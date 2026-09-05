@@ -38,19 +38,13 @@
   /* ---- header / hero ---- */
   header { padding: 88px 0 0; }
   .logo { width: 56px; height: 56px; border-radius: 13px; display: block; }
-  .eyebrow {
-    margin: 26px 0 0;
-    font-size: 12.5px;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
   h1 {
+    margin-top: 30px;
     font-size: clamp(34px, 6vw, 52px);
     line-height: 1.06;
     letter-spacing: -.035em;
     font-weight: 640;
-    margin: 14px 0 18px;
+    margin: 0 0 18px;
     max-width: 15ch;
   }
   h1 em { font-style: normal; color: var(--brand); }
@@ -152,14 +146,7 @@
   .facts span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
 
   /* ---- sections ---- */
-  section { padding: 68px 0 0; }
-  .kicker {
-    font-size: 12.5px;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    color: var(--brand);
-    margin: 0 0 10px;
-  }
+  section { padding: 80px 0 0; }
   h2 {
     font-size: clamp(24px, 3.4vw, 30px);
     line-height: 1.15;
@@ -186,9 +173,7 @@
   table.cmp thead th {
     border-top: 0;
     padding-top: 0;
-    font-size: 12.5px;
-    letter-spacing: .06em;
-    text-transform: uppercase;
+    font-size: 13px;
     color: var(--dim);
     font-weight: 500;
   }
@@ -270,7 +255,7 @@
   .cross a:hover { text-decoration: underline; }
 
   /* ---- downloads ---- */
-  .get { padding: 68px 0 0; }
+  .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
   .dl { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .dl a {
@@ -316,7 +301,7 @@
     flex: none;
   }
   .faq details[open] summary::before { content: "\2212"; }
-  /* `.faq p` would also catch the section kicker, which outranks `.kicker`. */
+  /* scoped to details so it cannot catch anything else in the section */
   .faq details p { margin: 10px 0 0 22px; color: var(--muted); font-size: 15px; }
 
   footer {
@@ -370,9 +355,7 @@
     table.cmp td:nth-child(2)::before,
     table.cmp td:last-child::before {
       display: block;
-      font-size: 11.5px;
-      letter-spacing: .07em;
-      text-transform: uppercase;
+      font-size: 13px;
       margin-bottom: 1px;
     }
     table.cmp td:nth-child(2)::before { content: "Point-and-click"; color: var(--dim); }
@@ -386,12 +369,11 @@
 <div class="wrap">
   <header>
     <img class="logo" src="/logo.png" alt="Blade" />
-    <p class="eyebrow">Blade Desktop &middot; macOS and Windows</p>
     <h1>Statistics without the <em>statistics software</em>.</h1>
     <p class="lede">
-      Ask about your data in plain language. Blade picks the test, runs it in R
-      on your own machine, and hands back APA output, assumption checks, and the
-      script that produced it.
+      Ask about your data in plain language. Blade picks the test and runs it in
+      R on your machine. You get APA output, assumption checks, and the script
+      behind them.
     </p>
     <span class="cta">
       <a class="btn" id="cta" href="#get">Get Blade</a>
@@ -400,7 +382,7 @@
       </button>
       <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
     </span>
-    <span class="note" id="cta-note">macOS &middot; Windows &middot; beta</span>
+    <span class="note" id="cta-note">macOS and Windows, beta</span>
   </header>
 </div>
 
@@ -408,24 +390,22 @@
   <figure>
     <img src="app.png" alt="Blade Desktop showing a linear regression panel, an ROC curve with logistic regression odds ratios, and a structural equation model path diagram, alongside the project files it generated." />
   </figure>
-  <figcaption>One session: regression diagnostics, an ROC curve, and an SEM path diagram, with every script left in the folder.</figcaption>
+  <figcaption>One session: regression diagnostics, an ROC curve, an SEM path diagram. Every script stayed in the folder.</figcaption>
 </div>
 
 <div class="wrap">
 
   <div class="facts">
     <div><b>46</b><span>statistical procedures, descriptives through SEM</span></div>
-    <div><b>R</b><span>computes every number, not the language model</span></div>
+    <div><b>R</b><span>runs the arithmetic behind every result</span></div>
     <div><b>0</b><span>data files uploaded anywhere</span></div>
   </div>
 
   <section id="spss">
-    <p class="kicker">Coming from SPSS</p>
     <h2>The dialog box was never the hard part.</h2>
     <p class="sub">
-      Knowing which test to run, checking whether you were allowed to run it, and
-      being able to run it again next year: that is the work. Blade is built
-      around those three.
+      Picking the right test is the work. So is checking you were allowed to run
+      it. So is running it again next year on new data.
     </p>
     <div class="cmp-scroll">
       <table class="cmp">
@@ -464,35 +444,33 @@
   </section>
 
   <section id="how">
-    <p class="kicker">How it goes</p>
     <h2>Point at a folder, ask, read the output.</h2>
     <ol class="steps">
       <li>
         <h3>Open the folder your data already lives in</h3>
         <p>No import step and no project format. Blade reads the files where they
-          sit and writes its output beside them.</p>
+          sit. Output lands beside them.</p>
       </li>
       <li>
         <h3>Ask the question the way you would ask a colleague</h3>
-        <p>Blade reads the variables, picks a method, and tells you what it chose
-          before it runs anything.</p>
+        <p>Blade reads the variables and picks a method. It tells you what it
+          chose before running anything.</p>
         <p class="quote">"Does the treatment group still differ on the outcome once I control for baseline score and age?"</p>
       </li>
       <li>
         <h3>Read the result, then take it with you</h3>
-        <p>APA-formatted output, tables, plots, assumption checks, a plain-language
-          reading of what it means, and the R syntax underneath. Export the
-          transcript, the figures, or the code.</p>
+        <p>You get APA output, tables, plots, assumption checks, and a plain
+          reading of what it means. The R syntax sits underneath. Export any of
+          it.</p>
       </li>
     </ol>
   </section>
 
   <section id="methods">
-    <p class="kicker">What it can run</p>
     <h2>Forty-six procedures, all of them real R.</h2>
     <p class="sub">
-      Each one is a tool the agent calls against an R engine. The model decides
-      which to use and how to read the output. It never produces the numbers.
+      Each one is a tool the agent calls against an R engine. The model picks
+      which to run and reads the output. It never produces the numbers.
     </p>
 
     <div class="fam">
@@ -550,52 +528,50 @@
   </section>
 
   <section id="trust">
-    <p class="kicker">Why the numbers hold</p>
     <h2>The model writes the call. R computes the answer.</h2>
 
     <div class="point">
       <h3>Nothing is estimated by a language model</h3>
-      <p>A p-value in Blade came out of an R procedure, the same one you would run
-        by hand. The model's job is to choose the procedure, pass the variables,
-        and explain the output it got back.</p>
+      <p>A p-value in Blade came out of an R procedure. It is the same one you
+        would run by hand. The model chooses the procedure and explains what came
+        back.</p>
     </div>
     <div class="point">
       <h3>When R complains, you see it</h3>
-      <p>Convergence warnings, singular fits, violated assumptions: these come
+      <p>Convergence warnings, singular fits and violated assumptions come
         through instead of being smoothed over. An analysis that failed says so.</p>
     </div>
     <div class="point">
       <h3>The syntax stays behind</h3>
       <p>Every analysis writes runnable R into your folder. Hand it to a
-        supervisor, a reviewer, or a statistician and they can check the work
-        without Blade.</p>
+        supervisor, a reviewer or a statistician. They can check the work without
+        Blade.</p>
     </div>
     <div class="point">
       <h3>Your machine, your files</h3>
-      <p>Blade runs on the R and Python installed on your computer, in a folder
-        you choose. Your data files are never uploaded. Every file write and shell
-        command waits for you to approve it.</p>
-      <p>The hosted API does the planning and holds the model keys. It stores the
-        session transcript, nothing from your workspace.</p>
+      <p>Blade runs on the R and Python already installed on your computer, in a
+        folder you pick. Your data files are never uploaded. Every file write and
+        shell command waits for your approval.</p>
+      <p>The hosted API plans the work and holds the model keys. It stores the
+        session transcript and nothing from your workspace.</p>
     </div>
     <div class="point">
       <h3>It does the mechanics, you own the claim</h3>
-      <p>Blade is fast at the part that is mechanical and cannot decide whether
-        your design supports the conclusion. That part is still yours.</p>
+      <p>Blade is quick at the mechanical part. It cannot judge whether your
+        design supports the conclusion. That stays yours.</p>
     </div>
 
     <div class="cross">
       <h3>Then keep it</h3>
       <p>Save an analysis as a workflow. Next term it runs on the new data in one
-        click, or goes to a colleague as a single file.</p>
+        click. Or it goes to a colleague as a single file.</p>
       <a href="https://blade.skalatec.com/">See how workflows work &rarr;</a>
     </div>
   </section>
 
   <section class="get" id="get">
-    <p class="kicker">Download</p>
-    <h2>Blade Desktop 0.2.2</h2>
-    <p class="sub">Beta. Needs R on your machine; Blade checks on first launch and can install R and Python for you.</p>
+    <h2>Download Blade Desktop 0.2.2</h2>
+    <p class="sub">Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.</p>
     <div class="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
@@ -622,42 +598,39 @@
   </section>
 
   <section class="faq" id="faq">
-    <p class="kicker">Questions</p>
     <h2>Before you download.</h2>
 
     <details>
       <summary>Do I need to know R?</summary>
       <p>No. You ask in plain language and read the explanation. The R is there
-        for when someone asks you to show your work, and it is real R you can run
-        yourself.</p>
+        for when someone asks to see your work. It runs on its own.</p>
     </details>
     <details>
       <summary>Will it open my SPSS files?</summary>
-      <p>Yes. SPSS <code>.sav</code> files are read through R, along with CSV, TSV,
-        Excel, and Parquet, with variable and value labels intact.</p>
+      <p>Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV,
+        Excel and Parquet. Variable and value labels survive.</p>
     </details>
     <details>
       <summary>Can I trust a language model with statistics?</summary>
-      <p>Not with the arithmetic, which is why it never does it. The model selects
-        the procedure and interprets the output; an R engine computes the result.
-        Both the choice and the syntax are shown to you, so a wrong call is
-        visible rather than buried.</p>
+      <p>Not with the arithmetic, which is why it never does any. The model picks
+        the procedure and reads the output. R computes the result. You see both
+        the choice and the syntax.</p>
     </details>
     <details>
       <summary>Does my data leave my computer?</summary>
-      <p>Your data files stay in your folder. Blade's hosted API plans the
-        analysis and stores the session transcript; it never receives your
-        dataset files. Every write and every command asks for approval first.</p>
+      <p>Your data files stay in your folder. The hosted API plans the analysis
+        and stores the session transcript. It never receives your datasets. Every
+        write and command asks first.</p>
     </details>
     <details>
       <summary>Is this a replacement for a statistician?</summary>
-      <p>It replaces the hours spent on menus, syntax, and reformatting output.
-        It does not decide whether your design supports your conclusion, and it
-        will tell you when a question is outside what the data can answer.</p>
+      <p>It replaces the hours lost to menus, syntax and reformatting output. It
+        cannot judge whether your design supports your conclusion. It will say
+        when a question is beyond the data.</p>
     </details>
     <details>
       <summary>What about Linux?</summary>
-      <p>Not published yet. macOS and Windows builds are above.</p>
+      <p>Not published yet. The macOS and Windows builds are above.</p>
     </details>
   </section>
 
