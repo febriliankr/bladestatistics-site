@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="ja" dir="ltr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blade, statistics without the statistics software</title>
-<meta name="description" content="Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them." />
-<link rel="canonical" href="https://bladestatistics.com/" />
+<title>Blade、統計ソフトのいらない統計</title>
+<meta name="description" content="ふだんの言葉でデータについて尋ねてください。Bladeが検定を選び、お使いのパソコンのRで実行します。APA形式の出力、前提の確認、実行したスクリプトが残ります。" />
+<link rel="canonical" href="https://bladestatistics.com/ja/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
 <link rel="alternate" hreflang="pt-BR" href="https://bladestatistics.com/pt/" />
@@ -22,10 +22,10 @@
 <link rel="alternate" hreflang="x-default" href="https://bladestatistics.com/" />
 <link rel="icon" href="/logo.png" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://bladestatistics.com/" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:title" content="Blade, statistics without the statistics software" />
-<meta property="og:description" content="Describe the question. Blade picks the test, runs it in R on your machine, and shows its work." />
+<meta property="og:url" content="https://bladestatistics.com/ja/" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:title" content="Blade、統計ソフトのいらない統計" />
+<meta property="og:description" content="問いを書くだけです。Bladeが検定を選び、手元のRで実行し、その手順を見せます。" />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -444,67 +444,67 @@
 <div class="wrap">
   <header>
     <img class="logo" src="/logo.png" alt="Blade" />
-    <h1>Statistics without the <em>statistics software</em>.</h1>
-    <p class="lede">Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them.</p>
+    <h1><em>統計ソフト</em>のいらない統計。</h1>
+    <p class="lede">ふだんの言葉でデータについて尋ねてください。Bladeが検定を選び、お使いのパソコンのRで実行します。APA形式の出力、前提の確認、そして実行したスクリプトが手元に残ります。</p>
     <span class="cta">
-      <a class="btn" id="cta" href="#get">Get Blade</a>
-      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Other downloads" hidden>
+      <a class="btn" id="cta" href="#get">Bladeを入手</a>
+      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="その他のダウンロード" hidden>
         <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
       </button>
       <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
     </span>
-    <span class="note" id="cta-note">macOS and Windows, beta</span>
+    <span class="note" id="cta-note">macOSとWindows、ベータ版</span>
   </header>
 </div>
 
 <div class="shot">
   <figure>
-    <img src="/app.png" alt="Blade Desktop showing a linear regression panel, an ROC curve with logistic regression odds ratios, and a structural equation model path diagram, alongside the project files it generated." />
+    <img src="/app.png" alt="線形回帰のパネル、ロジスティック回帰のオッズ比を伴うROC曲線、構造方程式モデルのパス図、そして生成されたプロジェクトファイルを表示しているBlade Desktop。" />
   </figure>
-  <figcaption>One session: regression diagnostics, an ROC curve, an SEM path diagram. Every script stayed in the folder.</figcaption>
+  <figcaption>ひとつのセッション：回帰診断、ROC曲線、SEMのパス図。スクリプトはすべてフォルダに残ります。</figcaption>
 </div>
 
 <div class="wrap">
 
   <div class="facts">
-    <div><b>46</b><span>statistical procedures, descriptives through SEM</span></div>
-    <div><b>R</b><span>runs the arithmetic behind every result</span></div>
-    <div><b>0</b><span>data files uploaded anywhere</span></div>
+    <div><b>46</b><span>統計手続き、記述統計からSEMまで</span></div>
+    <div><b>R</b><span>すべての結果の計算を担当</span></div>
+    <div><b>0</b><span>アップロードされるデータファイル</span></div>
   </div>
 
   <section id="spss">
-    <h2>The dialog box was never the hard part.</h2>
-    <p class="sub">Picking the right test is the work. So is checking you were allowed to run it. So is running it again next year on new data.</p>
+    <h2>難しかったのはダイアログではありません。</h2>
+    <p class="sub">正しい検定を選ぶことが仕事です。使ってよいか確かめることもです。来年また同じ分析をすることもです。</p>
     <div class="cmp-scroll">
       <table class="cmp">
         <thead>
-          <tr><th>&nbsp;</th><th>Point-and-click stats software</th><th>Blade</th></tr>
+          <tr><th>&nbsp;</th><th>メニュー式の統計ソフト</th><th>Blade</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>Getting to a result</td>
-            <td>Find the menu, fill in the dialog, hope the defaults are right.</td>
-            <td>Describe the question in a sentence.</td>
+            <td>結果にたどり着く</td>
+            <td>メニューを探し、ダイアログを埋め、既定値が正しいことを願う。</td>
+            <td>問いを一文で書く。</td>
           </tr>
           <tr>
-            <td>Choosing the test</td>
-            <td>You have to know before you start.</td>
-            <td>Blade proposes a method and says why that one.</td>
+            <td>検定を選ぶ</td>
+            <td>始める前に知っている必要がある。</td>
+            <td>Bladeが手法を提案し、理由を述べる。</td>
           </tr>
           <tr>
-            <td>Assumptions</td>
-            <td>A separate menu you have to remember to open.</td>
-            <td>Checked and reported next to the result.</td>
+            <td>前提条件</td>
+            <td>開くのを忘れがちな別メニュー。</td>
+            <td>確認され、結果の隣に示される。</td>
           </tr>
           <tr>
-            <td>Reproducing it</td>
-            <td>Only if you saved the syntax yourself.</td>
-            <td>Every analysis leaves runnable R in the folder.</td>
+            <td>再現する</td>
+            <td>自分で構文を保存していた場合だけ。</td>
+            <td>分析ごとに実行可能なRがフォルダに残る。</td>
           </tr>
           <tr>
-            <td>Your data</td>
-            <td>Imported into the tool's own world.</td>
-            <td>Read in place. CSV, Excel, <code>.sav</code>, Parquet.</td>
+            <td>データ</td>
+            <td>ツール独自の形式に取り込まれる。</td>
+            <td>その場で読む。CSV、Excel、<code>.sav</code>、Parquet。</td>
           </tr>
         </tbody>
       </table>
@@ -512,86 +512,86 @@
   </section>
 
   <section id="how">
-    <h2>Point at a folder, ask, read the output.</h2>
+    <h2>フォルダを指定し、尋ね、出力を読む。</h2>
     <ol class="steps">
       <li>
-        <h3>Open the folder your data already lives in</h3>
-        <p>No import step and no project format. Blade reads the files where they sit. Output lands beside them.</p>
+        <h3>データがすでにあるフォルダを開く</h3>
+        <p>取り込み作業もプロジェクト形式もありません。Bladeはファイルをその場所で読みます。出力はその隣に置かれます。</p>
       </li>
       <li>
-        <h3>Ask the question the way you would ask a colleague</h3>
-        <p>Blade reads the variables and picks a method. It tells you what it chose before running anything.</p>
-        <p class="quote">"Does the treatment group still differ on the outcome once I control for baseline score and age?"</p>
+        <h3>同僚に聞くように尋ねる</h3>
+        <p>Bladeは変数を読んで手法を選びます。何かを実行する前に、選んだ手法を伝えます。</p>
+        <p class="quote">「ベースライン得点と年齢を統制しても、治療群のアウトカムに差は残りますか」</p>
       </li>
       <li>
-        <h3>Read the result, then take it with you</h3>
-        <p>You get APA output, tables, plots, assumption checks, and a plain reading of what it means. The R syntax sits underneath. Export any of it.</p>
+        <h3>結果を読み、そのまま持ち出す</h3>
+        <p>APA形式の出力、表、図、前提の確認、そして平易な解釈が得られます。その下にRの構文があります。どれでも書き出せます。</p>
       </li>
     </ol>
   </section>
 
   <section id="methods">
-    <h2>Forty-six procedures, all of them real R.</h2>
-    <p class="sub">Each one is a tool the agent calls against an R engine. The model picks which to run and reads the output. It never produces the numbers.</p>
+    <h2>46の手続き、すべて本物のRです。</h2>
+    <p class="sub">どれもエージェントがRエンジンに対して呼び出すツールです。モデルはどれを使うかを選び、出力を読みます。数値を作ることはありません。</p>
     <div class="fam">
-      <h3>Describe and explore</h3>
-      <div class="chips"><span>Descriptives</span><span>Frequencies</span><span>Crosstabs</span><span>Explore</span><span>Means by group</span><span>Missing data</span><span>Recode</span><span>Compute</span></div>
+      <h3>記述と探索</h3>
+      <div class="chips"><span>記述統計</span><span>度数分布</span><span>クロス集計</span><span>探索</span><span>群別平均</span><span>欠測値</span><span>再コード</span><span>変数の計算</span></div>
     </div>
     <div class="fam">
-      <h3>Compare groups</h3>
-      <div class="chips"><span>Independent t-test</span><span>Paired t-test</span><span>One-sample t-test</span><span>One-way and factorial ANOVA</span><span>Repeated measures ANOVA</span><span>MANOVA</span><span>Mann-Whitney</span><span>Kruskal-Wallis</span><span>Wilcoxon signed-rank</span><span>Sign test</span><span>Friedman</span><span>McNemar</span><span>Cochran's Q</span></div>
+      <h3>群の比較</h3>
+      <div class="chips"><span>対応のないt検定</span><span>対応のあるt検定</span><span>1標本t検定</span><span>一元配置と要因分散分析</span><span>反復測定分散分析</span><span>MANOVA</span><span>マン・ホイットニー</span><span>クラスカル・ウォリス</span><span>ウィルコクソン符号順位</span><span>符号検定</span><span>フリードマン</span><span>マクネマー</span><span>コクランのQ</span></div>
     </div>
     <div class="fam">
-      <h3>Relationships and models</h3>
-      <div class="chips"><span>Pearson, Spearman, Kendall</span><span>Partial correlation</span><span>Linear regression</span><span>Logistic regression</span><span>Ordinal regression</span><span>Multinomial regression</span><span>Probit</span><span>Curve estimation</span><span>Mixed models</span></div>
+      <h3>関連とモデル</h3>
+      <div class="chips"><span>ピアソン、スピアマン、ケンドール</span><span>偏相関</span><span>線形回帰</span><span>ロジスティック回帰</span><span>順序回帰</span><span>多項回帰</span><span>プロビット</span><span>曲線推定</span><span>混合効果モデル</span></div>
     </div>
     <div class="fam">
-      <h3>Structure and scales</h3>
-      <div class="chips"><span>Exploratory factor analysis</span><span>PCA</span><span>Structural equation modelling</span><span>Reliability, Cronbach's alpha</span><span>K-means</span><span>Hierarchical clustering</span><span>Discriminant analysis</span><span>Multidimensional scaling</span><span>Correspondence analysis</span><span>LDA topic models</span></div>
+      <h3>構造と尺度</h3>
+      <div class="chips"><span>探索的因子分析</span><span>主成分分析</span><span>構造方程式モデリング</span><span>信頼性、クロンバックのα</span><span>k平均法</span><span>階層クラスター分析</span><span>判別分析</span><span>多次元尺度構成法</span><span>コレスポンデンス分析</span><span>LDAトピックモデル</span></div>
     </div>
     <div class="fam">
-      <h3>Categorical</h3>
-      <div class="chips"><span>Chi-square goodness of fit</span><span>Binomial test</span><span>Loglinear models</span><span>Runs test</span><span>Kolmogorov-Smirnov</span><span>Fisher's exact</span></div>
+      <h3>カテゴリカル</h3>
+      <div class="chips"><span>適合度のカイ二乗検定</span><span>二項検定</span><span>対数線形モデル</span><span>連検定</span><span>コルモゴロフ・スミルノフ</span><span>フィッシャーの正確確率検定</span></div>
     </div>
     <div class="fam">
-      <h3>Time, risk, synthesis</h3>
-      <div class="chips"><span>Kaplan-Meier</span><span>Cox regression</span><span>ROC curves</span><span>Autocorrelation</span><span>ARIMA</span><span>Meta-analysis</span></div>
+      <h3>時間、リスク、統合</h3>
+      <div class="chips"><span>カプラン・マイヤー</span><span>Cox回帰</span><span>ROC曲線</span><span>自己相関</span><span>ARIMA</span><span>メタ分析</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>The model writes the call. R computes the answer.</h2>
+    <h2>モデルが呼び出しを書き、Rが答えを計算します。</h2>
     <div class="point">
-      <h3>Nothing is estimated by a language model</h3>
-      <p>A p-value in Blade came out of an R procedure. It is the same one you would run by hand. The model chooses the procedure and explains what came back.</p>
+      <h3>言語モデルが数値を推測することはありません</h3>
+      <p>Bladeのp値はRの手続きから出たものです。手で実行するのと同じ手続きです。モデルは手続きを選び、返ってきた結果を説明します。</p>
     </div>
     <div class="point">
-      <h3>When R complains, you see it</h3>
-      <p>Convergence warnings, singular fits and violated assumptions come through instead of being smoothed over. An analysis that failed says so.</p>
+      <h3>Rが警告すれば、そのまま見えます</h3>
+      <p>収束の警告、特異な当てはめ、前提の違反はならされずに届きます。失敗した分析は失敗したと伝えます。</p>
     </div>
     <div class="point">
-      <h3>The syntax stays behind</h3>
-      <p>Every analysis writes runnable R into your folder. Hand it to a supervisor, a reviewer or a statistician. They can check the work without Blade.</p>
+      <h3>構文はその場に残ります</h3>
+      <p>分析ごとに実行可能なRがフォルダに書き出されます。指導教員、査読者、統計家に渡せます。Bladeなしで確認できます。</p>
     </div>
     <div class="point">
-      <h3>Your machine, your files</h3>
-      <p>Blade runs on the R and Python already installed on your computer, in a folder you pick. Your data files are never uploaded. Every file write and shell command waits for your approval.</p>
-      <p>The hosted API plans the work and holds the model keys. It stores the session transcript and nothing from your workspace.</p>
+      <h3>あなたのパソコン、あなたのファイル</h3>
+      <p>Bladeはすでに入っているRとPythonを、あなたが選んだフォルダで使います。データファイルが送信されることはありません。ファイルの書き込みとコマンドはすべて承認を待ちます。</p>
+      <p>ホスト側のAPIは手順を組み立て、モデルの鍵を保持します。保存されるのはセッションの記録だけで、作業フォルダの中身は保存されません。</p>
     </div>
     <div class="point">
-      <h3>It does the mechanics, you own the claim</h3>
-      <p>Blade is quick at the mechanical part. It cannot judge whether your design supports the conclusion. That stays yours.</p>
+      <h3>作業は任せ、主張はあなたのものです</h3>
+      <p>Bladeは機械的な部分が速いだけです。研究デザインが結論を支えるかどうかは判断できません。そこはあなたの領分です。</p>
     </div>
     <div class="cross">
-      <h3>Then keep it</h3>
-      <p>Save an analysis as a workflow. Next term it runs on the new data in one click. Or it goes to a colleague as a single file.</p>
-      <a href="https://blade.skalatec.com/">See how workflows work &rarr;</a>
+      <h3>そのまま残しておく</h3>
+      <p>分析をワークフローとして保存できます。来学期は新しいデータでワンクリックで動きます。1つのファイルとして同僚に渡すこともできます。</p>
+      <a href="https://blade.skalatec.com/">ワークフローの仕組みを見る &rarr;</a>
     </div>
   </section>
 
   <section class="get" id="get">
-    <h2>Download Blade Desktop 0.2.2</h2>
-    <p class="sub">Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.</p>
+    <h2>Blade Desktop 0.2.2 をダウンロード</h2>
+    <p class="sub">ベータ版です。BladeにはRが必要で、初回起動時に確認し、RとPythonの導入も代行できます。</p>
     <div class="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
@@ -610,48 +610,48 @@
         <span class="meta">ARM &middot; 92 MB</span>
       </a>
     </div>
-    <p class="caveat"><b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet.</p>
+    <p class="caveat"><b>macOS：</b>PT Skala Teknologi Nusantaraの署名と公証済みで、通常どおり開きます。<b>Windows：</b>署名はまだのため、SmartScreenが一度警告します。詳細情報を押し、実行を選んでください。Linux版はまだ公開していません。</p>
   </section>
 
   <section class="faq" id="faq">
-    <h2>Before you download.</h2>
+    <h2>ダウンロードの前に。</h2>
     <details>
-      <summary>Do I need to know R?</summary>
-      <p>No. You ask in plain language and read the explanation. The R is there for when someone asks to see your work. It runs on its own.</p>
+      <summary>Rが書けなくても使えますか</summary>
+      <p>使えます。ふだんの言葉で尋ね、説明を読むだけです。Rは誰かに作業を見せるときのためにあります。実行は自動です。</p>
     </details>
     <details>
-      <summary>Will it open my SPSS files?</summary>
-      <p>Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV, Excel and Parquet. Variable and value labels survive.</p>
+      <summary>SPSSのファイルは開けますか</summary>
+      <p>開けます。SPSSの<code>.sav</code>はRで読み込みます。CSV、TSV、Excel、Parquetも同様です。変数ラベルと値ラベルも残ります。</p>
     </details>
     <details>
-      <summary>Can I trust a language model with statistics?</summary>
-      <p>Not with the arithmetic, which is why it never does any. The model picks the procedure and reads the output. R computes the result. You see both the choice and the syntax.</p>
+      <summary>統計を言語モデルに任せて大丈夫ですか</summary>
+      <p>計算は任せていません。モデルは手続きを選んで出力を読み、計算はRが行います。選択も構文も見えます。</p>
     </details>
     <details>
-      <summary>Does my data leave my computer?</summary>
-      <p>Your data files stay in your folder. The hosted API plans the analysis and stores the session transcript. It never receives your datasets. Every write and command asks first.</p>
+      <summary>データはパソコンの外に出ますか</summary>
+      <p>ファイルはフォルダに残ります。ホスト側のAPIは分析を計画し、記録を保存します。データセットを受け取ることはありません。書き込みとコマンドは毎回確認します。</p>
     </details>
     <details>
-      <summary>Is this a replacement for a statistician?</summary>
-      <p>It replaces the hours lost to menus, syntax and reformatting output. It cannot judge whether your design supports your conclusion. It will say when a question is beyond the data.</p>
+      <summary>統計家の代わりになりますか</summary>
+      <p>メニュー、構文、出力整形に費やす時間の代わりになります。研究デザインが結論を支えるかは判断しません。データで答えられない問いはそう伝えます。</p>
     </details>
     <details>
-      <summary>What about Linux?</summary>
-      <p>Not published yet. The macOS and Windows builds are above.</p>
+      <summary>Linux版はありますか</summary>
+      <p>まだ公開していません。macOS版とWindows版は上にあります。</p>
     </details>
   </section>
 
   <footer>
-    <span>Blade, agentic statistical analysis.</span>
-    <a href="https://blade.skalatec.com/">Workflows</a>
+    <span>Blade、エージェントによる統計解析。</span>
+    <a href="https://blade.skalatec.com/">ワークフロー</a>
     <span class="spacer">PT Skala Teknologi Nusantara</span>
     <details class="lang">
       <summary>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.38-3.56A8.03 8.03 0 0118.9 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.98 7.98 0 010-4h3.38a16.5 16.5 0 000 4H4.26zm.84 2h2.95c.32 1.25.79 2.45 1.38 3.56A7.99 7.99 0 015.1 16zm2.95-8H5.1a7.99 7.99 0 014.33-3.56A15.6 15.6 0 008.05 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66a14.7 14.7 0 010-4h4.68a14.7 14.7 0 010 4zm.23 5.56c.59-1.11 1.06-2.31 1.38-3.56h2.95a7.99 7.99 0 01-4.33 3.56zM16.36 14a16.5 16.5 0 000-4h3.38a7.98 7.98 0 010 4h-3.38z"/></svg>
-        Language
+        言語
       </summary>
       <div class="lang-menu">
-        <a href="/" data-lang="en" aria-current="true">English</a>
+        <a href="/" data-lang="en">English</a>
         <a href="/es/" data-lang="es">Español</a>
         <a href="/pt/" data-lang="pt">Português</a>
         <a href="/fr/" data-lang="fr">Français</a>
@@ -662,7 +662,7 @@
         <a href="/ar/" data-lang="ar">العربية</a>
         <a href="/hi/" data-lang="hi">हिन्दी</a>
         <a href="/zh/" data-lang="zh">简体中文</a>
-        <a href="/ja/" data-lang="ja">日本語</a>
+        <a href="/ja/" data-lang="ja" aria-current="true">日本語</a>
         <a href="/ko/" data-lang="ko">한국어</a>
       </div>
     </details>
@@ -674,7 +674,7 @@
 // The download table below is the source of truth; the hero button just points
 // at whichever row matches the visitor. No JS -> the button still jumps to it.
 (function () {
-  var T = {"downloadFor": "Download for %s", "version": "version"};
+  var T = {"downloadFor": "%s版をダウンロード", "version": "バージョン"};
 
   var builds = [].map.call(document.querySelectorAll('.dl a[data-os]'), function (a) {
     return {
@@ -772,30 +772,6 @@
     if (!a) return;
     try { localStorage.setItem('bladeLang', a.dataset.lang); } catch (err) {}
   });
-})();
-
-// First visit with a non-English browser lands on that translation. A pick
-// from the switcher is remembered and wins from then on.
-(function () {
-  var LOCALES = ["es", "pt", "fr", "de", "it", "id", "ru", "ar", "hi", "zh", "ja", "ko"];
-  var stored = null;
-  try { stored = localStorage.getItem('bladeLang'); } catch (e) {}
-  if (stored) {
-    if (stored !== 'en' && LOCALES.indexOf(stored) !== -1) {
-      location.replace('/' + stored + '/' + location.hash);
-    }
-    return;
-  }
-  var tags = navigator.languages || [navigator.language || ''];
-  for (var i = 0; i < tags.length; i++) {
-    var base = String(tags[i]).toLowerCase().split('-')[0];
-    if (base === 'en') return;
-    if (base === 'in') base = 'id';  // legacy code some browsers still send
-    if (LOCALES.indexOf(base) !== -1) {
-      location.replace('/' + base + '/' + location.hash);
-      return;
-    }
-  }
 })();
 
 </script>

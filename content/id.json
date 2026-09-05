@@ -1,0 +1,147 @@
+{
+  "lang": "id",
+  "dir": "ltr",
+  "name": "Bahasa Indonesia",
+  "ogLocale": "id_ID",
+  "langLabel": "Bahasa",
+  "meta": {
+    "title": "Blade, statistik tanpa software statistik",
+    "description": "Tanyakan soal data Anda dengan bahasa biasa. Blade memilih ujinya lalu menjalankannya di R pada komputer Anda. Anda menerima keluaran APA, cek asumsi, dan skripnya.",
+    "ogTitle": "Blade, statistik tanpa software statistik",
+    "ogDescription": "Sebutkan pertanyaannya. Blade memilih uji, menjalankannya di R pada komputer Anda, dan menunjukkan caranya."
+  },
+  "hero": {
+    "h1a": "Statistik tanpa ",
+    "h1em": "software statistik",
+    "h1b": ".",
+    "lede": "Tanyakan soal data Anda dengan bahasa biasa. Blade memilih ujinya lalu menjalankannya di R pada komputer Anda. Anda menerima keluaran APA, cek asumsi, dan skripnya."
+  },
+  "cta": {
+    "get": "Unduh Blade",
+    "more": "Unduhan lain",
+    "downloadFor": "Unduh untuk %s",
+    "version": "versi",
+    "note": "macOS dan Windows, beta"
+  },
+  "shot": {
+    "alt": "Blade Desktop menampilkan panel regresi linear, kurva ROC dengan rasio odds regresi logistik, dan diagram jalur model persamaan struktural, di samping berkas proyek yang dihasilkannya.",
+    "caption": "Satu sesi: diagnostik regresi, kurva ROC, diagram jalur SEM. Semua skrip tertinggal di folder."
+  },
+  "facts": [
+    ["46", "prosedur statistik, dari deskriptif sampai SEM"],
+    ["R", "menghitung angka di balik tiap hasil"],
+    ["0", "berkas data yang diunggah ke mana pun"]
+  ],
+  "spss": {
+    "h2": "Kotak dialog tidak pernah jadi bagian yang sulit.",
+    "sub": "Yang berat itu memilih uji yang tepat. Berat juga memastikan uji itu boleh dipakai. Berat juga mengulangnya tahun depan.",
+    "colOther": "Software statistik berbasis menu",
+    "colBlade": "Blade",
+    "rows": [
+      ["Sampai ke hasil", "Cari menunya, isi kotaknya, berharap setelan bawaannya benar.", "Jelaskan pertanyaannya dalam satu kalimat."],
+      ["Memilih uji", "Anda harus sudah tahu sebelum mulai.", "Blade mengusulkan metode dan menyebut alasannya."],
+      ["Asumsi", "Menu terpisah yang harus Anda ingat untuk dibuka.", "Diperiksa dan dilaporkan di sebelah hasil."],
+      ["Mengulang", "Hanya kalau sintaksnya Anda simpan sendiri.", "Tiap analisis meninggalkan R yang bisa dijalankan."],
+      ["Data Anda", "Diimpor ke dunia milik aplikasi itu.", "Dibaca di tempat. CSV, Excel, <code>.sav</code>, Parquet."]
+    ]
+  },
+  "how": {
+    "h2": "Tunjuk satu folder, tanya, baca keluarannya.",
+    "steps": [
+      {
+        "h3": "Buka folder tempat data Anda sudah tersimpan",
+        "p": "Tanpa langkah impor dan tanpa format proyek. Blade membaca berkas di tempatnya. Keluarannya muncul di sebelahnya."
+      },
+      {
+        "h3": "Bertanyalah seperti kepada rekan kerja",
+        "p": "Blade membaca variabelnya lalu memilih metode. Pilihannya disebut sebelum apa pun dijalankan.",
+        "quote": "\"Apakah kelompok perlakuan masih berbeda pada hasil setelah skor awal dan usia dikontrol?\""
+      },
+      {
+        "h3": "Baca hasilnya, lalu bawa pulang",
+        "p": "Anda dapat keluaran APA, tabel, grafik, cek asumsi, dan bacaan yang lugas. Sintaks R ada di bawahnya. Ekspor bagian mana pun."
+      }
+    ]
+  },
+  "methods": {
+    "h2": "Empat puluh enam prosedur, semuanya R sungguhan.",
+    "sub": "Tiap prosedur adalah alat yang dipanggil agen ke mesin R. Model memilih mana yang dijalankan lalu membaca keluarannya. Angkanya tidak pernah dari model.",
+    "families": [
+      {
+        "h3": "Deskripsi dan eksplorasi",
+        "chips": ["Statistik deskriptif", "Frekuensi", "Tabulasi silang", "Eksplorasi", "Rerata per kelompok", "Data hilang", "Rekode", "Hitung variabel"]
+      },
+      {
+        "h3": "Membandingkan kelompok",
+        "chips": ["Uji t sampel bebas", "Uji t berpasangan", "Uji t satu sampel", "ANOVA satu jalur dan faktorial", "ANOVA ukuran berulang", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon bertanda", "Uji tanda", "Friedman", "McNemar", "Q Cochran"]
+      },
+      {
+        "h3": "Hubungan dan model",
+        "chips": ["Pearson, Spearman, Kendall", "Korelasi parsial", "Regresi linear", "Regresi logistik", "Regresi ordinal", "Regresi multinomial", "Probit", "Estimasi kurva", "Model campuran"]
+      },
+      {
+        "h3": "Struktur dan skala",
+        "chips": ["Analisis faktor eksploratori", "PCA", "Model persamaan struktural", "Reliabilitas, alfa Cronbach", "K-means", "Klaster hierarkis", "Analisis diskriminan", "Penskalaan multidimensi", "Analisis korespondensi", "Model topik LDA"]
+      },
+      {
+        "h3": "Kategorik",
+        "chips": ["Chi-square kecocokan", "Uji binomial", "Model loglinear", "Uji runtun", "Kolmogorov-Smirnov", "Uji eksak Fisher"]
+      },
+      {
+        "h3": "Waktu, risiko, sintesis",
+        "chips": ["Kaplan-Meier", "Regresi Cox", "Kurva ROC", "Autokorelasi", "ARIMA", "Meta-analisis"]
+      }
+    ]
+  },
+  "trust": {
+    "h2": "Model menulis pemanggilannya. R menghitung jawabannya.",
+    "points": [
+      {
+        "h3": "Tidak ada angka yang dikira-kira model bahasa",
+        "p": "Nilai p di Blade keluar dari prosedur R. Prosedurnya sama dengan yang Anda jalankan sendiri. Model memilih prosedur lalu menjelaskan hasilnya."
+      },
+      {
+        "h3": "Kalau R protes, Anda melihatnya",
+        "p": "Peringatan konvergensi, fit singular, dan asumsi yang dilanggar tampil apa adanya. Analisis yang gagal dinyatakan gagal."
+      },
+      {
+        "h3": "Sintaksnya tetap tinggal",
+        "p": "Tiap analisis menulis R yang bisa dijalankan ke folder Anda. Berikan ke pembimbing, reviewer, atau ahli statistik. Mereka bisa memeriksanya tanpa Blade."
+      },
+      {
+        "h3": "Komputer Anda, berkas Anda",
+        "p": "Blade memakai R dan Python yang sudah ada di komputer Anda, di folder pilihan Anda. Berkas data tidak pernah diunggah. Tiap penulisan berkas dan perintah menunggu persetujuan Anda.",
+        "p2": "API terkelola menyusun rencana kerja dan menyimpan kunci model. Yang tersimpan hanya transkrip sesi, bukan isi ruang kerja Anda."
+      },
+      {
+        "h3": "Bagian mekanisnya dikerjakan, klaimnya milik Anda",
+        "p": "Blade cepat di bagian yang mekanis. Ia tidak bisa menilai apakah desain Anda mendukung kesimpulan. Itu tetap urusan Anda."
+      }
+    ],
+    "cross": {
+      "h3": "Setelah itu, simpan",
+      "p": "Simpan sebuah analisis sebagai alur kerja. Semester depan ia jalan di data baru dengan sekali klik. Atau kirim ke rekan sebagai satu berkas.",
+      "link": "Lihat cara kerja alur kerja"
+    }
+  },
+  "get": {
+    "h2": "Unduh Blade Desktop 0.2.2",
+    "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
+    "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
+  },
+  "faq": {
+    "h2": "Sebelum mengunduh.",
+    "items": [
+      ["Apakah saya perlu bisa R?", "Tidak. Anda bertanya dengan bahasa biasa lalu membaca penjelasannya. R ada untuk saat orang minta bukti kerja Anda. Ia jalan sendiri."],
+      ["Apakah berkas SPSS saya bisa dibuka?", "Bisa. Berkas <code>.sav</code> SPSS dibaca lewat R, begitu juga CSV, TSV, Excel, dan Parquet. Label variabel dan label nilai ikut terbaca."],
+      ["Amankah menyerahkan statistik ke model bahasa?", "Bukan untuk hitungannya, makanya ia tidak pernah menghitung. Model memilih prosedur dan membaca keluaran. R yang menghitung. Pilihan dan sintaksnya terlihat."],
+      ["Apakah data saya keluar dari komputer?", "Berkas Anda tetap di folder Anda. API terkelola menyusun analisis dan menyimpan transkrip. Ia tidak pernah menerima data Anda. Tiap penulisan dan perintah minta izin dulu."],
+      ["Apakah ini pengganti ahli statistik?", "Yang diganti adalah jam-jam yang habis di menu, sintaks, dan merapikan keluaran. Ia tidak menilai apakah desain Anda mendukung kesimpulan. Ia akan bilang kalau pertanyaannya melampaui datanya."],
+      ["Bagaimana dengan Linux?", "Belum dirilis. Versi macOS dan Windows ada di atas."]
+    ]
+  },
+  "footer": {
+    "tagline": "Blade, analisis statistik berbasis agen.",
+    "workflows": "Alur kerja"
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "lang": "de",
+  "dir": "ltr",
+  "name": "Deutsch",
+  "ogLocale": "de_DE",
+  "langLabel": "Sprache",
+  "meta": {
+    "title": "Blade, Statistik ohne Statistiksoftware",
+    "description": "Fragen Sie in normaler Sprache nach Ihren Daten. Blade wählt den Test und rechnet in R auf Ihrem Rechner. Sie bekommen APA-Ausgabe, Voraussetzungsprüfungen und das Skript dazu.",
+    "ogTitle": "Blade, Statistik ohne Statistiksoftware",
+    "ogDescription": "Beschreiben Sie die Frage. Blade wählt den Test, rechnet in R auf Ihrem Rechner und zeigt den Rechenweg."
+  },
+  "hero": {
+    "h1a": "Statistik ohne ",
+    "h1em": "Statistiksoftware",
+    "h1b": ".",
+    "lede": "Fragen Sie in normaler Sprache nach Ihren Daten. Blade wählt den Test und rechnet in R auf Ihrem Rechner. Sie bekommen APA-Ausgabe, Voraussetzungsprüfungen und das Skript dazu."
+  },
+  "cta": {
+    "get": "Blade holen",
+    "more": "Weitere Downloads",
+    "downloadFor": "Für %s herunterladen",
+    "version": "Version",
+    "note": "macOS und Windows, Beta"
+  },
+  "shot": {
+    "alt": "Blade Desktop mit einem Panel zur linearen Regression, einer ROC-Kurve samt Odds Ratios der logistischen Regression und einem Pfaddiagramm eines Strukturgleichungsmodells, daneben die erzeugten Dateien.",
+    "caption": "Eine Sitzung: Regressionsdiagnostik, eine ROC-Kurve, ein SEM-Pfaddiagramm. Jedes Skript blieb im Ordner."
+  },
+  "facts": [
+    ["46", "statistische Verfahren, von Deskriptiven bis SEM"],
+    ["R", "rechnet hinter jedem Ergebnis"],
+    ["0", "Datendateien irgendwohin hochgeladen"]
+  ],
+  "spss": {
+    "h2": "Das Dialogfeld war nie das Schwere.",
+    "sub": "Den richtigen Test zu wählen ist die Arbeit. Zu prüfen, ob Sie ihn verwenden durften, auch. Ihn nächstes Jahr erneut zu rechnen auch.",
+    "colOther": "Statistiksoftware mit Menüs",
+    "colBlade": "Blade",
+    "rows": [
+      ["Zum Ergebnis kommen", "Menü suchen, Dialog ausfüllen, auf die Voreinstellungen hoffen.", "Die Frage in einem Satz beschreiben."],
+      ["Den Test wählen", "Sie müssen es vorher wissen.", "Blade schlägt ein Verfahren vor und begründet es."],
+      ["Voraussetzungen", "Ein eigenes Menü, an das Sie denken müssen.", "Geprüft und direkt neben dem Ergebnis ausgewiesen."],
+      ["Wiederholen", "Nur wenn Sie die Syntax selbst gespeichert haben.", "Jede Analyse hinterlässt lauffähiges R im Ordner."],
+      ["Ihre Daten", "In die eigene Welt des Programms importiert.", "Werden am Ort gelesen. CSV, Excel, <code>.sav</code>, Parquet."]
+    ]
+  },
+  "how": {
+    "h2": "Auf einen Ordner zeigen, fragen, Ausgabe lesen.",
+    "steps": [
+      {
+        "h3": "Öffnen Sie den Ordner, in dem Ihre Daten schon liegen",
+        "p": "Kein Importschritt und kein Projektformat. Blade liest die Dateien dort, wo sie liegen. Die Ausgabe landet daneben."
+      },
+      {
+        "h3": "Fragen Sie so, wie Sie eine Kollegin fragen würden",
+        "p": "Blade liest die Variablen und wählt ein Verfahren. Es nennt seine Wahl, bevor es etwas rechnet.",
+        "quote": "„Unterscheidet sich die Behandlungsgruppe im Ergebnis noch, wenn ich Ausgangswert und Alter kontrolliere?“"
+      },
+      {
+        "h3": "Ergebnis lesen und mitnehmen",
+        "p": "Sie bekommen APA-Ausgabe, Tabellen, Grafiken, Voraussetzungsprüfungen und eine klare Deutung. Darunter liegt die R-Syntax. Exportieren Sie beliebige Teile."
+      }
+    ]
+  },
+  "methods": {
+    "h2": "Sechsundvierzig Verfahren, alle in echtem R.",
+    "sub": "Jedes ist ein Werkzeug, das der Agent an einer R-Engine aufruft. Das Modell wählt aus und liest die Ausgabe. Die Zahlen erzeugt es nie.",
+    "families": [
+      {
+        "h3": "Beschreiben und erkunden",
+        "chips": ["Deskriptive Statistik", "Häufigkeiten", "Kreuztabellen", "Explorieren", "Mittelwerte nach Gruppe", "Fehlende Werte", "Umkodieren", "Berechnen"]
+      },
+      {
+        "h3": "Gruppen vergleichen",
+        "chips": ["t-Test bei unabhängigen Stichproben", "t-Test bei gepaarten Stichproben", "Ein-Stichproben-t-Test", "Einfaktorielle und faktorielle ANOVA", "ANOVA mit Messwiederholung", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon-Vorzeichen-Rang", "Vorzeichentest", "Friedman", "McNemar", "Cochran-Q"]
+      },
+      {
+        "h3": "Zusammenhänge und Modelle",
+        "chips": ["Pearson, Spearman, Kendall", "Partialkorrelation", "Lineare Regression", "Logistische Regression", "Ordinale Regression", "Multinomiale Regression", "Probit", "Kurvenanpassung", "Gemischte Modelle"]
+      },
+      {
+        "h3": "Struktur und Skalen",
+        "chips": ["Explorative Faktorenanalyse", "Hauptkomponentenanalyse", "Strukturgleichungsmodelle", "Reliabilität, Cronbachs Alpha", "K-Means", "Hierarchische Clusteranalyse", "Diskriminanzanalyse", "Multidimensionale Skalierung", "Korrespondenzanalyse", "LDA-Themenmodelle"]
+      },
+      {
+        "h3": "Kategorial",
+        "chips": ["Chi-Quadrat-Anpassungstest", "Binomialtest", "Loglineare Modelle", "Runs-Test", "Kolmogorow-Smirnow", "Exakter Test nach Fisher"]
+      },
+      {
+        "h3": "Zeit, Risiko, Synthese",
+        "chips": ["Kaplan-Meier", "Cox-Regression", "ROC-Kurven", "Autokorrelation", "ARIMA", "Metaanalyse"]
+      }
+    ]
+  },
+  "trust": {
+    "h2": "Das Modell schreibt den Aufruf. R rechnet die Antwort.",
+    "points": [
+      {
+        "h3": "Kein Wert wird von einem Sprachmodell geschätzt",
+        "p": "Ein p-Wert in Blade kam aus einer R-Prozedur. Es ist dieselbe, die Sie von Hand rechnen würden. Das Modell wählt die Prozedur und erklärt, was zurückkam."
+      },
+      {
+        "h3": "Wenn R meckert, sehen Sie es",
+        "p": "Konvergenzwarnungen, singuläre Anpassungen und verletzte Voraussetzungen kommen ungeglättet durch. Eine gescheiterte Analyse sagt das."
+      },
+      {
+        "h3": "Die Syntax bleibt liegen",
+        "p": "Jede Analyse schreibt lauffähiges R in Ihren Ordner. Geben Sie es einer Betreuerin, einem Gutachter oder einer Statistikerin. Sie prüfen die Arbeit ohne Blade."
+      },
+      {
+        "h3": "Ihr Rechner, Ihre Dateien",
+        "p": "Blade nutzt das R und das Python, die schon auf Ihrem Rechner liegen, in einem Ordner Ihrer Wahl. Ihre Datendateien werden nie hochgeladen. Jeder Schreibvorgang und jeder Befehl wartet auf Ihre Freigabe.",
+        "p2": "Die gehostete API plant die Arbeit und hält die Modellschlüssel. Sie speichert das Sitzungsprotokoll und nichts aus Ihrem Arbeitsordner."
+      },
+      {
+        "h3": "Es macht die Mechanik, die Aussage gehört Ihnen",
+        "p": "Blade ist schnell im mechanischen Teil. Ob Ihr Design die Schlussfolgerung trägt, kann es nicht beurteilen. Das bleibt bei Ihnen."
+      }
+    ],
+    "cross": {
+      "h3": "Und dann behalten",
+      "p": "Speichern Sie eine Analyse als Workflow. Im nächsten Semester läuft sie mit einem Klick auf den neuen Daten. Oder sie geht als eine Datei an Kollegen.",
+      "link": "So funktionieren Workflows"
+    }
+  },
+  "get": {
+    "h2": "Blade Desktop 0.2.2 laden",
+    "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",
+    "caveat": "<b>macOS:</b> von PT Skala Teknologi Nusantara signiert und notarisiert, öffnet also normal. <b>Windows:</b> noch nicht signiert, SmartScreen warnt einmal. Auf Weitere Informationen klicken, dann Trotzdem ausführen. Linux ist noch nicht veröffentlicht."
+  },
+  "faq": {
+    "h2": "Vor dem Download.",
+    "items": [
+      ["Muss ich R können?", "Nein. Sie fragen in normaler Sprache und lesen die Erklärung. Das R ist da, wenn jemand Ihre Arbeit sehen will. Es läuft von selbst."],
+      ["Öffnet es meine SPSS-Dateien?", "Ja. SPSS-<code>.sav</code> werden über R gelesen, ebenso CSV, TSV, Excel und Parquet. Variablen- und Wertelabels bleiben erhalten."],
+      ["Kann man einem Sprachmodell Statistik anvertrauen?", "Die Arithmetik nicht, deshalb rechnet es nie selbst. Das Modell wählt die Prozedur und liest die Ausgabe. R rechnet das Ergebnis. Sie sehen Wahl und Syntax."],
+      ["Verlassen meine Daten den Rechner?", "Ihre Dateien bleiben in Ihrem Ordner. Die gehostete API plant die Analyse und speichert das Protokoll. Ihre Datensätze bekommt sie nie. Jeder Schreibvorgang und Befehl fragt vorher."],
+      ["Ersetzt das eine Statistikerin?", "Es ersetzt die Stunden für Menüs, Syntax und Formatierung. Ob Ihr Design Ihre Schlussfolgerung trägt, beurteilt es nicht. Es sagt, wenn eine Frage über die Daten hinausgeht."],
+      ["Was ist mit Linux?", "Noch nicht veröffentlicht. Die Versionen für macOS und Windows stehen oben."]
+    ]
+  },
+  "footer": {
+    "tagline": "Blade, agentische statistische Analyse.",
+    "workflows": "Workflows"
+  }
+}

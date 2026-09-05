@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="ko" dir="ltr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blade, statistics without the statistics software</title>
-<meta name="description" content="Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them." />
-<link rel="canonical" href="https://bladestatistics.com/" />
+<title>Blade, 통계 소프트웨어 없는 통계</title>
+<meta name="description" content="평소 쓰는 말로 데이터에 관해 물어보세요. Blade가 검정을 고르고 여러분 컴퓨터의 R에서 실행합니다. APA 형식 출력과 가정 점검, 실행된 스크립트가 남습니다." />
+<link rel="canonical" href="https://bladestatistics.com/ko/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
 <link rel="alternate" hreflang="pt-BR" href="https://bladestatistics.com/pt/" />
@@ -22,10 +22,10 @@
 <link rel="alternate" hreflang="x-default" href="https://bladestatistics.com/" />
 <link rel="icon" href="/logo.png" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://bladestatistics.com/" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:title" content="Blade, statistics without the statistics software" />
-<meta property="og:description" content="Describe the question. Blade picks the test, runs it in R on your machine, and shows its work." />
+<meta property="og:url" content="https://bladestatistics.com/ko/" />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:title" content="Blade, 통계 소프트웨어 없는 통계" />
+<meta property="og:description" content="질문만 적으세요. Blade가 검정을 고르고 내 컴퓨터의 R에서 실행하며 과정을 보여줍니다." />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
@@ -444,67 +444,67 @@
 <div class="wrap">
   <header>
     <img class="logo" src="/logo.png" alt="Blade" />
-    <h1>Statistics without the <em>statistics software</em>.</h1>
-    <p class="lede">Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them.</p>
+    <h1><em>통계 소프트웨어</em> 없이 하는 통계.</h1>
+    <p class="lede">평소 쓰는 말로 데이터에 관해 물어보세요. Blade가 검정을 고르고 여러분 컴퓨터의 R에서 실행합니다. APA 형식 출력과 가정 점검, 그리고 실행된 스크립트가 남습니다.</p>
     <span class="cta">
-      <a class="btn" id="cta" href="#get">Get Blade</a>
-      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Other downloads" hidden>
+      <a class="btn" id="cta" href="#get">Blade 받기</a>
+      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="다른 다운로드" hidden>
         <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
       </button>
       <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
     </span>
-    <span class="note" id="cta-note">macOS and Windows, beta</span>
+    <span class="note" id="cta-note">macOS와 Windows, 베타</span>
   </header>
 </div>
 
 <div class="shot">
   <figure>
-    <img src="/app.png" alt="Blade Desktop showing a linear regression panel, an ROC curve with logistic regression odds ratios, and a structural equation model path diagram, alongside the project files it generated." />
+    <img src="/app.png" alt="선형회귀 패널, 로지스틱 회귀 오즈비가 함께 있는 ROC 곡선, 구조방정식모형 경로도, 그리고 생성된 프로젝트 파일을 보여주는 Blade Desktop 화면." />
   </figure>
-  <figcaption>One session: regression diagnostics, an ROC curve, an SEM path diagram. Every script stayed in the folder.</figcaption>
+  <figcaption>한 세션: 회귀 진단, ROC 곡선, SEM 경로도. 스크립트는 모두 폴더에 남았습니다.</figcaption>
 </div>
 
 <div class="wrap">
 
   <div class="facts">
-    <div><b>46</b><span>statistical procedures, descriptives through SEM</span></div>
-    <div><b>R</b><span>runs the arithmetic behind every result</span></div>
-    <div><b>0</b><span>data files uploaded anywhere</span></div>
+    <div><b>46</b><span>통계 절차, 기술통계부터 SEM까지</span></div>
+    <div><b>R</b><span>모든 결과의 계산을 담당</span></div>
+    <div><b>0</b><span>어딘가로 올라간 데이터 파일</span></div>
   </div>
 
   <section id="spss">
-    <h2>The dialog box was never the hard part.</h2>
-    <p class="sub">Picking the right test is the work. So is checking you were allowed to run it. So is running it again next year on new data.</p>
+    <h2>어려웠던 것은 대화상자가 아닙니다.</h2>
+    <p class="sub">맞는 검정을 고르는 일이 진짜 일입니다. 그 검정을 써도 되는지 확인하는 일도 그렇습니다. 내년에 다시 돌리는 일도 그렇습니다.</p>
     <div class="cmp-scroll">
       <table class="cmp">
         <thead>
-          <tr><th>&nbsp;</th><th>Point-and-click stats software</th><th>Blade</th></tr>
+          <tr><th>&nbsp;</th><th>메뉴식 통계 소프트웨어</th><th>Blade</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>Getting to a result</td>
-            <td>Find the menu, fill in the dialog, hope the defaults are right.</td>
-            <td>Describe the question in a sentence.</td>
+            <td>결과까지 가는 길</td>
+            <td>메뉴를 찾고, 대화상자를 채우고, 기본값이 맞기를 바랍니다.</td>
+            <td>질문을 한 문장으로 적습니다.</td>
           </tr>
           <tr>
-            <td>Choosing the test</td>
-            <td>You have to know before you start.</td>
-            <td>Blade proposes a method and says why that one.</td>
+            <td>검정 고르기</td>
+            <td>시작하기 전에 이미 알고 있어야 합니다.</td>
+            <td>Blade가 방법을 제안하고 이유를 말합니다.</td>
           </tr>
           <tr>
-            <td>Assumptions</td>
-            <td>A separate menu you have to remember to open.</td>
-            <td>Checked and reported next to the result.</td>
+            <td>가정</td>
+            <td>따로 열어야 하는 별도 메뉴입니다.</td>
+            <td>점검한 뒤 결과 옆에 함께 보여줍니다.</td>
           </tr>
           <tr>
-            <td>Reproducing it</td>
-            <td>Only if you saved the syntax yourself.</td>
-            <td>Every analysis leaves runnable R in the folder.</td>
+            <td>재현하기</td>
+            <td>직접 구문을 저장해 두었을 때만 가능합니다.</td>
+            <td>분석마다 실행 가능한 R이 폴더에 남습니다.</td>
           </tr>
           <tr>
-            <td>Your data</td>
-            <td>Imported into the tool's own world.</td>
-            <td>Read in place. CSV, Excel, <code>.sav</code>, Parquet.</td>
+            <td>내 데이터</td>
+            <td>도구 전용 형식으로 가져옵니다.</td>
+            <td>있는 자리에서 읽습니다. CSV, Excel, <code>.sav</code>, Parquet.</td>
           </tr>
         </tbody>
       </table>
@@ -512,86 +512,86 @@
   </section>
 
   <section id="how">
-    <h2>Point at a folder, ask, read the output.</h2>
+    <h2>폴더를 가리키고, 묻고, 출력을 읽습니다.</h2>
     <ol class="steps">
       <li>
-        <h3>Open the folder your data already lives in</h3>
-        <p>No import step and no project format. Blade reads the files where they sit. Output lands beside them.</p>
+        <h3>데이터가 이미 있는 폴더를 엽니다</h3>
+        <p>가져오기 단계도 프로젝트 형식도 없습니다. Blade는 파일을 있는 자리에서 읽습니다. 출력은 그 옆에 놓입니다.</p>
       </li>
       <li>
-        <h3>Ask the question the way you would ask a colleague</h3>
-        <p>Blade reads the variables and picks a method. It tells you what it chose before running anything.</p>
-        <p class="quote">"Does the treatment group still differ on the outcome once I control for baseline score and age?"</p>
+        <h3>동료에게 묻듯이 물어봅니다</h3>
+        <p>Blade가 변수를 읽고 방법을 고릅니다. 무엇이든 실행하기 전에 고른 방법을 알려줍니다.</p>
+        <p class="quote">"기저 점수와 나이를 통제해도 처치군의 결과가 여전히 다른가요?"</p>
       </li>
       <li>
-        <h3>Read the result, then take it with you</h3>
-        <p>You get APA output, tables, plots, assumption checks, and a plain reading of what it means. The R syntax sits underneath. Export any of it.</p>
+        <h3>결과를 읽고 그대로 가져갑니다</h3>
+        <p>APA 형식 출력, 표, 그림, 가정 점검, 그리고 쉬운 해석을 받습니다. 그 아래에 R 구문이 있습니다. 원하는 것을 내보내세요.</p>
       </li>
     </ol>
   </section>
 
   <section id="methods">
-    <h2>Forty-six procedures, all of them real R.</h2>
-    <p class="sub">Each one is a tool the agent calls against an R engine. The model picks which to run and reads the output. It never produces the numbers.</p>
+    <h2>마흔여섯 가지 절차, 전부 진짜 R입니다.</h2>
+    <p class="sub">각 절차는 에이전트가 R 엔진에 호출하는 도구입니다. 모델은 무엇을 돌릴지 고르고 출력을 읽습니다. 숫자를 만들어내지 않습니다.</p>
     <div class="fam">
-      <h3>Describe and explore</h3>
-      <div class="chips"><span>Descriptives</span><span>Frequencies</span><span>Crosstabs</span><span>Explore</span><span>Means by group</span><span>Missing data</span><span>Recode</span><span>Compute</span></div>
+      <h3>기술과 탐색</h3>
+      <div class="chips"><span>기술통계</span><span>빈도분석</span><span>교차표</span><span>탐색</span><span>집단별 평균</span><span>결측값</span><span>코딩 변경</span><span>변수 계산</span></div>
     </div>
     <div class="fam">
-      <h3>Compare groups</h3>
-      <div class="chips"><span>Independent t-test</span><span>Paired t-test</span><span>One-sample t-test</span><span>One-way and factorial ANOVA</span><span>Repeated measures ANOVA</span><span>MANOVA</span><span>Mann-Whitney</span><span>Kruskal-Wallis</span><span>Wilcoxon signed-rank</span><span>Sign test</span><span>Friedman</span><span>McNemar</span><span>Cochran's Q</span></div>
+      <h3>집단 비교</h3>
+      <div class="chips"><span>독립표본 t검정</span><span>대응표본 t검정</span><span>일표본 t검정</span><span>일원배치 및 요인 분산분석</span><span>반복측정 분산분석</span><span>MANOVA</span><span>맨-휘트니</span><span>크루스칼-왈리스</span><span>윌콕슨 부호순위</span><span>부호검정</span><span>프리드만</span><span>맥니마</span><span>코크란 Q</span></div>
     </div>
     <div class="fam">
-      <h3>Relationships and models</h3>
-      <div class="chips"><span>Pearson, Spearman, Kendall</span><span>Partial correlation</span><span>Linear regression</span><span>Logistic regression</span><span>Ordinal regression</span><span>Multinomial regression</span><span>Probit</span><span>Curve estimation</span><span>Mixed models</span></div>
+      <h3>관계와 모형</h3>
+      <div class="chips"><span>피어슨, 스피어만, 켄달</span><span>편상관</span><span>선형회귀</span><span>로지스틱 회귀</span><span>순서형 회귀</span><span>다항 회귀</span><span>프로빗</span><span>곡선 추정</span><span>혼합모형</span></div>
     </div>
     <div class="fam">
-      <h3>Structure and scales</h3>
-      <div class="chips"><span>Exploratory factor analysis</span><span>PCA</span><span>Structural equation modelling</span><span>Reliability, Cronbach's alpha</span><span>K-means</span><span>Hierarchical clustering</span><span>Discriminant analysis</span><span>Multidimensional scaling</span><span>Correspondence analysis</span><span>LDA topic models</span></div>
+      <h3>구조와 척도</h3>
+      <div class="chips"><span>탐색적 요인분석</span><span>주성분분석</span><span>구조방정식모형</span><span>신뢰도, 크론바흐 알파</span><span>K-평균</span><span>위계적 군집분석</span><span>판별분석</span><span>다차원척도법</span><span>대응분석</span><span>LDA 토픽모형</span></div>
     </div>
     <div class="fam">
-      <h3>Categorical</h3>
-      <div class="chips"><span>Chi-square goodness of fit</span><span>Binomial test</span><span>Loglinear models</span><span>Runs test</span><span>Kolmogorov-Smirnov</span><span>Fisher's exact</span></div>
+      <h3>범주형</h3>
+      <div class="chips"><span>적합도 카이제곱</span><span>이항검정</span><span>로그선형모형</span><span>런 검정</span><span>콜모고로프-스미르노프</span><span>피셔의 정확검정</span></div>
     </div>
     <div class="fam">
-      <h3>Time, risk, synthesis</h3>
-      <div class="chips"><span>Kaplan-Meier</span><span>Cox regression</span><span>ROC curves</span><span>Autocorrelation</span><span>ARIMA</span><span>Meta-analysis</span></div>
+      <h3>시간, 위험, 종합</h3>
+      <div class="chips"><span>카플란-마이어</span><span>콕스 회귀</span><span>ROC 곡선</span><span>자기상관</span><span>ARIMA</span><span>메타분석</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>The model writes the call. R computes the answer.</h2>
+    <h2>모델은 호출을 쓰고, R이 답을 계산합니다.</h2>
     <div class="point">
-      <h3>Nothing is estimated by a language model</h3>
-      <p>A p-value in Blade came out of an R procedure. It is the same one you would run by hand. The model chooses the procedure and explains what came back.</p>
+      <h3>언어모형이 수치를 추정하지 않습니다</h3>
+      <p>Blade의 p값은 R 절차에서 나온 값입니다. 손으로 돌렸을 때와 같은 절차입니다. 모델은 절차를 고르고 돌아온 결과를 설명합니다.</p>
     </div>
     <div class="point">
-      <h3>When R complains, you see it</h3>
-      <p>Convergence warnings, singular fits and violated assumptions come through instead of being smoothed over. An analysis that failed says so.</p>
+      <h3>R이 경고하면 그대로 보입니다</h3>
+      <p>수렴 경고, 특이 적합, 위배된 가정이 다듬어지지 않고 전달됩니다. 실패한 분석은 실패라고 말합니다.</p>
     </div>
     <div class="point">
-      <h3>The syntax stays behind</h3>
-      <p>Every analysis writes runnable R into your folder. Hand it to a supervisor, a reviewer or a statistician. They can check the work without Blade.</p>
+      <h3>구문은 그 자리에 남습니다</h3>
+      <p>분석마다 실행 가능한 R을 폴더에 씁니다. 지도교수나 심사자, 통계 전문가에게 넘기세요. Blade 없이도 확인할 수 있습니다.</p>
     </div>
     <div class="point">
-      <h3>Your machine, your files</h3>
-      <p>Blade runs on the R and Python already installed on your computer, in a folder you pick. Your data files are never uploaded. Every file write and shell command waits for your approval.</p>
-      <p>The hosted API plans the work and holds the model keys. It stores the session transcript and nothing from your workspace.</p>
+      <h3>내 컴퓨터, 내 파일</h3>
+      <p>Blade는 이미 설치된 R과 Python을, 여러분이 고른 폴더에서 씁니다. 데이터 파일은 절대 업로드되지 않습니다. 파일 쓰기와 명령은 모두 승인을 기다립니다.</p>
+      <p>호스팅 API는 작업을 계획하고 모델 키를 보관합니다. 저장하는 것은 세션 기록뿐이고 작업 폴더의 내용은 저장하지 않습니다.</p>
     </div>
     <div class="point">
-      <h3>It does the mechanics, you own the claim</h3>
-      <p>Blade is quick at the mechanical part. It cannot judge whether your design supports the conclusion. That stays yours.</p>
+      <h3>기계적인 일은 맡기고, 주장은 내 몫</h3>
+      <p>Blade는 기계적인 부분이 빠릅니다. 연구 설계가 결론을 뒷받침하는지는 판단하지 못합니다. 그건 계속 여러분 몫입니다.</p>
     </div>
     <div class="cross">
-      <h3>Then keep it</h3>
-      <p>Save an analysis as a workflow. Next term it runs on the new data in one click. Or it goes to a colleague as a single file.</p>
-      <a href="https://blade.skalatec.com/">See how workflows work &rarr;</a>
+      <h3>그다음엔 저장하세요</h3>
+      <p>분석을 워크플로로 저장하세요. 다음 학기에는 새 데이터에 클릭 한 번으로 돌아갑니다. 동료에게는 파일 하나로 건네집니다.</p>
+      <a href="https://blade.skalatec.com/">워크플로 작동 방식 보기 &rarr;</a>
     </div>
   </section>
 
   <section class="get" id="get">
-    <h2>Download Blade Desktop 0.2.2</h2>
-    <p class="sub">Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.</p>
+    <h2>Blade Desktop 0.2.2 내려받기</h2>
+    <p class="sub">베타입니다. Blade에는 R이 필요하며, 처음 실행할 때 확인하고 R과 Python을 대신 설치해 줍니다.</p>
     <div class="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
@@ -610,48 +610,48 @@
         <span class="meta">ARM &middot; 92 MB</span>
       </a>
     </div>
-    <p class="caveat"><b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet.</p>
+    <p class="caveat"><b>macOS:</b> PT Skala Teknologi Nusantara가 서명하고 공증해 정상적으로 열립니다. <b>Windows:</b> 아직 서명 전이라 SmartScreen이 한 번 경고합니다. 추가 정보를 누른 뒤 실행을 선택하세요. Linux 빌드는 아직 없습니다.</p>
   </section>
 
   <section class="faq" id="faq">
-    <h2>Before you download.</h2>
+    <h2>내려받기 전에.</h2>
     <details>
-      <summary>Do I need to know R?</summary>
-      <p>No. You ask in plain language and read the explanation. The R is there for when someone asks to see your work. It runs on its own.</p>
+      <summary>R을 알아야 하나요?</summary>
+      <p>아닙니다. 평소 말로 묻고 설명을 읽으면 됩니다. R은 누군가 작업 과정을 보자고 할 때를 위한 것입니다. 실행은 알아서 됩니다.</p>
     </details>
     <details>
-      <summary>Will it open my SPSS files?</summary>
-      <p>Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV, Excel and Parquet. Variable and value labels survive.</p>
+      <summary>SPSS 파일도 열리나요?</summary>
+      <p>열립니다. SPSS <code>.sav</code>는 R로 읽습니다. CSV, TSV, Excel, Parquet도 마찬가지입니다. 변수 레이블과 값 레이블도 남습니다.</p>
     </details>
     <details>
-      <summary>Can I trust a language model with statistics?</summary>
-      <p>Not with the arithmetic, which is why it never does any. The model picks the procedure and reads the output. R computes the result. You see both the choice and the syntax.</p>
+      <summary>통계를 언어모형에 맡겨도 되나요?</summary>
+      <p>계산은 맡기지 않습니다. 모델은 절차를 고르고 출력을 읽으며, 계산은 R이 합니다. 선택과 구문이 모두 보입니다.</p>
     </details>
     <details>
-      <summary>Does my data leave my computer?</summary>
-      <p>Your data files stay in your folder. The hosted API plans the analysis and stores the session transcript. It never receives your datasets. Every write and command asks first.</p>
+      <summary>제 데이터가 컴퓨터 밖으로 나가나요?</summary>
+      <p>파일은 폴더에 그대로 있습니다. 호스팅 API는 분석을 계획하고 기록을 저장합니다. 데이터셋을 받지는 않습니다. 쓰기와 명령은 매번 먼저 묻습니다.</p>
     </details>
     <details>
-      <summary>Is this a replacement for a statistician?</summary>
-      <p>It replaces the hours lost to menus, syntax and reformatting output. It cannot judge whether your design supports your conclusion. It will say when a question is beyond the data.</p>
+      <summary>통계 전문가를 대체하나요?</summary>
+      <p>메뉴와 구문, 출력 정리에 쓰던 시간을 대체합니다. 연구 설계가 결론을 뒷받침하는지는 판단하지 않습니다. 데이터로 답할 수 없는 질문은 그렇게 말합니다.</p>
     </details>
     <details>
-      <summary>What about Linux?</summary>
-      <p>Not published yet. The macOS and Windows builds are above.</p>
+      <summary>Linux는요?</summary>
+      <p>아직 공개하지 않았습니다. macOS와 Windows 빌드는 위에 있습니다.</p>
     </details>
   </section>
 
   <footer>
-    <span>Blade, agentic statistical analysis.</span>
-    <a href="https://blade.skalatec.com/">Workflows</a>
+    <span>Blade, 에이전트 기반 통계 분석.</span>
+    <a href="https://blade.skalatec.com/">워크플로</a>
     <span class="spacer">PT Skala Teknologi Nusantara</span>
     <details class="lang">
       <summary>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.38-3.56A8.03 8.03 0 0118.9 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.98 7.98 0 010-4h3.38a16.5 16.5 0 000 4H4.26zm.84 2h2.95c.32 1.25.79 2.45 1.38 3.56A7.99 7.99 0 015.1 16zm2.95-8H5.1a7.99 7.99 0 014.33-3.56A15.6 15.6 0 008.05 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66a14.7 14.7 0 010-4h4.68a14.7 14.7 0 010 4zm.23 5.56c.59-1.11 1.06-2.31 1.38-3.56h2.95a7.99 7.99 0 01-4.33 3.56zM16.36 14a16.5 16.5 0 000-4h3.38a7.98 7.98 0 010 4h-3.38z"/></svg>
-        Language
+        언어
       </summary>
       <div class="lang-menu">
-        <a href="/" data-lang="en" aria-current="true">English</a>
+        <a href="/" data-lang="en">English</a>
         <a href="/es/" data-lang="es">Español</a>
         <a href="/pt/" data-lang="pt">Português</a>
         <a href="/fr/" data-lang="fr">Français</a>
@@ -663,7 +663,7 @@
         <a href="/hi/" data-lang="hi">हिन्दी</a>
         <a href="/zh/" data-lang="zh">简体中文</a>
         <a href="/ja/" data-lang="ja">日本語</a>
-        <a href="/ko/" data-lang="ko">한국어</a>
+        <a href="/ko/" data-lang="ko" aria-current="true">한국어</a>
       </div>
     </details>
   </footer>
@@ -674,7 +674,7 @@
 // The download table below is the source of truth; the hero button just points
 // at whichever row matches the visitor. No JS -> the button still jumps to it.
 (function () {
-  var T = {"downloadFor": "Download for %s", "version": "version"};
+  var T = {"downloadFor": "%s용 내려받기", "version": "버전"};
 
   var builds = [].map.call(document.querySelectorAll('.dl a[data-os]'), function (a) {
     return {
@@ -772,30 +772,6 @@
     if (!a) return;
     try { localStorage.setItem('bladeLang', a.dataset.lang); } catch (err) {}
   });
-})();
-
-// First visit with a non-English browser lands on that translation. A pick
-// from the switcher is remembered and wins from then on.
-(function () {
-  var LOCALES = ["es", "pt", "fr", "de", "it", "id", "ru", "ar", "hi", "zh", "ja", "ko"];
-  var stored = null;
-  try { stored = localStorage.getItem('bladeLang'); } catch (e) {}
-  if (stored) {
-    if (stored !== 'en' && LOCALES.indexOf(stored) !== -1) {
-      location.replace('/' + stored + '/' + location.hash);
-    }
-    return;
-  }
-  var tags = navigator.languages || [navigator.language || ''];
-  for (var i = 0; i < tags.length; i++) {
-    var base = String(tags[i]).toLowerCase().split('-')[0];
-    if (base === 'en') return;
-    if (base === 'in') base = 'id';  // legacy code some browsers still send
-    if (LOCALES.indexOf(base) !== -1) {
-      location.replace('/' + base + '/' + location.hash);
-      return;
-    }
-  }
 })();
 
 </script>

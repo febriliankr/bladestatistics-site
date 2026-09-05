@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{meta.title}}</title>
+<meta name="description" content="{{meta.description}}" />
+<link rel="canonical" href="{{canonical}}" />
+{{alternates}}
+<link rel="icon" href="/logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{canonical}}" />
+<meta property="og:locale" content="{{ogLocale}}" />
+<meta property="og:title" content="{{meta.ogTitle}}" />
+<meta property="og:description" content="{{meta.ogDescription}}" />
+<meta property="og:image" content="https://bladestatistics.com/app.png" />
+<meta name="twitter:card" content="summary_large_image" />
+{{css}}
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <img class="logo" src="/logo.png" alt="Blade" />
+    <h1>{{hero.h1a}}<em>{{hero.h1em}}</em>{{hero.h1b}}</h1>
+    <p class="lede">{{hero.lede}}</p>
+    <span class="cta">
+      <a class="btn" id="cta" href="#get">{{cta.get}}</a>
+      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="{{cta.more}}" hidden>
+        <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
+      </button>
+      <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
+    </span>
+    <span class="note" id="cta-note">{{cta.note}}</span>
+  </header>
+</div>
+
+<div class="shot">
+  <figure>
+    <img src="/app.png" alt="{{shot.alt}}" />
+  </figure>
+  <figcaption>{{shot.caption}}</figcaption>
+</div>
+
+<div class="wrap">
+
+  <div class="facts">
+{{blockFacts}}
+  </div>
+
+  <section id="spss">
+    <h2>{{spss.h2}}</h2>
+    <p class="sub">{{spss.sub}}</p>
+    <div class="cmp-scroll">
+      <table class="cmp">
+        <thead>
+          <tr><th>&nbsp;</th><th>{{spss.colOther}}</th><th>{{spss.colBlade}}</th></tr>
+        </thead>
+        <tbody>
+{{blockRows}}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>{{how.h2}}</h2>
+    <ol class="steps">
+{{blockSteps}}
+    </ol>
+  </section>
+
+  <section id="methods">
+    <h2>{{methods.h2}}</h2>
+    <p class="sub">{{methods.sub}}</p>
+{{blockFamilies}}
+  </section>
+
+  <section id="trust">
+    <h2>{{trust.h2}}</h2>
+{{blockPoints}}
+    <div class="cross">
+      <h3>{{cross.h3}}</h3>
+      <p>{{cross.p}}</p>
+      <a href="https://blade.skalatec.com/">{{cross.link}} &rarr;</a>
+    </div>
+  </section>
+
+  <section class="get" id="get">
+    <h2>{{get.h2}}</h2>
+    <p class="sub">{{get.sub}}</p>
+    <div class="dl">
+      <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
+        <span class="os">{{svgMac}} macOS</span>
+        <span class="meta">Apple silicon &middot; 101 MB</span>
+      </a>
+      <a data-os="mac" data-arch="x64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-x64.dmg">
+        <span class="os">{{svgMac}} macOS</span>
+        <span class="meta">Intel &middot; 109 MB</span>
+      </a>
+      <a data-os="win" data-arch="x64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-win-x64.exe">
+        <span class="os">{{svgWin}} Windows</span>
+        <span class="meta">x64 &middot; 91 MB</span>
+      </a>
+      <a data-os="win" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-win-arm64.exe">
+        <span class="os">{{svgWin}} Windows</span>
+        <span class="meta">ARM &middot; 92 MB</span>
+      </a>
+    </div>
+    <p class="caveat">{{get.caveat}}</p>
+  </section>
+
+  <section class="faq" id="faq">
+    <h2>{{faq.h2}}</h2>
+{{blockFaq}}
+  </section>
+
+  <footer>
+    <span>{{footer.tagline}}</span>
+    <a href="https://blade.skalatec.com/">{{footer.workflows}}</a>
+    <span class="spacer">PT Skala Teknologi Nusantara</span>
+    <details class="lang">
+      <summary>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.38-3.56A8.03 8.03 0 0118.9 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.98 7.98 0 010-4h3.38a16.5 16.5 0 000 4H4.26zm.84 2h2.95c.32 1.25.79 2.45 1.38 3.56A7.99 7.99 0 015.1 16zm2.95-8H5.1a7.99 7.99 0 014.33-3.56A15.6 15.6 0 008.05 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66a14.7 14.7 0 010-4h4.68a14.7 14.7 0 010 4zm.23 5.56c.59-1.11 1.06-2.31 1.38-3.56h2.95a7.99 7.99 0 01-4.33 3.56zM16.36 14a16.5 16.5 0 000-4h3.38a7.98 7.98 0 010 4h-3.38z"/></svg>
+        {{langLabel}}
+      </summary>
+      <div class="lang-menu">
+{{blockLangs}}
+      </div>
+    </details>
+  </footer>
+
+</div>
+
+<script>
+// The download table below is the source of truth; the hero button just points
+// at whichever row matches the visitor. No JS -> the button still jumps to it.
+(function () {
+  var T = {{ctaStrings}};
+
+  var builds = [].map.call(document.querySelectorAll('.dl a[data-os]'), function (a) {
+    return {
+      os: a.dataset.os,
+      arch: a.dataset.arch,
+      href: a.getAttribute('href'),
+      name: a.querySelector('.os').textContent.trim(),
+      meta: a.querySelector('.meta').textContent.trim(),
+      icon: a.querySelector('svg').outerHTML,
+    };
+  });
+  if (!builds.length) return;
+
+  var btn = document.getElementById('cta');
+  var more = document.getElementById('cta-more');
+  var menu = document.getElementById('cta-menu');
+  var note = document.getElementById('cta-note');
+
+  function detectOS() {
+    var d = navigator.userAgentData;
+    var p = (d && d.platform) || navigator.platform || '';
+    var ua = navigator.userAgent || '';
+    if (/mac/i.test(p) || /Mac OS X/i.test(ua)) return 'mac';
+    if (/win/i.test(p) || /Windows/i.test(ua)) return 'win';
+    return null;
+  }
+
+  // Apple silicon is invisible in the UA string. Safari and Chrome both claim
+  // Intel. The GPU renderer is the one signal that survives.
+  function isArm() {
+    try {
+      var c = document.createElement('canvas');
+      var gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+      if (!gl) return false;
+      var ext = gl.getExtension('WEBGL_debug_renderer_info');
+      var r = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : '';
+      return /apple\s+(m\d|gpu)/i.test(r);
+    } catch (e) { return false; }
+  }
+
+  function pick(os, arch) {
+    for (var i = 0; i < builds.length; i++) {
+      if (builds[i].os === os && builds[i].arch === arch) return builds[i];
+    }
+    return null;
+  }
+
+  function render(build) {
+    if (!build) return;
+    btn.href = build.href;
+    btn.textContent = T.downloadFor.replace('%s', build.name);
+    var v = (build.href.match(/\/(\d+\.\d+\.\d+)\//) || [])[1];
+    note.textContent = build.meta + (v ? ' · ' + T.version + ' ' + v : '');
+    more.hidden = false;
+    menu.innerHTML = builds.map(function (b) {
+      return '<a role="menuitem" href="' + b.href + '">' + b.icon +
+             '<span>' + b.name + '</span><span class="meta">' + b.meta + '</span></a>';
+    }).join('');
+  }
+
+  function close() { menu.hidden = true; more.setAttribute('aria-expanded', 'false'); }
+
+  more.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = menu.hidden;
+    menu.hidden = !open;
+    more.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function (e) { if (!menu.contains(e.target)) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+  var os = detectOS();
+  if (!os) return; // Linux and friends keep the plain jump link.
+
+  // Chromium exposes the real architecture; everywhere else, fall back to the
+  // GPU probe, then to x64 (which runs under Rosetta / Windows emulation).
+  var d = navigator.userAgentData;
+  if (d && d.getHighEntropyValues) {
+    d.getHighEntropyValues(['architecture']).then(function (h) {
+      var arch = h && h.architecture === 'arm' ? 'arm64' : (isArm() ? 'arm64' : 'x64');
+      render(pick(os, arch) || pick(os, 'x64'));
+    }).catch(function () { render(pick(os, isArm() ? 'arm64' : 'x64')); });
+  } else {
+    render(pick(os, isArm() ? 'arm64' : 'x64'));
+  }
+})();
+
+// Picking a language is a decision worth remembering, so the English page
+// stops guessing once someone has chosen.
+(function () {
+  var menu = document.querySelector('.lang-menu');
+  if (!menu) return;
+  menu.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-lang]');
+    if (!a) return;
+    try { localStorage.setItem('bladeLang', a.dataset.lang); } catch (err) {}
+  });
+})();
+{{langRedirect}}
+</script>
+
+</body>
+</html>

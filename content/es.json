@@ -1,0 +1,147 @@
+{
+  "lang": "es",
+  "dir": "ltr",
+  "name": "Español",
+  "ogLocale": "es_ES",
+  "langLabel": "Idioma",
+  "meta": {
+    "title": "Blade, estadística sin el programa de estadística",
+    "description": "Pregunta por tus datos en lenguaje corriente. Blade elige la prueba y la ejecuta en R en tu equipo. Recibes salida APA, comprobación de supuestos y el script que hay detrás.",
+    "ogTitle": "Blade, estadística sin el programa de estadística",
+    "ogDescription": "Describe la pregunta. Blade elige la prueba, la ejecuta en R en tu equipo y enseña su trabajo."
+  },
+  "hero": {
+    "h1a": "Estadística sin el ",
+    "h1em": "programa de estadística",
+    "h1b": ".",
+    "lede": "Pregunta por tus datos en lenguaje corriente. Blade elige la prueba y la ejecuta en R en tu equipo. Recibes salida APA, comprobación de supuestos y el script que hay detrás."
+  },
+  "cta": {
+    "get": "Descargar Blade",
+    "more": "Otras descargas",
+    "downloadFor": "Descargar para %s",
+    "version": "versión",
+    "note": "macOS y Windows, beta"
+  },
+  "shot": {
+    "alt": "Blade Desktop con un panel de regresión lineal, una curva ROC con razones de momios de regresión logística y un diagrama de senderos de ecuaciones estructurales, junto a los archivos que generó.",
+    "caption": "Una sesión: diagnóstico de regresión, una curva ROC, un diagrama de senderos SEM. Todos los scripts quedaron en la carpeta."
+  },
+  "facts": [
+    ["46", "procedimientos estadísticos, de descriptivos a SEM"],
+    ["R", "hace el cálculo detrás de cada resultado"],
+    ["0", "archivos de datos subidos a ningún sitio"]
+  ],
+  "spss": {
+    "h2": "El cuadro de diálogo nunca fue lo difícil.",
+    "sub": "Elegir la prueba correcta es el trabajo. También comprobar que podías usarla. También repetirla el año que viene con datos nuevos.",
+    "colOther": "Programas de estadística de menús",
+    "colBlade": "Blade",
+    "rows": [
+      ["Llegar a un resultado", "Buscar el menú, rellenar el cuadro, confiar en los valores por defecto.", "Describir la pregunta en una frase."],
+      ["Elegir la prueba", "Tienes que saberlo antes de empezar.", "Blade propone un método y explica por qué ese."],
+      ["Supuestos", "Un menú aparte que hay que acordarse de abrir.", "Comprobados y presentados junto al resultado."],
+      ["Reproducirlo", "Solo si guardaste tú la sintaxis.", "Cada análisis deja código R ejecutable en la carpeta."],
+      ["Tus datos", "Importados al mundo propio de la herramienta.", "Se leen donde están. CSV, Excel, <code>.sav</code>, Parquet."]
+    ]
+  },
+  "how": {
+    "h2": "Señala una carpeta, pregunta, lee la salida.",
+    "steps": [
+      {
+        "h3": "Abre la carpeta donde ya viven tus datos",
+        "p": "Sin paso de importación ni formato de proyecto. Blade lee los archivos donde están. La salida aparece al lado."
+      },
+      {
+        "h3": "Pregunta como se lo preguntarías a un colega",
+        "p": "Blade lee las variables y elige un método. Te dice qué eligió antes de ejecutar nada.",
+        "quote": "«¿El grupo de tratamiento sigue difiriendo en el resultado si controlo la puntuación inicial y la edad?»"
+      },
+      {
+        "h3": "Lee el resultado y llévatelo",
+        "p": "Obtienes salida APA, tablas, gráficos, comprobación de supuestos y una lectura clara. Debajo está la sintaxis de R. Exporta lo que quieras."
+      }
+    ]
+  },
+  "methods": {
+    "h2": "Cuarenta y seis procedimientos, todos en R de verdad.",
+    "sub": "Cada uno es una herramienta que el agente llama en un motor de R. El modelo elige cuál ejecutar y lee la salida. Nunca produce los números.",
+    "families": [
+      {
+        "h3": "Describir y explorar",
+        "chips": ["Descriptivos", "Frecuencias", "Tablas de contingencia", "Explorar", "Medias por grupo", "Datos faltantes", "Recodificar", "Calcular"]
+      },
+      {
+        "h3": "Comparar grupos",
+        "chips": ["Prueba t independiente", "Prueba t pareada", "Prueba t de una muestra", "ANOVA de un factor y factorial", "ANOVA de medidas repetidas", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon de rangos con signo", "Prueba de signos", "Friedman", "McNemar", "Q de Cochran"]
+      },
+      {
+        "h3": "Relaciones y modelos",
+        "chips": ["Pearson, Spearman, Kendall", "Correlación parcial", "Regresión lineal", "Regresión logística", "Regresión ordinal", "Regresión multinomial", "Probit", "Estimación curvilínea", "Modelos mixtos"]
+      },
+      {
+        "h3": "Estructura y escalas",
+        "chips": ["Análisis factorial exploratorio", "PCA", "Ecuaciones estructurales", "Fiabilidad, alfa de Cronbach", "K-medias", "Conglomerados jerárquicos", "Análisis discriminante", "Escalamiento multidimensional", "Análisis de correspondencias", "Modelos de temas LDA"]
+      },
+      {
+        "h3": "Categóricos",
+        "chips": ["Chi-cuadrado de bondad de ajuste", "Prueba binomial", "Modelos loglineales", "Prueba de rachas", "Kolmogorov-Smirnov", "Exacta de Fisher"]
+      },
+      {
+        "h3": "Tiempo, riesgo, síntesis",
+        "chips": ["Kaplan-Meier", "Regresión de Cox", "Curvas ROC", "Autocorrelación", "ARIMA", "Metaanálisis"]
+      }
+    ]
+  },
+  "trust": {
+    "h2": "El modelo escribe la llamada. R calcula la respuesta.",
+    "points": [
+      {
+        "h3": "Ningún número lo estima un modelo de lenguaje",
+        "p": "Un valor p de Blade salió de un procedimiento de R. Es el mismo que ejecutarías a mano. El modelo elige el procedimiento y explica lo que devolvió."
+      },
+      {
+        "h3": "Si R protesta, lo ves",
+        "p": "Los avisos de convergencia, los ajustes singulares y los supuestos incumplidos llegan sin suavizar. Un análisis que falló lo dice."
+      },
+      {
+        "h3": "La sintaxis se queda",
+        "p": "Cada análisis escribe R ejecutable en tu carpeta. Dáselo a un director, a un revisor o a un estadístico. Pueden revisar el trabajo sin Blade."
+      },
+      {
+        "h3": "Tu equipo, tus archivos",
+        "p": "Blade usa el R y el Python ya instalados en tu ordenador, en la carpeta que elijas. Tus archivos de datos nunca se suben. Cada escritura y cada comando espera tu aprobación.",
+        "p2": "La API alojada planifica el trabajo y guarda las claves del modelo. Almacena la transcripción de la sesión y nada de tu espacio de trabajo."
+      },
+      {
+        "h3": "Hace la mecánica, la afirmación es tuya",
+        "p": "Blade es rápido en la parte mecánica. No puede juzgar si tu diseño sostiene la conclusión. Eso sigue siendo tuyo."
+      }
+    ],
+    "cross": {
+      "h3": "Y luego guárdalo",
+      "p": "Guarda un análisis como flujo de trabajo. El curso que viene se ejecuta con los datos nuevos en un clic. O va a un colega como un solo archivo.",
+      "link": "Mira cómo funcionan los flujos"
+    }
+  },
+  "get": {
+    "h2": "Descarga Blade Desktop 0.2.2",
+    "sub": "Beta. Blade necesita R, lo busca al primer arranque y puede instalar R y Python por ti.",
+    "caveat": "<b>macOS:</b> firmado y notarizado por PT Skala Teknologi Nusantara, así que abre con normalidad. <b>Windows:</b> aún sin firmar, así que SmartScreen avisa una vez. Pulsa Más información y luego Ejecutar de todas formas. Linux todavía no está publicado."
+  },
+  "faq": {
+    "h2": "Antes de descargar.",
+    "items": [
+      ["¿Necesito saber R?", "No. Preguntas en lenguaje corriente y lees la explicación. El R está para cuando alguien quiera ver tu trabajo. Se ejecuta solo."],
+      ["¿Abrirá mis archivos de SPSS?", "Sí. Los <code>.sav</code> de SPSS se leen con R, igual que CSV, TSV, Excel y Parquet. Las etiquetas de variable y de valor se conservan."],
+      ["¿Puedo fiarme de un modelo de lenguaje en estadística?", "Con la aritmética no, y por eso nunca la hace. El modelo elige el procedimiento y lee la salida. R calcula el resultado. Ves la elección y la sintaxis."],
+      ["¿Salen mis datos de mi ordenador?", "Tus archivos se quedan en tu carpeta. La API alojada planifica el análisis y guarda la transcripción. Nunca recibe tus conjuntos de datos. Cada escritura y cada comando pregunta antes."],
+      ["¿Sustituye a un estadístico?", "Sustituye las horas perdidas en menús, sintaxis y dar formato a la salida. No puede juzgar si tu diseño sostiene tu conclusión. Avisará cuando una pregunta supere los datos."],
+      ["¿Y Linux?", "Todavía no está publicado. Arriba están las versiones de macOS y Windows."]
+    ]
+  },
+  "footer": {
+    "tagline": "Blade, análisis estadístico con agentes.",
+    "workflows": "Flujos de trabajo"
+  }
+}
