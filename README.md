@@ -34,9 +34,17 @@ a language means dropping in a content file and adding its code to that list.
 Arabic sets `"dir": "rtl"` and the stylesheet uses logical properties, so the
 layout mirrors on its own.
 
-A first-time visitor on `/` whose browser prefers a translated language is sent
-there by a small script. Choosing from the footer switcher stores the pick in
-`localStorage` and stops the guessing.
+Every page carries a small script in `<head>` that runs before the first paint.
+A visitor whose browser prefers another available language is sent there once
+per session. Choosing from the switcher in the top bar stores the pick in
+`localStorage`, and a stored pick outranks the browser preference from then on.
+
+## Theme
+
+The palette follows the device through `prefers-color-scheme`. Both themes are
+defined as custom properties on `:root`, with the light values in one media
+query. Brand orange is too weak for small text on white, so `--brand-ink` and
+`--brand-btn` carry darker values in light mode.
 
 ## Releases
 

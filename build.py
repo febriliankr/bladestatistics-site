@@ -30,31 +30,34 @@ WIN_SVG = (
     '13.1h8.6v9.2L2 21.1v-8zm10.2 0H22v10.7l-9.8-1.3v-9.4z"/></svg>'
 )
 
-REDIRECT = """
-// First visit with a non-English browser lands on that translation. A pick
-// from the switcher is remembered and wins from then on.
+LANG_SCRIPT = """<script>
+// Runs before anything paints, so nobody sees the wrong language flash past.
+// A pick from the switcher is stored and outranks the browser's preference.
 (function () {
-  var LOCALES = %s;
-  var stored = null;
-  try { stored = localStorage.getItem('bladeLang'); } catch (e) {}
-  if (stored) {
-    if (stored !== 'en' && LOCALES.indexOf(stored) !== -1) {
-      location.replace('/' + stored + '/' + location.hash);
-    }
-    return;
+  var LOCALES = %(locales)s;
+  var CURRENT = "%(current)s";
+  function go(code) {
+    if (code === CURRENT || LOCALES.indexOf(code) === -1) return false;
+    location.replace((code === "en" ? "/" : "/" + code + "/") + location.hash);
+    return true;
   }
-  var tags = navigator.languages || [navigator.language || ''];
+  var stored = null;
+  try { stored = localStorage.getItem("bladeLang"); } catch (e) {}
+  if (stored) { go(stored); return; }
+  // Sniff once per session. Otherwise a visitor who navigates back to a
+  // deliberately shared translation gets bounced away from it again.
+  try {
+    if (sessionStorage.getItem("bladeLangSniffed")) return;
+    sessionStorage.setItem("bladeLangSniffed", "1");
+  } catch (e) {}
+  var tags = navigator.languages || [navigator.language || ""];
   for (var i = 0; i < tags.length; i++) {
-    var base = String(tags[i]).toLowerCase().split('-')[0];
-    if (base === 'en') return;
-    if (base === 'in') base = 'id';  // legacy code some browsers still send
-    if (LOCALES.indexOf(base) !== -1) {
-      location.replace('/' + base + '/' + location.hash);
-      return;
-    }
+    var base = String(tags[i]).toLowerCase().split("-")[0];
+    if (base === "in") base = "id";  // legacy code some browsers still send
+    if (LOCALES.indexOf(base) !== -1) { go(base); return; }
   }
 })();
-"""
+</script>"""
 
 
 def load(code):
@@ -179,9 +182,8 @@ def render(code, c, shell, css, locales, names):
             {"downloadFor": c["cta"]["downloadFor"], "version": c["cta"]["version"]},
             ensure_ascii=False,
         ),
-        "langRedirect": REDIRECT % json.dumps([x for x in ORDER if x != "en"])
-        if code == "en"
-        else "",
+        "langScript": LANG_SCRIPT
+        % {"locales": json.dumps(ORDER), "current": code},
     }
     for section in ("meta", "hero", "cta", "shot", "spss", "how", "methods", "trust", "get", "faq", "footer"):
         for key, value in c[section].items():
