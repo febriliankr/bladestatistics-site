@@ -57,6 +57,13 @@
   }
 })();
 </script>
+<script>
+try {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+} catch (e) {}
+</script>
 <style>
   :root {
     color-scheme: dark light;
@@ -76,6 +83,7 @@
     --brand-btn: #ff4900;
     --brand-btn-hover: #ff6326;
     --brand-wash: rgba(255, 73, 0, .035);
+    --brand-wash-hover: rgba(255, 73, 0, .075);
     --shadow: 0 12px 32px rgba(0, 0, 0, .55);
   }
 
@@ -96,6 +104,7 @@
       --brand-btn: #d13c00;
       --brand-btn-hover: #b93500;
       --brand-wash: rgba(255, 73, 0, .05);
+      --brand-wash-hover: rgba(255, 73, 0, .1);
       --shadow: 0 12px 32px rgba(0, 0, 0, .12);
     }
     /* thinning the strokes helps on a dark ground and hurts on a light one */
@@ -179,6 +188,9 @@
     box-shadow: var(--shadow);
     transform-origin: top left;
     animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
+  }
+  [dir="rtl"] .cta-menu {
+    transform-origin: top right;
   }
   @keyframes menuIn {
     from { opacity: 0; transform: translateY(-6px) scale(.97); }
@@ -364,7 +376,7 @@
     background: var(--panel);
     color: var(--fg);
     text-decoration: none;
-    transition: border-color .16s ease, background .16s ease;
+    transition: border-color .16s ease, background .16s ease, transform .16s ease;
   }
   .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
   .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
@@ -395,8 +407,9 @@
     font-weight: 500;
     width: 12px;
     flex: none;
+    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
   }
-  .faq details[open] summary::before { content: "\2212"; }
+  .faq details[open] summary::before { transform: rotate(45deg); }
   /* scoped to details so it cannot catch anything else in the section */
   .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
 
@@ -444,7 +457,10 @@
     border-radius: 11px;
     background: var(--panel);
     box-shadow: var(--shadow);
+    transform-origin: top right;
+    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
   }
+  [dir="rtl"] .lang-menu { transform-origin: top left; }
   .lang-menu a {
     display: block;
     padding: 7px 10px;
@@ -456,6 +472,61 @@
   }
   .lang-menu a:hover { background: var(--hover); }
   .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
+
+
+  /* ---- motion ----
+     The hero animates on load. Everything below it waits until it scrolls
+     into view, and only when JS has added .js-reveal, so a page without
+     JavaScript renders complete and still. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .topbar,
+  header h1,
+  header .lede,
+  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
+  /* .note is inline, so a transform on it would be ignored */
+  header .note { animation: fade .55s ease both; }
+  .topbar { animation-delay: .02s; }
+  header h1 { animation-delay: .09s; }
+  header .lede { animation-delay: .17s; }
+  header .cta { animation-delay: .25s; }
+  header .note { animation-delay: .34s; }
+
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
+  }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+
+  /* ---- hover detail ---- */
+  .dl a:hover { transform: translateY(-1px); }
+  .chips span { transition: border-color .16s ease, color .16s ease; }
+  .chips span:hover { border-color: var(--brand); color: var(--fg); }
+  table.cmp tbody td { transition: background .18s ease; }
+  table.cmp tbody tr:hover td:first-child,
+  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
+  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
+
+  /* Newer engines can transition to an intrinsic height. Older ones skip the
+     whole block and open instantly, which is what they did before. */
+  @supports selector(::details-content) {
+    :root { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
+      transition-behavior: allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  }
 
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -470,6 +541,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { animation: none !important; transition: none !important; }
+    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
   }
   @media (max-width: 640px) {
     header { padding-top: 56px; }
@@ -544,7 +616,7 @@
 </div>
 
 <div class="shot">
-  <figure>
+  <figure class="reveal">
     <img src="/app.png" alt="線形回帰のパネル、ロジスティック回帰のオッズ比を伴うROC曲線、構造方程式モデルのパス図、そして生成されたプロジェクトファイルを表示しているBlade Desktop。" />
   </figure>
   <figcaption>ひとつのセッション：回帰診断、ROC曲線、SEMのパス図。スクリプトはすべてフォルダに残ります。</figcaption>
@@ -552,16 +624,16 @@
 
 <div class="wrap">
 
-  <div class="facts">
+  <div class="facts reveal">
     <div><b>46</b><span>統計手続き、記述統計からSEMまで</span></div>
     <div><b>R</b><span>すべての結果の計算を担当</span></div>
     <div><b>0</b><span>アップロードされるデータファイル</span></div>
   </div>
 
   <section id="spss">
-    <h2>難しかったのはダイアログではありません。</h2>
-    <p class="sub">正しい検定を選ぶことが仕事です。使ってよいか確かめることもです。来年また同じ分析をすることもです。</p>
-    <div class="cmp-scroll">
+    <h2 class="reveal">難しかったのはダイアログではありません。</h2>
+    <p class="sub reveal">正しい検定を選ぶことが仕事です。使ってよいか確かめることもです。来年また同じ分析をすることもです。</p>
+    <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
           <tr><th>&nbsp;</th><th>メニュー式の統計ソフト</th><th>Blade</th></tr>
@@ -598,18 +670,18 @@
   </section>
 
   <section id="how">
-    <h2>フォルダを指定し、尋ね、出力を読む。</h2>
+    <h2 class="reveal">フォルダを指定し、尋ね、出力を読む。</h2>
     <ol class="steps">
-      <li>
+      <li class="reveal">
         <h3>データがすでにあるフォルダを開く</h3>
         <p>取り込み作業もプロジェクト形式もありません。Bladeはファイルをその場所で読みます。出力はその隣に置かれます。</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>同僚に聞くように尋ねる</h3>
         <p>Bladeは変数を読んで手法を選びます。何かを実行する前に、選んだ手法を伝えます。</p>
         <p class="quote">「ベースライン得点と年齢を統制しても、治療群のアウトカムに差は残りますか」</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>結果を読み、そのまま持ち出す</h3>
         <p>APA形式の出力、表、図、前提の確認、そして平易な解釈が得られます。その下にRの構文があります。どれでも書き出せます。</p>
       </li>
@@ -617,58 +689,58 @@
   </section>
 
   <section id="methods">
-    <h2>46の手続き、すべて本物のRです。</h2>
-    <p class="sub">どれもエージェントがRエンジンに対して呼び出すツールです。モデルはどれを使うかを選び、出力を読みます。数値を作ることはありません。</p>
-    <div class="fam">
+    <h2 class="reveal">46の手続き、すべて本物のRです。</h2>
+    <p class="sub reveal">どれもエージェントがRエンジンに対して呼び出すツールです。モデルはどれを使うかを選び、出力を読みます。数値を作ることはありません。</p>
+    <div class="fam reveal">
       <h3>記述と探索</h3>
       <div class="chips"><span>記述統計</span><span>度数分布</span><span>クロス集計</span><span>探索</span><span>群別平均</span><span>欠測値</span><span>再コード</span><span>変数の計算</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>群の比較</h3>
       <div class="chips"><span>対応のないt検定</span><span>対応のあるt検定</span><span>1標本t検定</span><span>一元配置と要因分散分析</span><span>反復測定分散分析</span><span>MANOVA</span><span>マン・ホイットニー</span><span>クラスカル・ウォリス</span><span>ウィルコクソン符号順位</span><span>符号検定</span><span>フリードマン</span><span>マクネマー</span><span>コクランのQ</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>関連とモデル</h3>
       <div class="chips"><span>ピアソン、スピアマン、ケンドール</span><span>偏相関</span><span>線形回帰</span><span>ロジスティック回帰</span><span>順序回帰</span><span>多項回帰</span><span>プロビット</span><span>曲線推定</span><span>混合効果モデル</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>構造と尺度</h3>
       <div class="chips"><span>探索的因子分析</span><span>主成分分析</span><span>構造方程式モデリング</span><span>信頼性、クロンバックのα</span><span>k平均法</span><span>階層クラスター分析</span><span>判別分析</span><span>多次元尺度構成法</span><span>コレスポンデンス分析</span><span>LDAトピックモデル</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>カテゴリカル</h3>
       <div class="chips"><span>適合度のカイ二乗検定</span><span>二項検定</span><span>対数線形モデル</span><span>連検定</span><span>コルモゴロフ・スミルノフ</span><span>フィッシャーの正確確率検定</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>時間、リスク、統合</h3>
       <div class="chips"><span>カプラン・マイヤー</span><span>Cox回帰</span><span>ROC曲線</span><span>自己相関</span><span>ARIMA</span><span>メタ分析</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>モデルが呼び出しを書き、Rが答えを計算します。</h2>
-    <div class="point">
+    <h2 class="reveal">モデルが呼び出しを書き、Rが答えを計算します。</h2>
+    <div class="point reveal">
       <h3>言語モデルが数値を推測することはありません</h3>
       <p>Bladeのp値はRの手続きから出たものです。手で実行するのと同じ手続きです。モデルは手続きを選び、返ってきた結果を説明します。</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Rが警告すれば、そのまま見えます</h3>
       <p>収束の警告、特異な当てはめ、前提の違反はならされずに届きます。失敗した分析は失敗したと伝えます。</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>構文はその場に残ります</h3>
       <p>分析ごとに実行可能なRがフォルダに書き出されます。指導教員、査読者、統計家に渡せます。Bladeなしで確認できます。</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>あなたのパソコン、あなたのファイル</h3>
       <p>Bladeはすでに入っているRとPythonを、あなたが選んだフォルダで使います。データファイルが送信されることはありません。ファイルの書き込みとコマンドはすべて承認を待ちます。</p>
       <p>ホスト側のAPIは手順を組み立て、モデルの鍵を保持します。保存されるのはセッションの記録だけで、作業フォルダの中身は保存されません。</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>作業は任せ、主張はあなたのものです</h3>
       <p>Bladeは機械的な部分が速いだけです。研究デザインが結論を支えるかどうかは判断できません。そこはあなたの領分です。</p>
     </div>
-    <div class="cross">
+    <div class="cross reveal">
       <h3>そのまま残しておく</h3>
       <p>分析をワークフローとして保存できます。来学期は新しいデータでワンクリックで動きます。1つのファイルとして同僚に渡すこともできます。</p>
       <a href="https://blade.skalatec.com/">ワークフローの仕組みを見る &rarr;</a>
@@ -676,9 +748,9 @@
   </section>
 
   <section class="get" id="get">
-    <h2>Blade Desktop 0.2.2 をダウンロード</h2>
-    <p class="sub">ベータ版です。BladeにはRが必要で、初回起動時に確認し、RとPythonの導入も代行できます。</p>
-    <div class="dl">
+    <h2 class="reveal">Blade Desktop 0.2.2 をダウンロード</h2>
+    <p class="sub reveal">ベータ版です。BladeにはRが必要で、初回起動時に確認し、RとPythonの導入も代行できます。</p>
+    <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 101 MB</span>
@@ -700,28 +772,28 @@
   </section>
 
   <section class="faq" id="faq">
-    <h2>ダウンロードの前に。</h2>
-    <details>
+    <h2 class="reveal">ダウンロードの前に。</h2>
+    <details class="reveal">
       <summary>Rが書けなくても使えますか</summary>
       <p>使えます。ふだんの言葉で尋ね、説明を読むだけです。Rは誰かに作業を見せるときのためにあります。実行は自動です。</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>SPSSのファイルは開けますか</summary>
       <p>開けます。SPSSの<code>.sav</code>はRで読み込みます。CSV、TSV、Excel、Parquetも同様です。変数ラベルと値ラベルも残ります。</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>統計を言語モデルに任せて大丈夫ですか</summary>
       <p>計算は任せていません。モデルは手続きを選んで出力を読み、計算はRが行います。選択も構文も見えます。</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>データはパソコンの外に出ますか</summary>
       <p>ファイルはフォルダに残ります。ホスト側のAPIは分析を計画し、記録を保存します。データセットを受け取ることはありません。書き込みとコマンドは毎回確認します。</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>統計家の代わりになりますか</summary>
       <p>メニュー、構文、出力整形に費やす時間の代わりになります。研究デザインが結論を支えるかは判断しません。データで答えられない問いはそう伝えます。</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Linux版はありますか</summary>
       <p>まだ公開していません。macOS版とWindows版は上にあります。</p>
     </details>
@@ -829,6 +901,46 @@
 
 // Picking a language is a decision worth remembering, so the English page
 // stops guessing once someone has chosen.
+// Reveal each block the first time it comes into view. Measured directly
+// rather than through IntersectionObserver: if anything here goes wrong the
+// catch reveals the page, because hidden content is worse than no animation.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-reveal')) return;
+  var pending = [].slice.call(document.querySelectorAll('.reveal'));
+  try {
+    var queued = false;
+
+    function pass() {
+      queued = false;
+      var limit = (window.innerHeight || root.clientHeight) * 0.92;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < limit) {
+          pending[i].className += ' in';
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', queue);
+        window.removeEventListener('resize', queue);
+      }
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      if (window.requestAnimationFrame) window.requestAnimationFrame(pass);
+      else setTimeout(pass, 16);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    pass();
+  } catch (e) {
+    for (var j = 0; j < pending.length; j++) pending[j].className += ' in';
+  }
+})();
+
 (function () {
   var menu = document.querySelector('.lang-menu');
   if (!menu) return;

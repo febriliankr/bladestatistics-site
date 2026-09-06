@@ -57,6 +57,13 @@
   }
 })();
 </script>
+<script>
+try {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+} catch (e) {}
+</script>
 <style>
   :root {
     color-scheme: dark light;
@@ -76,6 +83,7 @@
     --brand-btn: #ff4900;
     --brand-btn-hover: #ff6326;
     --brand-wash: rgba(255, 73, 0, .035);
+    --brand-wash-hover: rgba(255, 73, 0, .075);
     --shadow: 0 12px 32px rgba(0, 0, 0, .55);
   }
 
@@ -96,6 +104,7 @@
       --brand-btn: #d13c00;
       --brand-btn-hover: #b93500;
       --brand-wash: rgba(255, 73, 0, .05);
+      --brand-wash-hover: rgba(255, 73, 0, .1);
       --shadow: 0 12px 32px rgba(0, 0, 0, .12);
     }
     /* thinning the strokes helps on a dark ground and hurts on a light one */
@@ -179,6 +188,9 @@
     box-shadow: var(--shadow);
     transform-origin: top left;
     animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
+  }
+  [dir="rtl"] .cta-menu {
+    transform-origin: top right;
   }
   @keyframes menuIn {
     from { opacity: 0; transform: translateY(-6px) scale(.97); }
@@ -364,7 +376,7 @@
     background: var(--panel);
     color: var(--fg);
     text-decoration: none;
-    transition: border-color .16s ease, background .16s ease;
+    transition: border-color .16s ease, background .16s ease, transform .16s ease;
   }
   .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
   .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
@@ -395,8 +407,9 @@
     font-weight: 500;
     width: 12px;
     flex: none;
+    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
   }
-  .faq details[open] summary::before { content: "\2212"; }
+  .faq details[open] summary::before { transform: rotate(45deg); }
   /* scoped to details so it cannot catch anything else in the section */
   .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
 
@@ -444,7 +457,10 @@
     border-radius: 11px;
     background: var(--panel);
     box-shadow: var(--shadow);
+    transform-origin: top right;
+    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
   }
+  [dir="rtl"] .lang-menu { transform-origin: top left; }
   .lang-menu a {
     display: block;
     padding: 7px 10px;
@@ -456,6 +472,61 @@
   }
   .lang-menu a:hover { background: var(--hover); }
   .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
+
+
+  /* ---- motion ----
+     The hero animates on load. Everything below it waits until it scrolls
+     into view, and only when JS has added .js-reveal, so a page without
+     JavaScript renders complete and still. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .topbar,
+  header h1,
+  header .lede,
+  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
+  /* .note is inline, so a transform on it would be ignored */
+  header .note { animation: fade .55s ease both; }
+  .topbar { animation-delay: .02s; }
+  header h1 { animation-delay: .09s; }
+  header .lede { animation-delay: .17s; }
+  header .cta { animation-delay: .25s; }
+  header .note { animation-delay: .34s; }
+
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
+  }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+
+  /* ---- hover detail ---- */
+  .dl a:hover { transform: translateY(-1px); }
+  .chips span { transition: border-color .16s ease, color .16s ease; }
+  .chips span:hover { border-color: var(--brand); color: var(--fg); }
+  table.cmp tbody td { transition: background .18s ease; }
+  table.cmp tbody tr:hover td:first-child,
+  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
+  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
+
+  /* Newer engines can transition to an intrinsic height. Older ones skip the
+     whole block and open instantly, which is what they did before. */
+  @supports selector(::details-content) {
+    :root { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
+      transition-behavior: allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  }
 
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -470,6 +541,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { animation: none !important; transition: none !important; }
+    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
   }
   @media (max-width: 640px) {
     header { padding-top: 56px; }
@@ -544,7 +616,7 @@
 </div>
 
 <div class="shot">
-  <figure>
+  <figure class="reveal">
     <img src="/app.png" alt="Blade Desktop con un panel de regresión lineal, una curva ROC con razones de momios de regresión logística y un diagrama de senderos de ecuaciones estructurales, junto a los archivos que generó." />
   </figure>
   <figcaption>Una sesión: diagnóstico de regresión, una curva ROC, un diagrama de senderos SEM. Todos los scripts quedaron en la carpeta.</figcaption>
@@ -552,16 +624,16 @@
 
 <div class="wrap">
 
-  <div class="facts">
+  <div class="facts reveal">
     <div><b>46</b><span>procedimientos estadísticos, de descriptivos a SEM</span></div>
     <div><b>R</b><span>hace el cálculo detrás de cada resultado</span></div>
     <div><b>0</b><span>archivos de datos subidos a ningún sitio</span></div>
   </div>
 
   <section id="spss">
-    <h2>El cuadro de diálogo nunca fue lo difícil.</h2>
-    <p class="sub">Elegir la prueba correcta es el trabajo. También comprobar que podías usarla. También repetirla el año que viene con datos nuevos.</p>
-    <div class="cmp-scroll">
+    <h2 class="reveal">El cuadro de diálogo nunca fue lo difícil.</h2>
+    <p class="sub reveal">Elegir la prueba correcta es el trabajo. También comprobar que podías usarla. También repetirla el año que viene con datos nuevos.</p>
+    <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
           <tr><th>&nbsp;</th><th>Programas de estadística de menús</th><th>Blade</th></tr>
@@ -598,18 +670,18 @@
   </section>
 
   <section id="how">
-    <h2>Señala una carpeta, pregunta, lee la salida.</h2>
+    <h2 class="reveal">Señala una carpeta, pregunta, lee la salida.</h2>
     <ol class="steps">
-      <li>
+      <li class="reveal">
         <h3>Abre la carpeta donde ya viven tus datos</h3>
         <p>Sin paso de importación ni formato de proyecto. Blade lee los archivos donde están. La salida aparece al lado.</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Pregunta como se lo preguntarías a un colega</h3>
         <p>Blade lee las variables y elige un método. Te dice qué eligió antes de ejecutar nada.</p>
         <p class="quote">«¿El grupo de tratamiento sigue difiriendo en el resultado si controlo la puntuación inicial y la edad?»</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Lee el resultado y llévatelo</h3>
         <p>Obtienes salida APA, tablas, gráficos, comprobación de supuestos y una lectura clara. Debajo está la sintaxis de R. Exporta lo que quieras.</p>
       </li>
@@ -617,58 +689,58 @@
   </section>
 
   <section id="methods">
-    <h2>Cuarenta y seis procedimientos, todos en R de verdad.</h2>
-    <p class="sub">Cada uno es una herramienta que el agente llama en un motor de R. El modelo elige cuál ejecutar y lee la salida. Nunca produce los números.</p>
-    <div class="fam">
+    <h2 class="reveal">Cuarenta y seis procedimientos, todos en R de verdad.</h2>
+    <p class="sub reveal">Cada uno es una herramienta que el agente llama en un motor de R. El modelo elige cuál ejecutar y lee la salida. Nunca produce los números.</p>
+    <div class="fam reveal">
       <h3>Describir y explorar</h3>
       <div class="chips"><span>Descriptivos</span><span>Frecuencias</span><span>Tablas de contingencia</span><span>Explorar</span><span>Medias por grupo</span><span>Datos faltantes</span><span>Recodificar</span><span>Calcular</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Comparar grupos</h3>
       <div class="chips"><span>Prueba t independiente</span><span>Prueba t pareada</span><span>Prueba t de una muestra</span><span>ANOVA de un factor y factorial</span><span>ANOVA de medidas repetidas</span><span>MANOVA</span><span>Mann-Whitney</span><span>Kruskal-Wallis</span><span>Wilcoxon de rangos con signo</span><span>Prueba de signos</span><span>Friedman</span><span>McNemar</span><span>Q de Cochran</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Relaciones y modelos</h3>
       <div class="chips"><span>Pearson, Spearman, Kendall</span><span>Correlación parcial</span><span>Regresión lineal</span><span>Regresión logística</span><span>Regresión ordinal</span><span>Regresión multinomial</span><span>Probit</span><span>Estimación curvilínea</span><span>Modelos mixtos</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Estructura y escalas</h3>
       <div class="chips"><span>Análisis factorial exploratorio</span><span>PCA</span><span>Ecuaciones estructurales</span><span>Fiabilidad, alfa de Cronbach</span><span>K-medias</span><span>Conglomerados jerárquicos</span><span>Análisis discriminante</span><span>Escalamiento multidimensional</span><span>Análisis de correspondencias</span><span>Modelos de temas LDA</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Categóricos</h3>
       <div class="chips"><span>Chi-cuadrado de bondad de ajuste</span><span>Prueba binomial</span><span>Modelos loglineales</span><span>Prueba de rachas</span><span>Kolmogorov-Smirnov</span><span>Exacta de Fisher</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Tiempo, riesgo, síntesis</h3>
       <div class="chips"><span>Kaplan-Meier</span><span>Regresión de Cox</span><span>Curvas ROC</span><span>Autocorrelación</span><span>ARIMA</span><span>Metaanálisis</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>El modelo escribe la llamada. R calcula la respuesta.</h2>
-    <div class="point">
+    <h2 class="reveal">El modelo escribe la llamada. R calcula la respuesta.</h2>
+    <div class="point reveal">
       <h3>Ningún número lo estima un modelo de lenguaje</h3>
       <p>Un valor p de Blade salió de un procedimiento de R. Es el mismo que ejecutarías a mano. El modelo elige el procedimiento y explica lo que devolvió.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Si R protesta, lo ves</h3>
       <p>Los avisos de convergencia, los ajustes singulares y los supuestos incumplidos llegan sin suavizar. Un análisis que falló lo dice.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>La sintaxis se queda</h3>
       <p>Cada análisis escribe R ejecutable en tu carpeta. Dáselo a un director, a un revisor o a un estadístico. Pueden revisar el trabajo sin Blade.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Tu equipo, tus archivos</h3>
       <p>Blade usa el R y el Python ya instalados en tu ordenador, en la carpeta que elijas. Tus archivos de datos nunca se suben. Cada escritura y cada comando espera tu aprobación.</p>
       <p>La API alojada planifica el trabajo y guarda las claves del modelo. Almacena la transcripción de la sesión y nada de tu espacio de trabajo.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Hace la mecánica, la afirmación es tuya</h3>
       <p>Blade es rápido en la parte mecánica. No puede juzgar si tu diseño sostiene la conclusión. Eso sigue siendo tuyo.</p>
     </div>
-    <div class="cross">
+    <div class="cross reveal">
       <h3>Y luego guárdalo</h3>
       <p>Guarda un análisis como flujo de trabajo. El curso que viene se ejecuta con los datos nuevos en un clic. O va a un colega como un solo archivo.</p>
       <a href="https://blade.skalatec.com/">Mira cómo funcionan los flujos &rarr;</a>
@@ -676,9 +748,9 @@
   </section>
 
   <section class="get" id="get">
-    <h2>Descarga Blade Desktop 0.2.2</h2>
-    <p class="sub">Beta. Blade necesita R, lo busca al primer arranque y puede instalar R y Python por ti.</p>
-    <div class="dl">
+    <h2 class="reveal">Descarga Blade Desktop 0.2.2</h2>
+    <p class="sub reveal">Beta. Blade necesita R, lo busca al primer arranque y puede instalar R y Python por ti.</p>
+    <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 101 MB</span>
@@ -700,28 +772,28 @@
   </section>
 
   <section class="faq" id="faq">
-    <h2>Antes de descargar.</h2>
-    <details>
+    <h2 class="reveal">Antes de descargar.</h2>
+    <details class="reveal">
       <summary>¿Necesito saber R?</summary>
       <p>No. Preguntas en lenguaje corriente y lees la explicación. El R está para cuando alguien quiera ver tu trabajo. Se ejecuta solo.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>¿Abrirá mis archivos de SPSS?</summary>
       <p>Sí. Los <code>.sav</code> de SPSS se leen con R, igual que CSV, TSV, Excel y Parquet. Las etiquetas de variable y de valor se conservan.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>¿Puedo fiarme de un modelo de lenguaje en estadística?</summary>
       <p>Con la aritmética no, y por eso nunca la hace. El modelo elige el procedimiento y lee la salida. R calcula el resultado. Ves la elección y la sintaxis.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>¿Salen mis datos de mi ordenador?</summary>
       <p>Tus archivos se quedan en tu carpeta. La API alojada planifica el análisis y guarda la transcripción. Nunca recibe tus conjuntos de datos. Cada escritura y cada comando pregunta antes.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>¿Sustituye a un estadístico?</summary>
       <p>Sustituye las horas perdidas en menús, sintaxis y dar formato a la salida. No puede juzgar si tu diseño sostiene tu conclusión. Avisará cuando una pregunta supere los datos.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>¿Y Linux?</summary>
       <p>Todavía no está publicado. Arriba están las versiones de macOS y Windows.</p>
     </details>
@@ -829,6 +901,46 @@
 
 // Picking a language is a decision worth remembering, so the English page
 // stops guessing once someone has chosen.
+// Reveal each block the first time it comes into view. Measured directly
+// rather than through IntersectionObserver: if anything here goes wrong the
+// catch reveals the page, because hidden content is worse than no animation.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-reveal')) return;
+  var pending = [].slice.call(document.querySelectorAll('.reveal'));
+  try {
+    var queued = false;
+
+    function pass() {
+      queued = false;
+      var limit = (window.innerHeight || root.clientHeight) * 0.92;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < limit) {
+          pending[i].className += ' in';
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', queue);
+        window.removeEventListener('resize', queue);
+      }
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      if (window.requestAnimationFrame) window.requestAnimationFrame(pass);
+      else setTimeout(pass, 16);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    pass();
+  } catch (e) {
+    for (var j = 0; j < pending.length; j++) pending[j].className += ' in';
+  }
+})();
+
 (function () {
   var menu = document.querySelector('.lang-menu');
   if (!menu) return;

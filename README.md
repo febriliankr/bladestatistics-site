@@ -46,6 +46,22 @@ defined as custom properties on `:root`, with the light values in one media
 query. Brand orange is too weak for small text on white, so `--brand-ink` and
 `--brand-btn` carry darker values in light mode.
 
+## Motion
+
+The hero animates once on load through CSS. Everything below it carries
+`class="reveal"` and fades up the first time it scrolls into view.
+
+Two switches turn all of it off, and both fail towards a visible page:
+
+- Without JavaScript the `js-reveal` class is never added, so the hidden state
+  never applies and the page renders complete.
+- With `prefers-reduced-motion: reduce` the script skips the class too, and a
+  media query neutralises the reveal rules as a second guard.
+
+The reveal measures `getBoundingClientRect` on scroll rather than using
+IntersectionObserver, and the whole block sits in a `try` that reveals
+everything on error. Hidden content is a worse failure than no animation.
+
 ## Releases
 
 Download links point at `dl.skalatec.com` (Cloudflare R2), the same builds the

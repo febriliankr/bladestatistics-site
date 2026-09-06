@@ -57,6 +57,13 @@
   }
 })();
 </script>
+<script>
+try {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+} catch (e) {}
+</script>
 <style>
   :root {
     color-scheme: dark light;
@@ -76,6 +83,7 @@
     --brand-btn: #ff4900;
     --brand-btn-hover: #ff6326;
     --brand-wash: rgba(255, 73, 0, .035);
+    --brand-wash-hover: rgba(255, 73, 0, .075);
     --shadow: 0 12px 32px rgba(0, 0, 0, .55);
   }
 
@@ -96,6 +104,7 @@
       --brand-btn: #d13c00;
       --brand-btn-hover: #b93500;
       --brand-wash: rgba(255, 73, 0, .05);
+      --brand-wash-hover: rgba(255, 73, 0, .1);
       --shadow: 0 12px 32px rgba(0, 0, 0, .12);
     }
     /* thinning the strokes helps on a dark ground and hurts on a light one */
@@ -179,6 +188,9 @@
     box-shadow: var(--shadow);
     transform-origin: top left;
     animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
+  }
+  [dir="rtl"] .cta-menu {
+    transform-origin: top right;
   }
   @keyframes menuIn {
     from { opacity: 0; transform: translateY(-6px) scale(.97); }
@@ -364,7 +376,7 @@
     background: var(--panel);
     color: var(--fg);
     text-decoration: none;
-    transition: border-color .16s ease, background .16s ease;
+    transition: border-color .16s ease, background .16s ease, transform .16s ease;
   }
   .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
   .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
@@ -395,8 +407,9 @@
     font-weight: 500;
     width: 12px;
     flex: none;
+    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
   }
-  .faq details[open] summary::before { content: "\2212"; }
+  .faq details[open] summary::before { transform: rotate(45deg); }
   /* scoped to details so it cannot catch anything else in the section */
   .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
 
@@ -444,7 +457,10 @@
     border-radius: 11px;
     background: var(--panel);
     box-shadow: var(--shadow);
+    transform-origin: top right;
+    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
   }
+  [dir="rtl"] .lang-menu { transform-origin: top left; }
   .lang-menu a {
     display: block;
     padding: 7px 10px;
@@ -456,6 +472,61 @@
   }
   .lang-menu a:hover { background: var(--hover); }
   .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
+
+
+  /* ---- motion ----
+     The hero animates on load. Everything below it waits until it scrolls
+     into view, and only when JS has added .js-reveal, so a page without
+     JavaScript renders complete and still. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .topbar,
+  header h1,
+  header .lede,
+  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
+  /* .note is inline, so a transform on it would be ignored */
+  header .note { animation: fade .55s ease both; }
+  .topbar { animation-delay: .02s; }
+  header h1 { animation-delay: .09s; }
+  header .lede { animation-delay: .17s; }
+  header .cta { animation-delay: .25s; }
+  header .note { animation-delay: .34s; }
+
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
+  }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+
+  /* ---- hover detail ---- */
+  .dl a:hover { transform: translateY(-1px); }
+  .chips span { transition: border-color .16s ease, color .16s ease; }
+  .chips span:hover { border-color: var(--brand); color: var(--fg); }
+  table.cmp tbody td { transition: background .18s ease; }
+  table.cmp tbody tr:hover td:first-child,
+  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
+  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
+
+  /* Newer engines can transition to an intrinsic height. Older ones skip the
+     whole block and open instantly, which is what they did before. */
+  @supports selector(::details-content) {
+    :root { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
+      transition-behavior: allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  }
 
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -470,6 +541,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { animation: none !important; transition: none !important; }
+    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
   }
   @media (max-width: 640px) {
     header { padding-top: 56px; }
@@ -544,7 +616,7 @@
 </div>
 
 <div class="shot">
-  <figure>
+  <figure class="reveal">
     <img src="/app.png" alt="선형회귀 패널, 로지스틱 회귀 오즈비가 함께 있는 ROC 곡선, 구조방정식모형 경로도, 그리고 생성된 프로젝트 파일을 보여주는 Blade Desktop 화면." />
   </figure>
   <figcaption>한 세션: 회귀 진단, ROC 곡선, SEM 경로도. 스크립트는 모두 폴더에 남았습니다.</figcaption>
@@ -552,16 +624,16 @@
 
 <div class="wrap">
 
-  <div class="facts">
+  <div class="facts reveal">
     <div><b>46</b><span>통계 절차, 기술통계부터 SEM까지</span></div>
     <div><b>R</b><span>모든 결과의 계산을 담당</span></div>
     <div><b>0</b><span>어딘가로 올라간 데이터 파일</span></div>
   </div>
 
   <section id="spss">
-    <h2>어려웠던 것은 대화상자가 아닙니다.</h2>
-    <p class="sub">맞는 검정을 고르는 일이 진짜 일입니다. 그 검정을 써도 되는지 확인하는 일도 그렇습니다. 내년에 다시 돌리는 일도 그렇습니다.</p>
-    <div class="cmp-scroll">
+    <h2 class="reveal">어려웠던 것은 대화상자가 아닙니다.</h2>
+    <p class="sub reveal">맞는 검정을 고르는 일이 진짜 일입니다. 그 검정을 써도 되는지 확인하는 일도 그렇습니다. 내년에 다시 돌리는 일도 그렇습니다.</p>
+    <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
           <tr><th>&nbsp;</th><th>메뉴식 통계 소프트웨어</th><th>Blade</th></tr>
@@ -598,18 +670,18 @@
   </section>
 
   <section id="how">
-    <h2>폴더를 가리키고, 묻고, 출력을 읽습니다.</h2>
+    <h2 class="reveal">폴더를 가리키고, 묻고, 출력을 읽습니다.</h2>
     <ol class="steps">
-      <li>
+      <li class="reveal">
         <h3>데이터가 이미 있는 폴더를 엽니다</h3>
         <p>가져오기 단계도 프로젝트 형식도 없습니다. Blade는 파일을 있는 자리에서 읽습니다. 출력은 그 옆에 놓입니다.</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>동료에게 묻듯이 물어봅니다</h3>
         <p>Blade가 변수를 읽고 방법을 고릅니다. 무엇이든 실행하기 전에 고른 방법을 알려줍니다.</p>
         <p class="quote">"기저 점수와 나이를 통제해도 처치군의 결과가 여전히 다른가요?"</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>결과를 읽고 그대로 가져갑니다</h3>
         <p>APA 형식 출력, 표, 그림, 가정 점검, 그리고 쉬운 해석을 받습니다. 그 아래에 R 구문이 있습니다. 원하는 것을 내보내세요.</p>
       </li>
@@ -617,58 +689,58 @@
   </section>
 
   <section id="methods">
-    <h2>마흔여섯 가지 절차, 전부 진짜 R입니다.</h2>
-    <p class="sub">각 절차는 에이전트가 R 엔진에 호출하는 도구입니다. 모델은 무엇을 돌릴지 고르고 출력을 읽습니다. 숫자를 만들어내지 않습니다.</p>
-    <div class="fam">
+    <h2 class="reveal">마흔여섯 가지 절차, 전부 진짜 R입니다.</h2>
+    <p class="sub reveal">각 절차는 에이전트가 R 엔진에 호출하는 도구입니다. 모델은 무엇을 돌릴지 고르고 출력을 읽습니다. 숫자를 만들어내지 않습니다.</p>
+    <div class="fam reveal">
       <h3>기술과 탐색</h3>
       <div class="chips"><span>기술통계</span><span>빈도분석</span><span>교차표</span><span>탐색</span><span>집단별 평균</span><span>결측값</span><span>코딩 변경</span><span>변수 계산</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>집단 비교</h3>
       <div class="chips"><span>독립표본 t검정</span><span>대응표본 t검정</span><span>일표본 t검정</span><span>일원배치 및 요인 분산분석</span><span>반복측정 분산분석</span><span>MANOVA</span><span>맨-휘트니</span><span>크루스칼-왈리스</span><span>윌콕슨 부호순위</span><span>부호검정</span><span>프리드만</span><span>맥니마</span><span>코크란 Q</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>관계와 모형</h3>
       <div class="chips"><span>피어슨, 스피어만, 켄달</span><span>편상관</span><span>선형회귀</span><span>로지스틱 회귀</span><span>순서형 회귀</span><span>다항 회귀</span><span>프로빗</span><span>곡선 추정</span><span>혼합모형</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>구조와 척도</h3>
       <div class="chips"><span>탐색적 요인분석</span><span>주성분분석</span><span>구조방정식모형</span><span>신뢰도, 크론바흐 알파</span><span>K-평균</span><span>위계적 군집분석</span><span>판별분석</span><span>다차원척도법</span><span>대응분석</span><span>LDA 토픽모형</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>범주형</h3>
       <div class="chips"><span>적합도 카이제곱</span><span>이항검정</span><span>로그선형모형</span><span>런 검정</span><span>콜모고로프-스미르노프</span><span>피셔의 정확검정</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>시간, 위험, 종합</h3>
       <div class="chips"><span>카플란-마이어</span><span>콕스 회귀</span><span>ROC 곡선</span><span>자기상관</span><span>ARIMA</span><span>메타분석</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>모델은 호출을 쓰고, R이 답을 계산합니다.</h2>
-    <div class="point">
+    <h2 class="reveal">모델은 호출을 쓰고, R이 답을 계산합니다.</h2>
+    <div class="point reveal">
       <h3>언어모형이 수치를 추정하지 않습니다</h3>
       <p>Blade의 p값은 R 절차에서 나온 값입니다. 손으로 돌렸을 때와 같은 절차입니다. 모델은 절차를 고르고 돌아온 결과를 설명합니다.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>R이 경고하면 그대로 보입니다</h3>
       <p>수렴 경고, 특이 적합, 위배된 가정이 다듬어지지 않고 전달됩니다. 실패한 분석은 실패라고 말합니다.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>구문은 그 자리에 남습니다</h3>
       <p>분석마다 실행 가능한 R을 폴더에 씁니다. 지도교수나 심사자, 통계 전문가에게 넘기세요. Blade 없이도 확인할 수 있습니다.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>내 컴퓨터, 내 파일</h3>
       <p>Blade는 이미 설치된 R과 Python을, 여러분이 고른 폴더에서 씁니다. 데이터 파일은 절대 업로드되지 않습니다. 파일 쓰기와 명령은 모두 승인을 기다립니다.</p>
       <p>호스팅 API는 작업을 계획하고 모델 키를 보관합니다. 저장하는 것은 세션 기록뿐이고 작업 폴더의 내용은 저장하지 않습니다.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>기계적인 일은 맡기고, 주장은 내 몫</h3>
       <p>Blade는 기계적인 부분이 빠릅니다. 연구 설계가 결론을 뒷받침하는지는 판단하지 못합니다. 그건 계속 여러분 몫입니다.</p>
     </div>
-    <div class="cross">
+    <div class="cross reveal">
       <h3>그다음엔 저장하세요</h3>
       <p>분석을 워크플로로 저장하세요. 다음 학기에는 새 데이터에 클릭 한 번으로 돌아갑니다. 동료에게는 파일 하나로 건네집니다.</p>
       <a href="https://blade.skalatec.com/">워크플로 작동 방식 보기 &rarr;</a>
@@ -676,9 +748,9 @@
   </section>
 
   <section class="get" id="get">
-    <h2>Blade Desktop 0.2.2 내려받기</h2>
-    <p class="sub">베타입니다. Blade에는 R이 필요하며, 처음 실행할 때 확인하고 R과 Python을 대신 설치해 줍니다.</p>
-    <div class="dl">
+    <h2 class="reveal">Blade Desktop 0.2.2 내려받기</h2>
+    <p class="sub reveal">베타입니다. Blade에는 R이 필요하며, 처음 실행할 때 확인하고 R과 Python을 대신 설치해 줍니다.</p>
+    <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 101 MB</span>
@@ -700,28 +772,28 @@
   </section>
 
   <section class="faq" id="faq">
-    <h2>내려받기 전에.</h2>
-    <details>
+    <h2 class="reveal">내려받기 전에.</h2>
+    <details class="reveal">
       <summary>R을 알아야 하나요?</summary>
       <p>아닙니다. 평소 말로 묻고 설명을 읽으면 됩니다. R은 누군가 작업 과정을 보자고 할 때를 위한 것입니다. 실행은 알아서 됩니다.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>SPSS 파일도 열리나요?</summary>
       <p>열립니다. SPSS <code>.sav</code>는 R로 읽습니다. CSV, TSV, Excel, Parquet도 마찬가지입니다. 변수 레이블과 값 레이블도 남습니다.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>통계를 언어모형에 맡겨도 되나요?</summary>
       <p>계산은 맡기지 않습니다. 모델은 절차를 고르고 출력을 읽으며, 계산은 R이 합니다. 선택과 구문이 모두 보입니다.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>제 데이터가 컴퓨터 밖으로 나가나요?</summary>
       <p>파일은 폴더에 그대로 있습니다. 호스팅 API는 분석을 계획하고 기록을 저장합니다. 데이터셋을 받지는 않습니다. 쓰기와 명령은 매번 먼저 묻습니다.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>통계 전문가를 대체하나요?</summary>
       <p>메뉴와 구문, 출력 정리에 쓰던 시간을 대체합니다. 연구 설계가 결론을 뒷받침하는지는 판단하지 않습니다. 데이터로 답할 수 없는 질문은 그렇게 말합니다.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Linux는요?</summary>
       <p>아직 공개하지 않았습니다. macOS와 Windows 빌드는 위에 있습니다.</p>
     </details>
@@ -829,6 +901,46 @@
 
 // Picking a language is a decision worth remembering, so the English page
 // stops guessing once someone has chosen.
+// Reveal each block the first time it comes into view. Measured directly
+// rather than through IntersectionObserver: if anything here goes wrong the
+// catch reveals the page, because hidden content is worse than no animation.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-reveal')) return;
+  var pending = [].slice.call(document.querySelectorAll('.reveal'));
+  try {
+    var queued = false;
+
+    function pass() {
+      queued = false;
+      var limit = (window.innerHeight || root.clientHeight) * 0.92;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < limit) {
+          pending[i].className += ' in';
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', queue);
+        window.removeEventListener('resize', queue);
+      }
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      if (window.requestAnimationFrame) window.requestAnimationFrame(pass);
+      else setTimeout(pass, 16);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    pass();
+  } catch (e) {
+    for (var j = 0; j < pending.length; j++) pending[j].className += ' in';
+  }
+})();
+
 (function () {
   var menu = document.querySelector('.lang-menu');
   if (!menu) return;

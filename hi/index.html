@@ -57,6 +57,13 @@
   }
 })();
 </script>
+<script>
+try {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+} catch (e) {}
+</script>
 <style>
   :root {
     color-scheme: dark light;
@@ -76,6 +83,7 @@
     --brand-btn: #ff4900;
     --brand-btn-hover: #ff6326;
     --brand-wash: rgba(255, 73, 0, .035);
+    --brand-wash-hover: rgba(255, 73, 0, .075);
     --shadow: 0 12px 32px rgba(0, 0, 0, .55);
   }
 
@@ -96,6 +104,7 @@
       --brand-btn: #d13c00;
       --brand-btn-hover: #b93500;
       --brand-wash: rgba(255, 73, 0, .05);
+      --brand-wash-hover: rgba(255, 73, 0, .1);
       --shadow: 0 12px 32px rgba(0, 0, 0, .12);
     }
     /* thinning the strokes helps on a dark ground and hurts on a light one */
@@ -179,6 +188,9 @@
     box-shadow: var(--shadow);
     transform-origin: top left;
     animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
+  }
+  [dir="rtl"] .cta-menu {
+    transform-origin: top right;
   }
   @keyframes menuIn {
     from { opacity: 0; transform: translateY(-6px) scale(.97); }
@@ -364,7 +376,7 @@
     background: var(--panel);
     color: var(--fg);
     text-decoration: none;
-    transition: border-color .16s ease, background .16s ease;
+    transition: border-color .16s ease, background .16s ease, transform .16s ease;
   }
   .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
   .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
@@ -395,8 +407,9 @@
     font-weight: 500;
     width: 12px;
     flex: none;
+    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
   }
-  .faq details[open] summary::before { content: "\2212"; }
+  .faq details[open] summary::before { transform: rotate(45deg); }
   /* scoped to details so it cannot catch anything else in the section */
   .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
 
@@ -444,7 +457,10 @@
     border-radius: 11px;
     background: var(--panel);
     box-shadow: var(--shadow);
+    transform-origin: top right;
+    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
   }
+  [dir="rtl"] .lang-menu { transform-origin: top left; }
   .lang-menu a {
     display: block;
     padding: 7px 10px;
@@ -456,6 +472,61 @@
   }
   .lang-menu a:hover { background: var(--hover); }
   .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
+
+
+  /* ---- motion ----
+     The hero animates on load. Everything below it waits until it scrolls
+     into view, and only when JS has added .js-reveal, so a page without
+     JavaScript renders complete and still. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .topbar,
+  header h1,
+  header .lede,
+  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
+  /* .note is inline, so a transform on it would be ignored */
+  header .note { animation: fade .55s ease both; }
+  .topbar { animation-delay: .02s; }
+  header h1 { animation-delay: .09s; }
+  header .lede { animation-delay: .17s; }
+  header .cta { animation-delay: .25s; }
+  header .note { animation-delay: .34s; }
+
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
+  }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+
+  /* ---- hover detail ---- */
+  .dl a:hover { transform: translateY(-1px); }
+  .chips span { transition: border-color .16s ease, color .16s ease; }
+  .chips span:hover { border-color: var(--brand); color: var(--fg); }
+  table.cmp tbody td { transition: background .18s ease; }
+  table.cmp tbody tr:hover td:first-child,
+  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
+  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
+
+  /* Newer engines can transition to an intrinsic height. Older ones skip the
+     whole block and open instantly, which is what they did before. */
+  @supports selector(::details-content) {
+    :root { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
+      transition-behavior: allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  }
 
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -470,6 +541,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { animation: none !important; transition: none !important; }
+    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
   }
   @media (max-width: 640px) {
     header { padding-top: 56px; }
@@ -544,7 +616,7 @@
 </div>
 
 <div class="shot">
-  <figure>
+  <figure class="reveal">
     <img src="/app.png" alt="Blade Desktop में रैखिक प्रतिगमन पैनल, लॉजिस्टिक प्रतिगमन के ऑड्स अनुपात के साथ ROC वक्र, और संरचनात्मक समीकरण मॉडल का पथ आरेख, साथ में बनाई गई प्रोजेक्ट फ़ाइलें।" />
   </figure>
   <figcaption>एक सत्र: प्रतिगमन निदान, ROC वक्र, SEM पथ आरेख। हर स्क्रिप्ट फ़ोल्डर में रह गई।</figcaption>
@@ -552,16 +624,16 @@
 
 <div class="wrap">
 
-  <div class="facts">
+  <div class="facts reveal">
     <div><b>46</b><span>सांख्यिकीय प्रक्रियाएँ, वर्णनात्मक से SEM तक</span></div>
     <div><b>R</b><span>हर परिणाम के पीछे की गणना करता है</span></div>
     <div><b>0</b><span>डेटा फ़ाइलें कहीं भी अपलोड हुईं</span></div>
   </div>
 
   <section id="spss">
-    <h2>मुश्किल काम कभी डायलॉग बॉक्स नहीं था।</h2>
-    <p class="sub">सही परीक्षण चुनना ही असली काम है। यह जाँचना भी कि आप उसे चला सकते थे। अगले साल नए डेटा पर दोहराना भी।</p>
-    <div class="cmp-scroll">
+    <h2 class="reveal">मुश्किल काम कभी डायलॉग बॉक्स नहीं था।</h2>
+    <p class="sub reveal">सही परीक्षण चुनना ही असली काम है। यह जाँचना भी कि आप उसे चला सकते थे। अगले साल नए डेटा पर दोहराना भी।</p>
+    <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
           <tr><th>&nbsp;</th><th>मेन्यू वाले सांख्यिकी सॉफ़्टवेयर</th><th>Blade</th></tr>
@@ -598,18 +670,18 @@
   </section>
 
   <section id="how">
-    <h2>एक फ़ोल्डर दिखाइए, पूछिए, आउटपुट पढ़िए।</h2>
+    <h2 class="reveal">एक फ़ोल्डर दिखाइए, पूछिए, आउटपुट पढ़िए।</h2>
     <ol class="steps">
-      <li>
+      <li class="reveal">
         <h3>वह फ़ोल्डर खोलिए जहाँ डेटा पहले से है</h3>
         <p>न आयात का चरण, न प्रोजेक्ट फ़ॉर्मैट। Blade फ़ाइलें वहीं पढ़ता है। आउटपुट उन्हीं के बगल में आता है।</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>जैसे किसी सहकर्मी से पूछते, वैसे पूछिए</h3>
         <p>Blade चर पढ़कर तरीका चुनता है। कुछ भी चलाने से पहले वह अपना चुनाव बताता है।</p>
         <p class="quote">«आधार अंक और आयु को नियंत्रित करने के बाद भी क्या उपचार समूह का परिणाम अलग है?»</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>परिणाम पढ़िए, फिर साथ ले जाइए</h3>
         <p>आपको APA आउटपुट, तालिकाएँ, ग्राफ़, अनुमान जाँच और सीधी व्याख्या मिलती है। नीचे R सिंटैक्स रहता है। जो चाहें निर्यात कीजिए।</p>
       </li>
@@ -617,58 +689,58 @@
   </section>
 
   <section id="methods">
-    <h2>छियालीस प्रक्रियाएँ, सब असली R में।</h2>
-    <p class="sub">हर प्रक्रिया एक औज़ार है जिसे एजेंट R इंजन पर चलाता है। मॉडल तय करता है कि कौन सी चलेगी और आउटपुट पढ़ता है। संख्याएँ वह नहीं बनाता।</p>
-    <div class="fam">
+    <h2 class="reveal">छियालीस प्रक्रियाएँ, सब असली R में।</h2>
+    <p class="sub reveal">हर प्रक्रिया एक औज़ार है जिसे एजेंट R इंजन पर चलाता है। मॉडल तय करता है कि कौन सी चलेगी और आउटपुट पढ़ता है। संख्याएँ वह नहीं बनाता।</p>
+    <div class="fam reveal">
       <h3>वर्णन और अन्वेषण</h3>
       <div class="chips"><span>वर्णनात्मक सांख्यिकी</span><span>आवृत्तियाँ</span><span>क्रॉस सारणी</span><span>अन्वेषण</span><span>समूहवार माध्य</span><span>अनुपस्थित मान</span><span>पुनःकोडिंग</span><span>चर की गणना</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>समूहों की तुलना</h3>
       <div class="chips"><span>स्वतंत्र प्रतिदर्श t परीक्षण</span><span>युग्मित t परीक्षण</span><span>एक प्रतिदर्श t परीक्षण</span><span>एकमार्गी और गुणनखंडीय ANOVA</span><span>पुनरावृत्त माप ANOVA</span><span>MANOVA</span><span>मान-व्हिटनी</span><span>क्रुस्कल-वालिस</span><span>विलकॉक्सन चिह्नित कोटि</span><span>चिह्न परीक्षण</span><span>फ्रीडमैन</span><span>मैकनेमार</span><span>कोक्रेन Q</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>संबंध और मॉडल</h3>
       <div class="chips"><span>पियर्सन, स्पीयरमैन, केंडल</span><span>आंशिक सहसंबंध</span><span>रैखिक प्रतिगमन</span><span>लॉजिस्टिक प्रतिगमन</span><span>क्रमसूचक प्रतिगमन</span><span>बहुपद प्रतिगमन</span><span>प्रोबिट</span><span>वक्र आकलन</span><span>मिश्रित मॉडल</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>संरचना और मापनी</h3>
       <div class="chips"><span>अन्वेषी कारक विश्लेषण</span><span>प्रमुख घटक विश्लेषण</span><span>संरचनात्मक समीकरण मॉडल</span><span>विश्वसनीयता, क्रोनबाख अल्फा</span><span>K-मीन्स</span><span>पदानुक्रमिक क्लस्टरिंग</span><span>विभेदक विश्लेषण</span><span>बहुआयामी मापन</span><span>संगति विश्लेषण</span><span>LDA विषय मॉडल</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>श्रेणीबद्ध</h3>
       <div class="chips"><span>काई वर्ग सुसंगति</span><span>द्विपद परीक्षण</span><span>लॉगलीनियर मॉडल</span><span>रन परीक्षण</span><span>कोलमोगोरोव-स्मिरनोव</span><span>फिशर सटीक परीक्षण</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>समय, जोखिम, संश्लेषण</h3>
       <div class="chips"><span>कापलान-मायर</span><span>कॉक्स प्रतिगमन</span><span>ROC वक्र</span><span>स्वसहसंबंध</span><span>ARIMA</span><span>मेटा-विश्लेषण</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>मॉडल कॉल लिखता है। R उत्तर की गणना करता है।</h2>
-    <div class="point">
+    <h2 class="reveal">मॉडल कॉल लिखता है। R उत्तर की गणना करता है।</h2>
+    <div class="point reveal">
       <h3>कोई संख्या भाषा मॉडल नहीं अनुमानता</h3>
       <p>Blade का p मान R की प्रक्रिया से निकला है। वही प्रक्रिया, जो आप हाथ से चलाते। मॉडल प्रक्रिया चुनता है और लौटे परिणाम की व्याख्या करता है।</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>R शिकायत करे तो आपको दिखता है</h3>
       <p>अभिसरण चेतावनियाँ, विलक्षण फ़िट और टूटे अनुमान बिना नरमी के सामने आते हैं। असफल विश्लेषण खुद बता देता है।</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>सिंटैक्स वहीं रह जाता है</h3>
       <p>हर विश्लेषण चलने योग्य R आपके फ़ोल्डर में लिखता है। इसे मार्गदर्शक, समीक्षक या सांख्यिकीविद् को दीजिए। वे Blade के बिना जाँच सकते हैं।</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>आपका कंप्यूटर, आपकी फ़ाइलें</h3>
       <p>Blade आपके कंप्यूटर के पहले से मौजूद R और Python का उपयोग करता है, आपके चुने फ़ोल्डर में। डेटा फ़ाइलें कभी अपलोड नहीं होतीं। हर फ़ाइल लेखन और हर कमांड आपकी अनुमति का इंतज़ार करता है।</p>
       <p>होस्टेड API काम की योजना बनाता है और मॉडल कुंजियाँ रखता है। वह सत्र का प्रतिलेख सहेजता है, आपके कार्यक्षेत्र से कुछ नहीं।</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>यांत्रिक काम यह करता है, दावा आपका</h3>
       <p>Blade यांत्रिक हिस्से में तेज़ है। यह तय नहीं कर सकता कि आपका डिज़ाइन निष्कर्ष सँभालता है या नहीं। वह आपका ही रहता है।</p>
     </div>
-    <div class="cross">
+    <div class="cross reveal">
       <h3>फिर इसे रख लीजिए</h3>
       <p>एक विश्लेषण को वर्कफ़्लो के रूप में सहेजिए। अगले सत्र में यह नए डेटा पर एक क्लिक में चलेगा। या एक फ़ाइल के रूप में सहकर्मी तक जाएगा।</p>
       <a href="https://blade.skalatec.com/">देखिए वर्कफ़्लो कैसे चलते हैं &rarr;</a>
@@ -676,9 +748,9 @@
   </section>
 
   <section class="get" id="get">
-    <h2>Blade Desktop 0.2.2 डाउनलोड करें</h2>
-    <p class="sub">बीटा। Blade को R चाहिए, पहली बार चलने पर वह जाँचता है और आपके लिए R तथा Python स्थापित कर सकता है।</p>
-    <div class="dl">
+    <h2 class="reveal">Blade Desktop 0.2.2 डाउनलोड करें</h2>
+    <p class="sub reveal">बीटा। Blade को R चाहिए, पहली बार चलने पर वह जाँचता है और आपके लिए R तथा Python स्थापित कर सकता है।</p>
+    <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 101 MB</span>
@@ -700,28 +772,28 @@
   </section>
 
   <section class="faq" id="faq">
-    <h2>डाउनलोड से पहले।</h2>
-    <details>
+    <h2 class="reveal">डाउनलोड से पहले।</h2>
+    <details class="reveal">
       <summary>क्या मुझे R आना चाहिए?</summary>
       <p>नहीं। आप आम भाषा में पूछते हैं और व्याख्या पढ़ते हैं। R तब काम आता है जब कोई आपका काम देखना चाहे। वह अपने आप चलता है।</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>क्या यह मेरी SPSS फ़ाइलें खोलेगा?</summary>
       <p>हाँ। SPSS की <code>.sav</code> फ़ाइलें R से पढ़ी जाती हैं, और CSV, TSV, Excel तथा Parquet भी। चर और मान लेबल बने रहते हैं।</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>क्या सांख्यिकी भाषा मॉडल को सौंपी जा सकती है?</summary>
       <p>गणित नहीं, इसीलिए वह गणित करता ही नहीं। मॉडल प्रक्रिया चुनता है और आउटपुट पढ़ता है। गणना R करता है। चुनाव और सिंटैक्स दोनों दिखते हैं।</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>क्या मेरा डेटा कंप्यूटर से बाहर जाता है?</summary>
       <p>आपकी फ़ाइलें आपके फ़ोल्डर में रहती हैं। होस्टेड API विश्लेषण की योजना बनाता है और प्रतिलेख सहेजता है। आपका डेटासेट उस तक नहीं जाता। हर लेखन और कमांड पहले पूछता है।</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>क्या यह सांख्यिकीविद् की जगह लेता है?</summary>
       <p>यह मेन्यू, सिंटैक्स और आउटपुट सजाने में गए घंटों की जगह लेता है। यह तय नहीं करता कि डिज़ाइन निष्कर्ष सँभालता है या नहीं। डेटा से बाहर का सवाल हो तो बता देता है।</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Linux का क्या?</summary>
       <p>अभी जारी नहीं हुआ। macOS और Windows के संस्करण ऊपर हैं।</p>
     </details>
@@ -829,6 +901,46 @@
 
 // Picking a language is a decision worth remembering, so the English page
 // stops guessing once someone has chosen.
+// Reveal each block the first time it comes into view. Measured directly
+// rather than through IntersectionObserver: if anything here goes wrong the
+// catch reveals the page, because hidden content is worse than no animation.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-reveal')) return;
+  var pending = [].slice.call(document.querySelectorAll('.reveal'));
+  try {
+    var queued = false;
+
+    function pass() {
+      queued = false;
+      var limit = (window.innerHeight || root.clientHeight) * 0.92;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < limit) {
+          pending[i].className += ' in';
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', queue);
+        window.removeEventListener('resize', queue);
+      }
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      if (window.requestAnimationFrame) window.requestAnimationFrame(pass);
+      else setTimeout(pass, 16);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    pass();
+  } catch (e) {
+    for (var j = 0; j < pending.length; j++) pending[j].className += ' in';
+  }
+})();
+
 (function () {
   var menu = document.querySelector('.lang-menu');
   if (!menu) return;

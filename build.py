@@ -93,7 +93,7 @@ def steps_block(c):
     for step in c["how"]["steps"]:
         quote = f'\n        <p class="quote">{step["quote"]}</p>' if step.get("quote") else ""
         out.append(
-            "      <li>\n"
+            '      <li class="reveal">\n'
             f'        <h3>{step["h3"]}</h3>\n'
             f'        <p>{step["p"]}</p>{quote}\n'
             "      </li>"
@@ -106,7 +106,7 @@ def families_block(c):
     for fam in c["methods"]["families"]:
         chips = "".join(f"<span>{x}</span>" for x in fam["chips"])
         out.append(
-            '    <div class="fam">\n'
+            '    <div class="fam reveal">\n'
             f'      <h3>{fam["h3"]}</h3>\n'
             f'      <div class="chips">{chips}</div>\n'
             "    </div>"
@@ -119,7 +119,7 @@ def points_block(c):
     for pt in c["trust"]["points"]:
         extra = f'\n      <p>{pt["p2"]}</p>' if pt.get("p2") else ""
         out.append(
-            '    <div class="point">\n'
+            '    <div class="point reveal">\n'
             f'      <h3>{pt["h3"]}</h3>\n'
             f'      <p>{pt["p"]}</p>{extra}\n'
             "    </div>"
@@ -131,7 +131,7 @@ def faq_block(c):
     out = []
     for q, a in c["faq"]["items"]:
         out.append(
-            "    <details>\n"
+            '    <details class="reveal">\n'
             f"      <summary>{q}</summary>\n"
             f"      <p>{a}</p>\n"
             "    </details>"

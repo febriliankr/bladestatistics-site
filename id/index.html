@@ -57,6 +57,13 @@
   }
 })();
 </script>
+<script>
+try {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+} catch (e) {}
+</script>
 <style>
   :root {
     color-scheme: dark light;
@@ -76,6 +83,7 @@
     --brand-btn: #ff4900;
     --brand-btn-hover: #ff6326;
     --brand-wash: rgba(255, 73, 0, .035);
+    --brand-wash-hover: rgba(255, 73, 0, .075);
     --shadow: 0 12px 32px rgba(0, 0, 0, .55);
   }
 
@@ -96,6 +104,7 @@
       --brand-btn: #d13c00;
       --brand-btn-hover: #b93500;
       --brand-wash: rgba(255, 73, 0, .05);
+      --brand-wash-hover: rgba(255, 73, 0, .1);
       --shadow: 0 12px 32px rgba(0, 0, 0, .12);
     }
     /* thinning the strokes helps on a dark ground and hurts on a light one */
@@ -179,6 +188,9 @@
     box-shadow: var(--shadow);
     transform-origin: top left;
     animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
+  }
+  [dir="rtl"] .cta-menu {
+    transform-origin: top right;
   }
   @keyframes menuIn {
     from { opacity: 0; transform: translateY(-6px) scale(.97); }
@@ -364,7 +376,7 @@
     background: var(--panel);
     color: var(--fg);
     text-decoration: none;
-    transition: border-color .16s ease, background .16s ease;
+    transition: border-color .16s ease, background .16s ease, transform .16s ease;
   }
   .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
   .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
@@ -395,8 +407,9 @@
     font-weight: 500;
     width: 12px;
     flex: none;
+    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
   }
-  .faq details[open] summary::before { content: "\2212"; }
+  .faq details[open] summary::before { transform: rotate(45deg); }
   /* scoped to details so it cannot catch anything else in the section */
   .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
 
@@ -444,7 +457,10 @@
     border-radius: 11px;
     background: var(--panel);
     box-shadow: var(--shadow);
+    transform-origin: top right;
+    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
   }
+  [dir="rtl"] .lang-menu { transform-origin: top left; }
   .lang-menu a {
     display: block;
     padding: 7px 10px;
@@ -456,6 +472,61 @@
   }
   .lang-menu a:hover { background: var(--hover); }
   .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
+
+
+  /* ---- motion ----
+     The hero animates on load. Everything below it waits until it scrolls
+     into view, and only when JS has added .js-reveal, so a page without
+     JavaScript renders complete and still. */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .topbar,
+  header h1,
+  header .lede,
+  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
+  /* .note is inline, so a transform on it would be ignored */
+  header .note { animation: fade .55s ease both; }
+  .topbar { animation-delay: .02s; }
+  header h1 { animation-delay: .09s; }
+  header .lede { animation-delay: .17s; }
+  header .cta { animation-delay: .25s; }
+  header .note { animation-delay: .34s; }
+
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
+  }
+  .js-reveal .reveal.in { opacity: 1; transform: none; }
+
+  /* ---- hover detail ---- */
+  .dl a:hover { transform: translateY(-1px); }
+  .chips span { transition: border-color .16s ease, color .16s ease; }
+  .chips span:hover { border-color: var(--brand); color: var(--fg); }
+  table.cmp tbody td { transition: background .18s ease; }
+  table.cmp tbody tr:hover td:first-child,
+  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
+  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
+
+  /* Newer engines can transition to an intrinsic height. Older ones skip the
+     whole block and open instantly, which is what they did before. */
+  @supports selector(::details-content) {
+    :root { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
+      transition-behavior: allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  }
 
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -470,6 +541,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     * { animation: none !important; transition: none !important; }
+    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
   }
   @media (max-width: 640px) {
     header { padding-top: 56px; }
@@ -544,7 +616,7 @@
 </div>
 
 <div class="shot">
-  <figure>
+  <figure class="reveal">
     <img src="/app.png" alt="Blade Desktop menampilkan panel regresi linear, kurva ROC dengan rasio odds regresi logistik, dan diagram jalur model persamaan struktural, di samping berkas proyek yang dihasilkannya." />
   </figure>
   <figcaption>Satu sesi: diagnostik regresi, kurva ROC, diagram jalur SEM. Semua skrip tertinggal di folder.</figcaption>
@@ -552,16 +624,16 @@
 
 <div class="wrap">
 
-  <div class="facts">
+  <div class="facts reveal">
     <div><b>46</b><span>prosedur statistik, dari deskriptif sampai SEM</span></div>
     <div><b>R</b><span>menghitung angka di balik tiap hasil</span></div>
     <div><b>0</b><span>berkas data yang diunggah ke mana pun</span></div>
   </div>
 
   <section id="spss">
-    <h2>Kotak dialog tidak pernah jadi bagian yang sulit.</h2>
-    <p class="sub">Yang berat itu memilih uji yang tepat. Berat juga memastikan uji itu boleh dipakai. Berat juga mengulangnya tahun depan.</p>
-    <div class="cmp-scroll">
+    <h2 class="reveal">Kotak dialog tidak pernah jadi bagian yang sulit.</h2>
+    <p class="sub reveal">Yang berat itu memilih uji yang tepat. Berat juga memastikan uji itu boleh dipakai. Berat juga mengulangnya tahun depan.</p>
+    <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
           <tr><th>&nbsp;</th><th>Software statistik berbasis menu</th><th>Blade</th></tr>
@@ -598,18 +670,18 @@
   </section>
 
   <section id="how">
-    <h2>Tunjuk satu folder, tanya, baca keluarannya.</h2>
+    <h2 class="reveal">Tunjuk satu folder, tanya, baca keluarannya.</h2>
     <ol class="steps">
-      <li>
+      <li class="reveal">
         <h3>Buka folder tempat data Anda sudah tersimpan</h3>
         <p>Tanpa langkah impor dan tanpa format proyek. Blade membaca berkas di tempatnya. Keluarannya muncul di sebelahnya.</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Bertanyalah seperti kepada rekan kerja</h3>
         <p>Blade membaca variabelnya lalu memilih metode. Pilihannya disebut sebelum apa pun dijalankan.</p>
         <p class="quote">"Apakah kelompok perlakuan masih berbeda pada hasil setelah skor awal dan usia dikontrol?"</p>
       </li>
-      <li>
+      <li class="reveal">
         <h3>Baca hasilnya, lalu bawa pulang</h3>
         <p>Anda dapat keluaran APA, tabel, grafik, cek asumsi, dan bacaan yang lugas. Sintaks R ada di bawahnya. Ekspor bagian mana pun.</p>
       </li>
@@ -617,58 +689,58 @@
   </section>
 
   <section id="methods">
-    <h2>Empat puluh enam prosedur, semuanya R sungguhan.</h2>
-    <p class="sub">Tiap prosedur adalah alat yang dipanggil agen ke mesin R. Model memilih mana yang dijalankan lalu membaca keluarannya. Angkanya tidak pernah dari model.</p>
-    <div class="fam">
+    <h2 class="reveal">Empat puluh enam prosedur, semuanya R sungguhan.</h2>
+    <p class="sub reveal">Tiap prosedur adalah alat yang dipanggil agen ke mesin R. Model memilih mana yang dijalankan lalu membaca keluarannya. Angkanya tidak pernah dari model.</p>
+    <div class="fam reveal">
       <h3>Deskripsi dan eksplorasi</h3>
       <div class="chips"><span>Statistik deskriptif</span><span>Frekuensi</span><span>Tabulasi silang</span><span>Eksplorasi</span><span>Rerata per kelompok</span><span>Data hilang</span><span>Rekode</span><span>Hitung variabel</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Membandingkan kelompok</h3>
       <div class="chips"><span>Uji t sampel bebas</span><span>Uji t berpasangan</span><span>Uji t satu sampel</span><span>ANOVA satu jalur dan faktorial</span><span>ANOVA ukuran berulang</span><span>MANOVA</span><span>Mann-Whitney</span><span>Kruskal-Wallis</span><span>Wilcoxon bertanda</span><span>Uji tanda</span><span>Friedman</span><span>McNemar</span><span>Q Cochran</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Hubungan dan model</h3>
       <div class="chips"><span>Pearson, Spearman, Kendall</span><span>Korelasi parsial</span><span>Regresi linear</span><span>Regresi logistik</span><span>Regresi ordinal</span><span>Regresi multinomial</span><span>Probit</span><span>Estimasi kurva</span><span>Model campuran</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Struktur dan skala</h3>
       <div class="chips"><span>Analisis faktor eksploratori</span><span>PCA</span><span>Model persamaan struktural</span><span>Reliabilitas, alfa Cronbach</span><span>K-means</span><span>Klaster hierarkis</span><span>Analisis diskriminan</span><span>Penskalaan multidimensi</span><span>Analisis korespondensi</span><span>Model topik LDA</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Kategorik</h3>
       <div class="chips"><span>Chi-square kecocokan</span><span>Uji binomial</span><span>Model loglinear</span><span>Uji runtun</span><span>Kolmogorov-Smirnov</span><span>Uji eksak Fisher</span></div>
     </div>
-    <div class="fam">
+    <div class="fam reveal">
       <h3>Waktu, risiko, sintesis</h3>
       <div class="chips"><span>Kaplan-Meier</span><span>Regresi Cox</span><span>Kurva ROC</span><span>Autokorelasi</span><span>ARIMA</span><span>Meta-analisis</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2>Model menulis pemanggilannya. R menghitung jawabannya.</h2>
-    <div class="point">
+    <h2 class="reveal">Model menulis pemanggilannya. R menghitung jawabannya.</h2>
+    <div class="point reveal">
       <h3>Tidak ada angka yang dikira-kira model bahasa</h3>
       <p>Nilai p di Blade keluar dari prosedur R. Prosedurnya sama dengan yang Anda jalankan sendiri. Model memilih prosedur lalu menjelaskan hasilnya.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Kalau R protes, Anda melihatnya</h3>
       <p>Peringatan konvergensi, fit singular, dan asumsi yang dilanggar tampil apa adanya. Analisis yang gagal dinyatakan gagal.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Sintaksnya tetap tinggal</h3>
       <p>Tiap analisis menulis R yang bisa dijalankan ke folder Anda. Berikan ke pembimbing, reviewer, atau ahli statistik. Mereka bisa memeriksanya tanpa Blade.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Komputer Anda, berkas Anda</h3>
       <p>Blade memakai R dan Python yang sudah ada di komputer Anda, di folder pilihan Anda. Berkas data tidak pernah diunggah. Tiap penulisan berkas dan perintah menunggu persetujuan Anda.</p>
       <p>API terkelola menyusun rencana kerja dan menyimpan kunci model. Yang tersimpan hanya transkrip sesi, bukan isi ruang kerja Anda.</p>
     </div>
-    <div class="point">
+    <div class="point reveal">
       <h3>Bagian mekanisnya dikerjakan, klaimnya milik Anda</h3>
       <p>Blade cepat di bagian yang mekanis. Ia tidak bisa menilai apakah desain Anda mendukung kesimpulan. Itu tetap urusan Anda.</p>
     </div>
-    <div class="cross">
+    <div class="cross reveal">
       <h3>Setelah itu, simpan</h3>
       <p>Simpan sebuah analisis sebagai alur kerja. Semester depan ia jalan di data baru dengan sekali klik. Atau kirim ke rekan sebagai satu berkas.</p>
       <a href="https://blade.skalatec.com/">Lihat cara kerja alur kerja &rarr;</a>
@@ -676,9 +748,9 @@
   </section>
 
   <section class="get" id="get">
-    <h2>Unduh Blade Desktop 0.2.2</h2>
-    <p class="sub">Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.</p>
-    <div class="dl">
+    <h2 class="reveal">Unduh Blade Desktop 0.2.2</h2>
+    <p class="sub reveal">Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.</p>
+    <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 101 MB</span>
@@ -700,28 +772,28 @@
   </section>
 
   <section class="faq" id="faq">
-    <h2>Sebelum mengunduh.</h2>
-    <details>
+    <h2 class="reveal">Sebelum mengunduh.</h2>
+    <details class="reveal">
       <summary>Apakah saya perlu bisa R?</summary>
       <p>Tidak. Anda bertanya dengan bahasa biasa lalu membaca penjelasannya. R ada untuk saat orang minta bukti kerja Anda. Ia jalan sendiri.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Apakah berkas SPSS saya bisa dibuka?</summary>
       <p>Bisa. Berkas <code>.sav</code> SPSS dibaca lewat R, begitu juga CSV, TSV, Excel, dan Parquet. Label variabel dan label nilai ikut terbaca.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Amankah menyerahkan statistik ke model bahasa?</summary>
       <p>Bukan untuk hitungannya, makanya ia tidak pernah menghitung. Model memilih prosedur dan membaca keluaran. R yang menghitung. Pilihan dan sintaksnya terlihat.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Apakah data saya keluar dari komputer?</summary>
       <p>Berkas Anda tetap di folder Anda. API terkelola menyusun analisis dan menyimpan transkrip. Ia tidak pernah menerima data Anda. Tiap penulisan dan perintah minta izin dulu.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Apakah ini pengganti ahli statistik?</summary>
       <p>Yang diganti adalah jam-jam yang habis di menu, sintaks, dan merapikan keluaran. Ia tidak menilai apakah desain Anda mendukung kesimpulan. Ia akan bilang kalau pertanyaannya melampaui datanya.</p>
     </details>
-    <details>
+    <details class="reveal">
       <summary>Bagaimana dengan Linux?</summary>
       <p>Belum dirilis. Versi macOS dan Windows ada di atas.</p>
     </details>
@@ -829,6 +901,46 @@
 
 // Picking a language is a decision worth remembering, so the English page
 // stops guessing once someone has chosen.
+// Reveal each block the first time it comes into view. Measured directly
+// rather than through IntersectionObserver: if anything here goes wrong the
+// catch reveals the page, because hidden content is worse than no animation.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-reveal')) return;
+  var pending = [].slice.call(document.querySelectorAll('.reveal'));
+  try {
+    var queued = false;
+
+    function pass() {
+      queued = false;
+      var limit = (window.innerHeight || root.clientHeight) * 0.92;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < limit) {
+          pending[i].className += ' in';
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', queue);
+        window.removeEventListener('resize', queue);
+      }
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      if (window.requestAnimationFrame) window.requestAnimationFrame(pass);
+      else setTimeout(pass, 16);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    pass();
+  } catch (e) {
+    for (var j = 0; j < pending.length; j++) pending[j].className += ' in';
+  }
+})();
+
 (function () {
   var menu = document.querySelector('.lang-menu');
   if (!menu) return;

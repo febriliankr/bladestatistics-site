@@ -17,6 +17,13 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
 {{langScript}}
+<script>
+try {
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.documentElement.className += " js-reveal";
+  }
+} catch (e) {}
+</script>
 {{css}}
 </head>
 <body>
@@ -49,7 +56,7 @@
 </div>
 
 <div class="shot">
-  <figure>
+  <figure class="reveal">
     <img src="/app.png" alt="{{shot.alt}}" />
   </figure>
   <figcaption>{{shot.caption}}</figcaption>
@@ -57,14 +64,14 @@
 
 <div class="wrap">
 
-  <div class="facts">
+  <div class="facts reveal">
 {{blockFacts}}
   </div>
 
   <section id="spss">
-    <h2>{{spss.h2}}</h2>
-    <p class="sub">{{spss.sub}}</p>
-    <div class="cmp-scroll">
+    <h2 class="reveal">{{spss.h2}}</h2>
+    <p class="sub reveal">{{spss.sub}}</p>
+    <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
           <tr><th>&nbsp;</th><th>{{spss.colOther}}</th><th>{{spss.colBlade}}</th></tr>
@@ -77,22 +84,22 @@
   </section>
 
   <section id="how">
-    <h2>{{how.h2}}</h2>
+    <h2 class="reveal">{{how.h2}}</h2>
     <ol class="steps">
 {{blockSteps}}
     </ol>
   </section>
 
   <section id="methods">
-    <h2>{{methods.h2}}</h2>
-    <p class="sub">{{methods.sub}}</p>
+    <h2 class="reveal">{{methods.h2}}</h2>
+    <p class="sub reveal">{{methods.sub}}</p>
 {{blockFamilies}}
   </section>
 
   <section id="trust">
-    <h2>{{trust.h2}}</h2>
+    <h2 class="reveal">{{trust.h2}}</h2>
 {{blockPoints}}
-    <div class="cross">
+    <div class="cross reveal">
       <h3>{{cross.h3}}</h3>
       <p>{{cross.p}}</p>
       <a href="https://blade.skalatec.com/">{{cross.link}} &rarr;</a>
@@ -100,9 +107,9 @@
   </section>
 
   <section class="get" id="get">
-    <h2>{{get.h2}}</h2>
-    <p class="sub">{{get.sub}}</p>
-    <div class="dl">
+    <h2 class="reveal">{{get.h2}}</h2>
+    <p class="sub reveal">{{get.sub}}</p>
+    <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.2/blade-desktop-0.2.2-mac-arm64.dmg">
         <span class="os">{{svgMac}} macOS</span>
         <span class="meta">Apple silicon &middot; 101 MB</span>
@@ -124,7 +131,7 @@
   </section>
 
   <section class="faq" id="faq">
-    <h2>{{faq.h2}}</h2>
+    <h2 class="reveal">{{faq.h2}}</h2>
 {{blockFaq}}
   </section>
 
@@ -230,6 +237,46 @@
 
 // Picking a language is a decision worth remembering, so the English page
 // stops guessing once someone has chosen.
+// Reveal each block the first time it comes into view. Measured directly
+// rather than through IntersectionObserver: if anything here goes wrong the
+// catch reveals the page, because hidden content is worse than no animation.
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-reveal')) return;
+  var pending = [].slice.call(document.querySelectorAll('.reveal'));
+  try {
+    var queued = false;
+
+    function pass() {
+      queued = false;
+      var limit = (window.innerHeight || root.clientHeight) * 0.92;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < limit) {
+          pending[i].className += ' in';
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', queue);
+        window.removeEventListener('resize', queue);
+      }
+    }
+
+    function queue() {
+      if (queued) return;
+      queued = true;
+      if (window.requestAnimationFrame) window.requestAnimationFrame(pass);
+      else setTimeout(pass, 16);
+    }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    pass();
+  } catch (e) {
+    for (var j = 0; j < pending.length; j++) pending[j].className += ' in';
+  }
+})();
+
 (function () {
   var menu = document.querySelector('.lang-menu');
   if (!menu) return;
