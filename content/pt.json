@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Baixe o Blade Desktop 0.2.4",
+    "h2": "Baixe o Blade Desktop 0.2.5",
     "sub": "Beta. O Blade precisa do R, procura por ele no primeiro início e pode instalar R e Python para você.",
     "caveat": "<b>macOS:</b> assinado e notarizado pela PT Skala Teknologi Nusantara, então abre normalmente. <b>Windows:</b> ainda sem assinatura, então o SmartScreen avisa uma vez. Clique em Mais informações e depois em Executar assim mesmo. O Linux ainda não foi publicado."
   },
