@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "نزّل Blade Desktop 0.2.3",
+    "h2": "نزّل Blade Desktop 0.2.4",
     "sub": "إصدار تجريبي. يحتاج Blade إلى R، ويتحقق منه عند أول تشغيل، ويمكنه تثبيت R وPython نيابة عنك.",
     "caveat": "<b>macOS:</b> موقّع وموثّق من PT Skala Teknologi Nusantara، لذا يفتح بشكل طبيعي. <b>Windows:</b> غير موقّع بعد، لذا ينبّه SmartScreen مرة واحدة. اضغط More info ثم Run anyway. لم يصدر إصدار Linux بعد."
   },
