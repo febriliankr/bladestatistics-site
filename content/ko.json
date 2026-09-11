@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Blade Desktop 0.2.2 내려받기",
+    "h2": "Blade Desktop 0.2.3 내려받기",
     "sub": "베타입니다. Blade에는 R이 필요하며, 처음 실행할 때 확인하고 R과 Python을 대신 설치해 줍니다.",
     "caveat": "<b>macOS:</b> PT Skala Teknologi Nusantara가 서명하고 공증해 정상적으로 열립니다. <b>Windows:</b> 아직 서명 전이라 SmartScreen이 한 번 경고합니다. 추가 정보를 누른 뒤 실행을 선택하세요. Linux 빌드는 아직 없습니다."
   },

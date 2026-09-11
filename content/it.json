@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Scarica Blade Desktop 0.2.2",
+    "h2": "Scarica Blade Desktop 0.2.3",
     "sub": "Beta. Blade richiede R, lo cerca al primo avvio e può installare R e Python al posto tuo.",
     "caveat": "<b>macOS:</b> firmato e autenticato da PT Skala Teknologi Nusantara, quindi si apre normalmente. <b>Windows:</b> non ancora firmato, quindi SmartScreen avvisa una volta. Clicca Ulteriori informazioni e poi Esegui comunque. Linux non è ancora pubblicato."
   },
