@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Télécharger Blade Desktop 0.2.6",
+    "h2": "Télécharger Blade Desktop 0.2.7",
     "sub": "Bêta. Blade a besoin de R, le cherche au premier lancement et peut installer R et Python pour vous.",
     "caveat": "<b>macOS :</b> signé et notarisé par PT Skala Teknologi Nusantara, donc il s'ouvre normalement. <b>Windows :</b> pas encore signé, donc SmartScreen avertit une fois. Cliquez sur Informations complémentaires puis Exécuter quand même. Linux n'est pas encore publié."
   },
