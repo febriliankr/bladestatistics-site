@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Blade Desktop 0.2.5 डाउनलोड करें",
+    "h2": "Blade Desktop 0.2.6 डाउनलोड करें",
     "sub": "बीटा। Blade को R चाहिए, पहली बार चलने पर वह जाँचता है और आपके लिए R तथा Python स्थापित कर सकता है।",
     "caveat": "<b>macOS:</b> PT Skala Teknologi Nusantara द्वारा हस्ताक्षरित और नोटराइज़्ड, इसलिए सामान्य रूप से खुलता है। <b>Windows:</b> अभी हस्ताक्षरित नहीं, इसलिए SmartScreen एक बार चेतावनी देता है। More info दबाइए, फिर Run anyway। Linux अभी जारी नहीं हुआ।"
   },

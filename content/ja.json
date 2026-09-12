@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Blade Desktop 0.2.5 をダウンロード",
+    "h2": "Blade Desktop 0.2.6 をダウンロード",
     "sub": "ベータ版です。BladeにはRが必要で、初回起動時に確認し、RとPythonの導入も代行できます。",
     "caveat": "<b>macOS：</b>PT Skala Teknologi Nusantaraの署名と公証済みで、通常どおり開きます。<b>Windows：</b>署名はまだのため、SmartScreenが一度警告します。詳細情報を押し、実行を選んでください。Linux版はまだ公開していません。"
   },

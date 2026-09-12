@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "Blade Desktop 0.2.5 laden",
+    "h2": "Blade Desktop 0.2.6 laden",
     "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",
     "caveat": "<b>macOS:</b> von PT Skala Teknologi Nusantara signiert und notarisiert, öffnet also normal. <b>Windows:</b> noch nicht signiert, SmartScreen warnt einmal. Auf Weitere Informationen klicken, dann Trotzdem ausführen. Linux ist noch nicht veröffentlicht."
   },
