@@ -17,6 +17,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
 {{langScript}}
+{{pixel}}
 <script>
 try {
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -284,6 +285,32 @@ try {
     var a = e.target.closest('a[data-lang]');
     if (!a) return;
     try { localStorage.setItem('bladeLang', a.dataset.lang); } catch (err) {}
+  });
+})();
+
+// A download is the only conversion this page has, so it is the one worth
+// reporting to Meta. One delegated listener covers all three surfaces — the
+// table, the hero button, and its menu — because every one of them points at
+// dl.skalatec.com; wiring them individually would miss the hero button, whose
+// href is rewritten at runtime, and the menu, which does not exist yet at
+// load. Platform and version are read back out of the href rather than
+// tracked separately, so they cannot drift from the link actually clicked.
+(function () {
+  document.addEventListener('click', function (e) {
+    if (typeof fbq !== 'function') return;
+    var a = e.target.closest && e.target.closest('a[href*="dl.skalatec.com"]');
+    if (!a) return;
+    var m = (a.getAttribute('href') || '').match(
+      /\/(\d+\.\d+\.\d+)\/blade-desktop-[\d.]+-(mac|win)-(arm64|x64)\./
+    );
+    try {
+      fbq('trackCustom', 'Download', {
+        platform: m ? m[2] : 'unknown',
+        arch: m ? m[3] : 'unknown',
+        version: m ? m[1] : 'unknown',
+        locale: document.documentElement.lang || 'en'
+      });
+    } catch (err) {}
   });
 })();
 </script>

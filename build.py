@@ -30,6 +30,27 @@ WIN_SVG = (
     '13.1h8.6v9.2L2 21.1v-8zm10.2 0H22v10.7l-9.8-1.3v-9.4z"/></svg>'
 )
 
+# Meta pixel for bladestatistics.com, owned by the "Blade Statistics" business.
+# The id is public by design — it ships in client JS on every page — so it
+# lives here rather than in an env var. Nothing else about the ads setup
+# belongs in this repo: it is public, and access tokens never go in it.
+PIXEL_ID = "1373789871610184"
+
+PIXEL_SCRIPT = """<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '%(pixel)s');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=%(pixel)s&ev=PageView&noscript=1" /></noscript>"""
+
 LANG_SCRIPT = """<script>
 // Runs before anything paints, so nobody sees the wrong language flash past.
 // A pick from the switcher is stored and outranks the browser's preference.
@@ -184,6 +205,7 @@ def render(code, c, shell, css, locales, names):
         ),
         "langScript": LANG_SCRIPT
         % {"locales": json.dumps(ORDER), "current": code},
+        "pixel": PIXEL_SCRIPT % {"pixel": PIXEL_ID},
     }
     for section in ("meta", "hero", "cta", "shot", "spss", "how", "methods", "trust", "get", "faq", "footer"):
         for key, value in c[section].items():
