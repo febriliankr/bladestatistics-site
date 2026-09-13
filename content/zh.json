@@ -125,7 +125,7 @@
     }
   },
   "get": {
-    "h2": "下载 Blade Desktop 0.2.7",
+    "h2": "下载 Blade Desktop 0.2.8",
     "sub": "测试版。Blade 需要 R，首次启动会检查，也可以替你安装 R 和 Python。",
     "caveat": "<b>macOS：</b>已由 PT Skala Teknologi Nusantara 签名并公证，可以正常打开。<b>Windows：</b>尚未签名，SmartScreen 会提示一次。点击“更多信息”，再点“仍要运行”。Linux 版本尚未发布。"
   },
