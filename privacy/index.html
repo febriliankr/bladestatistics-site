@@ -310,6 +310,19 @@
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -496,6 +509,7 @@
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -521,6 +535,7 @@
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 <style>
   .doc { padding: 64px 0 0; }
   .doc .back { color: var(--muted); text-decoration: none; font-size: 14px; }

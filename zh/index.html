@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>把一次分析存成工作流。下个学期一键跑在新数据上。也可以作为单个文件发给同事。</p>
       <a href="https://blade.skalatec.com/">看看工作流怎么用 &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">0.2.9 版本更新</h2>
+    <p class="sub reveal">本次更新让操作更安全、停止更可靠，也减少了工作中的意外情况。</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>更安全地处理文件</h3>
+      <p>Blade 会更严格地检查文件夹和命令，敏感操作仍需你的批准，也不会把已保存的密钥传给它启动的工具。</p>
+    </li>
+    <li class="reveal">
+      <h3>停止就是彻底停止</h3>
+      <p>点击停止后，在线回复和 Blade 启动的本地命令都会取消，包括这些命令创建的子进程。</p>
+    </li>
+    <li class="reveal">
+      <h3>聊天和附件保持完整</h3>
+      <p>新消息不会再被旧的同步副本覆盖。拖入的文件、文件树以及任何语言的文件夹名称现在都更加可靠。</p>
+    </li>
+    <li class="reveal">
+      <h3>每个下载都经过检查</h3>
+      <p>macOS 和 Windows 安装程序不齐全时，版本无法发布。远程 API 连接也统一使用 HTTPS。</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

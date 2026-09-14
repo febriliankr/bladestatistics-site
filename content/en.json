@@ -124,6 +124,28 @@
       "link": "See how workflows work"
     }
   },
+  "release": {
+    "h2": "What's new in 0.2.9",
+    "sub": "This release is about safer actions, reliable stopping, and fewer surprises while you work.",
+    "items": [
+      {
+        "h3": "Safer around your files",
+        "p": "Blade checks folders and commands more carefully, keeps sensitive actions behind your approval, and does not pass saved secrets to tools it starts."
+      },
+      {
+        "h3": "Stop means stop",
+        "p": "Pressing Stop now cancels both the online response and local commands Blade started, including anything they launched."
+      },
+      {
+        "h3": "Chats and attachments stay put",
+        "p": "New messages are no longer replaced by older synced copies. Dropped files, the file tree, and folder names in any language now behave more reliably."
+      },
+      {
+        "h3": "Every download is checked",
+        "p": "A release cannot go live unless both macOS and Windows installers are present. Remote API connections also use HTTPS."
+      }
+    ]
+  },
   "get": {
     "h2": "Download Blade Desktop 0.2.9",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",

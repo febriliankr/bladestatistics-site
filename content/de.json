@@ -124,6 +124,28 @@
       "link": "So funktionieren Workflows"
     }
   },
+  "release": {
+    "h2": "Neu in Version 0.2.9",
+    "sub": "Diese Version macht Aktionen sicherer, das Stoppen zuverlässiger und die Arbeit vorhersehbarer.",
+    "items": [
+      {
+        "h3": "Mehr Schutz für Ihre Dateien",
+        "p": "Blade prüft Ordner und Befehle sorgfältiger, verlangt Ihre Zustimmung für sensible Aktionen und gibt gespeicherte Geheimnisse nicht an gestartete Werkzeuge weiter."
+      },
+      {
+        "h3": "Stopp stoppt wirklich alles",
+        "p": "Ein Klick auf Stopp beendet jetzt sowohl die Online-Antwort als auch lokale Befehle, die Blade gestartet hat, einschließlich ihrer Unterprozesse."
+      },
+      {
+        "h3": "Chats und Anhänge bleiben erhalten",
+        "p": "Neue Nachrichten werden nicht mehr durch ältere synchronisierte Kopien ersetzt. Abgelegte Dateien, der Dateibaum und Ordnernamen in jeder Sprache funktionieren zuverlässiger."
+      },
+      {
+        "h3": "Jeder Download wird geprüft",
+        "p": "Eine Version kann nur mit Installern für macOS und Windows veröffentlicht werden. Verbindungen zu entfernten APIs nutzen außerdem HTTPS."
+      }
+    ]
+  },
   "get": {
     "h2": "Blade Desktop 0.2.9 laden",
     "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",

@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>Salve uma análise como fluxo de trabalho. No próximo semestre ela roda nos dados novos em um clique. Ou vai para um colega como um arquivo só.</p>
       <a href="https://blade.skalatec.com/">Veja como funcionam os fluxos &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">Novidades da versão 0.2.9</h2>
+    <p class="sub reveal">Esta versão traz ações mais seguras, uma interrupção confiável e menos surpresas durante o trabalho.</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>Mais segurança para seus arquivos</h3>
+      <p>O Blade verifica pastas e comandos com mais cuidado, pede sua aprovação para ações sensíveis e não repassa segredos salvos às ferramentas que inicia.</p>
+    </li>
+    <li class="reveal">
+      <h3>Parar realmente para tudo</h3>
+      <p>Ao clicar em Parar, a resposta online e os comandos locais iniciados pelo Blade são cancelados, inclusive os processos que eles abriram.</p>
+    </li>
+    <li class="reveal">
+      <h3>Conversas e anexos permanecem intactos</h3>
+      <p>Mensagens novas não são mais substituídas por cópias antigas sincronizadas. Arquivos soltos, a árvore de arquivos e nomes de pasta em qualquer idioma funcionam melhor.</p>
+    </li>
+    <li class="reveal">
+      <h3>Cada download é verificado</h3>
+      <p>Uma versão não pode ser publicada sem os instaladores para macOS e Windows. Conexões com APIs remotas também usam HTTPS.</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

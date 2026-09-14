@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>Salva un'analisi come flusso di lavoro. Il semestre prossimo gira sui dati nuovi con un clic. Oppure va a un collega come singolo file.</p>
       <a href="https://blade.skalatec.com/">Guarda come funzionano i flussi &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">Novità della versione 0.2.9</h2>
+    <p class="sub reveal">Questa versione rende le azioni più sicure, l'arresto più affidabile e il lavoro più prevedibile.</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>Più sicurezza per i tuoi file</h3>
+      <p>Blade controlla meglio cartelle e comandi, chiede la tua approvazione per le azioni sensibili e non passa i segreti salvati agli strumenti che avvia.</p>
+    </li>
+    <li class="reveal">
+      <h3>Stop ferma davvero tutto</h3>
+      <p>Premendo Stop ora si annullano sia la risposta online sia i comandi locali avviati da Blade, compresi i loro processi secondari.</p>
+    </li>
+    <li class="reveal">
+      <h3>Chat e allegati restano al sicuro</h3>
+      <p>I nuovi messaggi non vengono più sostituiti da vecchie copie sincronizzate. File trascinati, albero dei file e nomi di cartella in qualsiasi lingua funzionano meglio.</p>
+    </li>
+    <li class="reveal">
+      <h3>Ogni download viene verificato</h3>
+      <p>Una versione non può essere pubblicata senza i programmi di installazione per macOS e Windows. Anche le connessioni alle API remote usano HTTPS.</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

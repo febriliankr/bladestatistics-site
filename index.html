@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>Save an analysis as a workflow. Next term it runs on the new data in one click. Or it goes to a colleague as a single file.</p>
       <a href="https://blade.skalatec.com/">See how workflows work &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">What's new in 0.2.9</h2>
+    <p class="sub reveal">This release is about safer actions, reliable stopping, and fewer surprises while you work.</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>Safer around your files</h3>
+      <p>Blade checks folders and commands more carefully, keeps sensitive actions behind your approval, and does not pass saved secrets to tools it starts.</p>
+    </li>
+    <li class="reveal">
+      <h3>Stop means stop</h3>
+      <p>Pressing Stop now cancels both the online response and local commands Blade started, including anything they launched.</p>
+    </li>
+    <li class="reveal">
+      <h3>Chats and attachments stay put</h3>
+      <p>New messages are no longer replaced by older synced copies. Dropped files, the file tree, and folder names in any language now behave more reliably.</p>
+    </li>
+    <li class="reveal">
+      <h3>Every download is checked</h3>
+      <p>A release cannot go live unless both macOS and Windows installers are present. Remote API connections also use HTTPS.</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

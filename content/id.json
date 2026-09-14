@@ -124,6 +124,28 @@
       "link": "Lihat cara kerja alur kerja"
     }
   },
+  "release": {
+    "h2": "Yang baru di 0.2.9",
+    "sub": "Rilis ini berfokus pada tindakan yang lebih aman, tombol Stop yang andal, dan lebih sedikit kejutan saat bekerja.",
+    "items": [
+      {
+        "h3": "Lebih aman saat mengakses berkas",
+        "p": "Blade memeriksa folder dan perintah dengan lebih teliti, meminta persetujuan Anda untuk tindakan sensitif, dan tidak meneruskan rahasia tersimpan ke alat yang dijalankannya."
+      },
+      {
+        "h3": "Stop benar-benar menghentikan",
+        "p": "Menekan Stop sekarang membatalkan respons online dan perintah lokal yang dimulai Blade, termasuk proses lain yang dijalankan oleh perintah tersebut."
+      },
+      {
+        "h3": "Chat dan lampiran tetap tersimpan",
+        "p": "Pesan baru tidak lagi tertimpa salinan lama saat sinkronisasi. Berkas yang dilepas, pohon berkas, dan nama folder dalam bahasa apa pun kini bekerja lebih andal."
+      },
+      {
+        "h3": "Setiap unduhan diperiksa",
+        "p": "Rilis tidak dapat dipublikasikan tanpa pemasang macOS dan Windows. Koneksi ke API jarak jauh juga menggunakan HTTPS."
+      }
+    ]
+  },
   "get": {
     "h2": "Unduh Blade Desktop 0.2.9",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",

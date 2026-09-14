@@ -124,6 +124,28 @@
       "link": "Veja como funcionam os fluxos"
     }
   },
+  "release": {
+    "h2": "Novidades da versão 0.2.9",
+    "sub": "Esta versão traz ações mais seguras, uma interrupção confiável e menos surpresas durante o trabalho.",
+    "items": [
+      {
+        "h3": "Mais segurança para seus arquivos",
+        "p": "O Blade verifica pastas e comandos com mais cuidado, pede sua aprovação para ações sensíveis e não repassa segredos salvos às ferramentas que inicia."
+      },
+      {
+        "h3": "Parar realmente para tudo",
+        "p": "Ao clicar em Parar, a resposta online e os comandos locais iniciados pelo Blade são cancelados, inclusive os processos que eles abriram."
+      },
+      {
+        "h3": "Conversas e anexos permanecem intactos",
+        "p": "Mensagens novas não são mais substituídas por cópias antigas sincronizadas. Arquivos soltos, a árvore de arquivos e nomes de pasta em qualquer idioma funcionam melhor."
+      },
+      {
+        "h3": "Cada download é verificado",
+        "p": "Uma versão não pode ser publicada sem os instaladores para macOS e Windows. Conexões com APIs remotas também usam HTTPS."
+      }
+    ]
+  },
   "get": {
     "h2": "Baixe o Blade Desktop 0.2.9",
     "sub": "Beta. O Blade precisa do R, procura por ele no primeiro início e pode instalar R e Python para você.",

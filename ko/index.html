@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>분석을 워크플로로 저장하세요. 다음 학기에는 새 데이터에 클릭 한 번으로 돌아갑니다. 동료에게는 파일 하나로 건네집니다.</p>
       <a href="https://blade.skalatec.com/">워크플로 작동 방식 보기 &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">버전 0.2.9의 새로운 점</h2>
+    <p class="sub reveal">이번 버전은 작업을 더 안전하게 하고, 중지를 확실하게 하며, 예상치 못한 문제를 줄였습니다.</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>파일을 더 안전하게 다룹니다</h3>
+      <p>Blade가 폴더와 명령을 더 꼼꼼히 확인하고, 민감한 작업에는 승인을 요청하며, 저장된 비밀 정보를 실행한 도구에 전달하지 않습니다.</p>
+    </li>
+    <li class="reveal">
+      <h3>중지는 모든 작업을 멈춥니다</h3>
+      <p>중지를 누르면 온라인 응답과 Blade가 시작한 로컬 명령이 하위 프로세스까지 모두 취소됩니다.</p>
+    </li>
+    <li class="reveal">
+      <h3>채팅과 첨부 파일이 그대로 유지됩니다</h3>
+      <p>새 메시지가 이전 동기화 사본으로 덮어써지지 않습니다. 끌어다 놓은 파일, 파일 트리, 모든 언어의 폴더 이름도 더 안정적으로 작동합니다.</p>
+    </li>
+    <li class="reveal">
+      <h3>모든 다운로드를 확인합니다</h3>
+      <p>macOS와 Windows 설치 파일이 모두 있어야 릴리스를 게시할 수 있습니다. 원격 API 연결도 HTTPS를 사용합니다.</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

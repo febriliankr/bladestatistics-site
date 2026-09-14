@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>Guarda un análisis como flujo de trabajo. El curso que viene se ejecuta con los datos nuevos en un clic. O va a un colega como un solo archivo.</p>
       <a href="https://blade.skalatec.com/">Mira cómo funcionan los flujos &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">Novedades de la versión 0.2.9</h2>
+    <p class="sub reveal">Esta versión ofrece acciones más seguras, una detención fiable y menos sorpresas mientras trabajas.</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>Más seguridad para tus archivos</h3>
+      <p>Blade comprueba mejor las carpetas y los comandos, pide tu aprobación para las acciones sensibles y no comparte secretos guardados con las herramientas que inicia.</p>
+    </li>
+    <li class="reveal">
+      <h3>Detener lo detiene todo</h3>
+      <p>Al pulsar Detener se cancelan tanto la respuesta en línea como los comandos locales iniciados por Blade, incluidos sus procesos secundarios.</p>
+    </li>
+    <li class="reveal">
+      <h3>Chats y archivos adjuntos protegidos</h3>
+      <p>Los mensajes nuevos ya no se sustituyen por copias antiguas sincronizadas. Los archivos arrastrados, el árbol de archivos y los nombres de carpeta en cualquier idioma funcionan mejor.</p>
+    </li>
+    <li class="reveal">
+      <h3>Cada descarga se comprueba</h3>
+      <p>Una versión no puede publicarse sin los instaladores de macOS y Windows. Las conexiones con API remotas también usan HTTPS.</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>Simpan sebuah analisis sebagai alur kerja. Semester depan ia jalan di data baru dengan sekali klik. Atau kirim ke rekan sebagai satu berkas.</p>
       <a href="https://blade.skalatec.com/">Lihat cara kerja alur kerja &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">Yang baru di 0.2.9</h2>
+    <p class="sub reveal">Rilis ini berfokus pada tindakan yang lebih aman, tombol Stop yang andal, dan lebih sedikit kejutan saat bekerja.</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>Lebih aman saat mengakses berkas</h3>
+      <p>Blade memeriksa folder dan perintah dengan lebih teliti, meminta persetujuan Anda untuk tindakan sensitif, dan tidak meneruskan rahasia tersimpan ke alat yang dijalankannya.</p>
+    </li>
+    <li class="reveal">
+      <h3>Stop benar-benar menghentikan</h3>
+      <p>Menekan Stop sekarang membatalkan respons online dan perintah lokal yang dimulai Blade, termasuk proses lain yang dijalankan oleh perintah tersebut.</p>
+    </li>
+    <li class="reveal">
+      <h3>Chat dan lampiran tetap tersimpan</h3>
+      <p>Pesan baru tidak lagi tertimpa salinan lama saat sinkronisasi. Berkas yang dilepas, pohon berkas, dan nama folder dalam bahasa apa pun kini bekerja lebih andal.</p>
+    </li>
+    <li class="reveal">
+      <h3>Setiap unduhan diperiksa</h3>
+      <p>Rilis tidak dapat dipublikasikan tanpa pemasang macOS dan Windows. Koneksi ke API jarak jauh juga menggunakan HTTPS.</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

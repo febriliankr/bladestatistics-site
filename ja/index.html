@@ -376,6 +376,19 @@ try {
   .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
   .cross a:hover { text-decoration: underline; }
 
+  /* ---- release notes ---- */
+  .release-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
+  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
+  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
+
   /* ---- downloads ---- */
   .get { padding: 80px 0 0; }
   .get .sub { margin-bottom: 22px; }
@@ -562,6 +575,7 @@ try {
     h1 { max-width: none; }
     .note { display: block; margin: 14px 0 0; }
     .dl { grid-template-columns: 1fr; }
+    .release-list { grid-template-columns: 1fr; }
     .facts { grid-template-columns: 1fr; }
     .fam { grid-template-columns: 1fr; gap: 10px; }
     .shot { padding: 0 16px; }
@@ -587,6 +601,7 @@ try {
     table.cmp td:last-child { background: none; margin-top: 12px; }
   }
 </style>
+
 </head>
 <body>
 
@@ -759,6 +774,29 @@ try {
       <p>分析をワークフローとして保存できます。来学期は新しいデータでワンクリックで動きます。1つのファイルとして同僚に渡すこともできます。</p>
       <a href="https://blade.skalatec.com/">ワークフローの仕組みを見る &rarr;</a>
     </div>
+  </section>
+
+  <section id="release">
+    <h2 class="reveal">バージョン0.2.9の新機能</h2>
+    <p class="sub reveal">操作をより安全にし、停止を確実にして、作業中の思わぬトラブルを減らしました。</p>
+    <ul class="release-list">
+    <li class="reveal">
+      <h3>ファイルをより安全に扱います</h3>
+      <p>Bladeはフォルダとコマンドをより慎重に確認し、重要な操作では承認を求め、保存済みの秘密情報を起動したツールへ渡しません。</p>
+    </li>
+    <li class="reveal">
+      <h3>停止ですべてが止まります</h3>
+      <p>停止を押すと、オンラインの応答とBladeが開始したローカルコマンドが、その子プロセスも含めてキャンセルされます。</p>
+    </li>
+    <li class="reveal">
+      <h3>チャットと添付ファイルを維持します</h3>
+      <p>新しいメッセージが古い同期データで上書きされなくなりました。ドロップしたファイル、ファイルツリー、あらゆる言語のフォルダ名もより確実に扱えます。</p>
+    </li>
+    <li class="reveal">
+      <h3>すべてのダウンロードを確認します</h3>
+      <p>macOSとWindowsの両方のインストーラーが揃わない限り、リリースは公開されません。リモートAPI接続にもHTTPSを使用します。</p>
+    </li>
+    </ul>
   </section>
 
   <section class="get" id="get">

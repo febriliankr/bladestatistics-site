@@ -148,6 +148,18 @@ def points_block(c):
     return "\n".join(out)
 
 
+def release_block(c):
+    out = []
+    for item in c["release"]["items"]:
+        out.append(
+            '    <li class="reveal">\n'
+            f'      <h3>{item["h3"]}</h3>\n'
+            f'      <p>{item["p"]}</p>\n'
+            "    </li>"
+        )
+    return "\n".join(out)
+
+
 def faq_block(c):
     out = []
     for q, a in c["faq"]["items"]:
@@ -197,6 +209,7 @@ def render(code, c, shell, css, locales, names):
         "blockSteps": steps_block(c),
         "blockFamilies": families_block(c),
         "blockPoints": points_block(c),
+        "blockRelease": release_block(c),
         "blockFaq": faq_block(c),
         "blockLangs": langs_block(code, names),
         "ctaStrings": json.dumps(
@@ -207,7 +220,7 @@ def render(code, c, shell, css, locales, names):
         % {"locales": json.dumps(ORDER), "current": code},
         "pixel": PIXEL_SCRIPT % {"pixel": PIXEL_ID},
     }
-    for section in ("meta", "hero", "cta", "shot", "spss", "how", "methods", "trust", "get", "faq", "footer"):
+    for section in ("meta", "hero", "cta", "shot", "spss", "how", "methods", "trust", "release", "get", "faq", "footer"):
         for key, value in c[section].items():
             if isinstance(value, str):
                 scalars[f"{section}.{key}"] = value

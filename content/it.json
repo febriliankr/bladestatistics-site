@@ -124,6 +124,28 @@
       "link": "Guarda come funzionano i flussi"
     }
   },
+  "release": {
+    "h2": "Novità della versione 0.2.9",
+    "sub": "Questa versione rende le azioni più sicure, l'arresto più affidabile e il lavoro più prevedibile.",
+    "items": [
+      {
+        "h3": "Più sicurezza per i tuoi file",
+        "p": "Blade controlla meglio cartelle e comandi, chiede la tua approvazione per le azioni sensibili e non passa i segreti salvati agli strumenti che avvia."
+      },
+      {
+        "h3": "Stop ferma davvero tutto",
+        "p": "Premendo Stop ora si annullano sia la risposta online sia i comandi locali avviati da Blade, compresi i loro processi secondari."
+      },
+      {
+        "h3": "Chat e allegati restano al sicuro",
+        "p": "I nuovi messaggi non vengono più sostituiti da vecchie copie sincronizzate. File trascinati, albero dei file e nomi di cartella in qualsiasi lingua funzionano meglio."
+      },
+      {
+        "h3": "Ogni download viene verificato",
+        "p": "Una versione non può essere pubblicata senza i programmi di installazione per macOS e Windows. Anche le connessioni alle API remote usano HTTPS."
+      }
+    ]
+  },
   "get": {
     "h2": "Scarica Blade Desktop 0.2.9",
     "sub": "Beta. Blade richiede R, lo cerca al primo avvio e può installare R e Python al posto tuo.",
