@@ -227,21 +227,24 @@ def render(code, c, shell, css, locales, names):
     return body
 
 
-def render_privacy(css):
-    """The policy is one English page, not thirteen.
+# The legal pages are one English page each, not thirteen. The rest of the site
+# is marketing copy, where a translation that drifts slightly costs nothing.
+# These are statements about what happens to someone's data, and a machine
+# translation that drifts is a false statement in twelve languages. The footer
+# links are translated so the pages are findable; the wording stays in one
+# reviewed language until a human translates it.
+DOCS = {
+    "privacy": "privacy.html",
+    "data-deletion": "data-deletion.html",
+}
 
-    Every other page here is marketing copy, where a translation that drifts
-    slightly costs nothing. A privacy policy is a legal statement about what
-    happens to someone's data, and a machine translation that drifts is a
-    false statement in twelve languages. The footer link is translated so the
-    page is findable; the policy itself stays in one reviewed wording until a
-    human translates it.
-    """
-    page = (ROOT / "src" / "privacy.html").read_text(encoding="utf-8")
-    page = page.replace("{{css}}", css)
+
+def render_doc(name, css, doc_css):
+    page = (ROOT / "src" / DOCS[name]).read_text(encoding="utf-8")
+    page = page.replace("{{css}}", css).replace("{{docCss}}", doc_css)
     leftover = page.split("{{")[1:]
     if leftover:
-        sys.exit("privacy: unresolved placeholder {{" + leftover[0].split("}}")[0] + "}}")
+        sys.exit(name + ": unresolved placeholder {{" + leftover[0].split("}}")[0] + "}}")
     return page
 
 
@@ -261,15 +264,17 @@ def main():
         out.write_text(page, encoding="utf-8")
         print(f"  {code:3} -> {out.relative_to(ROOT)}  ({len(page) // 1024} KB)")
 
-    (ROOT / "privacy").mkdir(exist_ok=True)
-    privacy = render_privacy(css)
-    (ROOT / "privacy" / "index.html").write_text(privacy, encoding="utf-8")
-    print(f"  privacy -> privacy/index.html  ({len(privacy) // 1024} KB)")
+    doc_css = (ROOT / "src" / "_doc-css.html").read_text(encoding="utf-8")
+    for name in DOCS:
+        page = render_doc(name, css, doc_css)
+        (ROOT / name).mkdir(exist_ok=True)
+        (ROOT / name / "index.html").write_text(page, encoding="utf-8")
+        print(f"  {name:8} -> {name}/index.html  ({len(page) // 1024} KB)")
 
     urls = "\n".join(
         "  <url><loc>%s</loc></url>" % (SITE + "/" if code == "en" else f"{SITE}/{code}/")
         for code in ORDER
-    ) + f"\n  <url><loc>{SITE}/privacy</loc></url>"
+    ) + "".join(f"\n  <url><loc>{SITE}/{name}</loc></url>" for name in DOCS)
     (ROOT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

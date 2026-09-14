@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Privacy &middot; Blade Statistics</title>
-<meta name="description" content="What Blade Statistics collects, who processes it, and how to get it deleted." />
-<link rel="canonical" href="https://bladestatistics.com/privacy" />
+<title>Delete your data &middot; Blade Statistics</title>
+<meta name="description" content="How to have your Blade Statistics account and data deleted, what gets removed, and how long it takes." />
+<link rel="canonical" href="https://bladestatistics.com/data-deletion" />
 <link rel="icon" href="/logo.png" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://bladestatistics.com/privacy" />
-<meta property="og:title" content="Privacy &middot; Blade Statistics" />
-<meta property="og:description" content="What Blade Statistics collects, who processes it, and how to get it deleted." />
+<meta property="og:url" content="https://bladestatistics.com/data-deletion" />
+<meta property="og:title" content="Delete your data &middot; Blade Statistics" />
+<meta property="og:description" content="How to have your Blade Statistics account and data deleted, what gets removed, and how long it takes." />
 <meta name="color-scheme" content="dark light" />
 <style>
   :root {
@@ -559,161 +559,73 @@
 <div class="wrap">
   <article class="doc">
     <a class="back" href="/">&larr; Blade Statistics</a>
-    <h1>Privacy</h1>
+    <h1>Delete your data</h1>
     <p class="updated">Last updated 14 September 2026</p>
 
     <p class="lead">
-      Blade is made by PT Skala Teknologi Nusantara. This page covers both this
-      website and the Blade desktop app, and describes what actually happens to
-      your data rather than what we might one day like to do with it.
+      You can have everything we hold about you erased. There is no form to
+      fight with and no retention offer — you ask, and it goes.
     </p>
 
     <div class="box">
-      <ul>
-        <li>This website runs one advertising tracker (Meta) and nothing else.</li>
-        <li>The app needs an account, and stores your analysis conversations so you can reopen them.</li>
-        <li>Files in your workspace stay on your computer until you ask Blade to read one.</li>
-        <li>Your analysis is processed by a third-party AI provider. Today that is OpenAI.</li>
-        <li>We do not sell personal data.</li>
-      </ul>
+      <p style="margin:0 0 10px"><strong>To delete your account and all of its data</strong></p>
+      <p style="margin:0">
+        Email <a href="mailto:privacy@bladestatistics.com?subject=Delete%20my%20data">privacy@bladestatistics.com</a>
+        from the address you signed up with, with the subject
+        <em>Delete my data</em>. Using your sign-up address is how we know the
+        request is yours; if you cannot, write from any address and we will
+        verify another way before deleting anything.
+      </p>
     </div>
 
-    <h2>This website</h2>
-
-    <h3>Advertising pixel</h3>
+    <h2>What gets deleted</h2>
+    <ul>
+      <li>Your account: email address, name, and password hash.</li>
+      <li>Your organisation membership, and the organisation itself if you were its only member.</li>
+      <li>Every conversation with Blade, including the messages, the model's replies, and the tool output they contain.</li>
+      <li>Every stored analysis: the R code, the results, and any generated charts.</li>
+      <li>Every dataset you uploaded, both the database record and the stored file itself.</li>
+      <li>Any feedback you sent from inside the app.</li>
+    </ul>
     <p>
-      Every page on bladestatistics.com loads the Meta pixel. It reports that
-      you viewed the page, and — if you click a download link — that a download
-      started, along with the platform, processor architecture, app version and
-      page language. Meta receives your IP address, your browser's user agent
-      and the page address, and sets cookies in your browser. We use this only
-      to measure whether our ads reach people who find Blade useful.
-    </p>
-    <p>
-      To avoid it, use a content blocker, or adjust your
-      <a href="https://www.facebook.com/adpreferences/ad_settings" rel="noopener">Meta ad settings</a>.
-      Blocking it changes nothing about the site or the app.
+      This is a permanent deletion, not a flag that hides the data from you. It
+      cannot be undone, and we cannot restore an account afterwards.
     </p>
 
-    <h3>Language preference</h3>
+    <h2>How long it takes</h2>
     <p>
-      Choosing a language stores the code in your browser under
-      <code>bladeLang</code>, so the site stops guessing on your next visit. It
-      stays in your browser and is never sent anywhere.
+      We action requests within 30 days, and usually within a few working days.
+      You get an email confirming it is done. Encrypted backups roll over on
+      their own schedule, so a copy may persist in a backup for up to 30 further
+      days; nothing is restored from those backups except to recover from a
+      failure of the whole system.
     </p>
 
-    <h3>Hosting</h3>
+    <h2>What we keep, and why</h2>
     <p>
-      The site is served by GitHub Pages, which keeps standard web-server logs
-      including IP addresses.
+      If you ever paid for Blade, our payment provider keeps the invoice
+      records that tax and accounting law require them to keep. Those records
+      contain the fact of a transaction, not your analyses or your data. We
+      cannot delete them early, and neither can they.
     </p>
 
-    <h2>The desktop app</h2>
-
-    <h3>Your account</h3>
+    <h2>Deleting one thing rather than everything</h2>
     <p>
-      An email address, optionally a name, a one-way hash of your password (we
-      never store the password itself), and which organisation you belong to.
-      Sign-in codes are delivered by email.
+      You do not have to delete the whole account. Ask us to remove a specific
+      dataset, a specific conversation, or a specific analysis and we will
+      remove only that. Say which one in the same email.
     </p>
 
-    <h3>Conversations and analyses</h3>
+    <h2>Data collected by this website</h2>
     <p>
-      What you ask Blade, what it answers, and the results of the statistical
-      tools it runs are stored so a session survives closing the app. Each
-      analysis keeps the R code that produced it and the numbers that came back.
-    </p>
-
-    <h3>Your files</h3>
-    <p>
-      Blade runs its tools on your own machine. The contents of your workspace
-      are not uploaded, and we cannot browse your disk. What does leave your
-      computer is whatever the model is shown in the course of answering you:
-      the text of a file it opens, the output of a command it runs, and the
-      contents of a dataset you point it at. If a file is sensitive, do not ask
-      Blade to read it.
-    </p>
-    <p>
-      Datasets you deliberately upload to the cloud workspace are stored on
-      Cloudflare R2.
-    </p>
-
-    <h3>AI processing</h3>
-    <p>
-      The analysis itself is performed by a large language model run by a third
-      party. Today that provider is <strong>OpenAI</strong>, through its Agents
-      API. Your conversation — including any file contents and tool output it
-      contains — is sent to OpenAI and held on OpenAI's servers in the
-      United States for as long as the session lives there. OpenAI states that
-      content submitted through its API is not used to train its models.
-    </p>
-    <p>
-      We may change provider. When we do, this page is updated to name the one
-      actually in use.
-    </p>
-
-    <h3>Payments</h3>
-    <p>
-      Subscriptions are handled by Paddle, who act as merchant of record. Card
-      details go to Paddle and never reach us; we see only which plan you are on
-      and whether it is active.
-    </p>
-
-    <h3>Feedback</h3>
-    <p>
-      If you send feedback from inside the app we receive your message together
-      with your app version and platform, so a bug report is actionable.
-    </p>
-
-    <h2>Who else processes your data</h2>
-    <div class="tw">
-      <table>
-        <tr><th>Who</th><th>What they handle</th><th>Where</th></tr>
-        <tr><td>OpenAI</td><td>Conversations, including file contents and tool output</td><td>United States</td></tr>
-        <tr><td>Neon</td><td>Accounts, conversations, analysis records</td><td>Singapore</td></tr>
-        <tr><td>Cloudflare</td><td>Datasets you upload</td><td>Global network</td></tr>
-        <tr><td>Resend</td><td>Sign-in code emails</td><td>United States</td></tr>
-        <tr><td>Paddle</td><td>Subscriptions and payment</td><td>United Kingdom / EU</td></tr>
-        <tr><td>Meta</td><td>This website's advertising pixel only — never app data</td><td>United States</td></tr>
-        <tr><td>GitHub</td><td>Website hosting logs</td><td>United States</td></tr>
-      </table>
-    </div>
-    <p>
-      We do not sell personal data, and nothing from inside the app is shared
-      with advertisers.
-    </p>
-
-    <h2>How long we keep it</h2>
-    <p>
-      Conversations, analyses and uploaded datasets are kept until you delete
-      them or ask us to. Account records are kept while the account exists.
-      Deleting your account removes your conversations, analyses and datasets
-      along with it.
-    </p>
-
-    <h2>Your rights</h2>
-    <p>
-      Wherever you live, you can ask us for a copy of what we hold about you,
-      ask us to correct it, or ask us to delete it. If you are in the UK, the
-      EU, or another jurisdiction with equivalent law, you also have the right
-      to object to processing, to restrict it, and to receive your data in a
-      portable form. Email
-      <a href="mailto:privacy@bladestatistics.com">privacy@bladestatistics.com</a>
-      and we will act within 30 days.
-    </p>
-    <p>
-      To erase everything we hold, see
-      <a href="/data-deletion">deleting your data</a>, which sets out exactly
-      what is removed and how long it takes.
-    </p>
-
-    <h2>Children</h2>
-    <p>Blade is not intended for anyone under 16, and we do not knowingly collect their data.</p>
-
-    <h2>Changes</h2>
-    <p>
-      If this page changes materially we update the date at the top. For a
-      change that affects what leaves your computer, we will say so in the app.
+      Separately from your account, this website loads Meta's advertising
+      pixel, which records page views and download clicks. That data sits with
+      Meta rather than with us, so deleting your Blade account does not touch
+      it. To clear it, use
+      <a href="https://accountscenter.facebook.com/info_and_permissions" rel="noopener">Meta's Accounts Center</a>,
+      where you can review and remove the off-Facebook activity that sites have
+      reported about you. A content blocker stops it being collected at all.
+      See the <a href="/privacy">privacy policy</a> for what the pixel sends.
     </p>
 
     <h2>Contact</h2>
@@ -726,7 +638,7 @@
   <footer>
     <span>Blade, agentic statistical analysis.</span>
     <a href="/">Home</a>
-    <a href="/data-deletion">Delete your data</a>
+    <a href="/privacy">Privacy</a>
     <span class="spacer">PT Skala Teknologi Nusantara</span>
   </footer>
 </div>
