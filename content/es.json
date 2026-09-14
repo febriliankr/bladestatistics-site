@@ -142,6 +142,7 @@
   },
   "footer": {
     "tagline": "Blade, análisis estadístico con agentes.",
-    "workflows": "Flujos de trabajo"
+    "workflows": "Flujos de trabajo",
+    "privacy": "Privacidad"
   }
 }

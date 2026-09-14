@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy &middot; Blade Statistics</title>
+<meta name="description" content="What Blade Statistics collects, who processes it, and how to get it deleted." />
+<link rel="canonical" href="https://bladestatistics.com/privacy" />
+<link rel="icon" href="/logo.png" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://bladestatistics.com/privacy" />
+<meta property="og:title" content="Privacy &middot; Blade Statistics" />
+<meta property="og:description" content="What Blade Statistics collects, who processes it, and how to get it deleted." />
+<meta name="color-scheme" content="dark light" />
+{{css}}
+<style>
+  .doc { padding: 64px 0 0; }
+  .doc .back { color: var(--muted); text-decoration: none; font-size: 14px; }
+  .doc .back:hover { color: var(--fg); }
+  .doc h1 { margin: 28px 0 8px; max-width: none; font-size: clamp(30px, 5vw, 42px); }
+  .doc .updated { color: var(--dim); font-size: 14px; margin: 0 0 36px; }
+  .doc h2 {
+    margin: 44px 0 12px; font-size: 21px; letter-spacing: -.015em; font-weight: 640;
+  }
+  .doc h3 { margin: 28px 0 8px; font-size: 16.5px; font-weight: 620; }
+  .doc p, .doc li { color: #c9c9cd; }
+  .doc li { margin: 6px 0; }
+  .doc a { color: var(--brand-ink); }
+  .doc .lead { font-size: 17.5px; color: var(--muted); }
+  .doc .box {
+    border: 1px solid var(--line); background: var(--panel);
+    border-radius: 12px; padding: 18px 20px; margin: 24px 0;
+  }
+  .doc .box ul { margin: 0; padding-left: 20px; }
+  .doc table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14.5px; }
+  .doc th, .doc td {
+    text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .doc th { color: var(--fg); font-weight: 620; white-space: nowrap; }
+  .doc td { color: #c9c9cd; }
+  .doc .tw { overflow-x: auto; }
+  .doc code {
+    background: var(--code-bg); border-radius: 5px; padding: 1px 5px; font-size: 13.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <article class="doc">
+    <a class="back" href="/">&larr; Blade Statistics</a>
+    <h1>Privacy</h1>
+    <p class="updated">Last updated 14 September 2026</p>
+
+    <p class="lead">
+      Blade is made by PT Skala Teknologi Nusantara. This page covers both this
+      website and the Blade desktop app, and describes what actually happens to
+      your data rather than what we might one day like to do with it.
+    </p>
+
+    <div class="box">
+      <ul>
+        <li>This website runs one advertising tracker (Meta) and nothing else.</li>
+        <li>The app needs an account, and stores your analysis conversations so you can reopen them.</li>
+        <li>Files in your workspace stay on your computer until you ask Blade to read one.</li>
+        <li>Your analysis is processed by a third-party AI provider. Today that is OpenAI.</li>
+        <li>We do not sell personal data.</li>
+      </ul>
+    </div>
+
+    <h2>This website</h2>
+
+    <h3>Advertising pixel</h3>
+    <p>
+      Every page on bladestatistics.com loads the Meta pixel. It reports that
+      you viewed the page, and — if you click a download link — that a download
+      started, along with the platform, processor architecture, app version and
+      page language. Meta receives your IP address, your browser's user agent
+      and the page address, and sets cookies in your browser. We use this only
+      to measure whether our ads reach people who find Blade useful.
+    </p>
+    <p>
+      To avoid it, use a content blocker, or adjust your
+      <a href="https://www.facebook.com/adpreferences/ad_settings" rel="noopener">Meta ad settings</a>.
+      Blocking it changes nothing about the site or the app.
+    </p>
+
+    <h3>Language preference</h3>
+    <p>
+      Choosing a language stores the code in your browser under
+      <code>bladeLang</code>, so the site stops guessing on your next visit. It
+      stays in your browser and is never sent anywhere.
+    </p>
+
+    <h3>Hosting</h3>
+    <p>
+      The site is served by GitHub Pages, which keeps standard web-server logs
+      including IP addresses.
+    </p>
+
+    <h2>The desktop app</h2>
+
+    <h3>Your account</h3>
+    <p>
+      An email address, optionally a name, a one-way hash of your password (we
+      never store the password itself), and which organisation you belong to.
+      Sign-in codes are delivered by email.
+    </p>
+
+    <h3>Conversations and analyses</h3>
+    <p>
+      What you ask Blade, what it answers, and the results of the statistical
+      tools it runs are stored so a session survives closing the app. Each
+      analysis keeps the R code that produced it and the numbers that came back.
+    </p>
+
+    <h3>Your files</h3>
+    <p>
+      Blade runs its tools on your own machine. The contents of your workspace
+      are not uploaded, and we cannot browse your disk. What does leave your
+      computer is whatever the model is shown in the course of answering you:
+      the text of a file it opens, the output of a command it runs, and the
+      contents of a dataset you point it at. If a file is sensitive, do not ask
+      Blade to read it.
+    </p>
+    <p>
+      Datasets you deliberately upload to the cloud workspace are stored on
+      Cloudflare R2.
+    </p>
+
+    <h3>AI processing</h3>
+    <p>
+      The analysis itself is performed by a large language model run by a third
+      party. Today that provider is <strong>OpenAI</strong>, through its Agents
+      API. Your conversation — including any file contents and tool output it
+      contains — is sent to OpenAI and held on OpenAI's servers in the
+      United States for as long as the session lives there. OpenAI states that
+      content submitted through its API is not used to train its models.
+    </p>
+    <p>
+      We may change provider. When we do, this page is updated to name the one
+      actually in use.
+    </p>
+
+    <h3>Payments</h3>
+    <p>
+      Subscriptions are handled by Paddle, who act as merchant of record. Card
+      details go to Paddle and never reach us; we see only which plan you are on
+      and whether it is active.
+    </p>
+
+    <h3>Feedback</h3>
+    <p>
+      If you send feedback from inside the app we receive your message together
+      with your app version and platform, so a bug report is actionable.
+    </p>
+
+    <h2>Who else processes your data</h2>
+    <div class="tw">
+      <table>
+        <tr><th>Who</th><th>What they handle</th><th>Where</th></tr>
+        <tr><td>OpenAI</td><td>Conversations, including file contents and tool output</td><td>United States</td></tr>
+        <tr><td>Neon</td><td>Accounts, conversations, analysis records</td><td>Singapore</td></tr>
+        <tr><td>Cloudflare</td><td>Datasets you upload</td><td>Global network</td></tr>
+        <tr><td>Resend</td><td>Sign-in code emails</td><td>United States</td></tr>
+        <tr><td>Paddle</td><td>Subscriptions and payment</td><td>United Kingdom / EU</td></tr>
+        <tr><td>Meta</td><td>This website's advertising pixel only — never app data</td><td>United States</td></tr>
+        <tr><td>GitHub</td><td>Website hosting logs</td><td>United States</td></tr>
+      </table>
+    </div>
+    <p>
+      We do not sell personal data, and nothing from inside the app is shared
+      with advertisers.
+    </p>
+
+    <h2>How long we keep it</h2>
+    <p>
+      Conversations, analyses and uploaded datasets are kept until you delete
+      them or ask us to. Account records are kept while the account exists.
+      Deleting your account removes your conversations, analyses and datasets
+      along with it.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      Wherever you live, you can ask us for a copy of what we hold about you,
+      ask us to correct it, or ask us to delete it. If you are in the UK, the
+      EU, or another jurisdiction with equivalent law, you also have the right
+      to object to processing, to restrict it, and to receive your data in a
+      portable form. Email
+      <a href="mailto:privacy@bladestatistics.com">privacy@bladestatistics.com</a>
+      and we will act within 30 days.
+    </p>
+
+    <h2>Children</h2>
+    <p>Blade is not intended for anyone under 16, and we do not knowingly collect their data.</p>
+
+    <h2>Changes</h2>
+    <p>
+      If this page changes materially we update the date at the top. For a
+      change that affects what leaves your computer, we will say so in the app.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      PT Skala Teknologi Nusantara &middot;
+      <a href="mailto:privacy@bladestatistics.com">privacy@bladestatistics.com</a>
+    </p>
+  </article>
+
+  <footer>
+    <span>Blade, agentic statistical analysis.</span>
+    <a href="/">Home</a>
+    <span class="spacer">PT Skala Teknologi Nusantara</span>
+  </footer>
+</div>
+
+</body>
+</html>

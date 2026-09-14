@@ -227,6 +227,24 @@ def render(code, c, shell, css, locales, names):
     return body
 
 
+def render_privacy(css):
+    """The policy is one English page, not thirteen.
+
+    Every other page here is marketing copy, where a translation that drifts
+    slightly costs nothing. A privacy policy is a legal statement about what
+    happens to someone's data, and a machine translation that drifts is a
+    false statement in twelve languages. The footer link is translated so the
+    page is findable; the policy itself stays in one reviewed wording until a
+    human translates it.
+    """
+    page = (ROOT / "src" / "privacy.html").read_text(encoding="utf-8")
+    page = page.replace("{{css}}", css)
+    leftover = page.split("{{")[1:]
+    if leftover:
+        sys.exit("privacy: unresolved placeholder {{" + leftover[0].split("}}")[0] + "}}")
+    return page
+
+
 def main():
     shell = (ROOT / "src" / "shell.html").read_text(encoding="utf-8")
     css = (ROOT / "src" / "_css.html").read_text(encoding="utf-8")
@@ -243,10 +261,15 @@ def main():
         out.write_text(page, encoding="utf-8")
         print(f"  {code:3} -> {out.relative_to(ROOT)}  ({len(page) // 1024} KB)")
 
+    (ROOT / "privacy").mkdir(exist_ok=True)
+    privacy = render_privacy(css)
+    (ROOT / "privacy" / "index.html").write_text(privacy, encoding="utf-8")
+    print(f"  privacy -> privacy/index.html  ({len(privacy) // 1024} KB)")
+
     urls = "\n".join(
         "  <url><loc>%s</loc></url>" % (SITE + "/" if code == "en" else f"{SITE}/{code}/")
         for code in ORDER
-    )
+    ) + f"\n  <url><loc>{SITE}/privacy</loc></url>"
     (ROOT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
