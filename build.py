@@ -249,6 +249,7 @@ def render(code, c, shell, css, locales, names):
 DOCS = {
     "privacy": "privacy.html",
     "data-deletion": "data-deletion.html",
+    "terms": "terms.html",
 }
 
 

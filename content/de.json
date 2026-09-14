@@ -165,6 +165,7 @@
   "footer": {
     "tagline": "Blade, agentische statistische Analyse.",
     "workflows": "Workflows",
-    "privacy": "Datenschutz"
+    "privacy": "Datenschutz",
+    "terms": "AGB"
   }
 }

@@ -165,6 +165,7 @@
   "footer": {
     "tagline": "Blade、エージェントによる統計解析。",
     "workflows": "ワークフロー",
-    "privacy": "プライバシー"
+    "privacy": "プライバシー",
+    "terms": "利用規約"
   }
 }
