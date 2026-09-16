@@ -26,6 +26,23 @@ try {
 } catch (e) {}
 </script>
 {{css}}
+<style>
+  .pro{border:1px solid var(--line,#232326);background:var(--panel,#131315);border-radius:14px;padding:22px;margin:0 0 26px;text-align:start}
+  .pro-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+  .pro-head h3{margin:0 0 4px;font-size:19px;letter-spacing:-.02em}
+  .pro-sub{margin:0;color:var(--muted,#8b8b90);font-size:14px;max-width:44ch}
+  .pro-price{white-space:nowrap;text-align:end}
+  .pro-price b{font-size:20px}.pro-price span{color:var(--muted,#8b8b90);font-size:14px}
+  .pro-form{display:flex;gap:8px;margin:18px 0 0;flex-wrap:wrap}
+  .pro-form input{flex:1 1 220px;min-width:0;padding:11px 13px;font-size:15px;border:1px solid var(--line,#232326);border-radius:9px;background:var(--bg,#0b0b0c);color:var(--fg,#ededee)}
+  .pro-form input:focus{outline:none;border-color:var(--brand,#ff4900)}
+  .pro-form button{background:var(--brand,#ff4900);color:#fff;border:0;cursor:pointer;font-size:15px;font-weight:550;padding:11px 22px;border-radius:9px}
+  .pro-form button:hover{background:#ff6326}.pro-form button:disabled{opacity:.6;cursor:default}
+  .pro-msg{margin:10px 0 0;font-size:14px;color:#ff8a6a}
+  .pro-note{margin:12px 0 0;font-size:14px;color:var(--muted,#8b8b90)}
+  .pro-note a{color:var(--brand,#ff4900);text-decoration:none}.pro-note a:hover{text-decoration:underline}
+  .free-label{font-size:14px;color:var(--muted,#8b8b90);margin:0 0 12px}
+</style>
 </head>
 <body>
 
@@ -118,6 +135,24 @@ try {
   <section class="get" id="get">
     <h2 class="reveal">{{get.h2}}</h2>
     <p class="sub reveal">{{get.sub}}</p>
+
+    <div class="pro reveal">
+      <div class="pro-head">
+        <div>
+          <h3>Blade Pro</h3>
+          <p class="pro-sub">Unlimited, private, local statistical analysis with AI. Cancel anytime.</p>
+        </div>
+        <div class="pro-price"><b>Rp299.000</b><span>&nbsp;/mo</span></div>
+      </div>
+      <form id="pro-form" class="pro-form" novalidate>
+        <input id="pro-email" type="email" required placeholder="you@email.com" autocomplete="email" aria-label="Email" />
+        <button type="submit" id="pro-btn">Get Pro</button>
+      </form>
+      <p id="pro-msg" class="pro-msg" hidden></p>
+      <p class="pro-note">Prefer to try first? <a href="#dl">Download free below</a> &mdash; no account needed.</p>
+    </div>
+
+    <p class="free-label reveal" id="dl">Or download free to try:</p>
     <div class="dl reveal">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.12/blade-desktop-0.2.12-mac-arm64.dmg">
         <span class="os">{{svgMac}} macOS</span>
@@ -321,6 +356,37 @@ try {
         locale: document.documentElement.lang || 'en'
       });
     } catch (err) {}
+  });
+})();
+</script>
+
+<script>
+// Pro checkout: email -> API creates/reuses an account + Xendit session -> hosted
+// pay page. Purchase is reported from billing/success and the server webhook.
+(function () {
+  var API = 'https://api.skalatec.com';
+  var PRICE = 299000;
+  var form = document.getElementById('pro-form');
+  if (!form) return;
+  var btn = document.getElementById('pro-btn');
+  var msg = document.getElementById('pro-msg');
+  var input = document.getElementById('pro-email');
+  function fail(t) { btn.disabled = false; btn.textContent = 'Get Pro'; msg.hidden = false; msg.textContent = t; }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (input.value || '').trim();
+    if (!email || email.indexOf('@') < 1) { fail('Enter a valid email.'); return; }
+    msg.hidden = true; btn.disabled = true; btn.textContent = 'Starting checkout…';
+    if (typeof fbq === 'function') fbq('track', 'InitiateCheckout', { value: PRICE, currency: 'IDR' });
+    fetch(API + '/api/subscription/web-checkout', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, b: b }; });
+    }).then(function (res) {
+      if (res.ok && res.b && res.b.url) { window.location.href = res.b.url; return; }
+      fail((res.b && res.b.message) || 'Could not start checkout. Please try again.');
+    }).catch(function () { fail('Network error. Please try again.'); });
   });
 })();
 </script>

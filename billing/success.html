@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Payment received · Blade</title>
+<meta name="robots" content="noindex">
+<style>body{margin:0;background:#f6f5f2;color:#171717;font:16px/1.5 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #ddd8cf;border-radius:16px;max-width:440px;padding:32px;box-shadow:0 12px 40px #00000012}h1{font-size:24px;margin:0 0 10px}p{color:#5b5750;margin:0}a{color:#ff4900}strong{color:#171717}</style>
+<!-- Meta Pixel + browser Purchase, deduped with the server CAPI event by the checkout ref -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1373789871610184');fbq('track','PageView');
+(function(){try{var m=(location.search.match(/[?&]ref=([^&]+)/)||[])[1];if(!m)return;
+var ref=decodeURIComponent(m);if(/^[A-Za-z0-9._-]{1,128}$/.test(ref))
+fbq('track','Purchase',{value:299000,currency:'IDR'},{eventID:ref});}catch(e){}})();
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1"/></noscript>
+</head>
+<body><main class="card"><h1>Payment received</h1><p>Thank you! Blade Pro is now active for your email. <a href="/#dl">Download Blade</a>, then sign in with the same email to unlock Pro.</p></main></body></html>
