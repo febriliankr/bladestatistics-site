@@ -18,6 +18,8 @@
   },
   "cta": {
     "get": "Unduh Blade",
+    "subscribe": "Berlangganan — Rp299.000/bulan",
+    "pay": "Bayar dengan QRIS atau VA",
     "more": "Unduhan lain",
     "downloadFor": "Unduh untuk %s",
     "version": "versi",

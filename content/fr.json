@@ -18,6 +18,8 @@
   },
   "cta": {
     "get": "Télécharger Blade",
+    "subscribe": "S’abonner — Rp299.000/mois",
+    "pay": "Payer par QRIS ou compte virtuel",
     "more": "Autres téléchargements",
     "downloadFor": "Télécharger pour %s",
     "version": "version",

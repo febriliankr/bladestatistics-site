@@ -18,6 +18,8 @@
   },
   "cta": {
     "get": "Get Blade",
+    "subscribe": "Subscribe — Rp299.000/month",
+    "pay": "Pay with QRIS or VA",
     "more": "Other downloads",
     "downloadFor": "Download for %s",
     "version": "version",

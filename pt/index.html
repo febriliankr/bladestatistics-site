@@ -618,6 +618,12 @@ try {
   .pro-note{margin:12px 0 0;font-size:14px;color:var(--muted,#8b8b90)}
   .pro-note a{color:var(--brand,#ff4900);text-decoration:none}.pro-note a:hover{text-decoration:underline}
   .free-label{font-size:14px;color:var(--muted,#8b8b90);margin:0 0 12px}
+  .hero-actions{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+  .hero-actions+.note{display:block;margin:12px 0 0}
+  .hero-pro{border:1px solid var(--brand,#ff4900);background:transparent;color:var(--brand-ink,#ff5c1a)}
+  .hero-pro:hover{background:var(--brand-wash-hover,rgba(255,73,0,.075))}
+  .pro{scroll-margin-top:24px}
+  @media(max-width:520px){.hero-actions{align-items:stretch}.hero-actions>.btn,.hero-actions>.cta{width:100%}.hero-actions>.btn{text-align:center}.hero-actions>.cta>.btn:first-child{flex:1;text-align:center}}
 </style>
 </head>
 <body>
@@ -650,13 +656,16 @@ try {
     </div>
     <h1>Estatística sem o <em>software de estatística</em>.</h1>
     <p class="lede">Pergunte sobre seus dados em linguagem comum. O Blade escolhe o teste e roda em R na sua máquina. Você recebe saída APA, checagem de pressupostos e o script por trás.</p>
-    <span class="cta">
-      <a class="btn" id="cta" href="#get">Baixar o Blade</a>
-      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Outros downloads" hidden>
-        <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
-      </button>
-      <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
-    </span>
+    <div class="hero-actions">
+      <span class="cta">
+        <a class="btn" id="cta" href="#get">Baixar o Blade</a>
+        <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Outros downloads" hidden>
+          <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
+        </button>
+        <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
+      </span>
+      <a class="btn hero-pro" href="#pro">Assinar — Rp299.000/mês</a>
+    </div>
     <span class="note" id="cta-note">macOS e Windows, beta</span>
   </header>
 </div>
@@ -820,7 +829,7 @@ try {
     <h2 class="reveal">Baixe o Blade Desktop 0.2.12</h2>
     <p class="sub reveal">Beta. O Blade precisa do R, procura por ele no primeiro início e pode instalar R e Python para você.</p>
 
-    <div class="pro reveal">
+    <div class="pro reveal" id="pro">
       <div class="pro-head">
         <div>
           <h3>Blade Pro</h3>
@@ -830,7 +839,7 @@ try {
       </div>
       <form id="pro-form" class="pro-form" novalidate>
         <input id="pro-email" type="email" required placeholder="you@email.com" autocomplete="email" aria-label="Email" />
-        <button type="submit" id="pro-btn">Get Pro</button>
+        <button type="submit" id="pro-btn">Pagar com QRIS ou conta virtual</button>
       </form>
       <p id="pro-msg" class="pro-msg" hidden></p>
       <p class="pro-note">Prefer to try first? <a href="#dl">Download free below</a> &mdash; no account needed.</p>
@@ -1078,7 +1087,8 @@ try {
   var btn = document.getElementById('pro-btn');
   var msg = document.getElementById('pro-msg');
   var input = document.getElementById('pro-email');
-  function fail(t) { btn.disabled = false; btn.textContent = 'Get Pro'; msg.hidden = false; msg.textContent = t; }
+  var idleLabel = btn.textContent;
+  function fail(t) { btn.disabled = false; btn.textContent = idleLabel; msg.hidden = false; msg.textContent = t; }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = (input.value || '').trim();

@@ -18,6 +18,8 @@
   },
   "cta": {
     "get": "Blade holen",
+    "subscribe": "Abonnieren — Rp299.000/Monat",
+    "pay": "Mit QRIS oder virtuellem Konto zahlen",
     "more": "Weitere Downloads",
     "downloadFor": "Für %s herunterladen",
     "version": "Version",
