@@ -18,8 +18,6 @@
   },
   "cta": {
     "get": "Télécharger Blade",
-    "subscribe": "S’abonner pour Rp299.000/mois",
-    "pay": "Payer par QRIS ou compte virtuel",
     "more": "Autres téléchargements",
     "downloadFor": "Télécharger pour %s",
     "version": "version",
@@ -167,6 +165,7 @@
   "footer": {
     "tagline": "Blade, analyse statistique par agent.",
     "workflows": "Flux de travail",
+    "pricing": "Tarifs",
     "privacy": "Confidentialité",
     "terms": "Conditions"
   }

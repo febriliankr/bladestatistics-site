@@ -602,29 +602,6 @@ try {
   }
 </style>
 
-<style>
-  .pro{border:1px solid var(--line,#232326);background:var(--panel,#131315);border-radius:14px;padding:22px;margin:0 0 26px;text-align:start}
-  .pro-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-  .pro-head h3{margin:0 0 4px;font-size:19px;letter-spacing:-.02em}
-  .pro-sub{margin:0;color:var(--muted,#8b8b90);font-size:14px;max-width:44ch}
-  .pro-price{white-space:nowrap;text-align:end}
-  .pro-price b{font-size:20px}.pro-price span{color:var(--muted,#8b8b90);font-size:14px}
-  .pro-form{display:flex;gap:8px;margin:18px 0 0;flex-wrap:wrap}
-  .pro-form input{flex:1 1 220px;min-width:0;padding:11px 13px;font-size:15px;border:1px solid var(--line,#232326);border-radius:9px;background:var(--bg,#0b0b0c);color:var(--fg,#ededee)}
-  .pro-form input:focus{outline:none;border-color:var(--brand,#ff4900)}
-  .pro-form button{background:var(--brand,#ff4900);color:#fff;border:0;cursor:pointer;font-size:15px;font-weight:550;padding:11px 22px;border-radius:9px}
-  .pro-form button:hover{background:#ff6326}.pro-form button:disabled{opacity:.6;cursor:default}
-  .pro-msg{margin:10px 0 0;font-size:14px;color:#ff8a6a}
-  .pro-note{margin:12px 0 0;font-size:14px;color:var(--muted,#8b8b90)}
-  .pro-note a{color:var(--brand,#ff4900);text-decoration:none}.pro-note a:hover{text-decoration:underline}
-  .free-label{font-size:14px;color:var(--muted,#8b8b90);margin:0 0 12px}
-  .hero-actions{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
-  .hero-actions+.note{display:block;margin:12px 0 0}
-  .hero-pro{border:1px solid var(--brand,#ff4900);background:transparent;color:var(--brand-ink,#ff5c1a)}
-  .hero-pro:hover{background:var(--brand-wash-hover,rgba(255,73,0,.075))}
-  .pro{scroll-margin-top:24px}
-  @media(max-width:520px){.hero-actions{align-items:stretch}.hero-actions>.btn,.hero-actions>.cta{width:100%}.hero-actions>.btn{text-align:center}.hero-actions>.cta>.btn:first-child{flex:1;text-align:center}}
-</style>
 </head>
 <body>
 
@@ -656,16 +633,13 @@ try {
     </div>
     <h1>Статистика без <em>статистического пакета</em>.</h1>
     <p class="lede">Спрашивайте о данных обычными словами. Blade выбирает критерий и считает в R на вашем компьютере. Вы получаете вывод APA, проверку допущений и сам скрипт.</p>
-    <div class="hero-actions">
-      <span class="cta">
-        <a class="btn" id="cta" href="#get">Скачать Blade</a>
-        <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Другие загрузки" hidden>
-          <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
-        </button>
-        <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
-      </span>
-      <a class="btn hero-pro" href="#pro">Подписаться за Rp299.000/мес.</a>
-    </div>
+    <span class="cta">
+      <a class="btn" id="cta" href="#get">Скачать Blade</a>
+      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Другие загрузки" hidden>
+        <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
+      </button>
+      <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
+    </span>
     <span class="note" id="cta-note">macOS и Windows, бета</span>
   </header>
 </div>
@@ -829,24 +803,7 @@ try {
     <h2 class="reveal">Скачать Blade Desktop 0.2.12</h2>
     <p class="sub reveal">Бета. Blade нужен R, он ищет его при первом запуске и может установить R и Python за вас.</p>
 
-    <div class="pro reveal" id="pro">
-      <div class="pro-head">
-        <div>
-          <h3>Blade Pro</h3>
-          <p class="pro-sub">Unlimited, private, local statistical analysis with AI. Cancel anytime.</p>
-        </div>
-        <div class="pro-price"><b>Rp299.000</b><span>&nbsp;/mo</span></div>
-      </div>
-      <form id="pro-form" class="pro-form" novalidate>
-        <input id="pro-email" type="email" required placeholder="you@email.com" autocomplete="email" aria-label="Email" />
-        <button type="submit" id="pro-btn">Оплатить через QRIS или виртуальный счёт</button>
-      </form>
-      <p id="pro-msg" class="pro-msg" hidden></p>
-      <p class="pro-note">Prefer to try first? <a href="#dl">Download free below</a>. No account needed.</p>
-    </div>
-
-    <p class="free-label reveal" id="dl">Or download free to try:</p>
-    <div class="dl reveal">
+    <div class="dl reveal" id="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.12/blade-desktop-0.2.12-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 106 MB</span>
@@ -898,6 +855,7 @@ try {
   <footer>
     <span>Blade, агентный статистический анализ.</span>
     <a href="https://blade.skalatec.com/">Рабочие процессы</a>
+    <a href="/pricing">Тарифы</a>
     <a href="/privacy">Конфиденциальность</a>
     <a href="/terms">Условия</a>
     <span class="spacer">PT Skala Teknologi Nusantara</span>
@@ -1072,38 +1030,6 @@ try {
         locale: document.documentElement.lang || 'en'
       });
     } catch (err) {}
-  });
-})();
-</script>
-
-<script>
-// Pro checkout: email -> API creates/reuses an account + Xendit session -> hosted
-// pay page. Purchase is reported from billing/success and the server webhook.
-(function () {
-  var API = 'https://api.skalatec.com';
-  var PRICE = 299000;
-  var form = document.getElementById('pro-form');
-  if (!form) return;
-  var btn = document.getElementById('pro-btn');
-  var msg = document.getElementById('pro-msg');
-  var input = document.getElementById('pro-email');
-  var idleLabel = btn.textContent;
-  function fail(t) { btn.disabled = false; btn.textContent = idleLabel; msg.hidden = false; msg.textContent = t; }
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var email = (input.value || '').trim();
-    if (!email || email.indexOf('@') < 1) { fail('Enter a valid email.'); return; }
-    msg.hidden = true; btn.disabled = true; btn.textContent = 'Starting checkout…';
-    if (typeof fbq === 'function') fbq('track', 'InitiateCheckout', { value: PRICE, currency: 'IDR' });
-    fetch(API + '/api/subscription/web-checkout', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
-    }).then(function (r) {
-      return r.json().catch(function () { return {}; }).then(function (b) { return { ok: r.ok, b: b }; });
-    }).then(function (res) {
-      if (res.ok && res.b && res.b.url) { window.location.href = res.b.url; return; }
-      fail((res.b && res.b.message) || 'Could not start checkout. Please try again.');
-    }).catch(function () { fail('Network error. Please try again.'); });
   });
 })();
 </script>

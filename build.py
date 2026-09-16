@@ -240,13 +240,10 @@ def render(code, c, shell, css, locales, names):
     return body
 
 
-# The legal pages are one English page each, not thirteen. The rest of the site
-# is marketing copy, where a translation that drifts slightly costs nothing.
-# These are statements about what happens to someone's data, and a machine
-# translation that drifts is a false statement in twelve languages. The footer
-# links are translated so the pages are findable; the wording stays in one
+# Standalone pages are English-only for now. The legal wording stays in one
 # reviewed language until a human translates it.
-DOCS = {
+PAGES = {
+    "pricing": "pricing.html",
     "privacy": "privacy.html",
     "data-deletion": "data-deletion.html",
     "terms": "terms.html",
@@ -254,8 +251,12 @@ DOCS = {
 
 
 def render_doc(name, css, doc_css):
-    page = (ROOT / "src" / DOCS[name]).read_text(encoding="utf-8")
-    page = page.replace("{{css}}", css).replace("{{docCss}}", doc_css)
+    page = (ROOT / "src" / PAGES[name]).read_text(encoding="utf-8")
+    page = (
+        page.replace("{{css}}", css)
+        .replace("{{docCss}}", doc_css)
+        .replace("{{pixel}}", PIXEL_SCRIPT % {"pixel": PIXEL_ID})
+    )
     leftover = page.split("{{")[1:]
     if leftover:
         sys.exit(name + ": unresolved placeholder {{" + leftover[0].split("}}")[0] + "}}")
@@ -279,7 +280,7 @@ def main():
         print(f"  {code:3} -> {out.relative_to(ROOT)}  ({len(page) // 1024} KB)")
 
     doc_css = (ROOT / "src" / "_doc-css.html").read_text(encoding="utf-8")
-    for name in DOCS:
+    for name in PAGES:
         page = render_doc(name, css, doc_css)
         (ROOT / name).mkdir(exist_ok=True)
         (ROOT / name / "index.html").write_text(page, encoding="utf-8")
@@ -288,7 +289,7 @@ def main():
     urls = "\n".join(
         "  <url><loc>%s</loc></url>" % (SITE + "/" if code == "en" else f"{SITE}/{code}/")
         for code in ORDER
-    ) + "".join(f"\n  <url><loc>{SITE}/{name}</loc></url>" for name in DOCS)
+    ) + "".join(f"\n  <url><loc>{SITE}/{name}</loc></url>" for name in PAGES)
     (ROOT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

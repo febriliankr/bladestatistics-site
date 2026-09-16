@@ -18,8 +18,6 @@
   },
   "cta": {
     "get": "Bladeを入手",
-    "subscribe": "月額Rp299.000で購読",
-    "pay": "QRISまたは仮想口座で支払う",
     "more": "その他のダウンロード",
     "downloadFor": "%s版をダウンロード",
     "version": "バージョン",
@@ -167,6 +165,7 @@
   "footer": {
     "tagline": "Blade、エージェントによる統計解析。",
     "workflows": "ワークフロー",
+    "pricing": "料金",
     "privacy": "プライバシー",
     "terms": "利用規約"
   }

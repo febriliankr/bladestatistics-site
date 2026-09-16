@@ -3,15 +3,30 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Terms of Service &middot; Blade Statistics</title>
-<meta name="description" content="The terms you agree to when you use Blade Statistics: accounts, billing, acceptable use, and the limits of what the software promises." />
-<link rel="canonical" href="https://bladestatistics.com/terms" />
+<title>Pricing &middot; Blade Statistics</title>
+<meta name="description" content="Compare Blade Free and Blade Pro. Start with 5 prompts in your first 24 hours, then 2 per day, or get unlimited prompts for Rp299.000 per month." />
+<link rel="canonical" href="https://bladestatistics.com/pricing" />
 <link rel="icon" href="/logo.png" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://bladestatistics.com/terms" />
-<meta property="og:title" content="Terms of Service &middot; Blade Statistics" />
-<meta property="og:description" content="The terms you agree to when you use Blade Statistics: accounts, billing, acceptable use, and the limits of what the software promises." />
+<meta property="og:url" content="https://bladestatistics.com/pricing" />
+<meta property="og:title" content="Blade Free and Pro pricing" />
+<meta property="og:description" content="Start free, then get a month of unlimited prompts for Rp299.000 when you need it." />
+<meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="color-scheme" content="dark light" />
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1373789871610184');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /></noscript>
 <style>
   :root {
     color-scheme: dark light;
@@ -537,227 +552,178 @@
 </style>
 
 <style>
-  .doc { padding: 64px 0 0; }
-  .doc .back { color: var(--muted); text-decoration: none; font-size: 14px; }
-  .doc .back:hover { color: var(--fg); }
-  .doc h1 { margin: 28px 0 8px; max-width: none; font-size: clamp(30px, 5vw, 42px); }
-  .doc .updated { color: var(--dim); font-size: 14px; margin: 0 0 36px; }
-  .doc h2 {
-    margin: 44px 0 12px; font-size: 21px; letter-spacing: -.015em; font-weight: 640;
-  }
-  .doc h3 { margin: 28px 0 8px; font-size: 16.5px; font-weight: 620; }
-  .doc p, .doc li { color: #c9c9cd; }
-  .doc li { margin: 6px 0; }
-  .doc a { color: var(--brand-ink); }
-  .doc .lead { font-size: 17.5px; color: var(--muted); }
-  .doc .box {
-    border: 1px solid var(--line); background: var(--panel);
-    border-radius: 12px; padding: 18px 20px; margin: 24px 0;
-  }
-  .doc .box ul { margin: 0; padding-left: 20px; }
-  .doc table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14.5px; }
-  .doc th, .doc td {
-    text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line);
-    vertical-align: top;
-  }
-  .doc th { color: var(--fg); font-weight: 620; white-space: nowrap; }
-  .doc td { color: #c9c9cd; }
-  .doc .tw { overflow-x: auto; }
-  .doc code {
-    background: var(--code-bg); border-radius: 5px; padding: 1px 5px; font-size: 13.5px;
-  }
+  .pricing-wrap{max-width:860px}
+  .pricing{padding:64px 0 0}
+  .back{color:var(--muted);text-decoration:none;font-size:14px}
+  .back:hover{color:var(--fg)}
+  .pricing h1{margin:28px 0 16px;max-width:15ch;font-size:clamp(34px,6vw,52px)}
+  .pricing .lead{margin:0;max-width:58ch;color:var(--muted);font-size:18px}
+  .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:44px}
+  .plan{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:26px}
+  .plan.pro{border-color:var(--brand)}
+  .plan-label{margin:0;color:var(--muted);font-size:13px;font-weight:620;text-transform:uppercase;letter-spacing:.08em}
+  .plan h2{margin:8px 0 0;font-size:25px}
+  .price{margin:14px 0 4px;font-size:32px;font-weight:650;letter-spacing:-.03em}
+  .price span{color:var(--muted);font-size:14px;font-weight:450;letter-spacing:0}
+  .plan-summary{min-height:52px;margin:0;color:var(--muted);font-size:14.5px}
+  .features{list-style:none;margin:24px 0;padding:0;border-top:1px solid var(--line)}
+  .features li{position:relative;padding:11px 0 11px 24px;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px}
+  .features li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--brand-ink);font-weight:700}
+  .plan .action{margin-top:auto}
+  .plan .btn{display:block;text-align:center}
+  .free-note{margin:11px 0 0;color:var(--dim);font-size:12.5px;text-align:center}
+  .checkout-form{display:flex;flex-direction:column;gap:9px}
+  .checkout-form label{color:var(--muted);font-size:13px}
+  .checkout-form input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--fg);font:inherit}
+  .checkout-form input:focus{outline:none;border-color:var(--brand)}
+  .checkout-form button{border:0;cursor:pointer;width:100%}
+  .checkout-form button:disabled{cursor:default;opacity:.6}
+  .checkout-msg{margin:2px 0 0;color:#ff8a6a;font-size:13px}
+  .payment-note{margin:11px 0 0;color:var(--dim);font-size:12.5px;text-align:center}
+  .explain{margin-top:52px;padding-top:34px;border-top:1px solid var(--line)}
+  .explain h2{font-size:24px;margin-bottom:8px}
+  .explain>p{color:var(--muted);margin:0 0 24px}
+  .answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 30px}
+  .answers h3{font-size:15.5px;margin:0 0 5px}
+  .answers p{color:var(--muted);font-size:14px;margin:0}
+  @media(max-width:680px){.plans,.answers{grid-template-columns:1fr}.plan-summary{min-height:0}.pricing{padding-top:40px}}
 </style>
-
 </head>
 <body>
 
-<div class="wrap">
-  <article class="doc">
+<div class="wrap pricing-wrap">
+  <main class="pricing">
     <a class="back" href="/">&larr; Blade Statistics</a>
-    <h1>Terms of Service</h1>
-    <p class="updated">Last updated 16 September 2026</p>
+    <h1>Start free. Go Pro when you need more.</h1>
+    <p class="lead">Both plans include the complete desktop app and the same local analysis tools. Pro changes prompt capacity, not where your data runs.</p>
 
-    <p class="lead">
-      These terms are the agreement between you and PT Skala Teknologi
-      Nusantara, an Indonesian company, covering the Blade desktop app and the
-      services behind it. Installing or using Blade means you accept them.
-    </p>
+    <div class="plans">
+      <section class="plan">
+        <p class="plan-label">Free</p>
+        <h2>Blade Free</h2>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">Enough room to try Blade on real work before paying.</p>
+        <ul class="features">
+          <li>5 prompts during your first 24 hours</li>
+          <li>2 prompts per day after the first day</li>
+          <li>Daily allowance resets at midnight WIB</li>
+          <li>All desktop analysis tools</li>
+          <li>Data files stay on your computer</li>
+        </ul>
+        <div class="action">
+          <a class="btn" href="/#get">Download Blade</a>
+          <p class="free-note">The limit only appears after you reach it.</p>
+        </div>
+      </section>
 
-    <div class="box">
-      <p style="margin:0 0 10px"><strong>The part that matters most</strong></p>
-      <p style="margin:0">
-        Blade is a research tool driven by a language model. It can be wrong.
-        Check any result you intend to publish, submit, or make a decision on
-        against the R script Blade shows you. Read
-        <a href="#accuracy">Accuracy and your judgement</a> before relying on it
-        for anything that counts.
-      </p>
+      <section class="plan pro">
+        <p class="plan-label">Pro</p>
+        <h2>Blade Pro</h2>
+        <p class="price">Rp299.000 <span>for one month</span></p>
+        <p class="plan-summary">Unlimited prompts for focused projects and frequent analysis.</p>
+        <ul class="features">
+          <li>Unlimited prompts while Pro is active</li>
+          <li>All desktop analysis tools</li>
+          <li>Data files stay on your computer</li>
+          <li>Secure checkout with QRIS or bank virtual account</li>
+          <li>No automatic renewal</li>
+        </ul>
+        <div class="action">
+          <form id="pro-form" class="checkout-form" novalidate>
+            <label for="pro-email">Email used to sign in to Blade</label>
+            <input id="pro-email" type="email" required placeholder="you@email.com" autocomplete="email" />
+            <button class="btn" type="submit" id="pro-btn">Pay Rp299.000 with QRIS or VA</button>
+          </form>
+          <p id="pro-msg" class="checkout-msg" hidden></p>
+          <p class="payment-note">One payment adds one month. Pay again only when you choose.</p>
+        </div>
+      </section>
     </div>
 
-    <h2>1. Beta software</h2>
-    <p>
-      Blade is in beta. Features change, break, and occasionally disappear;
-      data formats may change between versions. We do not promise that any
-      particular feature will keep working, and we release on our own schedule.
-      If you need software that is frozen and guaranteed, this is not it yet.
-    </p>
-
-    <h2 id="accuracy">2. Accuracy and your judgement</h2>
-    <p>
-      Blade chooses statistical tests and interprets output using a language
-      model. The arithmetic itself runs in R, and Blade is built to report only
-      numbers that came back from a real tool run — but the choice of test, the
-      reading of assumptions, and the wording of an interpretation are all
-      produced by a model, and a model can be confidently wrong.
-    </p>
-    <p>
-      You remain the analyst. You are responsible for the correctness of
-      anything you publish, submit for review, hand to a client, or decide on.
-      Blade shows you the R script behind every result precisely so it can be
-      checked — check it. Do not present a Blade result as a finding you have
-      verified unless you have actually verified it.
-    </p>
-    <p>
-      Blade is not a substitute for professional advice, and nothing it
-      produces is medical, legal, or financial advice.
-    </p>
-
-    <h2>3. Your account</h2>
-    <p>
-      You need an account to use Blade. Give us an address you can receive mail
-      at, since sign-in codes go there. Keep access to that mailbox secure:
-      anyone who can read your email can sign in as you. One account is for one
-      person — do not share credentials. Tell us promptly if you think someone
-      else has got in.
-    </p>
-    <p>You must be at least 16 years old.</p>
-
-    <h2>4. What you may not do</h2>
-    <ul>
-      <li>Break the law with it, or use it to process data you have no right to process.</li>
-      <li>Upload someone's personal or medical data without the consent or approval your own rules require.</li>
-      <li>Try to break, overload, or work around the service's limits, or probe it for weaknesses without asking us first.</li>
-      <li>Resell Blade, or run it as a service for other people, without a written agreement with us.</li>
-      <li>Use it to generate results you intend to present dishonestly.</li>
-    </ul>
-    <p>
-      If you find a security problem, email
-      <a href="mailto:privacy@bladestatistics.com">privacy@bladestatistics.com</a>
-      rather than publishing it, and we will work with you.
-    </p>
-
-    <h2>5. Your data stays yours</h2>
-    <p>
-      Your datasets, your analyses, and anything you write in Blade belong to
-      you. We claim no ownership of them. You give us only the permission we
-      need to run the service for you: to store your content, and to send it to
-      the AI provider that answers your questions, as described in the
-      <a href="/privacy">privacy policy</a>. We do not use your content to
-      train models, and we do not sell it.
-    </p>
-    <p>
-      You can have all of it erased at any time — see
-      <a href="/data-deletion">deleting your data</a>.
-    </p>
-
-    <h2>6. Processing by a third-party AI provider</h2>
-    <p>
-      Answering your questions requires sending your conversation, including
-      file contents and tool output, to a third-party model provider. Today
-      that is OpenAI. By using Blade you accept that this happens. If your data
-      may not leave your organisation or your country, do not put it into
-      Blade. The <a href="/privacy">privacy policy</a> names the current
-      provider and where the processing happens.
-    </p>
-
-    <h2>7. Plans and payment</h2>
-    <p>
-      Blade has a free plan with limits and a paid Pro plan. Payments are
-      handled by Xendit. Prices and available payment methods are shown before
-      you pay.
-    </p>
-    <p>
-      Each successful payment adds one month of Pro access. Pro does not renew
-      automatically. At the end of the paid month, your account returns to the
-      free plan unless you choose to buy another month. We do not give partial
-      refunds for an unused part of a paid month, but if something has clearly
-      gone wrong, write to us and we will sort it out.
-    </p>
-    <p>
-      We may change prices. A price change does not shorten access you already
-      paid for. The current price is shown before each new payment.
-    </p>
-
-    <h2>8. Availability</h2>
-    <p>
-      We do not promise any particular uptime. The service depends on providers
-      we do not control — a model provider, a database host, a payment
-      processor — and an outage at one of them is an outage for Blade. We take
-      the service down for maintenance when we need to.
-    </p>
-
-    <h2>9. Ending it</h2>
-    <p>
-      You can stop using Blade whenever you like, and ask us to delete your
-      account. We may suspend or close an account that breaks section 4, that
-      is being used to harm the service or other people, or where we are
-      required to by law. Except where the breach is serious or the law leaves
-      us no choice, we will tell you first and give you a chance to put it
-      right. If we close your account without cause, we refund the unused part
-      of your current period.
-    </p>
-
-    <h2>10. What we do not promise</h2>
-    <p>
-      Blade is provided as it is. To the extent the law allows, we exclude
-      implied warranties — that it is fit for a particular purpose, that it is
-      error-free, or that results will be correct. Nothing here limits
-      liability for fraud, death or personal injury caused by negligence, or
-      anything else that cannot lawfully be limited. Where you have consumer
-      rights under your local law, those rights still apply and these terms do
-      not reduce them.
-    </p>
-
-    <h2>11. Limit of liability</h2>
-    <p>
-      We are not liable for indirect or consequential loss, for lost profits or
-      lost data, or for a decision made on the strength of a Blade result. Our
-      total liability to you for any claim is limited to what you paid us in
-      the twelve months before it arose, or USD 100 if you paid us nothing.
-    </p>
-
-    <h2>12. Changes to these terms</h2>
-    <p>
-      We update the date at the top when these terms change. For a change that
-      materially affects you, we will give notice in the app or by email before
-      it takes effect. Continuing to use Blade after that means you accept the
-      new terms; if you do not, stop using it and ask us to delete your data.
-    </p>
-
-    <h2>13. Governing law</h2>
-    <p>
-      These terms are governed by the laws of the Republic of Indonesia, and
-      disputes belong to the courts of Jakarta. If you are a consumer, this
-      does not deprive you of the protection of the mandatory law of the
-      country you live in.
-    </p>
-
-    <h2>14. Contact</h2>
-    <p>
-      PT Skala Teknologi Nusantara &middot;
-      <a href="mailto:privacy@bladestatistics.com">privacy@bladestatistics.com</a>
-    </p>
-  </article>
+    <section class="explain">
+      <h2>How access works</h2>
+      <p>Use the same email here and in Blade. Xendit confirms the payment, then Pro activates for that account.</p>
+      <div class="answers">
+        <div>
+          <h3>What happens after one month?</h3>
+          <p>Your account returns to the free daily allowance. Your projects and files remain unchanged.</p>
+        </div>
+        <div>
+          <h3>Does Pro renew automatically?</h3>
+          <p>No. Each payment buys one month. You choose whether to buy another month.</p>
+        </div>
+        <div>
+          <h3>Are the analysis features different?</h3>
+          <p>No. Free and Pro use the same tools. Pro removes the prompt limit while active.</p>
+        </div>
+        <div>
+          <h3>Where does payment happen?</h3>
+          <p>Xendit hosts the secure checkout and offers QRIS or supported bank virtual accounts.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <span>Blade, agentic statistical analysis.</span>
     <a href="/">Home</a>
-    <a href="/pricing">Pricing</a>
     <a href="/privacy">Privacy</a>
-    <a href="/data-deletion">Delete your data</a>
+    <a href="/terms">Terms</a>
     <span class="spacer">PT Skala Teknologi Nusantara</span>
   </footer>
 </div>
+
+<script>
+(function () {
+  var API = 'https://api.skalatec.com';
+  var PRICE = 299000;
+  var form = document.getElementById('pro-form');
+  var btn = document.getElementById('pro-btn');
+  var msg = document.getElementById('pro-msg');
+  var input = document.getElementById('pro-email');
+  var idleLabel = btn.textContent;
+
+  function fail(text) {
+    btn.disabled = false;
+    btn.textContent = idleLabel;
+    msg.hidden = false;
+    msg.textContent = text;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var email = (input.value || '').trim();
+    if (!email || email.indexOf('@') < 1) {
+      fail('Enter a valid email.');
+      input.focus();
+      return;
+    }
+    msg.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Starting secure checkout...';
+    if (typeof fbq === 'function') {
+      fbq('track', 'InitiateCheckout', { value: PRICE, currency: 'IDR' });
+    }
+    fetch(API + '/api/subscription/web-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (body) {
+        return { ok: response.ok, body: body };
+      });
+    }).then(function (result) {
+      if (result.ok && result.body && result.body.url) {
+        window.location.href = result.body.url;
+        return;
+      }
+      fail((result.body && result.body.message) || 'Could not start checkout. Please try again.');
+    }).catch(function () {
+      fail('Network error. Please try again.');
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
