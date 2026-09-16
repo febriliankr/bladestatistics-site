@@ -378,6 +378,12 @@
 
   /* ---- top bar and language switcher ---- */
   .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .topnav { display: flex; align-items: center; gap: 18px; }
+  .topnav-link {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    transition: color .16s ease;
+  }
+  .topnav-link:hover, .topnav-link[aria-current="page"] { color: var(--fg); }
   .lang { position: relative; }
   .lang summary {
     list-style: none;

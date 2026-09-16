@@ -18,8 +18,7 @@
 <style>
   .pricing-wrap{max-width:860px}
   .pricing{padding:64px 0 0}
-  .back{color:var(--muted);text-decoration:none;font-size:14px}
-  .back:hover{color:var(--fg)}
+  .pricing-home{display:block;line-height:0}
   .pricing h1{margin:28px 0 16px;max-width:15ch;font-size:clamp(34px,6vw,52px)}
   .pricing .lead{margin:0;max-width:58ch;color:var(--muted);font-size:18px}
   .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:44px}
@@ -36,13 +35,7 @@
   .plan .action{margin-top:auto}
   .plan .btn{display:block;text-align:center}
   .free-note{margin:11px 0 0;color:var(--dim);font-size:12.5px;text-align:center}
-  .checkout-form{display:flex;flex-direction:column;gap:9px}
-  .checkout-form label{color:var(--muted);font-size:13px}
-  .checkout-form input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--fg);font:inherit}
-  .checkout-form input:focus{outline:none;border-color:var(--brand)}
-  .checkout-form button{border:0;cursor:pointer;width:100%}
-  .checkout-form button:disabled{cursor:default;opacity:.6}
-  .checkout-msg{margin:2px 0 0;color:#ff8a6a;font-size:13px}
+  .purchase-btn{width:100%;border:0;cursor:pointer}
   .payment-note{margin:11px 0 0;color:var(--dim);font-size:12.5px;text-align:center}
   .explain{margin-top:52px;padding-top:34px;border-top:1px solid var(--line)}
   .explain h2{font-size:24px;margin-bottom:8px}
@@ -50,14 +43,45 @@
   .answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 30px}
   .answers h3{font-size:15.5px;margin:0 0 5px}
   .answers p{color:var(--muted);font-size:14px;margin:0}
-  @media(max-width:680px){.plans,.answers{grid-template-columns:1fr}.plan-summary{min-height:0}.pricing{padding-top:40px}}
+  .checkout-modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
+  .checkout-modal[hidden]{display:none}
+  .checkout-dialog{width:min(100%,470px);border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:var(--shadow);padding:24px}
+  .checkout-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+  .checkout-head h2{margin:0 0 4px;font-size:22px}
+  .checkout-head p{margin:0;color:var(--muted);font-size:14px}
+  .checkout-close{border:0;background:transparent;color:var(--muted);font-size:24px;line-height:1;cursor:pointer;padding:1px 4px}
+  .checkout-close:hover{color:var(--fg)}
+  .wizard-steps{display:grid;grid-template-columns:1fr 1fr;gap:8px;list-style:none;margin:22px 0;padding:0}
+  .wizard-steps li{border-top:2px solid var(--line);padding-top:8px;color:var(--dim);font-size:12.5px}
+  .wizard-steps li.current,.wizard-steps li.done{border-color:var(--brand);color:var(--fg)}
+  .wizard-panel[hidden]{display:none}
+  .wizard-panel label.field-label{display:block;margin:0 0 7px;color:var(--muted);font-size:13px}
+  .wizard-panel input[type="email"]{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--fg);font:inherit}
+  .wizard-panel input[type="email"]:focus{outline:none;border-color:var(--brand)}
+  .wizard-actions{display:flex;gap:9px;margin-top:18px}
+  .wizard-actions .btn{flex:1;border:0;cursor:pointer;text-align:center}
+  .wizard-actions .secondary{background:transparent;color:var(--muted);border:1px solid var(--line)}
+  .wizard-actions .secondary:hover{background:var(--hover);color:var(--fg)}
+  .method-list{display:grid;gap:9px}
+  .method{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:13px;cursor:pointer;background:var(--bg)}
+  .method:hover,.method:has(input:checked){border-color:var(--brand)}
+  .method input{margin-top:4px;accent-color:var(--brand)}
+  .method strong{display:block;font-size:14.5px}
+  .method span{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+  .checkout-email{color:var(--muted);font-size:13px;margin:0 0 12px}
+  .checkout-msg{margin:12px 0 0;color:#ff8a6a;font-size:13px}
+  .wizard-actions button:disabled{cursor:default;opacity:.6}
+  @media(max-width:680px){.plans,.answers{grid-template-columns:1fr}.plan-summary{min-height:0}.pricing{padding-top:32px}.checkout-dialog{padding:20px}}
 </style>
 </head>
 <body>
 
 <div class="wrap pricing-wrap">
   <main class="pricing">
-    <a class="back" href="/">&larr; Blade Statistics</a>
+    <div class="topbar">
+      <a class="pricing-home" href="/" aria-label="Blade Statistics home"><img class="logo" src="/logo.png" alt="" /></a>
+      <nav class="topnav" aria-label="Primary"><a class="topnav-link" href="/pricing" aria-current="page">Pricing</a></nav>
+    </div>
     <h1>Start free. Go Pro when you need more.</h1>
     <p class="lead">Both plans include the complete desktop app and the same local analysis tools. Pro changes prompt capacity, not where your data runs.</p>
 
@@ -93,13 +117,8 @@
           <li>No automatic renewal</li>
         </ul>
         <div class="action">
-          <form id="pro-form" class="checkout-form" novalidate>
-            <label for="pro-email">Email used to sign in to Blade</label>
-            <input id="pro-email" type="email" required placeholder="you@email.com" autocomplete="email" />
-            <button class="btn" type="submit" id="pro-btn">Pay Rp299.000 with QRIS or VA</button>
-          </form>
-          <p id="pro-msg" class="checkout-msg" hidden></p>
-          <p class="payment-note">One payment adds one month. Pay again only when you choose.</p>
+          <button class="btn purchase-btn" type="button" id="open-checkout">Get Blade Pro</button>
+          <p class="payment-note">Choose QRIS or bank virtual account in the next step.</p>
         </div>
       </section>
     </div>
@@ -137,15 +156,101 @@
   </footer>
 </div>
 
+<div class="checkout-modal" id="checkout-modal" hidden>
+  <div class="checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div class="checkout-head">
+      <div>
+        <h2 id="checkout-title">Get Blade Pro</h2>
+        <p>Rp299.000 for one month</p>
+      </div>
+      <button class="checkout-close" id="checkout-close" type="button" aria-label="Close checkout">&times;</button>
+    </div>
+    <ol class="wizard-steps" aria-label="Checkout progress">
+      <li class="current" id="step-email-label">1. Email</li>
+      <li id="step-payment-label">2. Payment</li>
+    </ol>
+
+    <form class="wizard-panel" id="email-step" novalidate>
+      <label class="field-label" for="pro-email">Email used to sign in to Blade</label>
+      <input id="pro-email" type="email" required placeholder="you@email.com" autocomplete="email" />
+      <div class="wizard-actions">
+        <button class="btn" type="submit">Continue</button>
+      </div>
+    </form>
+
+    <form class="wizard-panel" id="payment-step" hidden>
+      <p class="checkout-email" id="checkout-email"></p>
+      <div class="method-list">
+        <label class="method">
+          <input type="radio" name="payment-method" value="qris" checked />
+          <span><strong>QRIS</strong><span>Scan with a supported bank or wallet app</span></span>
+        </label>
+        <label class="method">
+          <input type="radio" name="payment-method" value="virtual_account" />
+          <span><strong>Bank virtual account</strong><span>BCA, BNI, BRI, Mandiri, or Permata</span></span>
+        </label>
+      </div>
+      <div class="wizard-actions">
+        <button class="btn secondary" type="button" id="checkout-back">Back</button>
+        <button class="btn" type="submit" id="pro-btn">Continue to Xendit</button>
+      </div>
+    </form>
+    <p id="pro-msg" class="checkout-msg" hidden></p>
+  </div>
+</div>
+
 <script>
 (function () {
   var API = 'https://api.skalatec.com';
   var PRICE = 299000;
-  var form = document.getElementById('pro-form');
+  var openBtn = document.getElementById('open-checkout');
+  var modal = document.getElementById('checkout-modal');
+  var closeBtn = document.getElementById('checkout-close');
+  var backBtn = document.getElementById('checkout-back');
+  var emailForm = document.getElementById('email-step');
+  var paymentForm = document.getElementById('payment-step');
+  var emailLabel = document.getElementById('step-email-label');
+  var paymentLabel = document.getElementById('step-payment-label');
+  var emailSummary = document.getElementById('checkout-email');
   var btn = document.getElementById('pro-btn');
   var msg = document.getElementById('pro-msg');
   var input = document.getElementById('pro-email');
   var idleLabel = btn.textContent;
+  var email = '';
+
+  function showEmailStep() {
+    emailForm.hidden = false;
+    paymentForm.hidden = true;
+    emailLabel.className = 'current';
+    paymentLabel.className = '';
+    msg.hidden = true;
+    input.focus();
+  }
+
+  function showPaymentStep() {
+    emailForm.hidden = true;
+    paymentForm.hidden = false;
+    emailLabel.className = 'done';
+    paymentLabel.className = 'current';
+    emailSummary.textContent = 'Pro will activate for ' + email;
+    msg.hidden = true;
+    paymentForm.querySelector('input[name="payment-method"]:checked').focus();
+  }
+
+  function openCheckout() {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    showEmailStep();
+  }
+
+  function closeCheckout() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    btn.disabled = false;
+    btn.textContent = idleLabel;
+    msg.hidden = true;
+    openBtn.focus();
+  }
 
   function fail(text) {
     btn.disabled = false;
@@ -154,14 +259,31 @@
     msg.textContent = text;
   }
 
-  form.addEventListener('submit', function (event) {
+  openBtn.addEventListener('click', openCheckout);
+  closeBtn.addEventListener('click', closeCheckout);
+  backBtn.addEventListener('click', showEmailStep);
+  modal.addEventListener('click', function (event) {
+    if (event.target === modal) closeCheckout();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !modal.hidden) closeCheckout();
+  });
+
+  emailForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    var email = (input.value || '').trim();
+    email = (input.value || '').trim();
     if (!email || email.indexOf('@') < 1) {
       fail('Enter a valid email.');
       input.focus();
       return;
     }
+    showPaymentStep();
+  });
+
+  paymentForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var selected = paymentForm.querySelector('input[name="payment-method"]:checked');
+    var paymentMethod = selected ? selected.value : '';
     msg.hidden = true;
     btn.disabled = true;
     btn.textContent = 'Starting secure checkout...';
@@ -171,7 +293,7 @@
     fetch(API + '/api/subscription/web-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
+      body: JSON.stringify({ email: email, payment_method: paymentMethod })
     }).then(function (response) {
       return response.json().catch(function () { return {}; }).then(function (body) {
         return { ok: response.ok, body: body };
