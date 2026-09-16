@@ -664,7 +664,7 @@ try {
         </button>
         <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
       </span>
-      <a class="btn hero-pro" href="#pro">订阅 — Rp299.000/月</a>
+      <a class="btn hero-pro" href="#pro">订阅，每月 Rp299.000</a>
     </div>
     <span class="note" id="cta-note">macOS 和 Windows，测试版</span>
   </header>
@@ -842,7 +842,7 @@ try {
         <button type="submit" id="pro-btn">使用 QRIS 或虚拟账户付款</button>
       </form>
       <p id="pro-msg" class="pro-msg" hidden></p>
-      <p class="pro-note">Prefer to try first? <a href="#dl">Download free below</a> &mdash; no account needed.</p>
+      <p class="pro-note">Prefer to try first? <a href="#dl">Download free below</a>. No account needed.</p>
     </div>
 
     <p class="free-label reveal" id="dl">Or download free to try:</p>
@@ -1050,8 +1050,8 @@ try {
 })();
 
 // A download is the only conversion this page has, so it is the one worth
-// reporting to Meta. One delegated listener covers all three surfaces — the
-// table, the hero button, and its menu — because every one of them points at
+// reporting to Meta. One delegated listener covers all three surfaces: the
+// table, the hero button, and its menu, because every one of them points at
 // dl.skalatec.com; wiring them individually would miss the hero button, whose
 // href is rewritten at runtime, and the menu, which does not exist yet at
 // load. Platform and version are read back out of the href rather than
