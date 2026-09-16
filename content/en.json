@@ -125,7 +125,7 @@
     }
   },
   "release": {
-    "h2": "What's new in 0.2.11",
+    "h2": "What's new in 0.2.12",
     "sub": "This release is about safer actions, reliable stopping, and fewer surprises while you work.",
     "items": [
       {
@@ -147,7 +147,7 @@
     ]
   },
   "get": {
-    "h2": "Download Blade Desktop 0.2.11",
+    "h2": "Download Blade Desktop 0.2.12",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
     "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
   },
