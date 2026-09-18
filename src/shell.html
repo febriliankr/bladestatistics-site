@@ -326,6 +326,18 @@ try {
         locale: document.documentElement.lang || 'en'
       });
     } catch (err) {}
+    // The download is a cross-origin file (dl.skalatec.com), so clicking it
+    // unloads this page immediately. That races the pixel beacon fired above
+    // against the browser's own navigation -- and Instagram's in-app browser
+    // in particular tends to hand off to the system browser fast enough to
+    // kill the request before it leaves, which is why Download events from
+    // ad traffic go missing even though the click and landing page view are
+    // both recorded correctly. Hold plain left-clicks open for one tick so
+    // the beacon has time to send; leave modifier/middle clicks (new tab)
+    // untouched since those don't unload this page.
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    setTimeout(function () { window.location.href = a.href; }, 250);
   });
 })();
 </script>
