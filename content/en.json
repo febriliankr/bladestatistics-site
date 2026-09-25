@@ -125,8 +125,8 @@
     }
   },
   "release": {
-    "h2": "What's new in 0.2.15",
-    "sub": "This release is about safer actions, reliable stopping, and fewer surprises while you work.",
+    "h2": "What's new in 0.2.16",
+    "sub": "Sign in more reliably, and find updates even before you log in.",
     "items": [
       {
         "h3": "Safer around your files",
@@ -141,13 +141,13 @@
         "p": "New messages are no longer replaced by older synced copies. Dropped files, the file tree, and folder names in any language now behave more reliably."
       },
       {
-        "h3": "Every download is checked",
-        "p": "A release cannot go live unless both macOS and Windows installers are present. Remote API connections also use HTTPS."
+        "h3": "Updates on the sign-in screen",
+        "p": "Blade now shows its version and available updates before login. Sign-in requests also use a more reliable connection path and explain connection failures clearly."
       }
     ]
   },
   "get": {
-    "h2": "Download Blade Desktop 0.2.15",
+    "h2": "Download Blade Desktop 0.2.16",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
     "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
   },

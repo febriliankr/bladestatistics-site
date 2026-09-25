@@ -125,8 +125,8 @@
     }
   },
   "release": {
-    "h2": "Yang baru di 0.2.15",
-    "sub": "Rilis ini berfokus pada tindakan yang lebih aman, tombol Stop yang andal, dan lebih sedikit kejutan saat bekerja.",
+    "h2": "Yang baru di 0.2.16",
+    "sub": "Masuk lebih andal dan temukan pembaruan sebelum login.",
     "items": [
       {
         "h3": "Lebih aman saat mengakses berkas",
@@ -141,13 +141,13 @@
         "p": "Pesan baru tidak lagi tertimpa salinan lama saat sinkronisasi. Berkas yang dilepas, pohon berkas, dan nama folder dalam bahasa apa pun kini bekerja lebih andal."
       },
       {
-        "h3": "Setiap unduhan diperiksa",
-        "p": "Rilis tidak dapat dipublikasikan tanpa pemasang macOS dan Windows. Koneksi ke API jarak jauh juga menggunakan HTTPS."
+        "h3": "Pembaruan di layar login",
+        "p": "Blade kini menampilkan versi dan pembaruan yang tersedia sebelum login. Permintaan login juga memakai jalur koneksi yang lebih andal dan menjelaskan kegagalan koneksi dengan jelas."
       }
     ]
   },
   "get": {
-    "h2": "Unduh Blade Desktop 0.2.15",
+    "h2": "Unduh Blade Desktop 0.2.16",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
     "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
   },
