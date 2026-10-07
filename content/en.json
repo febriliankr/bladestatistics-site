@@ -125,29 +125,21 @@
     }
   },
   "release": {
-    "h2": "What's new in 0.2.16",
-    "sub": "Sign in more reliably, and find updates even before you log in.",
+    "h2": "What's new in 0.2.17",
+    "sub": "Keep analyses running while you switch sessions.",
     "items": [
       {
-        "h3": "Safer around your files",
-        "p": "Blade checks folders and commands more carefully, keeps sensitive actions behind your approval, and does not pass saved secrets to tools it starts."
+        "h3": "Switch sessions without stopping",
+        "p": "Thinking and tools continue in the background. Return to see the live result. Stop and approvals apply to their own session."
       },
       {
-        "h3": "Stop means stop",
-        "p": "Pressing Stop now cancels both the online response and local commands Blade started, including anything they launched."
-      },
-      {
-        "h3": "Chats and attachments stay put",
-        "p": "New messages are no longer replaced by older synced copies. Dropped files, the file tree, and folder names in any language now behave more reliably."
-      },
-      {
-        "h3": "Updates on the sign-in screen",
-        "p": "Blade now shows its version and available updates before login. Sign-in requests also use a more reliable connection path and explain connection failures clearly."
+        "h3": "Relevant file cards",
+        "p": "Folder listings and raw tool output no longer turn unrelated CSVs into file cards. Cards appear for documents written by tools or linked in the assistant response."
       }
     ]
   },
   "get": {
-    "h2": "Download Blade Desktop 0.2.16",
+    "h2": "Download Blade Desktop 0.2.17",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
     "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
   },

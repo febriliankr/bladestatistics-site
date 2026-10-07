@@ -125,29 +125,21 @@
     }
   },
   "release": {
-    "h2": "Yang baru di 0.2.16",
-    "sub": "Masuk lebih andal dan temukan pembaruan sebelum login.",
+    "h2": "Yang baru di 0.2.17",
+    "sub": "Analisis tetap berjalan saat Anda berpindah sesi.",
     "items": [
       {
-        "h3": "Lebih aman saat mengakses berkas",
-        "p": "Blade memeriksa folder dan perintah dengan lebih teliti, meminta persetujuan Anda untuk tindakan sensitif, dan tidak meneruskan rahasia tersimpan ke alat yang dijalankannya."
+        "h3": "Pindah sesi tanpa menghentikan analisis",
+        "p": "Proses berpikir dan alat tetap berjalan di latar belakang. Kembali untuk melihat hasil terbaru. Stop dan persetujuan berlaku untuk sesi masing-masing."
       },
       {
-        "h3": "Stop benar-benar menghentikan",
-        "p": "Menekan Stop sekarang membatalkan respons online dan perintah lokal yang dimulai Blade, termasuk proses lain yang dijalankan oleh perintah tersebut."
-      },
-      {
-        "h3": "Chat dan lampiran tetap tersimpan",
-        "p": "Pesan baru tidak lagi tertimpa salinan lama saat sinkronisasi. Berkas yang dilepas, pohon berkas, dan nama folder dalam bahasa apa pun kini bekerja lebih andal."
-      },
-      {
-        "h3": "Pembaruan di layar login",
-        "p": "Blade kini menampilkan versi dan pembaruan yang tersedia sebelum login. Permintaan login juga memakai jalur koneksi yang lebih andal dan menjelaskan kegagalan koneksi dengan jelas."
+        "h3": "Kartu berkas yang relevan",
+        "p": "Daftar folder dan keluaran mentah alat tidak lagi menampilkan CSV yang tidak terkait sebagai kartu berkas. Kartu muncul untuk dokumen yang ditulis oleh alat atau ditautkan dalam respons asisten."
       }
     ]
   },
   "get": {
-    "h2": "Unduh Blade Desktop 0.2.16",
+    "h2": "Unduh Blade Desktop 0.2.17",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
     "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
   },

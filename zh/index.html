@@ -786,46 +786,38 @@ try {
   </section>
 
   <section id="release">
-    <h2 class="reveal">0.2.16 版本更新</h2>
-    <p class="sub reveal">本次更新让操作更安全、停止更可靠，也减少了工作中的意外情况。</p>
+    <h2 class="reveal">0.2.17 版本更新</h2>
+    <p class="sub reveal">切换会话时，分析仍会继续。</p>
     <ul class="release-list">
     <li class="reveal">
-      <h3>更安全地处理文件</h3>
-      <p>Blade 会更严格地检查文件夹和命令，敏感操作仍需你的批准，也不会把已保存的密钥传给它启动的工具。</p>
+      <h3>切换会话，无需停止分析</h3>
+      <p>思考和工具会在后台继续运行。返回即可查看最新结果。停止操作和审批仅针对各自的会话。</p>
     </li>
     <li class="reveal">
-      <h3>停止就是彻底停止</h3>
-      <p>点击停止后，在线回复和 Blade 启动的本地命令都会取消，包括这些命令创建的子进程。</p>
-    </li>
-    <li class="reveal">
-      <h3>聊天和附件保持完整</h3>
-      <p>新消息不会再被旧的同步副本覆盖。拖入的文件、文件树以及任何语言的文件夹名称现在都更加可靠。</p>
-    </li>
-    <li class="reveal">
-      <h3>每个下载都经过检查</h3>
-      <p>macOS 和 Windows 安装程序不齐全时，版本无法发布。远程 API 连接也统一使用 HTTPS。</p>
+      <h3>相关文件卡片</h3>
+      <p>文件夹列表和工具的原始输出不再将无关的 CSV 显示为文件卡片。卡片仅显示工具写入的文档或助手回复中链接的文件。</p>
     </li>
     </ul>
   </section>
 
   <section class="get" id="get">
-    <h2 class="reveal">下载 Blade Desktop 0.2.16</h2>
+    <h2 class="reveal">下载 Blade Desktop 0.2.17</h2>
     <p class="sub reveal">测试版。Blade 需要 R，首次启动会检查，也可以替你安装 R 和 Python。</p>
 
     <div class="dl reveal" id="dl">
-      <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.16/blade-desktop-0.2.16-mac-arm64.dmg">
+      <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.17/blade-desktop-0.2.17-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Apple silicon &middot; 106 MB</span>
       </a>
-      <a data-os="mac" data-arch="x64" href="https://dl.skalatec.com/0.2.16/blade-desktop-0.2.16-mac-x64.dmg">
+      <a data-os="mac" data-arch="x64" href="https://dl.skalatec.com/0.2.17/blade-desktop-0.2.17-mac-x64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
         <span class="meta">Intel &middot; 114 MB</span>
       </a>
-      <a data-os="win" data-arch="x64" href="https://dl.skalatec.com/0.2.16/blade-desktop-0.2.16-win-x64.exe">
+      <a data-os="win" data-arch="x64" href="https://dl.skalatec.com/0.2.17/blade-desktop-0.2.17-win-x64.exe">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3.5 10.6 2.3v9.2H2V3.5zm10.2-1.4L22 .8v10.7h-9.8V2.1zM2 13.1h8.6v9.2L2 21.1v-8zm10.2 0H22v10.7l-9.8-1.3v-9.4z"/></svg> Windows</span>
         <span class="meta">x64 &middot; 96 MB</span>
       </a>
-      <a data-os="win" data-arch="arm64" href="https://dl.skalatec.com/0.2.16/blade-desktop-0.2.16-win-arm64.exe">
+      <a data-os="win" data-arch="arm64" href="https://dl.skalatec.com/0.2.17/blade-desktop-0.2.17-win-arm64.exe">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3.5 10.6 2.3v9.2H2V3.5zm10.2-1.4L22 .8v10.7h-9.8V2.1zM2 13.1h8.6v9.2L2 21.1v-8zm10.2 0H22v10.7l-9.8-1.3v-9.4z"/></svg> Windows</span>
         <span class="meta">ARM &middot; 97 MB</span>
       </a>

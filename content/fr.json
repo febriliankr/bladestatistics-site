@@ -125,29 +125,21 @@
     }
   },
   "release": {
-    "h2": "Nouveautés de la version 0.2.16",
-    "sub": "Cette version rend les actions plus sûres, l'arrêt plus fiable et le travail plus prévisible.",
+    "h2": "Nouveautés de la version 0.2.17",
+    "sub": "Les analyses continuent lorsque vous changez de session.",
     "items": [
       {
-        "h3": "Plus de sécurité pour vos fichiers",
-        "p": "Blade vérifie mieux les dossiers et les commandes, demande votre accord pour les actions sensibles et ne transmet pas vos secrets enregistrés aux outils qu'il lance."
+        "h3": "Changez de session sans arrêter l’analyse",
+        "p": "La réflexion et les outils continuent en arrière-plan. Revenez pour voir le résultat en direct. Arrêter et les autorisations concernent leur propre session."
       },
       {
-        "h3": "Arrêter arrête vraiment tout",
-        "p": "Le bouton Arrêter annule maintenant la réponse en ligne et les commandes locales lancées par Blade, y compris leurs processus secondaires."
-      },
-      {
-        "h3": "Conversations et pièces jointes préservées",
-        "p": "Les nouveaux messages ne sont plus remplacés par d'anciennes copies synchronisées. Les fichiers déposés, l'arborescence et les noms de dossiers dans toutes les langues sont plus fiables."
-      },
-      {
-        "h3": "Chaque téléchargement est vérifié",
-        "p": "Une version ne peut pas être publiée sans les programmes d'installation macOS et Windows. Les connexions aux API distantes utilisent aussi HTTPS."
+        "h3": "Des fichiers pertinents",
+        "p": "Les listes de dossiers et les sorties brutes des outils ne font plus apparaître des CSV sans rapport sous forme de cartes. Les cartes concernent les documents écrits par les outils ou liés dans la réponse de l’assistant."
       }
     ]
   },
   "get": {
-    "h2": "Télécharger Blade Desktop 0.2.16",
+    "h2": "Télécharger Blade Desktop 0.2.17",
     "sub": "Bêta. Blade a besoin de R, le cherche au premier lancement et peut installer R et Python pour vous.",
     "caveat": "<b>macOS :</b> signé et notarisé par PT Skala Teknologi Nusantara, donc il s'ouvre normalement. <b>Windows :</b> pas encore signé, donc SmartScreen avertit une fois. Cliquez sur Informations complémentaires puis Exécuter quand même. Linux n'est pas encore publié."
   },

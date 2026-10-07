@@ -125,29 +125,21 @@
     }
   },
   "release": {
-    "h2": "Novidades da versão 0.2.16",
-    "sub": "Esta versão traz ações mais seguras, uma interrupção confiável e menos surpresas durante o trabalho.",
+    "h2": "Novidades da versão 0.2.17",
+    "sub": "As análises continuam enquanto você muda de sessão.",
     "items": [
       {
-        "h3": "Mais segurança para seus arquivos",
-        "p": "O Blade verifica pastas e comandos com mais cuidado, pede sua aprovação para ações sensíveis e não repassa segredos salvos às ferramentas que inicia."
+        "h3": "Mude de sessão sem interromper a análise",
+        "p": "O raciocínio e as ferramentas continuam em segundo plano. Volte para ver o resultado atualizado. Parar e as aprovações se aplicam à própria sessão."
       },
       {
-        "h3": "Parar realmente para tudo",
-        "p": "Ao clicar em Parar, a resposta online e os comandos locais iniciados pelo Blade são cancelados, inclusive os processos que eles abriram."
-      },
-      {
-        "h3": "Conversas e anexos permanecem intactos",
-        "p": "Mensagens novas não são mais substituídas por cópias antigas sincronizadas. Arquivos soltos, a árvore de arquivos e nomes de pasta em qualquer idioma funcionam melhor."
-      },
-      {
-        "h3": "Cada download é verificado",
-        "p": "Uma versão não pode ser publicada sem os instaladores para macOS e Windows. Conexões com APIs remotas também usam HTTPS."
+        "h3": "Cartões de arquivos relevantes",
+        "p": "Listagens de pastas e saídas brutas das ferramentas não exibem mais CSVs sem relação como cartões. Os cartões aparecem para documentos escritos por ferramentas ou vinculados na resposta do assistente."
       }
     ]
   },
   "get": {
-    "h2": "Baixe o Blade Desktop 0.2.16",
+    "h2": "Baixe o Blade Desktop 0.2.17",
     "sub": "Beta. O Blade precisa do R, procura por ele no primeiro início e pode instalar R e Python para você.",
     "caveat": "<b>macOS:</b> assinado e notarizado pela PT Skala Teknologi Nusantara, então abre normalmente. <b>Windows:</b> ainda sem assinatura, então o SmartScreen avisa uma vez. Clique em Mais informações e depois em Executar assim mesmo. O Linux ainda não foi publicado."
   },
