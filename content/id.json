@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Yang baru di 0.2.17",
-    "sub": "Analisis tetap berjalan saat Anda berpindah sesi.",
+    "h2": "Yang baru di 0.2.18",
+    "sub": "Blade dapat menjelajah web bersama Anda.",
     "items": [
       {
-        "h3": "Pindah sesi tanpa menghentikan analisis",
-        "p": "Proses berpikir dan alat tetap berjalan di latar belakang. Kembali untuk melihat hasil terbaru. Stop dan persetujuan berlaku untuk sesi masing-masing."
+        "h3": "Chrome yang tetap tersimpan",
+        "p": "Blade membuka dan mengendalikan jendela Chrome yang terlihat. Status masuk Anda tetap tersedia antar giliran."
       },
       {
-        "h3": "Kartu berkas yang relevan",
-        "p": "Daftar folder dan keluaran mentah alat tidak lagi menampilkan CSV yang tidak terkait sebagai kartu berkas. Kartu muncul untuk dokumen yang ditulis oleh alat atau ditautkan dalam respons asisten."
+        "h3": "Ambil alih saat diperlukan",
+        "p": "Selesaikan CAPTCHA atau masuk sendiri, lalu klik Continue with Blade agar agen melanjutkan di halaman yang sama."
       }
     ]
   },
   "get": {
-    "h2": "Unduh Blade Desktop 0.2.17",
+    "h2": "Unduh Blade Desktop 0.2.18",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
     "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
   },

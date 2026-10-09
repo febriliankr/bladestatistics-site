@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Novità della versione 0.2.17",
-    "sub": "Le analisi continuano mentre cambi sessione.",
+    "h2": "Novità della versione 0.2.18",
+    "sub": "Blade può navigare con te.",
     "items": [
       {
-        "h3": "Cambia sessione senza interrompere l’analisi",
-        "p": "Il ragionamento e gli strumenti continuano in background. Torna per vedere il risultato aggiornato. Stop e le autorizzazioni riguardano la propria sessione."
+        "h3": "Sessione Chrome persistente",
+        "p": "Blade apre e controlla una finestra Chrome visibile. L’accesso resta attivo tra un turno e l’altro."
       },
       {
-        "h3": "Schede dei file pertinenti",
-        "p": "Gli elenchi delle cartelle e l’output grezzo degli strumenti non mostrano più CSV estranei come schede. Le schede appaiono per documenti scritti dagli strumenti o collegati nella risposta dell’assistente."
+        "h3": "Intervieni quando serve",
+        "p": "Completa un CAPTCHA o accedi personalmente, poi fai clic su Continue with Blade per far riprendere l’agente sulla stessa pagina."
       }
     ]
   },
   "get": {
-    "h2": "Scarica Blade Desktop 0.2.17",
+    "h2": "Scarica Blade Desktop 0.2.18",
     "sub": "Beta. Blade richiede R, lo cerca al primo avvio e può installare R e Python al posto tuo.",
     "caveat": "<b>macOS:</b> firmato e autenticato da PT Skala Teknologi Nusantara, quindi si apre normalmente. <b>Windows:</b> non ancora firmato, quindi SmartScreen avvisa una volta. Clicca Ulteriori informazioni e poi Esegui comunque. Linux non è ancora pubblicato."
   },

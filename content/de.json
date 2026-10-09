@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Neu in Version 0.2.17",
-    "sub": "Analysen laufen weiter, während Sie die Sitzung wechseln.",
+    "h2": "Neu in Version 0.2.18",
+    "sub": "Blade kann mit Ihnen im Web arbeiten.",
     "items": [
       {
-        "h3": "Sitzung wechseln, ohne die Analyse zu stoppen",
-        "p": "Denken und Werkzeuge laufen im Hintergrund weiter. Kehren Sie zurück, um das aktuelle Ergebnis zu sehen. Stoppen und Freigaben gelten für die jeweilige Sitzung."
+        "h3": "Dauerhafte Chrome-Sitzung",
+        "p": "Blade öffnet und steuert ein sichtbares Chrome-Fenster. Ihre Anmeldung bleibt über mehrere Schritte erhalten."
       },
       {
-        "h3": "Passende Dateikarten",
-        "p": "Ordnerlisten und rohe Werkzeugausgaben zeigen keine unbeteiligten CSV-Dateien mehr als Dateikarten. Karten erscheinen für von Werkzeugen geschriebene Dokumente oder in der Antwort verlinkte Dateien."
+        "h3": "Bei Bedarf übernehmen",
+        "p": "Lösen Sie ein CAPTCHA oder melden Sie sich selbst an. Klicken Sie dann auf Continue with Blade, damit der Agent auf derselben Seite fortfährt."
       }
     ]
   },
   "get": {
-    "h2": "Blade Desktop 0.2.17 laden",
+    "h2": "Blade Desktop 0.2.18 laden",
     "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",
     "caveat": "<b>macOS:</b> von PT Skala Teknologi Nusantara signiert und notarisiert, öffnet also normal. <b>Windows:</b> noch nicht signiert, SmartScreen warnt einmal. Auf Weitere Informationen klicken, dann Trotzdem ausführen. Linux ist noch nicht veröffentlicht."
   },
