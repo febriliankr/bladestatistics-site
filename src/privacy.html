@@ -21,7 +21,7 @@
   <article class="doc">
     <a class="back" href="/">&larr; Blade Statistics</a>
     <h1>Privacy</h1>
-    <p class="updated">Last updated 16 September 2026</p>
+    <p class="updated">Last updated 17 October 2026</p>
 
     <p class="lead">
       Blade is made by PT Skala Teknologi Nusantara. This page covers both this
@@ -101,16 +101,19 @@
 
     <h3>AI processing</h3>
     <p>
-      The analysis itself is performed by a large language model run by a third
-      party. Today that provider is <strong>OpenAI</strong>, through its Agents
-      API. Your conversation — including any file contents and tool output it
-      contains — is sent to OpenAI and held on OpenAI's servers in the
-      United States for as long as the session lives there. OpenAI states that
-      content submitted through its API is not used to train its models.
+      Blade sends requests to the third-party AI provider serving the selected
+      model. Depending on the available model and server configuration, providers
+      may include <strong>OpenAI, Anthropic, Z.AI, DeepSeek, and Alibaba
+      DashScope (Qwen)</strong>. A request can include your conversation, file
+      contents the assistant reads, and tool output. Selecting another model can
+      change which provider receives subsequent requests and conversation context.
     </p>
     <p>
-      We may change provider. When we do, this page is updated to name the one
-      actually in use.
+      Providers process requests under their respective service terms and data
+      policies. Processing location and retention depend on the provider and
+      service configuration. Do not include confidential or personal information
+      in a conversation or workspace unless you are authorized to send it for AI
+      processing. We update this page when the available providers change.
     </p>
 
     <h3>Payments</h3>
@@ -131,7 +134,7 @@
     <div class="tw">
       <table>
         <tr><th>Who</th><th>What they handle</th><th>Where</th></tr>
-        <tr><td>OpenAI</td><td>Conversations, including file contents and tool output</td><td>United States</td></tr>
+        <tr><td>OpenAI, Anthropic, Z.AI, DeepSeek, or Alibaba DashScope (Qwen), depending on the selected model</td><td>AI requests and conversation context, including file contents and tool output</td><td>Depends on provider and service configuration</td></tr>
         <tr><td>Neon</td><td>Accounts, conversations, analysis records</td><td>Singapore</td></tr>
         <tr><td>Cloudflare</td><td>Datasets you upload</td><td>Global network</td></tr>
         <tr><td>Resend</td><td>Sign-in code emails</td><td>United States</td></tr>
