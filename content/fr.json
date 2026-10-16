@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Nouveautés de la version 0.2.18",
-    "sub": "Blade peut naviguer avec vous.",
+    "h2": "Nouveautés de la version 0.2.19",
+    "sub": "Connexion simplifiée et aperçu des images.",
     "items": [
       {
-        "h3": "Session Chrome persistante",
-        "p": "Blade ouvre et contrôle une fenêtre Chrome visible. Votre connexion reste disponible d’un tour à l’autre."
+        "h3": "Connexion simplifiée",
+        "p": "Le champ de serveur avancé a été supprimé de l’écran de connexion."
       },
       {
-        "h3": "Reprenez la main si nécessaire",
-        "p": "Résolvez un CAPTCHA ou connectez-vous vous-même, puis cliquez sur Continue with Blade pour que l’agent reprenne sur la même page."
+        "h3": "Des aperçus plus grands",
+        "p": "Cliquez sur une image de votre analyse pour afficher un aperçu plus grand."
       }
     ]
   },
   "get": {
-    "h2": "Télécharger Blade Desktop 0.2.18",
+    "h2": "Télécharger Blade Desktop 0.2.19",
     "sub": "Bêta. Blade a besoin de R, le cherche au premier lancement et peut installer R et Python pour vous.",
     "caveat": "<b>macOS :</b> signé et notarisé par PT Skala Teknologi Nusantara, donc il s'ouvre normalement. <b>Windows :</b> pas encore signé, donc SmartScreen avertit une fois. Cliquez sur Informations complémentaires puis Exécuter quand même. Linux n'est pas encore publié."
   },

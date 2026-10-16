@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Neu in Version 0.2.18",
-    "sub": "Blade kann mit Ihnen im Web arbeiten.",
+    "h2": "Neu in 0.2.19",
+    "sub": "Einfachere Anmeldung und Bildvorschau.",
     "items": [
       {
-        "h3": "Dauerhafte Chrome-Sitzung",
-        "p": "Blade öffnet und steuert ein sichtbares Chrome-Fenster. Ihre Anmeldung bleibt über mehrere Schritte erhalten."
+        "h3": "Einfachere Anmeldung",
+        "p": "Das erweiterte Serverfeld wurde vom Anmeldebildschirm entfernt."
       },
       {
-        "h3": "Bei Bedarf übernehmen",
-        "p": "Lösen Sie ein CAPTCHA oder melden Sie sich selbst an. Klicken Sie dann auf Continue with Blade, damit der Agent auf derselben Seite fortfährt."
+        "h3": "Größere Bildvorschau",
+        "p": "Klicken Sie auf ein Bild in Ihrer Analyse, um eine größere Vorschau zu öffnen."
       }
     ]
   },
   "get": {
-    "h2": "Blade Desktop 0.2.18 laden",
+    "h2": "Blade Desktop 0.2.19 laden",
     "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",
     "caveat": "<b>macOS:</b> von PT Skala Teknologi Nusantara signiert und notarisiert, öffnet also normal. <b>Windows:</b> noch nicht signiert, SmartScreen warnt einmal. Auf Weitere Informationen klicken, dann Trotzdem ausführen. Linux ist noch nicht veröffentlicht."
   },

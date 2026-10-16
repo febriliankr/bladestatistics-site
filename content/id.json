@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Yang baru di 0.2.18",
-    "sub": "Blade dapat menjelajah web bersama Anda.",
+    "h2": "Yang baru di 0.2.19",
+    "sub": "Login lebih sederhana dan pratinjau gambar.",
     "items": [
       {
-        "h3": "Chrome yang tetap tersimpan",
-        "p": "Blade membuka dan mengendalikan jendela Chrome yang terlihat. Status masuk Anda tetap tersedia antar giliran."
+        "h3": "Login lebih sederhana",
+        "p": "Kolom server Advanced telah dihapus dari layar login."
       },
       {
-        "h3": "Ambil alih saat diperlukan",
-        "p": "Selesaikan CAPTCHA atau masuk sendiri, lalu klik Continue with Blade agar agen melanjutkan di halaman yang sama."
+        "h3": "Pratinjau gambar lebih besar",
+        "p": "Klik gambar dalam analisis untuk membuka pratinjau yang lebih besar."
       }
     ]
   },
   "get": {
-    "h2": "Unduh Blade Desktop 0.2.18",
+    "h2": "Unduh Blade Desktop 0.2.19",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
     "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
   },
