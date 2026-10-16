@@ -243,6 +243,7 @@ def render(code, c, shell, css, locales, names):
 # Standalone pages are English-only for now. The legal wording stays in one
 # reviewed language until a human translates it.
 PAGES = {
+    "support": "support.html",
     "pricing": "pricing.html",
     "privacy": "privacy.html",
     "data-deletion": "data-deletion.html",
