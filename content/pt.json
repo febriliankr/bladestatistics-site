@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Novidades da versão 0.2.20",
-    "sub": "Cole imagens nas suas mensagens.",
+    "h2": "Novidades da versão 0.2.21",
+    "sub": "Conecte o WhatsApp com WAHA.",
     "items": [
       {
-        "h3": "Colar ou arrastar imagens",
-        "p": "Adicione capturas de tela e imagens locais com miniaturas que você pode remover."
+        "h3": "Instale, escaneie e conecte",
+        "p": "Abra Plugins, execute o WAHA localmente com Docker ou conecte um servidor e escaneie o código QR no WhatsApp."
       },
       {
-        "h3": "Os arquivos de imagem permanecem locais",
-        "p": "As imagens existentes mantêm seus caminhos. As imagens da área de transferência são salvas no seu espaço de trabalho."
+        "h3": "Controle o acesso e o armazenamento",
+        "p": "Escolha as permissões de cada espaço e aprove cada envio. Os dados e arquivos do WhatsApp podem ocupar muito espaço."
       }
     ]
   },
   "get": {
-    "h2": "Baixe o Blade Desktop 0.2.20",
+    "h2": "Baixe o Blade Desktop 0.2.21",
     "sub": "Beta. O Blade precisa do R, procura por ele no primeiro início e pode instalar R e Python para você.",
     "caveat": "<b>macOS:</b> assinado e notarizado pela PT Skala Teknologi Nusantara, então abre normalmente. <b>Windows:</b> ainda sem assinatura, então o SmartScreen avisa uma vez. Clique em Mais informações e depois em Executar assim mesmo. O Linux ainda não foi publicado."
   },

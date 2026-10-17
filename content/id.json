@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Yang baru di 0.2.20",
-    "sub": "Tempel gambar ke dalam pesan.",
+    "h2": "Yang baru di 0.2.21",
+    "sub": "Hubungkan WhatsApp dengan WAHA.",
     "items": [
       {
-        "h3": "Tempel atau seret gambar",
-        "p": "Tambahkan tangkapan layar dan gambar lokal dengan pratinjau yang dapat dihapus."
+        "h3": "Instal, pindai, hubungkan",
+        "p": "Buka Plugins, jalankan WAHA secara lokal dengan Docker atau hubungkan server, lalu pindai kode QR melalui WhatsApp."
       },
       {
-        "h3": "File gambar tetap lokal",
-        "p": "Gambar yang sudah ada tetap menggunakan path aslinya. Gambar dari clipboard disimpan di workspace."
+        "h3": "Atur akses dan penyimpanan",
+        "p": "Pilih izin setiap workspace dan setujui setiap pengiriman. Data dan file WhatsApp dapat memakai banyak ruang penyimpanan."
       }
     ]
   },
   "get": {
-    "h2": "Unduh Blade Desktop 0.2.20",
+    "h2": "Unduh Blade Desktop 0.2.21",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
     "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
   },

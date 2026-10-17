@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "What's new in 0.2.20",
-    "sub": "Paste images into your prompts.",
+    "h2": "What's new in 0.2.21",
+    "sub": "Connect WhatsApp with WAHA.",
     "items": [
       {
-        "h3": "Paste or drop images",
-        "p": "Add screenshots and local images with removable thumbnail previews."
+        "h3": "Install, scan, connect",
+        "p": "Open Plugins, run WAHA locally with Docker or connect a server, and scan the QR code in WhatsApp."
       },
       {
-        "h3": "Image files stay local",
-        "p": "Existing images keep their paths. Clipboard images are saved in your workspace."
+        "h3": "Control access and storage",
+        "p": "Choose workspace permissions and approve each send. WhatsApp data and files can use a lot of storage."
       }
     ]
   },
   "get": {
-    "h2": "Download Blade Desktop 0.2.20",
+    "h2": "Download Blade Desktop 0.2.21",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
     "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
   },

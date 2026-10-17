@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Neu in 0.2.20",
-    "sub": "Bilder in Ihre Eingaben einfügen.",
+    "h2": "Neu in 0.2.21",
+    "sub": "WhatsApp mit WAHA verbinden.",
     "items": [
       {
-        "h3": "Bilder einfügen oder ablegen",
-        "p": "Fügen Sie Screenshots und lokale Bilder mit entfernbaren Vorschaubildern hinzu."
+        "h3": "Installieren, scannen, verbinden",
+        "p": "Öffne Plugins, starte WAHA lokal mit Docker oder verbinde einen Server und scanne den QR-Code in WhatsApp."
       },
       {
-        "h3": "Bilddateien bleiben lokal",
-        "p": "Vorhandene Bilder behalten ihre Pfade. Bilder aus der Zwischenablage werden im Arbeitsordner gespeichert."
+        "h3": "Zugriff und Speicher verwalten",
+        "p": "Lege die Rechte je Arbeitsbereich fest und bestätige jeden Versand. WhatsApp-Daten und Dateien können viel Speicherplatz benötigen."
       }
     ]
   },
   "get": {
-    "h2": "Blade Desktop 0.2.20 laden",
+    "h2": "Blade Desktop 0.2.21 laden",
     "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",
     "caveat": "<b>macOS:</b> von PT Skala Teknologi Nusantara signiert und notarisiert, öffnet also normal. <b>Windows:</b> noch nicht signiert, SmartScreen warnt einmal. Auf Weitere Informationen klicken, dann Trotzdem ausführen. Linux ist noch nicht veröffentlicht."
   },
