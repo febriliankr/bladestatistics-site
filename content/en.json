@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "What's new in 0.2.19",
-    "sub": "Simpler sign-in and image previews.",
+    "h2": "What's new in 0.2.20",
+    "sub": "Paste images into your prompts.",
     "items": [
       {
-        "h3": "Simpler sign-in",
-        "p": "The Advanced server field has been removed from the sign-in screen."
+        "h3": "Paste or drop images",
+        "p": "Add screenshots and local images with removable thumbnail previews."
       },
       {
-        "h3": "Larger image previews",
-        "p": "Click an image in your analysis to open a larger preview."
+        "h3": "Image files stay local",
+        "p": "Existing images keep their paths. Clipboard images are saved in your workspace."
       }
     ]
   },
   "get": {
-    "h2": "Download Blade Desktop 0.2.19",
+    "h2": "Download Blade Desktop 0.2.20",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
     "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
   },

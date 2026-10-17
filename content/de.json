@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Neu in 0.2.19",
-    "sub": "Einfachere Anmeldung und Bildvorschau.",
+    "h2": "Neu in 0.2.20",
+    "sub": "Bilder in Ihre Eingaben einfügen.",
     "items": [
       {
-        "h3": "Einfachere Anmeldung",
-        "p": "Das erweiterte Serverfeld wurde vom Anmeldebildschirm entfernt."
+        "h3": "Bilder einfügen oder ablegen",
+        "p": "Fügen Sie Screenshots und lokale Bilder mit entfernbaren Vorschaubildern hinzu."
       },
       {
-        "h3": "Größere Bildvorschau",
-        "p": "Klicken Sie auf ein Bild in Ihrer Analyse, um eine größere Vorschau zu öffnen."
+        "h3": "Bilddateien bleiben lokal",
+        "p": "Vorhandene Bilder behalten ihre Pfade. Bilder aus der Zwischenablage werden im Arbeitsordner gespeichert."
       }
     ]
   },
   "get": {
-    "h2": "Blade Desktop 0.2.19 laden",
+    "h2": "Blade Desktop 0.2.20 laden",
     "sub": "Beta. Blade braucht R, sucht beim ersten Start danach und kann R und Python für Sie installieren.",
     "caveat": "<b>macOS:</b> von PT Skala Teknologi Nusantara signiert und notarisiert, öffnet also normal. <b>Windows:</b> noch nicht signiert, SmartScreen warnt einmal. Auf Weitere Informationen klicken, dann Trotzdem ausführen. Linux ist noch nicht veröffentlicht."
   },

@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Novidades da versão 0.2.19",
-    "sub": "Login mais simples e prévias de imagens.",
+    "h2": "Novidades da versão 0.2.20",
+    "sub": "Cole imagens nas suas mensagens.",
     "items": [
       {
-        "h3": "Login mais simples",
-        "p": "O campo de servidor avançado foi removido da tela de login."
+        "h3": "Colar ou arrastar imagens",
+        "p": "Adicione capturas de tela e imagens locais com miniaturas que você pode remover."
       },
       {
-        "h3": "Prévias de imagens maiores",
-        "p": "Clique em uma imagem na análise para abrir uma prévia maior."
+        "h3": "Os arquivos de imagem permanecem locais",
+        "p": "As imagens existentes mantêm seus caminhos. As imagens da área de transferência são salvas no seu espaço de trabalho."
       }
     ]
   },
   "get": {
-    "h2": "Baixe o Blade Desktop 0.2.19",
+    "h2": "Baixe o Blade Desktop 0.2.20",
     "sub": "Beta. O Blade precisa do R, procura por ele no primeiro início e pode instalar R e Python para você.",
     "caveat": "<b>macOS:</b> assinado e notarizado pela PT Skala Teknologi Nusantara, então abre normalmente. <b>Windows:</b> ainda sem assinatura, então o SmartScreen avisa uma vez. Clique em Mais informações e depois em Executar assim mesmo. O Linux ainda não foi publicado."
   },

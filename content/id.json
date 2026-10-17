@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Yang baru di 0.2.19",
-    "sub": "Login lebih sederhana dan pratinjau gambar.",
+    "h2": "Yang baru di 0.2.20",
+    "sub": "Tempel gambar ke dalam pesan.",
     "items": [
       {
-        "h3": "Login lebih sederhana",
-        "p": "Kolom server Advanced telah dihapus dari layar login."
+        "h3": "Tempel atau seret gambar",
+        "p": "Tambahkan tangkapan layar dan gambar lokal dengan pratinjau yang dapat dihapus."
       },
       {
-        "h3": "Pratinjau gambar lebih besar",
-        "p": "Klik gambar dalam analisis untuk membuka pratinjau yang lebih besar."
+        "h3": "File gambar tetap lokal",
+        "p": "Gambar yang sudah ada tetap menggunakan path aslinya. Gambar dari clipboard disimpan di workspace."
       }
     ]
   },
   "get": {
-    "h2": "Unduh Blade Desktop 0.2.19",
+    "h2": "Unduh Blade Desktop 0.2.20",
     "sub": "Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.",
     "caveat": "<b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis."
   },

@@ -125,21 +125,21 @@
     }
   },
   "release": {
-    "h2": "Novità della versione 0.2.19",
-    "sub": "Accesso più semplice e anteprime delle immagini.",
+    "h2": "Novità della versione 0.2.20",
+    "sub": "Incolla immagini nei tuoi messaggi.",
     "items": [
       {
-        "h3": "Accesso più semplice",
-        "p": "Il campo del server avanzato è stato rimosso dalla schermata di accesso."
+        "h3": "Incollare o trascinare immagini",
+        "p": "Aggiungi schermate e immagini locali con anteprime rimovibili."
       },
       {
-        "h3": "Anteprime più grandi",
-        "p": "Fai clic su un’immagine nell’analisi per aprire un’anteprima più grande."
+        "h3": "I file immagine restano locali",
+        "p": "Le immagini esistenti mantengono i loro percorsi. Le immagini degli appunti vengono salvate nella cartella di lavoro."
       }
     ]
   },
   "get": {
-    "h2": "Scarica Blade Desktop 0.2.19",
+    "h2": "Scarica Blade Desktop 0.2.20",
     "sub": "Beta. Blade richiede R, lo cerca al primo avvio e può installare R e Python al posto tuo.",
     "caveat": "<b>macOS:</b> firmato e autenticato da PT Skala Teknologi Nusantara, quindi si apre normalmente. <b>Windows:</b> non ancora firmato, quindi SmartScreen avvisa una volta. Clicca Ulteriori informazioni e poi Esegui comunque. Linux non è ancora pubblicato."
   },
