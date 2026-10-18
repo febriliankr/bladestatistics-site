@@ -9,6 +9,7 @@
   /* Logo orange (#ff4900) deepened just enough for AA white text. */
   --orange: #d43b00;
   --orange-hover: #b53200;
+  --orange-press: #9a2b00;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 * {
@@ -258,7 +259,10 @@ h2 {
   border-start-end-radius: 100px;
   border-end-end-radius: 100px;
   padding-inline: 13px;
-  background: #3d4c35;
+  background: var(--orange-hover);
+}
+.cta > .caret:hover {
+  background: var(--orange-press);
 }
 .caret svg {
   width: 10px;
