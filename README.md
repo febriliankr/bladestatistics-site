@@ -41,10 +41,7 @@ per session. Choosing from the switcher in the top bar stores the pick in
 
 ## Theme
 
-The palette follows the device through `prefers-color-scheme`. Both themes are
-defined as custom properties on `:root`, with the light values in one media
-query. Brand orange is too weak for small text on white, so `--brand-ink` and
-`--brand-btn` carry darker values in light mode.
+The landing pages use `assets/landing.css` over the shared base stylesheet: an original GPT Image night-sky hero above warm, light statistics sections. `DESIGN.md` records the artwork prompt and asset details. Pricing and legal pages keep the shared device-aware theme. The home page remains translated in every supported language, including Arabic's right-to-left layout.
 
 ## Motion
 

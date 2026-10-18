@@ -608,15 +608,21 @@ try {
   }
 </style>
 
+<meta name="theme-color" content="#0c1427" />
+<link rel="preload" as="image" href="/assets/night-sky.webp" media="(min-width: 641px)" />
+<link rel="preload" as="image" href="/assets/night-sky-mobile.webp" media="(max-width: 640px)" />
+<link rel="stylesheet" href="/assets/landing.css" />
 </head>
 <body>
 
-<div class="wrap">
-  <header>
-    <div class="topbar">
-      <img class="logo" src="/logo.png" alt="Blade" />
-      <nav class="topnav" aria-label="Primary">
-        <a class="topnav-link" href="/pricing">요금</a>
+<header class="hero">
+  <div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/night-sky-mobile.webp" /><img src="/assets/night-sky.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+  <div class="stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <nav class="nav wrap" aria-label="Primary">
+      <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
+      <div class="nav-links">
+        <a class="workflow-link" href="https://blade.skalatec.com/">워크플로 ↗</a>
+        <a href="/pricing">요금</a>
       <details class="lang">
         <summary>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.38-3.56A8.03 8.03 0 0118.9 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.98 7.98 0 010-4h3.38a16.5 16.5 0 000 4H4.26zm.84 2h2.95c.32 1.25.79 2.45 1.38 3.56A7.99 7.99 0 015.1 16zm2.95-8H5.1a7.99 7.99 0 014.33-3.56A15.6 15.6 0 008.05 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66a14.7 14.7 0 010-4h4.68a14.7 14.7 0 010 4zm.23 5.56c.59-1.11 1.06-2.31 1.38-3.56h2.95a7.99 7.99 0 01-4.33 3.56zM16.36 14a16.5 16.5 0 000-4h3.38a7.98 7.98 0 010 4h-3.38z"/></svg>
@@ -638,29 +644,31 @@ try {
         <a href="/ko/" data-lang="ko" aria-current="true">한국어</a>
         </div>
       </details>
-      </nav>
-    </div>
+      </div>
+      <a class="nav-cta" href="#get">Blade 받기 <span aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="hero-content wrap">
+    <a class="eyebrow-pill" href="#get"><span class="status-dot"></span>macOS와 Windows, 베타<span aria-hidden="true">↗</span></a>
     <h1><em>통계 소프트웨어</em> 없이 하는 통계.</h1>
     <p class="lede">평소 쓰는 말로 데이터에 관해 물어보세요. Blade가 검정을 고르고 여러분 컴퓨터의 R에서 실행합니다. APA 형식 출력과 가정 점검, 그리고 실행된 스크립트가 남습니다.</p>
     <span class="cta">
       <a class="btn" id="cta" href="#get">Blade 받기</a>
-      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="다른 다운로드" hidden>
+      <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-controls="cta-menu" aria-expanded="false" aria-label="다른 다운로드" hidden>
         <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
       </button>
       <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
     </span>
     <span class="note" id="cta-note">macOS와 Windows, 베타</span>
-  </header>
-</div>
-
+    </div>
+    <div class="hero-foot wrap"><span>Blade, 에이전트 기반 통계 분석.</span><a href="#get">Blade 받기 <span aria-hidden="true">↓</span></a></div>
+</header>
+<main class="wrap main-content">
 <div class="shot">
   <figure class="reveal">
-    <img src="/app.png" alt="선형회귀 패널, 로지스틱 회귀 오즈비가 함께 있는 ROC 곡선, 구조방정식모형 경로도, 그리고 생성된 프로젝트 파일을 보여주는 Blade Desktop 화면." />
+    <img src="/app.png" alt="선형회귀 패널, 로지스틱 회귀 오즈비가 함께 있는 ROC 곡선, 구조방정식모형 경로도, 그리고 생성된 프로젝트 파일을 보여주는 Blade Desktop 화면." width="1600" height="1011" loading="lazy" />
   </figure>
   <figcaption>한 세션: 회귀 진단, ROC 곡선, SEM 경로도. 스크립트는 모두 폴더에 남았습니다.</figcaption>
 </div>
-
-<div class="wrap">
 
   <div class="facts reveal">
     <div><b>46</b><span>통계 절차, 기술통계부터 SEM까지</span></div>
@@ -862,7 +870,7 @@ try {
     <span class="spacer">PT Skala Teknologi Nusantara</span>
   </footer>
 
-</div>
+</main>
 
 <script>
 // The download table below is the source of truth; the hero button just points
@@ -924,12 +932,12 @@ try {
     note.textContent = build.meta + (v ? ' · ' + T.version + ' ' + v : '');
     more.hidden = false;
     menu.innerHTML = builds.map(function (b) {
-      return '<a role="menuitem" href="' + b.href + '">' + b.icon +
+      return '<a role="menuitem" tabindex="-1" href="' + b.href + '">' + b.icon +
              '<span>' + b.name + '</span><span class="meta">' + b.meta + '</span></a>';
     }).join('');
   }
 
-  function close() { menu.hidden = true; more.setAttribute('aria-expanded', 'false'); }
+  function close(restoreFocus) { menu.hidden = true; more.setAttribute('aria-expanded', 'false'); if (restoreFocus) more.focus(); }
 
   more.addEventListener('click', function (e) {
     e.stopPropagation();
@@ -938,7 +946,20 @@ try {
     more.setAttribute('aria-expanded', String(open));
   });
   document.addEventListener('click', function (e) { if (!menu.contains(e.target)) close(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) close(true); });
+  more.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault(); menu.hidden = false; more.setAttribute('aria-expanded', 'true'); menu.querySelector('a').focus();
+    }
+  });
+  menu.addEventListener('keydown', function (e) {
+    var items = [].slice.call(menu.querySelectorAll('a'));
+    var index = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault(); items[(index + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length].focus();
+    }
+    if (e.key === 'Tab') close();
+  });
 
   var os = detectOS();
   if (!os) return; // Linux and friends keep the plain jump link.
