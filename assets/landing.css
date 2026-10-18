@@ -594,6 +594,8 @@ h2 {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  --footer-solid: 100px;
+  --footer-fade: 260px;
   background: #faf8ed;
   padding-top: 110px;
 }
@@ -614,13 +616,10 @@ h2 {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: linear-gradient(
-    180deg,
-    #fff9 0%,
-    #fff6 30%,
-    #fff1 75%,
-    #fff7 100%
-  );
+  /* Second layer fades the art to solid white behind the footer links. */
+  background:
+    linear-gradient(0deg, #fff 0, #fff var(--footer-solid), #fff0 var(--footer-fade)),
+    linear-gradient(180deg, #fff9 0%, #fff6 30%, #fff1 75%);
   pointer-events: none;
 }
 .download-content {
@@ -721,9 +720,8 @@ h2 {
   align-items: center;
   flex-wrap: wrap;
   gap: 30px;
-  padding-top: 32px;
+  padding-top: 28px;
   padding-bottom: 36px;
-  border-top: 1px solid #8b997d3d;
 }
 .footer-bottom .wordmark {
   font-size: 25px;
@@ -734,22 +732,21 @@ h2 {
 }
 .footer-bottom nav {
   display: flex;
-  gap: 22px;
+  gap: 24px;
   margin-inline-start: auto;
-  font-size: 12px;
+  font-size: 13px;
 }
 .footer-bottom nav a {
   text-decoration: none;
-  color: #606d55;
+  color: var(--fg);
 }
 .footer-bottom nav a:hover {
-  color: #25351d;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 .footer-bottom small {
-  color: #65705c;
-  font-size: 10px;
+  color: var(--muted);
+  font-size: 12px;
 }
 @keyframes rise-in {
   from {
@@ -1014,6 +1011,8 @@ h2 {
     margin-top: 10px;
   }
   .landscape-footer {
+    --footer-solid: 150px;
+    --footer-fade: 300px;
     padding-top: 75px;
   }
   .download-content {
@@ -1058,10 +1057,10 @@ h2 {
     justify-content: center;
     flex-wrap: wrap;
     gap: 12px 22px;
-    font-size: 12px;
+    font-size: 13px;
   }
   .footer-bottom small {
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 @media (max-width: 360px) {
