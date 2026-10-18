@@ -5,210 +5,123 @@
   "ogLocale": "en_US",
   "langLabel": "Language",
   "meta": {
-    "title": "Blade: statistical analysis with runnable R scripts",
-    "description": "Ask a question about CSV, Excel, or SPSS data. Blade runs the analysis in R and saves the script.",
-    "ogTitle": "Blade: statistical analysis with runnable R scripts",
-    "ogDescription": "Open your data folder. Describe the analysis. Blade runs R and saves the script beside your results."
+    "title": "Blade, statistics without the statistics software",
+    "description": "Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them.",
+    "ogTitle": "Blade, statistics without the statistics software",
+    "ogDescription": "Describe the question. Blade picks the test, runs it in R on your machine, and shows its work."
   },
   "hero": {
-    "h1a": "Ask about your data. ",
-    "h1em": "Keep the R script.",
-    "h1b": "",
-    "lede": "Open your data folder and describe the analysis. Blade runs R, checks assumptions, and saves the script beside your results."
+    "h1a": "Statistics without the ",
+    "h1em": "statistics software",
+    "h1b": ".",
+    "lede": "Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them."
   },
   "cta": {
-    "get": "Download Blade",
+    "get": "Get Blade",
     "more": "Other downloads",
     "downloadFor": "Download for %s",
     "version": "version",
-    "note": "Beta for macOS and Windows"
+    "note": "macOS and Windows, beta"
   },
   "shot": {
-    "alt": "Blade Desktop displaying regression diagnostics, an ROC curve, an SEM diagram, and the R scripts saved in the project folder.",
-    "caption": "Regression diagnostics, an ROC curve, and an SEM diagram from one session. The R scripts stay in the project folder."
+    "alt": "Blade Desktop showing a linear regression panel, an ROC curve with logistic regression odds ratios, and a structural equation model path diagram, alongside the project files it generated.",
+    "caption": "One session: regression diagnostics, an ROC curve, an SEM path diagram. Every script stayed in the folder."
   },
   "facts": [
-    [
-      "46",
-      "procedures, from descriptives to SEM"
-    ],
-    [
-      "R",
-      "calculates each result"
-    ],
-    [
-      "0",
-      "data files uploaded"
-    ]
+    ["46", "statistical procedures, descriptives through SEM"],
+    ["R", "runs the arithmetic behind every result"],
+    ["0", "data files uploaded anywhere"]
   ],
   "spss": {
-    "h2": "How Blade handles an analysis",
-    "sub": "Compare how you choose a method, check assumptions, and save the analysis for another dataset.",
-    "colOther": "Menu-based statistics software",
+    "h2": "The dialog box was never the hard part.",
+    "sub": "Picking the right test is the work. So is checking you were allowed to run it. So is running it again next year on new data.",
+    "colOther": "Point-and-click stats software",
     "colBlade": "Blade",
     "rows": [
-      [
-        "Start an analysis",
-        "Select a procedure and configure its dialog.",
-        "Describe the comparison or relationship you want to test."
-      ],
-      [
-        "Choose a method",
-        "Choose the procedure before opening its dialog.",
-        "Blade proposes a procedure and explains its choice."
-      ],
-      [
-        "Check assumptions",
-        "Run the relevant diagnostic procedures.",
-        "Read assumption checks alongside the result."
-      ],
-      [
-        "Repeat the analysis",
-        "Save the syntax and update its inputs.",
-        "Keep the R script and rerun it on new files."
-      ],
-      [
-        "Read your data",
-        "Import files into the application.",
-        "Read CSV, Excel, <code>.sav</code>, and Parquet from your folder."
-      ]
+      ["Getting to a result", "Find the menu, fill in the dialog, hope the defaults are right.", "Describe the question in a sentence."],
+      ["Choosing the test", "You have to know before you start.", "Blade proposes a method and says why that one."],
+      ["Assumptions", "A separate menu you have to remember to open.", "Checked and reported next to the result."],
+      ["Reproducing it", "Only if you saved the syntax yourself.", "Every analysis leaves runnable R in the folder."],
+      ["Your data", "Imported into the tool's own world.", "Read in place. CSV, Excel, <code>.sav</code>, Parquet."]
     ]
   },
   "how": {
-    "h2": "From your data folder to the R output",
+    "h2": "Point at a folder, ask, read the output.",
     "steps": [
       {
-        "h3": "Choose the folder containing your data",
-        "p": "Blade reads your existing files. Scripts, tables, and plots are saved in the same project folder."
+        "h3": "Open the folder your data already lives in",
+        "p": "No import step and no project format. Blade reads the files where they sit. Output lands beside them."
       },
       {
-        "h3": "Describe the analysis you need",
-        "p": "Blade reads the variables, proposes a method, and explains its choice before running the analysis.",
-        "quote": "\"Does treatment affect the outcome after adjusting for baseline score and age?\""
+        "h3": "Ask the question the way you would ask a colleague",
+        "p": "Blade reads the variables and picks a method. It tells you what it chose before running anything.",
+        "quote": "\"Does the treatment group still differ on the outcome once I control for baseline score and age?\""
       },
       {
-        "h3": "Read the results and inspect the script",
-        "p": "Review the APA output, tables, plots, and assumption checks. Open the saved R script to inspect or rerun the analysis."
+        "h3": "Read the result, then take it with you",
+        "p": "You get APA output, tables, plots, assumption checks, and a plain reading of what it means. The R syntax sits underneath. Export any of it."
       }
     ]
   },
   "methods": {
-    "h2": "46 statistical procedures",
-    "sub": "Blade calls these procedures through R. Each result comes from the procedure output, with the code saved for review.",
+    "h2": "Forty-six procedures, all of them real R.",
+    "sub": "Each one is a tool the agent calls against an R engine. The model picks which to run and reads the output. It never produces the numbers.",
     "families": [
       {
         "h3": "Describe and explore",
-        "chips": [
-          "Descriptives",
-          "Frequencies",
-          "Crosstabs",
-          "Explore",
-          "Means by group",
-          "Missing data",
-          "Recode",
-          "Compute"
-        ]
+        "chips": ["Descriptives", "Frequencies", "Crosstabs", "Explore", "Means by group", "Missing data", "Recode", "Compute"]
       },
       {
         "h3": "Compare groups",
-        "chips": [
-          "Independent t-test",
-          "Paired t-test",
-          "One-sample t-test",
-          "One-way and factorial ANOVA",
-          "Repeated measures ANOVA",
-          "MANOVA",
-          "Mann-Whitney",
-          "Kruskal-Wallis",
-          "Wilcoxon signed-rank",
-          "Sign test",
-          "Friedman",
-          "McNemar",
-          "Cochran's Q"
-        ]
+        "chips": ["Independent t-test", "Paired t-test", "One-sample t-test", "One-way and factorial ANOVA", "Repeated measures ANOVA", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon signed-rank", "Sign test", "Friedman", "McNemar", "Cochran's Q"]
       },
       {
         "h3": "Relationships and models",
-        "chips": [
-          "Pearson, Spearman, Kendall",
-          "Partial correlation",
-          "Linear regression",
-          "Logistic regression",
-          "Ordinal regression",
-          "Multinomial regression",
-          "Probit",
-          "Curve estimation",
-          "Mixed models"
-        ]
+        "chips": ["Pearson, Spearman, Kendall", "Partial correlation", "Linear regression", "Logistic regression", "Ordinal regression", "Multinomial regression", "Probit", "Curve estimation", "Mixed models"]
       },
       {
         "h3": "Structure and scales",
-        "chips": [
-          "Exploratory factor analysis",
-          "PCA",
-          "Structural equation modelling",
-          "Reliability, Cronbach's alpha",
-          "K-means",
-          "Hierarchical clustering",
-          "Discriminant analysis",
-          "Multidimensional scaling",
-          "Correspondence analysis",
-          "LDA topic models"
-        ]
+        "chips": ["Exploratory factor analysis", "PCA", "Structural equation modelling", "Reliability, Cronbach's alpha", "K-means", "Hierarchical clustering", "Discriminant analysis", "Multidimensional scaling", "Correspondence analysis", "LDA topic models"]
       },
       {
         "h3": "Categorical",
-        "chips": [
-          "Chi-square goodness of fit",
-          "Binomial test",
-          "Loglinear models",
-          "Runs test",
-          "Kolmogorov-Smirnov",
-          "Fisher's exact"
-        ]
+        "chips": ["Chi-square goodness of fit", "Binomial test", "Loglinear models", "Runs test", "Kolmogorov-Smirnov", "Fisher's exact"]
       },
       {
-        "h3": "Survival, time series, and meta-analysis",
-        "chips": [
-          "Kaplan-Meier",
-          "Cox regression",
-          "ROC curves",
-          "Autocorrelation",
-          "ARIMA",
-          "Meta-analysis"
-        ]
+        "h3": "Time, risk, synthesis",
+        "chips": ["Kaplan-Meier", "Cox regression", "ROC curves", "Autocorrelation", "ARIMA", "Meta-analysis"]
       }
     ]
   },
   "trust": {
-    "h2": "Check the method, assumptions, and R script",
+    "h2": "The model writes the call. R computes the answer.",
     "points": [
       {
-        "h3": "R calculates the numbers",
-        "p": "Each p-value comes from an R procedure. Blade selects the procedure and explains its output."
+        "h3": "Nothing is estimated by a language model",
+        "p": "A p-value in Blade came out of an R procedure. It is the same one you would run by hand. The model chooses the procedure and explains what came back."
       },
       {
-        "h3": "Warnings stay with the result",
-        "p": "Convergence warnings, singular fits, and assumption failures appear with the output. Failed analyses are reported as failures."
+        "h3": "When R complains, you see it",
+        "p": "Convergence warnings, singular fits and violated assumptions come through instead of being smoothed over. An analysis that failed says so."
       },
       {
-        "h3": "Keep runnable R scripts",
-        "p": "Every analysis saves its R script in your folder. A supervisor or statistician can inspect it without installing Blade."
+        "h3": "The syntax stays behind",
+        "p": "Every analysis writes runnable R into your folder. Hand it to a supervisor, a reviewer or a statistician. They can check the work without Blade."
       },
       {
-        "h3": "Work in your own folder",
-        "p": "Blade uses R and Python on your computer. Data files stay in your folder. File writes and shell commands require approval.",
-        "p2": "The hosted API plans the analysis and stores the session transcript. Your workspace files stay on your computer."
+        "h3": "Your machine, your files",
+        "p": "Blade runs on the R and Python already installed on your computer, in a folder you pick. Your data files are never uploaded. Every file write and shell command waits for your approval.",
+        "p2": "The hosted API plans the work and holds the model keys. It stores the session transcript and nothing from your workspace."
       },
       {
-        "h3": "Review the study design",
-        "p": "Check whether the comparison answers your research question. Review confounders, study design, and interpretation alongside the procedure output."
+        "h3": "It does the mechanics, you own the claim",
+        "p": "Blade is quick at the mechanical part. It cannot judge whether your design supports the conclusion. That stays yours."
       }
     ],
     "cross": {
-      "h3": "Save the analysis as a workflow",
-      "p": "Run the same analysis on next month's files. Share it with a colleague as one <code>.bladeworkflow</code> file.",
-      "link": "How workflows work"
+      "h3": "Then keep it",
+      "p": "Save an analysis as a workflow. Next term it runs on the new data in one click. Or it goes to a colleague as a single file.",
+      "link": "See how workflows work"
     }
   },
   "release": {
@@ -216,51 +129,33 @@
     "sub": "Connect WhatsApp with WAHA.",
     "items": [
       {
-        "h3": "Connect WhatsApp through Plugins",
-        "p": "Run WAHA locally with Docker or connect your server. Scan the QR code in WhatsApp to pair the account."
+        "h3": "Install, scan, connect",
+        "p": "Open Plugins, run WAHA locally with Docker or connect a server, and scan the QR code in WhatsApp."
       },
       {
         "h3": "Control access and storage",
-        "p": "Set workspace permissions and approve each send. Review the storage used by WhatsApp messages and files."
+        "p": "Choose workspace permissions and approve each send. WhatsApp data and files can use a lot of storage."
       }
     ]
   },
   "get": {
     "h2": "Download Blade Desktop 0.2.21",
-    "sub": "Beta for macOS and Windows. Blade checks for R at startup and offers to install R and Python.",
-    "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara. <b>Windows:</b> unsigned, so SmartScreen shows a warning. Click More info, then Run anyway. Linux builds are not available yet."
+    "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
+    "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
   },
   "faq": {
-    "h2": "Questions about files, R, and data",
+    "h2": "Before you download.",
     "items": [
-      [
-        "Do I need to know R?",
-        "No. Describe the analysis in plain language. Blade runs R and explains the output. The saved script is available for review."
-      ],
-      [
-        "Can Blade read SPSS files?",
-        "Yes. Blade reads SPSS <code>.sav</code> files through R, preserving variable and value labels. It also reads CSV, TSV, Excel, and Parquet."
-      ],
-      [
-        "Where do the numbers come from?",
-        "R procedures calculate the results. Blade selects the procedure and explains its output. You can inspect the method and saved script."
-      ],
-      [
-        "Does my data leave my computer?",
-        "Data files stay in your project folder. The hosted API plans the analysis and stores the session transcript. Writes and commands require approval."
-      ],
-      [
-        "What should a statistician review?",
-        "Review the study design, procedure choice, assumptions, and interpretation. The saved R script lets a statistician inspect and rerun the analysis."
-      ],
-      [
-        "Is there a Linux version?",
-        "Linux builds are not available yet. Download links for macOS and Windows are above."
-      ]
+      ["Do I need to know R?", "No. You ask in plain language and read the explanation. The R is there for when someone asks to see your work. It runs on its own."],
+      ["Will it open my SPSS files?", "Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV, Excel and Parquet. Variable and value labels survive."],
+      ["Can I trust a language model with statistics?", "Not with the arithmetic, which is why it never does any. The model picks the procedure and reads the output. R computes the result. You see both the choice and the syntax."],
+      ["Does my data leave my computer?", "Your data files stay in your folder. The hosted API plans the analysis and stores the session transcript. It never receives your datasets. Every write and command asks first."],
+      ["Is this a replacement for a statistician?", "It replaces the hours lost to menus, syntax and reformatting output. It cannot judge whether your design supports your conclusion. It will say when a question is beyond the data."],
+      ["What about Linux?", "Not published yet. The macOS and Windows builds are above."]
     ]
   },
   "footer": {
-    "tagline": "Statistical analysis with runnable R scripts.",
+    "tagline": "Blade, agentic statistical analysis.",
     "workflows": "Workflows",
     "pricing": "Pricing",
     "privacy": "Privacy",

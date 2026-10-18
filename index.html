@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blade: statistical analysis with runnable R scripts</title>
-<meta name="description" content="Ask a question about CSV, Excel, or SPSS data. Blade runs the analysis in R and saves the script." />
+<title>Blade, statistics without the statistics software</title>
+<meta name="description" content="Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them." />
 <link rel="canonical" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
@@ -24,8 +24,8 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bladestatistics.com/" />
 <meta property="og:locale" content="en_US" />
-<meta property="og:title" content="Blade: statistical analysis with runnable R scripts" />
-<meta property="og:description" content="Open your data folder. Describe the analysis. Blade runs R and saves the script beside your results." />
+<meta property="og:title" content="Blade, statistics without the statistics software" />
+<meta property="og:description" content="Describe the question. Blade picks the test, runs it in R on your machine, and shows its work." />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
@@ -644,68 +644,68 @@ try {
         </div>
       </details>
       </div>
-      <a class="nav-cta" href="#get">Download Blade</a>
+      <a class="nav-cta" href="#get">Get Blade</a>
     </nav>
     <div class="hero-content wrap">
-    <h1>Ask about your data. <em>Keep the R script.</em></h1>
-    <p class="lede">Open your data folder and describe the analysis. Blade runs R, checks assumptions, and saves the script beside your results.</p>
+    <h1>Statistics without the <em>statistics software</em>.</h1>
+    <p class="lede">Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them.</p>
     <span class="cta">
-      <a class="btn" id="cta" href="#get">Download Blade</a>
+      <a class="btn" id="cta" href="#get">Get Blade</a>
       <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-controls="cta-menu" aria-expanded="false" aria-label="Other downloads" hidden>
         <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0h10L5 6z"/></svg>
       </button>
       <div class="cta-menu" id="cta-menu" role="menu" hidden></div>
     </span>
-    <span class="note" id="cta-note">Beta for macOS and Windows</span>
+    <span class="note" id="cta-note">macOS and Windows, beta</span>
     </div>
 </header>
 <main class="wrap main-content">
 <div class="shot">
   <figure class="reveal">
-    <img src="/app.png" alt="Blade Desktop displaying regression diagnostics, an ROC curve, an SEM diagram, and the R scripts saved in the project folder." width="1600" height="1011" loading="lazy" />
+    <img src="/app.png" alt="Blade Desktop showing a linear regression panel, an ROC curve with logistic regression odds ratios, and a structural equation model path diagram, alongside the project files it generated." width="1600" height="1011" loading="lazy" />
   </figure>
-  <figcaption>Regression diagnostics, an ROC curve, and an SEM diagram from one session. The R scripts stay in the project folder.</figcaption>
+  <figcaption>One session: regression diagnostics, an ROC curve, an SEM path diagram. Every script stayed in the folder.</figcaption>
 </div>
 
   <div class="facts reveal">
-    <div><b>46</b><span>procedures, from descriptives to SEM</span></div>
-    <div><b>R</b><span>calculates each result</span></div>
-    <div><b>0</b><span>data files uploaded</span></div>
+    <div><b>46</b><span>statistical procedures, descriptives through SEM</span></div>
+    <div><b>R</b><span>runs the arithmetic behind every result</span></div>
+    <div><b>0</b><span>data files uploaded anywhere</span></div>
   </div>
 
   <section id="spss">
-    <h2 class="reveal">How Blade handles an analysis</h2>
-    <p class="sub reveal">Compare how you choose a method, check assumptions, and save the analysis for another dataset.</p>
+    <h2 class="reveal">The dialog box was never the hard part.</h2>
+    <p class="sub reveal">Picking the right test is the work. So is checking you were allowed to run it. So is running it again next year on new data.</p>
     <div class="cmp-scroll reveal">
       <table class="cmp">
         <thead>
-          <tr><th>&nbsp;</th><th>Menu-based statistics software</th><th>Blade</th></tr>
+          <tr><th>&nbsp;</th><th>Point-and-click stats software</th><th>Blade</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>Start an analysis</td>
-            <td>Select a procedure and configure its dialog.</td>
-            <td>Describe the comparison or relationship you want to test.</td>
+            <td>Getting to a result</td>
+            <td>Find the menu, fill in the dialog, hope the defaults are right.</td>
+            <td>Describe the question in a sentence.</td>
           </tr>
           <tr>
-            <td>Choose a method</td>
-            <td>Choose the procedure before opening its dialog.</td>
-            <td>Blade proposes a procedure and explains its choice.</td>
+            <td>Choosing the test</td>
+            <td>You have to know before you start.</td>
+            <td>Blade proposes a method and says why that one.</td>
           </tr>
           <tr>
-            <td>Check assumptions</td>
-            <td>Run the relevant diagnostic procedures.</td>
-            <td>Read assumption checks alongside the result.</td>
+            <td>Assumptions</td>
+            <td>A separate menu you have to remember to open.</td>
+            <td>Checked and reported next to the result.</td>
           </tr>
           <tr>
-            <td>Repeat the analysis</td>
-            <td>Save the syntax and update its inputs.</td>
-            <td>Keep the R script and rerun it on new files.</td>
+            <td>Reproducing it</td>
+            <td>Only if you saved the syntax yourself.</td>
+            <td>Every analysis leaves runnable R in the folder.</td>
           </tr>
           <tr>
-            <td>Read your data</td>
-            <td>Import files into the application.</td>
-            <td>Read CSV, Excel, <code>.sav</code>, and Parquet from your folder.</td>
+            <td>Your data</td>
+            <td>Imported into the tool's own world.</td>
+            <td>Read in place. CSV, Excel, <code>.sav</code>, Parquet.</td>
           </tr>
         </tbody>
       </table>
@@ -713,27 +713,27 @@ try {
   </section>
 
   <section id="how">
-    <h2 class="reveal">From your data folder to the R output</h2>
+    <h2 class="reveal">Point at a folder, ask, read the output.</h2>
     <ol class="steps">
       <li class="reveal">
-        <h3>Choose the folder containing your data</h3>
-        <p>Blade reads your existing files. Scripts, tables, and plots are saved in the same project folder.</p>
+        <h3>Open the folder your data already lives in</h3>
+        <p>No import step and no project format. Blade reads the files where they sit. Output lands beside them.</p>
       </li>
       <li class="reveal">
-        <h3>Describe the analysis you need</h3>
-        <p>Blade reads the variables, proposes a method, and explains its choice before running the analysis.</p>
-        <p class="quote">"Does treatment affect the outcome after adjusting for baseline score and age?"</p>
+        <h3>Ask the question the way you would ask a colleague</h3>
+        <p>Blade reads the variables and picks a method. It tells you what it chose before running anything.</p>
+        <p class="quote">"Does the treatment group still differ on the outcome once I control for baseline score and age?"</p>
       </li>
       <li class="reveal">
-        <h3>Read the results and inspect the script</h3>
-        <p>Review the APA output, tables, plots, and assumption checks. Open the saved R script to inspect or rerun the analysis.</p>
+        <h3>Read the result, then take it with you</h3>
+        <p>You get APA output, tables, plots, assumption checks, and a plain reading of what it means. The R syntax sits underneath. Export any of it.</p>
       </li>
     </ol>
   </section>
 
   <section id="methods">
-    <h2 class="reveal">46 statistical procedures</h2>
-    <p class="sub reveal">Blade calls these procedures through R. Each result comes from the procedure output, with the code saved for review.</p>
+    <h2 class="reveal">Forty-six procedures, all of them real R.</h2>
+    <p class="sub reveal">Each one is a tool the agent calls against an R engine. The model picks which to run and reads the output. It never produces the numbers.</p>
     <div class="fam reveal">
       <h3>Describe and explore</h3>
       <div class="chips"><span>Descriptives</span><span>Frequencies</span><span>Crosstabs</span><span>Explore</span><span>Means by group</span><span>Missing data</span><span>Recode</span><span>Compute</span></div>
@@ -755,38 +755,38 @@ try {
       <div class="chips"><span>Chi-square goodness of fit</span><span>Binomial test</span><span>Loglinear models</span><span>Runs test</span><span>Kolmogorov-Smirnov</span><span>Fisher's exact</span></div>
     </div>
     <div class="fam reveal">
-      <h3>Survival, time series, and meta-analysis</h3>
+      <h3>Time, risk, synthesis</h3>
       <div class="chips"><span>Kaplan-Meier</span><span>Cox regression</span><span>ROC curves</span><span>Autocorrelation</span><span>ARIMA</span><span>Meta-analysis</span></div>
     </div>
   </section>
 
   <section id="trust">
-    <h2 class="reveal">Check the method, assumptions, and R script</h2>
+    <h2 class="reveal">The model writes the call. R computes the answer.</h2>
     <div class="point reveal">
-      <h3>R calculates the numbers</h3>
-      <p>Each p-value comes from an R procedure. Blade selects the procedure and explains its output.</p>
+      <h3>Nothing is estimated by a language model</h3>
+      <p>A p-value in Blade came out of an R procedure. It is the same one you would run by hand. The model chooses the procedure and explains what came back.</p>
     </div>
     <div class="point reveal">
-      <h3>Warnings stay with the result</h3>
-      <p>Convergence warnings, singular fits, and assumption failures appear with the output. Failed analyses are reported as failures.</p>
+      <h3>When R complains, you see it</h3>
+      <p>Convergence warnings, singular fits and violated assumptions come through instead of being smoothed over. An analysis that failed says so.</p>
     </div>
     <div class="point reveal">
-      <h3>Keep runnable R scripts</h3>
-      <p>Every analysis saves its R script in your folder. A supervisor or statistician can inspect it without installing Blade.</p>
+      <h3>The syntax stays behind</h3>
+      <p>Every analysis writes runnable R into your folder. Hand it to a supervisor, a reviewer or a statistician. They can check the work without Blade.</p>
     </div>
     <div class="point reveal">
-      <h3>Work in your own folder</h3>
-      <p>Blade uses R and Python on your computer. Data files stay in your folder. File writes and shell commands require approval.</p>
-      <p>The hosted API plans the analysis and stores the session transcript. Your workspace files stay on your computer.</p>
+      <h3>Your machine, your files</h3>
+      <p>Blade runs on the R and Python already installed on your computer, in a folder you pick. Your data files are never uploaded. Every file write and shell command waits for your approval.</p>
+      <p>The hosted API plans the work and holds the model keys. It stores the session transcript and nothing from your workspace.</p>
     </div>
     <div class="point reveal">
-      <h3>Review the study design</h3>
-      <p>Check whether the comparison answers your research question. Review confounders, study design, and interpretation alongside the procedure output.</p>
+      <h3>It does the mechanics, you own the claim</h3>
+      <p>Blade is quick at the mechanical part. It cannot judge whether your design supports the conclusion. That stays yours.</p>
     </div>
     <div class="cross reveal">
-      <h3>Save the analysis as a workflow</h3>
-      <p>Run the same analysis on next month's files. Share it with a colleague as one <code>.bladeworkflow</code> file.</p>
-      <a href="https://blade.skalatec.com/">How workflows work &rarr;</a>
+      <h3>Then keep it</h3>
+      <p>Save an analysis as a workflow. Next term it runs on the new data in one click. Or it goes to a colleague as a single file.</p>
+      <a href="https://blade.skalatec.com/">See how workflows work &rarr;</a>
     </div>
   </section>
 
@@ -795,19 +795,19 @@ try {
     <p class="sub reveal">Connect WhatsApp with WAHA.</p>
     <ul class="release-list">
     <li class="reveal">
-      <h3>Connect WhatsApp through Plugins</h3>
-      <p>Run WAHA locally with Docker or connect your server. Scan the QR code in WhatsApp to pair the account.</p>
+      <h3>Install, scan, connect</h3>
+      <p>Open Plugins, run WAHA locally with Docker or connect a server, and scan the QR code in WhatsApp.</p>
     </li>
     <li class="reveal">
       <h3>Control access and storage</h3>
-      <p>Set workspace permissions and approve each send. Review the storage used by WhatsApp messages and files.</p>
+      <p>Choose workspace permissions and approve each send. WhatsApp data and files can use a lot of storage.</p>
     </li>
     </ul>
   </section>
 
   <section class="get" id="get">
     <h2 class="reveal">Download Blade Desktop 0.2.21</h2>
-    <p class="sub reveal">Beta for macOS and Windows. Blade checks for R at startup and offers to install R and Python.</p>
+    <p class="sub reveal">Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.</p>
 
     <div class="dl reveal" id="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.21/blade-desktop-0.2.21-mac-arm64.dmg">
@@ -827,39 +827,39 @@ try {
         <span class="meta">ARM &middot; 99 MB</span>
       </a>
     </div>
-    <p class="caveat"><b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara. <b>Windows:</b> unsigned, so SmartScreen shows a warning. Click More info, then Run anyway. Linux builds are not available yet.</p>
+    <p class="caveat"><b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet.</p>
   </section>
 
   <section class="faq" id="faq">
-    <h2 class="reveal">Questions about files, R, and data</h2>
+    <h2 class="reveal">Before you download.</h2>
     <details class="reveal">
       <summary>Do I need to know R?</summary>
-      <p>No. Describe the analysis in plain language. Blade runs R and explains the output. The saved script is available for review.</p>
+      <p>No. You ask in plain language and read the explanation. The R is there for when someone asks to see your work. It runs on its own.</p>
     </details>
     <details class="reveal">
-      <summary>Can Blade read SPSS files?</summary>
-      <p>Yes. Blade reads SPSS <code>.sav</code> files through R, preserving variable and value labels. It also reads CSV, TSV, Excel, and Parquet.</p>
+      <summary>Will it open my SPSS files?</summary>
+      <p>Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV, Excel and Parquet. Variable and value labels survive.</p>
     </details>
     <details class="reveal">
-      <summary>Where do the numbers come from?</summary>
-      <p>R procedures calculate the results. Blade selects the procedure and explains its output. You can inspect the method and saved script.</p>
+      <summary>Can I trust a language model with statistics?</summary>
+      <p>Not with the arithmetic, which is why it never does any. The model picks the procedure and reads the output. R computes the result. You see both the choice and the syntax.</p>
     </details>
     <details class="reveal">
       <summary>Does my data leave my computer?</summary>
-      <p>Data files stay in your project folder. The hosted API plans the analysis and stores the session transcript. Writes and commands require approval.</p>
+      <p>Your data files stay in your folder. The hosted API plans the analysis and stores the session transcript. It never receives your datasets. Every write and command asks first.</p>
     </details>
     <details class="reveal">
-      <summary>What should a statistician review?</summary>
-      <p>Review the study design, procedure choice, assumptions, and interpretation. The saved R script lets a statistician inspect and rerun the analysis.</p>
+      <summary>Is this a replacement for a statistician?</summary>
+      <p>It replaces the hours lost to menus, syntax and reformatting output. It cannot judge whether your design supports your conclusion. It will say when a question is beyond the data.</p>
     </details>
     <details class="reveal">
-      <summary>Is there a Linux version?</summary>
-      <p>Linux builds are not available yet. Download links for macOS and Windows are above.</p>
+      <summary>What about Linux?</summary>
+      <p>Not published yet. The macOS and Windows builds are above.</p>
     </details>
   </section>
 
   <footer>
-    <span>Statistical analysis with runnable R scripts.</span>
+    <span>Blade, agentic statistical analysis.</span>
     <a href="https://blade.skalatec.com/">Workflows</a>
     <a href="/pricing">Pricing</a>
     <a href="/privacy">Privacy</a>
