@@ -555,6 +555,20 @@ h2 {
   letter-spacing: -0.025em;
   text-wrap: pretty;
 }
+.leader-person {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.leader-photo {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eceee7;
+}
 .leader-profile h3 {
   margin: 0 0 4px;
   font-size: 17px;

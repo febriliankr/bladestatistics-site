@@ -64,3 +64,5 @@ Run `python3 build.py`, commit the source and generated pages, then push `master
 ## Leadership section
 
 The two cards use the names and titles supplied by the site owner: Febrilian, CEO of Skala, and Elvan Wiyarta, CEO of Risetku. Their sample quotes are visibly labelled as placeholders in every locale. They are not presented as verified testimonials. The cloud section was removed from the homepage; its generated artwork is retained in the repository.
+
+The profile photos were downloaded from the owner-supplied Instagram profiles on October 18, 2026: [Febrilian](https://www.instagram.com/febrilian/) and [Elvan Wiyarta](https://www.instagram.com/elvanwiyarta/). The original JPEGs are stored at `assets/febrilian-profile.jpg` and `assets/elvan-wiyarta-profile.jpg`. They are displayed as 64-pixel circular portraits and are not AI-generated.
