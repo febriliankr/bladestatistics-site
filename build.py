@@ -201,7 +201,7 @@ def render(code, c, shell, css, locales, names):
         "canonical": canonical,
         "ogLocale": c["ogLocale"],
         "css": css,
-        "designVersion": hashlib.sha256((ROOT / "assets" / "landing.css").read_bytes() + (ROOT / "assets" / "landing.js").read_bytes()).hexdigest()[:12],
+        "designVersion": design_version(),
         "svgMac": MAC_SVG,
         "svgWin": WIN_SVG,
         "langLabel": c["langLabel"],
@@ -253,12 +253,19 @@ PAGES = {
 }
 
 
+def design_version():
+    """Cache-busting hash for the shared homepage stylesheet and script."""
+    assets = ROOT / "assets"
+    return hashlib.sha256((assets / "landing.css").read_bytes() + (assets / "landing.js").read_bytes()).hexdigest()[:12]
+
+
 def render_doc(name, css, doc_css):
     page = (ROOT / "src" / PAGES[name]).read_text(encoding="utf-8")
     page = (
         page.replace("{{css}}", css)
         .replace("{{docCss}}", doc_css)
         .replace("{{pixel}}", PIXEL_SCRIPT % {"pixel": PIXEL_ID})
+        .replace("{{designVersion}}", design_version())
     )
     leftover = page.split("{{")[1:]
     if leftover:

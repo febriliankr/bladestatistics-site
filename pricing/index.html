@@ -12,7 +12,8 @@
 <meta property="og:title" content="Blade Free and Pro pricing" />
 <meta property="og:description" content="Start free, then get a month of unlimited prompts for Rp299.000 when you need it." />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
-<meta name="color-scheme" content="dark light" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f8f7f3" />
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -27,673 +28,276 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /></noscript>
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
+<link rel="stylesheet" href="/assets/landing.css?v=bdd615234285" />
 <style>
-  :root {
-    color-scheme: dark light;
-    --bg: #0b0b0c;
-    --fg: #ededee;
-    --muted: #8b8b90;
-    --dim: #6a6a70;
-    --line: #232326;
-    --panel: #131315;
-    --panel-2: #17171a;
-    --hover: #1c1c1f;
-    --code-bg: #1a1a1d;
-    --brand: #ff4900;
-    /* brand orange on white is too weak for small text, so text and buttons
-       get their own darker value in light mode */
-    --brand-ink: #ff5c1a;
-    --brand-btn: #ff4900;
-    --brand-btn-hover: #ff6326;
-    --brand-wash: rgba(255, 73, 0, .035);
-    --brand-wash-hover: rgba(255, 73, 0, .075);
-    --shadow: 0 12px 32px rgba(0, 0, 0, .55);
-  }
-
-  /* the page follows the device: same layout, two palettes */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #ffffff;
-      --fg: #17171a;
-      --muted: #5d5d64;
-      --dim: #85858c;
-      --line: #e4e4e6;
-      --panel: #f8f8f7;
-      --panel-2: #f2f2f1;
-      --hover: #eeeeed;
-      --code-bg: #f0f0ee;
-      --brand: #ff4900;
-      --brand-ink: #c03700;
-      --brand-btn: #d13c00;
-      --brand-btn-hover: #b93500;
-      --brand-wash: rgba(255, 73, 0, .05);
-      --brand-wash-hover: rgba(255, 73, 0, .1);
-      --shadow: 0 12px 32px rgba(0, 0, 0, .12);
-    }
-    /* thinning the strokes helps on a dark ground and hurts on a light one */
-    body { -webkit-font-smoothing: auto; }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-      "Hiragino Sans", "Yu Gothic UI", "Malgun Gothic", "PingFang SC",
-      "Microsoft YaHei", "Noto Sans", "Nirmala UI", "Geeza Pro", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---- header / hero ---- */
-  header { padding: 88px 0 0; }
-  .logo { width: 56px; height: 56px; border-radius: 13px; display: block; }
-  h1 {
-    margin-top: 30px;
-    font-size: clamp(34px, 6vw, 52px);
-    line-height: 1.06;
-    letter-spacing: -.035em;
-    font-weight: 640;
-    margin: 0 0 18px;
-    max-width: 15ch;
-  }
-  h1 em { font-style: normal; color: var(--brand-ink); }
-  .lede { font-size: 18.5px; color: var(--muted); margin: 0 0 32px; max-width: 54ch; }
-
-  .btn {
-    display: inline-block;
-    background: var(--brand-btn);
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 550;
-    padding: 11px 22px;
-    border-radius: 9px;
-    transition: background .16s ease, transform .16s ease;
-  }
-  .btn:hover { background: var(--brand-btn-hover); }
-  .btn:active { transform: translateY(1px); }
-
-  /* adaptive CTA: primary button + variant dropdown */
-  .cta { position: relative; display: inline-flex; align-items: stretch; gap: 2px; vertical-align: middle; }
-  .cta .btn {
-    border-start-start-radius: 9px;
-    border-end-start-radius: 9px;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-  .cta .btn:only-child { border-radius: 9px; }
-  /* .cta .btn outranks a bare .caret rule, so this selector has to match it. */
-  .cta .caret {
-    border: 0;
-    cursor: pointer;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-    border-start-end-radius: 9px;
-    border-end-end-radius: 9px;
-  }
-  .caret svg { width: 10px; height: 6px; fill: #fff; transition: transform .18s ease; }
-  .caret[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .cta-menu {
-    position: absolute;
-    top: calc(100% + 6px);
-    inset-inline-start: 0;
-    z-index: 10;
-    min-width: 290px;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top left;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .cta-menu {
-    transform-origin: top right;
-  }
-  @keyframes menuIn {
-    from { opacity: 0; transform: translateY(-6px) scale(.97); }
-    to { opacity: 1; transform: none; }
-  }
-  .cta-menu a {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 11px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .cta-menu a:hover { background: var(--hover); }
-  .cta-menu svg { width: 15px; height: 15px; fill: currentColor; color: var(--muted); flex: none; }
-  .cta-menu a:hover svg { color: var(--fg); }
-  .cta-menu .meta { margin-inline-start: auto; font-size: 12px; color: var(--muted); }
-  .note { color: var(--muted); font-size: 14px; margin-inline-start: 16px; }
-
-  /* ---- screenshot ---- */
-  .shot {
-    margin: 52px auto 0;
-    max-width: 880px;
-    padding: 0 24px;
-  }
-  .shot figure {
-    margin: 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--panel);
-    line-height: 0;
-  }
-  .shot img { width: 100%; height: auto; display: block; }
-  .shot figcaption {
-    line-height: 1.6;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--dim);
-    text-align: center;
-  }
-
-  /* ---- facts band ---- */
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin: 56px 0 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--line);
-  }
-  .facts div { background: var(--panel); padding: 22px 20px; }
-  .facts b { display: block; font-size: 26px; font-weight: 620; letter-spacing: -.02em; }
-  .facts span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
-
-  /* ---- sections ---- */
-  section { padding: 80px 0 0; }
-  h2 {
-    font-size: clamp(24px, 3.4vw, 30px);
-    line-height: 1.15;
-    letter-spacing: -.025em;
-    font-weight: 620;
-    margin: 0 0 12px;
-  }
-  .sub { color: var(--muted); font-size: 16px; margin: 0 0 26px; max-width: 56ch; }
-
-  /* ---- comparison table ---- */
-  .cmp-scroll { overflow-x: auto; }
-  table.cmp {
-    width: 100%;
-    min-width: 520px;
-    border-collapse: collapse;
-    font-size: 14.5px;
-  }
-  table.cmp th, table.cmp td {
-    text-align: start;
-    padding: 15px 16px;
-    border-top: 1px solid var(--line);
-    vertical-align: top;
-  }
-  table.cmp thead th {
-    border-top: 0;
-    padding-top: 0;
-    font-size: 13px;
-    color: var(--dim);
-    font-weight: 500;
-  }
-  table.cmp thead th:last-child { color: var(--brand-ink); }
-  table.cmp td:first-child { color: var(--fg); width: 27%; font-weight: 550; }
-  table.cmp td:nth-child(2) { color: var(--dim); width: 36%; }
-  table.cmp td:last-child { color: var(--muted); }
-  table.cmp td:last-child { background: var(--brand-wash); }
-
-  /* ---- steps ---- */
-  .steps { counter-reset: s; margin: 0; padding: 0; list-style: none; }
-  .steps li {
-    counter-increment: s;
-    position: relative;
-    padding: 24px 0;
-    padding-inline-start: 46px;
-    border-top: 1px solid var(--line);
-  }
-  .steps li::before {
-    content: counter(s);
-    position: absolute;
-    inset-inline-start: 0;
-    top: 24px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    color: var(--muted);
-    font-size: 12.5px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .steps h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 5px; letter-spacing: -.01em; }
-  .steps p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  .quote {
-    margin: 14px 0 0;
-    padding: 13px 15px;
-    border-inline-start: 2px solid var(--brand);
-    background: var(--panel);
-    border-start-end-radius: 8px;
-    border-end-end-radius: 8px;
-    color: var(--fg);
-    font-size: 14.5px;
-  }
-
-  /* ---- method chips ---- */
-  .fam { padding: 20px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
-  .fam h3 { margin: 2px 0 0; font-size: 14px; font-weight: 600; color: var(--fg); letter-spacing: -.005em; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips span {
-    font-size: 12.5px;
-    color: var(--muted);
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 3px 9px;
-    line-height: 1.5;
-  }
-
-  /* ---- generic points ---- */
-  .point { padding: 26px 0; border-top: 1px solid var(--line); }
-  .point h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 6px; letter-spacing: -.01em; }
-  .point p { margin: 0; color: var(--muted); font-size: 15px; }
-  .point p + p { margin-top: 10px; }
-
-  /* ---- callout ---- */
-  .cross {
-    margin-top: 30px;
-    padding: 24px 22px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--panel);
-  }
-  .cross h3 { margin: 0 0 6px; font-size: 17px; font-weight: 620; }
-  .cross p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
-  .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
-  .cross a:hover { text-decoration: underline; }
-
-  /* ---- release notes ---- */
-  .release-list {
+  /* Pricing reuses the homepage system (landing.css): the daylight landscape,
+     sage-green pills, and warm panels. Only page-specific parts live here. */
+  .pricing-hero { min-height: 0; }
+  /* The artwork fills exactly the hero, so the hero's white fade covers its edge. */
+  .pricing-hero .hero-landscape { inset: 0; height: auto; }
+  .pricing-hero .hero-content { padding-top: 150px; padding-bottom: 56px; }
+  .pricing-hero h1 { font-size: clamp(42px, 4.6vw, 64px); max-width: 760px; text-wrap: balance; }
+  .nav-links > a[aria-current="page"] { color: #192715; }
+  .plans {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 34px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: 20px;
+    max-width: 920px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
   }
-  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
-  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
-  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  /* ---- downloads ---- */
-  .get { padding: 80px 0 0; }
-  .get .sub { margin-bottom: 22px; }
-  .dl { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .dl a {
+  .plan {
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 14px 16px;
+    flex-direction: column;
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 20px;
     background: var(--panel);
-    color: var(--fg);
-    text-decoration: none;
-    transition: border-color .16s ease, background .16s ease, transform .16s ease;
+    padding: 32px;
+    box-shadow: 0 18px 50px #2a35200f;
   }
-  .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
-  .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
-  .dl svg { width: 16px; height: 16px; fill: currentColor; color: var(--muted); flex: none; transition: color .16s ease; }
-  .dl a:hover svg { color: var(--fg); }
-  .dl .meta { font-size: 13px; color: var(--muted); margin-inline-start: auto; }
-  .caveat { color: var(--muted); font-size: 13px; margin: 18px 0 0; }
-  .caveat b { color: var(--fg); font-weight: 550; }
-
-  /* ---- faq ---- */
-  .faq details {
-    border-top: 1px solid var(--line);
-    padding: 16px 0;
-  }
-  .faq summary {
-    cursor: pointer;
-    list-style: none;
-    font-size: 15.5px;
-    font-weight: 550;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::before {
-    content: "+";
-    color: var(--brand-ink);
-    font-weight: 500;
-    width: 12px;
-    flex: none;
-    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
-  }
-  .faq details[open] summary::before { transform: rotate(45deg); }
-  /* scoped to details so it cannot catch anything else in the section */
-  .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
-
-  footer {
-    margin-top: 72px;
-    padding: 28px 0 72px;
-    border-top: 1px solid var(--line);
-    color: var(--dim);
-    font-size: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    align-items: center;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--fg); }
-  footer .spacer { margin-inline-start: auto; }
-
-
-  /* ---- top bar and language switcher ---- */
-  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .topnav { display: flex; align-items: center; gap: 18px; }
-  .topnav-link {
-    color: var(--muted); text-decoration: none; font-size: 14px;
-    transition: color .16s ease;
-  }
-  .topnav-link:hover, .topnav-link[aria-current="page"] { color: var(--fg); }
-  .lang { position: relative; }
-  .lang summary {
-    list-style: none;
-    cursor: pointer;
-    color: var(--muted);
+  .plan.pro { border-color: #9fb08e; box-shadow: 0 22px 60px #2a35201c; }
+  .plan-label {
     display: inline-flex;
+    align-self: flex-start;
     align-items: center;
-    gap: 7px;
-    transition: color .16s ease;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: #eceee6;
+    color: #4b5547;
+    font-size: 12px;
+    font-weight: 500;
   }
-  .lang summary::-webkit-details-marker { display: none; }
-  .lang summary:hover { color: var(--fg); }
-  .lang summary svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
-  .lang-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    inset-inline-end: 0;
-    z-index: 20;
-    width: 190px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top right;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
+  .plan.pro .plan-label { background: var(--green); color: #fffef9; }
+  .plan-label::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9aa190;
   }
-  [dir="rtl"] .lang-menu { transform-origin: top left; }
-  .lang-menu a {
-    display: block;
-    padding: 7px 10px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
+  .plan.pro .plan-label::before { background: #ef9b6d; box-shadow: 0 0 8px #ef9b6d88; }
+  .plan h2 { margin: 0; font-size: 26px; letter-spacing: -0.035em; font-weight: 500; }
+  .price { margin: 14px 0 6px; font-size: 40px; line-height: 1.1; font-weight: 450; letter-spacing: -0.05em; }
+  .price span { color: var(--muted); font-size: 14px; letter-spacing: 0; }
+  .plan-summary { min-height: 54px; margin: 0; color: var(--muted); font-size: 15px; }
+  .features { list-style: none; margin: 24px 0 28px; padding: 0; border-top: 1px solid var(--line); }
+  .features li {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    color: #4b5547;
     font-size: 14px;
-    transition: background .13s ease;
   }
-  .lang-menu a:hover { background: var(--hover); }
-  .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
-
-
-  /* ---- motion ----
-     The hero animates on load. Everything below it waits until it scrolls
-     into view, and only when JS has added .js-reveal, so a page without
-     JavaScript renders complete and still. */
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
+  .features li::before { content: "✓"; color: #6f8b5f; font-weight: 600; }
+  .plan .action { margin-top: auto; }
+  .plan .btn { display: flex; width: 100%; padding: 13px 23px; }
+  .btn.ghost { background: transparent; color: var(--fg); border: 1px solid #c9cfbf; }
+  .btn.ghost:hover { background: #f0f2eb; box-shadow: none; }
+  .action-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
+  .explain { max-width: 920px; margin: 0 auto; padding: 96px 0 104px; }
+  .explain-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 40px;
+    margin-bottom: 40px;
   }
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .explain-head h2 { margin: 0; }
+  .explain-head p { max-width: 380px; margin: 0; color: var(--muted); font-size: 15px; }
+  .explain-head a { color: var(--fg); text-underline-offset: 4px; }
+  .answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 40px; border-top: 1px solid var(--line); }
+  .answers > div { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .answers h3 { margin: 0 0 6px; font-size: 17px; font-weight: 500; letter-spacing: -0.02em; }
+  .answers p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
+  .pricing-foot { background: #f8f7f3; }
+
+  /* Checkout dialog */
+  .checkout-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: #1d261977;
+    backdrop-filter: blur(8px);
   }
-  .topbar,
-  header h1,
-  header .lede,
-  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
-  /* .note is inline, so a transform on it would be ignored */
-  header .note { animation: fade .55s ease both; }
-  .topbar { animation-delay: .02s; }
-  header h1 { animation-delay: .09s; }
-  header .lede { animation-delay: .17s; }
-  header .cta { animation-delay: .25s; }
-  header .note { animation-delay: .34s; }
-
-  .js-reveal .reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
+  .checkout-modal[hidden] { display: none; }
+  .checkout-dialog {
+    width: min(100%, 470px);
+    border-radius: 20px;
+    background: var(--panel);
+    box-shadow: 0 30px 80px #1a24124d;
+    padding: 30px;
+    animation: rise-in 0.4s var(--ease) both;
   }
-  .js-reveal .reveal.in { opacity: 1; transform: none; }
-
-  /* ---- hover detail ---- */
-  .dl a:hover { transform: translateY(-1px); }
-  .chips span { transition: border-color .16s ease, color .16s ease; }
-  .chips span:hover { border-color: var(--brand); color: var(--fg); }
-  table.cmp tbody td { transition: background .18s ease; }
-  table.cmp tbody tr:hover td:first-child,
-  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
-  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
-
-  /* Newer engines can transition to an intrinsic height. Older ones skip the
-     whole block and open instantly, which is what they did before. */
-  @supports selector(::details-content) {
-    :root { interpolate-size: allow-keywords; }
-    .faq details::details-content {
-      block-size: 0;
-      overflow: clip;
-      opacity: 0;
-      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
-      transition-behavior: allow-discrete;
-    }
-    .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  .checkout-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+  .checkout-head h2 { margin: 0 0 4px; font-size: 26px; }
+  .checkout-head p { margin: 0; color: var(--muted); font-size: 14px; }
+  .checkout-close {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border: 0;
+    border-radius: 50%;
+    background: #eceee6;
+    color: #4b5547;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
   }
-
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13.5px;
+  .checkout-close:hover { background: #e1e5d8; color: var(--fg); }
+  .wizard-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; list-style: none; margin: 22px 0; padding: 0; }
+  .wizard-steps li { border-top: 2px solid var(--line); padding-top: 8px; color: var(--muted); font-size: 12px; }
+  .wizard-steps li.current, .wizard-steps li.done { border-color: var(--green); color: var(--fg); }
+  .wizard-panel[hidden] { display: none; }
+  .wizard-panel label.field-label { display: block; margin: 0 0 7px; color: #4b5547; font-size: 13px; font-weight: 500; }
+  .wizard-panel input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #d9ddcf;
+    border-radius: 12px;
+    background: #fff;
     color: var(--fg);
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    padding: 1px 5px;
-    border-radius: 5px;
+    font-size: 16px;
   }
+  .wizard-panel input[type="email"]:focus-visible { outline: 2px solid #7b8b6e; outline-offset: 2px; }
+  .wizard-actions { display: flex; gap: 9px; margin-top: 18px; }
+  .wizard-actions .btn { flex: 1; }
+  .wizard-actions .btn:disabled { cursor: default; opacity: 0.6; }
+  .method-list { display: grid; gap: 9px; }
+  .method {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: start;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .method:hover, .method:has(input:checked) { border-color: #8fa27d; background: #f6f8f2; }
+  .method input { margin-top: 4px; accent-color: var(--green); }
+  .method strong { display: block; font-size: 14px; font-weight: 550; }
+  .method span { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .checkout-email { color: var(--muted); font-size: 13px; margin: 0 0 12px; overflow-wrap: anywhere; }
+  .checkout-msg { margin: 12px 0 0; color: #a63f24; font-size: 13px; }
 
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
+  @media (max-width: 760px) {
+    .plans, .answers { grid-template-columns: minmax(0, 1fr); }
+    .plan-summary { min-height: 0; }
+    .explain-head { display: block; }
+    .explain-head p { margin-top: 14px; }
   }
   @media (max-width: 640px) {
-    header { padding-top: 56px; }
-    h1 { max-width: none; }
-    .note { display: block; margin: 14px 0 0; }
-    .dl { grid-template-columns: 1fr; }
-    .release-list { grid-template-columns: 1fr; }
-    .facts { grid-template-columns: 1fr; }
-    .fam { grid-template-columns: 1fr; gap: 10px; }
-    .shot { padding: 0 16px; }
-
-    /* The two-column comparison would need sideways scrolling here, so each
-       row becomes a small card with its own column labels instead. */
-    table.cmp { min-width: 0; }
-    table.cmp thead { display: none; }
-    table.cmp tbody tr { display: block; padding: 20px 0; border-top: 1px solid var(--line); }
-    table.cmp td { display: block; border: 0; padding: 0; }
-    /* the desktop percentage widths would keep these columns narrow */
-    table.cmp td:first-child,
-    table.cmp td:nth-child(2) { width: auto; }
-    table.cmp td:first-child { font-size: 16px; margin-bottom: 10px; }
-    table.cmp td:nth-child(2)::before,
-    table.cmp td:last-child::before {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 1px;
-    }
-    table.cmp td:nth-child(2)::before { content: "Point-and-click"; color: var(--dim); }
-    table.cmp td:last-child::before { content: "Blade"; color: var(--brand-ink); }
-    table.cmp td:last-child { background: none; margin-top: 12px; }
+    .pricing-hero .hero-content { padding-top: clamp(120px, 20svh, 170px); padding-bottom: 36px; }
+    .pricing-hero h1 { font-size: clamp(34px, 9.6vw, 48px); }
+    .plan { padding: 24px 22px; border-radius: 18px; }
+    .price { font-size: 34px; }
+    .explain { padding: 64px 0 72px; }
+    .checkout-dialog { padding: 22px; }
   }
-</style>
-
-<style>
-  .pricing-wrap{max-width:860px}
-  .pricing{padding:64px 0 0}
-  .pricing-home{display:block;line-height:0}
-  .pricing h1{margin:28px 0 16px;max-width:15ch;font-size:clamp(34px,6vw,52px)}
-  .pricing .lead{margin:0;max-width:58ch;color:var(--muted);font-size:18px}
-  .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:44px}
-  .plan{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:26px}
-  .plan.pro{border-color:var(--brand)}
-  .plan h2{margin:8px 0 0;font-size:25px}
-  .price{margin:14px 0 4px;font-size:32px;font-weight:650;letter-spacing:-.03em}
-  .price span{color:var(--muted);font-size:14px;font-weight:450;letter-spacing:0}
-  .plan-summary{min-height:52px;margin:0;color:var(--muted);font-size:14.5px}
-  .features{list-style:none;margin:24px 0;padding:0;border-top:1px solid var(--line)}
-  .features li{position:relative;padding:11px 0 11px 24px;border-bottom:1px solid var(--line);color:var(--muted);font-size:14px}
-  .features li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--brand-ink);font-weight:700}
-  .plan .action{margin-top:auto}
-  .plan .btn{display:block;text-align:center}
-  .free-note{margin:11px 0 0;color:var(--dim);font-size:12.5px;text-align:center}
-  .purchase-btn{width:100%;border:0;cursor:pointer}
-  .payment-note{margin:11px 0 0;color:var(--dim);font-size:12.5px;text-align:center}
-  .explain{margin-top:52px;padding-top:34px;border-top:1px solid var(--line)}
-  .explain h2{font-size:24px;margin-bottom:8px}
-  .explain>p{color:var(--muted);margin:0 0 24px}
-  .answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 30px}
-  .answers h3{font-size:15.5px;margin:0 0 5px}
-  .answers p{color:var(--muted);font-size:14px;margin:0}
-  .checkout-modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
-  .checkout-modal[hidden]{display:none}
-  .checkout-dialog{width:min(100%,470px);border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:var(--shadow);padding:24px}
-  .checkout-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
-  .checkout-head h2{margin:0 0 4px;font-size:22px}
-  .checkout-head p{margin:0;color:var(--muted);font-size:14px}
-  .checkout-close{border:0;background:transparent;color:var(--muted);font-size:24px;line-height:1;cursor:pointer;padding:1px 4px}
-  .checkout-close:hover{color:var(--fg)}
-  .wizard-steps{display:grid;grid-template-columns:1fr 1fr;gap:8px;list-style:none;margin:22px 0;padding:0}
-  .wizard-steps li{border-top:2px solid var(--line);padding-top:8px;color:var(--dim);font-size:12.5px}
-  .wizard-steps li.current,.wizard-steps li.done{border-color:var(--brand);color:var(--fg)}
-  .wizard-panel[hidden]{display:none}
-  .wizard-panel label.field-label{display:block;margin:0 0 7px;color:var(--muted);font-size:13px}
-  .wizard-panel input[type="email"]{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--fg);font:inherit}
-  .wizard-panel input[type="email"]:focus{outline:none;border-color:var(--brand)}
-  .wizard-actions{display:flex;gap:9px;margin-top:18px}
-  .wizard-actions .btn{flex:1;border:0;cursor:pointer;text-align:center}
-  .wizard-actions .secondary{background:transparent;color:var(--muted);border:1px solid var(--line)}
-  .wizard-actions .secondary:hover{background:var(--hover);color:var(--fg)}
-  .method-list{display:grid;gap:9px}
-  .method{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:13px;cursor:pointer;background:var(--bg)}
-  .method:hover,.method:has(input:checked){border-color:var(--brand)}
-  .method input{margin-top:4px;accent-color:var(--brand)}
-  .method strong{display:block;font-size:14.5px}
-  .method span{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
-  .checkout-email{color:var(--muted);font-size:13px;margin:0 0 12px}
-  .checkout-msg{margin:12px 0 0;color:#ff8a6a;font-size:13px}
-  .wizard-actions button:disabled{cursor:default;opacity:.6}
-  @media(max-width:680px){.plans,.answers{grid-template-columns:1fr}.plan-summary{min-height:0}.pricing{padding-top:32px}.checkout-dialog{padding:20px}}
 </style>
 </head>
 <body>
 
-<div class="wrap pricing-wrap">
-  <main class="pricing">
-    <div class="topbar">
-      <a class="pricing-home" href="/" aria-label="Blade Statistics home"><img class="logo" src="/logo.png" alt="" /></a>
-      <nav class="topnav" aria-label="Primary"><a class="topnav-link" href="/pricing" aria-current="page">Pricing</a></nav>
+<header class="hero pricing-hero">
+  <div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+  <nav class="nav wrap" aria-label="Primary">
+    <a class="wordmark" href="/" aria-label="Blade Statistics home"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
+    <div class="nav-links">
+      <a href="/pricing" aria-current="page">Pricing</a>
     </div>
+    <a class="nav-cta" href="/#get">Get Blade</a>
+  </nav>
+  <div class="hero-content wrap">
     <h1>Start free. Go Pro when you need more.</h1>
-    <p class="lead">Both plans include the complete desktop app and the same local analysis tools. Pro changes prompt capacity, not where your data runs.</p>
+    <p class="lede">Both plans include the complete desktop app and the same local analysis tools. Pro changes prompt capacity, not where your data runs.</p>
+  </div>
+</header>
 
-    <div class="plans">
-      <section class="plan">
-          <h2>Blade Free</h2>
-        <p class="price">Rp0</p>
-        <p class="plan-summary">Enough room to try Blade on real work before paying.</p>
-        <ul class="features">
-          <li>5 prompts during your first 24 hours</li>
-          <li>2 prompts per day after the first day</li>
-          <li>Daily allowance resets at midnight WIB</li>
-          <li>All desktop analysis tools</li>
-          <li>Data files stay on your computer</li>
-        </ul>
-        <div class="action">
-          <a class="btn" href="/#get">Download Blade</a>
-          <p class="free-note">The limit only appears after you reach it.</p>
-        </div>
-      </section>
-
-      <section class="plan pro">
-          <h2>Blade Pro</h2>
-        <p class="price">Rp299.000 <span>for one month</span></p>
-        <p class="plan-summary">Unlimited prompts for focused projects and frequent analysis.</p>
-        <ul class="features">
-          <li>Unlimited prompts while Pro is active</li>
-          <li>All desktop analysis tools</li>
-          <li>Data files stay on your computer</li>
-          <li>Secure checkout with QRIS or bank virtual account</li>
-          <li>No automatic renewal</li>
-        </ul>
-        <div class="action">
-          <button class="btn purchase-btn" type="button" id="open-checkout">Get Blade Pro</button>
-          <p class="payment-note">Choose QRIS or bank virtual account in the next step.</p>
-        </div>
-      </section>
-    </div>
-
-    <section class="explain">
-      <h2>How access works</h2>
-      <p>Use the same email here and in Blade. Xendit confirms the payment, then Pro activates for that account.</p>
-      <div class="answers">
-        <div>
-          <h3>What happens after one month?</h3>
-          <p>Your account returns to the free daily allowance. Your projects and files remain unchanged.</p>
-        </div>
-        <div>
-          <h3>Does Pro renew automatically?</h3>
-          <p>No. Each payment buys one month. You choose whether to buy another month.</p>
-        </div>
-        <div>
-          <h3>Are the analysis features different?</h3>
-          <p>No. Free and Pro use the same tools. Pro removes the prompt limit while active.</p>
-        </div>
-        <div>
-          <h3>Where does payment happen?</h3>
-          <p>Xendit hosts the secure checkout and offers QRIS or supported bank virtual accounts.</p>
-        </div>
+<main class="wrap">
+  <div class="plans">
+    <section class="plan" aria-labelledby="plan-free">
+      <span class="plan-label">Free</span>
+      <h2 id="plan-free">Blade Free</h2>
+      <p class="price">Rp0</p>
+      <p class="plan-summary">Enough room to try Blade on real work before paying.</p>
+      <ul class="features">
+        <li>5 prompts during your first 24 hours</li>
+        <li>2 prompts per day after the first day</li>
+        <li>Daily allowance resets at midnight WIB</li>
+        <li>All desktop analysis tools</li>
+        <li>Data files stay on your computer</li>
+      </ul>
+      <div class="action">
+        <a class="btn ghost" href="/#get">Download Blade</a>
+        <p class="action-note">The limit only appears after you reach it.</p>
       </div>
     </section>
-  </main>
 
-  <footer>
-    <span>Blade, agentic statistical analysis.</span>
-    <a href="/">Home</a>
-    <a href="/privacy">Privacy</a>
-    <a href="/terms">Terms</a>
-    <span class="spacer">PT Skala Teknologi Nusantara</span>
-  </footer>
-</div>
+    <section class="plan pro" aria-labelledby="plan-pro">
+      <span class="plan-label">Pro</span>
+      <h2 id="plan-pro">Blade Pro</h2>
+      <p class="price">Rp299.000 <span>for one month</span></p>
+      <p class="plan-summary">Unlimited prompts for focused projects and frequent analysis.</p>
+      <ul class="features">
+        <li>Unlimited prompts while Pro is active</li>
+        <li>All desktop analysis tools</li>
+        <li>Data files stay on your computer</li>
+        <li>Secure checkout with QRIS or bank virtual account</li>
+        <li>No automatic renewal</li>
+      </ul>
+      <div class="action">
+        <button class="btn purchase-btn" type="button" id="open-checkout">Get Blade Pro</button>
+        <p class="action-note">Choose QRIS or bank virtual account in the next step.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="explain" aria-labelledby="explain-title">
+    <div class="explain-head">
+      <h2 id="explain-title">How access works</h2>
+      <p>Use the same email here and in Blade. Xendit confirms the payment, then Pro activates for that account. Already paid? <a href="https://blade.skalatec.com/account">Check your plan</a>.</p>
+    </div>
+    <div class="answers">
+      <div>
+        <h3>What happens after one month?</h3>
+        <p>Your account returns to the free daily allowance. Your projects and files remain unchanged.</p>
+      </div>
+      <div>
+        <h3>Does Pro renew automatically?</h3>
+        <p>No. Each payment buys one month. You choose whether to buy another month.</p>
+      </div>
+      <div>
+        <h3>Are the analysis features different?</h3>
+        <p>No. Free and Pro use the same tools. Pro removes the prompt limit while active.</p>
+      </div>
+      <div>
+        <h3>Where does payment happen?</h3>
+        <p>Xendit hosts the secure checkout and offers QRIS or supported bank virtual accounts.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pricing-foot">
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade Statistics home"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
 
 <div class="checkout-modal" id="checkout-modal" hidden>
   <div class="checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
@@ -730,11 +334,11 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
         </label>
       </div>
       <div class="wizard-actions">
-        <button class="btn secondary" type="button" id="checkout-back">Back</button>
+        <button class="btn ghost" type="button" id="checkout-back">Back</button>
         <button class="btn" type="submit" id="pro-btn">Continue to Xendit</button>
       </div>
     </form>
-    <p id="pro-msg" class="checkout-msg" hidden></p>
+    <p id="pro-msg" class="checkout-msg" role="alert" hidden></p>
   </div>
 </div>
 
