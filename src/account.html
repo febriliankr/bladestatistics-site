@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your account &middot; Blade</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f8f7f3" />
+    <script>
+      // Signed-out visitors go straight to sign-in, before anything paints.
+      try {
+        var s = JSON.parse(localStorage.getItem("blade.session") || "null");
+        if (!s || !s.token || s.expires <= Date.now()) throw 0;
+      } catch (e) {
+        location.replace("/login?next=/account");
+      }
+    </script>
+
+{{pixel}}
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
+<link rel="stylesheet" href="/assets/landing.css?v={{designVersion}}" />
+<link rel="stylesheet" href="/assets/auth.css?v={{designVersion}}" />
+</head>
+<body class="auth-page">
+<div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+<nav class="nav wrap" aria-label="Primary">
+  <a class="wordmark" href="/" aria-label="Blade home"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
+  <div class="nav-links"><a href="/pricing">Pricing</a></div>
+  <a class="nav-cta" href="/#get">Get Blade</a>
+</nav>
+<main class="auth-main" id="main">
+      <section class="auth-card wide" aria-labelledby="account-title">
+        <div class="account-head">
+          <div>
+            <span class="auth-kicker">YOUR ACCOUNT</span>
+            <h1 id="account-title">Hi<span id="who-name"></span></h1>
+            <p>Signed in as <span id="who-email"></span></p>
+          </div>
+          <button class="link-btn" type="button" id="sign-out">Sign out</button>
+        </div>
+
+        <div id="plan-loading" class="skeleton" role="status" aria-label="Loading your plan"></div>
+
+        <div id="plan" class="plan" hidden>
+          <div class="plan-top">
+            <div>
+              <h2 id="plan-name">Blade Free</h2>
+              <p class="plan-detail" id="plan-detail"></p>
+            </div>
+            <span class="pill" id="plan-pill"><span id="plan-pill-text">Free</span></span>
+          </div>
+
+          <ul class="perks" id="perks">
+            <li>Unlimited prompts while Pro is active</li>
+            <li>Data files stay on your computer</li>
+            <li>One month per payment. No automatic renewal.</li>
+          </ul>
+
+          <p class="plan-price"><b id="price">Rp299.000</b><span>for one month</span></p>
+
+          <div class="pending" id="pending" role="status" hidden>
+            You have a checkout in progress. Finish paying, or check again if
+            you already paid. Confirmation can take a minute.
+          </div>
+
+          <button class="btn" type="button" id="buy">Get Pro</button>
+          <button class="btn ghost" type="button" id="recheck" hidden>I've paid, check again</button>
+          <p class="form-msg" id="plan-msg" role="alert" hidden></p>
+        </div>
+
+        <p class="form-msg" id="load-msg" role="alert" hidden></p>
+
+        <div class="next">
+          <a href="/#get"><span>Download Blade for desktop</span><span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="fine">
+          In the desktop app, sign in with this same email to use your plan.
+          Payments are processed by Xendit. QRIS and bank virtual accounts
+          accepted.
+        </p>
+      </section>
+</main>
+<footer class="auth-foot">
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade home"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+    <script src="/assets/auth.js?v={{designVersion}}"></script>
+    <script>
+      (function () {
+        var A = window.BladeAuth;
+        var session = A.load();
+        if (!session) return; // the head script is already redirecting
+
+        var $ = function (id) {
+          return document.getElementById(id);
+        };
+        var pending = null;
+        var price = 299000;
+
+        $("who-email").textContent = session.email || "";
+        if (session.name) $("who-name").textContent = ", " + session.name.split(" ")[0];
+
+        function signOut(reason) {
+          A.clear();
+          location.replace("/login" + (reason ? "?next=/account" : ""));
+        }
+        $("sign-out").addEventListener("click", function () {
+          signOut();
+        });
+
+        function call(method, path, body) {
+          return A.request(method, path, body, session.token).catch(function (err) {
+            if (err.status === 401) signOut(true);
+            throw err;
+          });
+        }
+
+        function rupiah(n) {
+          return "Rp" + Number(n).toLocaleString("id-ID");
+        }
+
+        function date(iso) {
+          return new Date(iso).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          });
+        }
+
+        function say(text) {
+          $("plan-msg").hidden = !text;
+          $("plan-msg").textContent = text || "";
+        }
+
+        function render(res) {
+          var sub = res.subscription || {};
+          var active = !!sub.is_active;
+          var lapsed = sub.plan === "pro" && !active;
+          pending = res.pending_checkout && res.pending_checkout.url ? res.pending_checkout : null;
+          if (res.price && res.price.amount) price = res.price.amount;
+
+          $("plan-name").textContent = active ? "Blade Pro" : "Blade Free";
+          $("plan-detail").textContent = active
+            ? "Active until " + date(sub.current_period_end) + "."
+            : lapsed && sub.current_period_end
+              ? "Pro ended on " + date(sub.current_period_end) + "."
+              : "Free daily allowance. Upgrade for unlimited prompts.";
+          $("plan-pill").classList.toggle("pro", active);
+          $("plan-pill-text").textContent = active ? "Pro" : lapsed ? "Expired" : "Free";
+          $("price").textContent = rupiah(price);
+          $("pending").hidden = !pending;
+          $("recheck").hidden = !pending;
+          $("buy").textContent = pending
+            ? "Continue to payment"
+            : active
+              ? "Add another month"
+              : lapsed
+                ? "Renew Pro"
+                : "Get Pro";
+
+          $("plan-loading").hidden = true;
+          $("plan").hidden = false;
+        }
+
+        function refresh() {
+          return call("GET", "/api/desktop/subscription").then(render);
+        }
+
+        refresh().catch(function (err) {
+          if (err.status === 401) return;
+          $("plan-loading").hidden = true;
+          $("load-msg").hidden = false;
+          $("load-msg").textContent = "Couldn't load your plan. " + err.message;
+        });
+
+        $("buy").addEventListener("click", function () {
+          var btn = this;
+          if (pending) {
+            location.href = pending.url;
+            return;
+          }
+          say("");
+          btn.disabled = true;
+          btn.textContent = "Starting checkout…";
+          if (typeof fbq === "function")
+            fbq("track", "InitiateCheckout", { value: price, currency: "IDR" });
+          call("POST", "/api/desktop/subscription/checkout", { return_to_origin: true })
+            .then(function (res) {
+              if (res && res.url) {
+                location.href = res.url;
+                return;
+              }
+              throw new Error("Could not start checkout. Please try again.");
+            })
+            .catch(function (err) {
+              btn.disabled = false;
+              say(err.message);
+              refresh().catch(function () {});
+            });
+        });
+
+        $("recheck").addEventListener("click", function () {
+          var btn = this;
+          say("");
+          btn.disabled = true;
+          btn.textContent = "Checking…";
+          refresh()
+            .then(function () {
+              if (pending) say("Payment not confirmed yet. Give it a minute and check again.");
+            })
+            .catch(function (err) {
+              say(err.message);
+            })
+            .then(function () {
+              btn.disabled = false;
+              btn.textContent = "I've paid, check again";
+            });
+        });
+      })();
+    </script>
+</body>
+</html>

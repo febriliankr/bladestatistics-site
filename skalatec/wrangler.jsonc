@@ -1,0 +1,15 @@
+{
+  // blade.skalatec.com: the same site as bladestatistics.com with a broader
+  // English pitch. `python3 build.py` writes ./dist, then `npx wrangler deploy`
+  // from this directory. The custom domain is attached to the worker in the
+  // Cloudflare dashboard. run_worker_first lets the worker force HTTPS even for
+  // paths that match a static file (like "/").
+  "name": "blade-landing",
+  "compatibility_date": "2026-08-01",
+  "main": "worker.js",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  }
+}

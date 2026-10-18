@@ -3,6 +3,12 @@
 
 English builds to /index.html, every other locale to /<code>/index.html.
 Run `python3 build.py` after editing any content file, then commit the output.
+
+One source, two domains. bladestatistics.com is built into the repository
+root and served by GitHub Pages. blade.skalatec.com is the same site with a
+broader English pitch, built into skalatec/dist/ (not committed) and served
+by the Cloudflare Worker in skalatec/. Canonical URLs on both point at
+bladestatistics.com, so search engines treat it as the primary site.
 """
 
 import html
@@ -14,6 +20,27 @@ import sys
 
 ROOT = pathlib.Path(__file__).parent
 SITE = "https://bladestatistics.com"
+
+# Per-domain differences. "overrides" names a content file merged over the
+# English copy, so a domain can reword a few strings without its own locale.
+SITES = {
+    "bladestatistics": {
+        "out": ROOT,
+        "overrides": None,
+        "workflowsHref": "https://blade.skalatec.com/#workflows",
+    },
+    "skalatec": {
+        "out": ROOT / "skalatec" / "dist",
+        "overrides": "skalatec.en.json",
+        "workflowsHref": "#workflows",
+    },
+}
+
+SIGN_IN = {
+    "en": "Sign in", "es": "Iniciar sesión", "pt": "Entrar", "fr": "Se connecter",
+    "de": "Anmelden", "it": "Accedi", "id": "Masuk", "ru": "Войти",
+    "ar": "تسجيل الدخول", "hi": "साइन इन", "zh": "登录", "ja": "ログイン", "ko": "로그인",
+}
 
 # order controls the switcher menu; English first, then by native name
 ORDER = ["en", "es", "pt", "fr", "de", "it", "id", "ru", "ar", "hi", "zh", "ja", "ko"]
@@ -191,7 +218,78 @@ def alternates_block(locales):
     return "\n".join(out)
 
 
-def render(code, c, shell, css, locales, names):
+def merge(base, extra):
+    out = dict(base)
+    for key, value in extra.items():
+        out[key] = merge(base[key], value) if isinstance(value, dict) and isinstance(base.get(key), dict) else value
+    return out
+
+
+FLOW_CSS = """  <style>
+    .flow-section { padding-bottom: 112px; }
+    .flow-head {
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 50px;
+      border-top: 1px solid var(--line); padding-top: 80px; margin-bottom: 40px;
+    }
+    .flow-head h2 { max-width: 560px; margin-bottom: 0; }
+    .flow-head p { max-width: 400px; margin: 0; font-size: 17px; color: var(--muted); }
+    .flow-steps {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;
+      list-style: none; margin: 0; padding: 0;
+    }
+    .flow-step { border: 1px solid var(--line); border-radius: 20px; background: var(--panel); padding: 28px; }
+    .flow-label {
+      display: block; margin-bottom: 40px; color: #5f6858; font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .flow-step h3 { margin: 0 0 10px; font-size: 21px; font-weight: 500; letter-spacing: -0.03em; }
+    .flow-step p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+    .flow-step code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em;
+      background: #eceee6; border-radius: 5px; padding: 1px 5px;
+    }
+    @media (max-width: 900px) {
+      .flow-head { display: block; }
+      .flow-head p { margin-top: 18px; }
+      .flow-steps { grid-template-columns: minmax(0, 1fr); }
+      .flow-label { margin-bottom: 18px; }
+    }
+    @media (max-width: 640px) {
+      .flow-section { padding-bottom: 65px; }
+      .flow-head { padding-top: 50px; margin-bottom: 27px; }
+      .flow-head p { font-size: 15px; line-height: 1.75; }
+      .flow-step { padding: 22px; border-radius: 16px; }
+    }
+  </style>
+"""
+
+
+def workflows_block(c):
+    """Only content that defines "workflows" gets the section."""
+    w = c.get("workflows")
+    if not w:
+        return ""
+    steps = "\n".join(
+        '      <li class="flow-step">\n'
+        f'        <span class="flow-label">{st["label"]}</span>\n'
+        f'        <h3>{st["title"]}</h3>\n'
+        f'        <p>{st["text"]}</p>\n'
+        "      </li>"
+        for st in w["steps"]
+    )
+    return (
+        FLOW_CSS
+        + '  <section class="flow-section wrap" id="workflows" aria-labelledby="flow-title">\n'
+        '    <div class="flow-head reveal">\n'
+        f'      <h2 id="flow-title">{w["title"]}</h2>\n'
+        f'      <p>{w["text"]}</p>\n'
+        "    </div>\n"
+        f'    <ol class="flow-steps reveal">\n{steps}\n    </ol>\n'
+        "  </section>"
+    )
+
+
+def render(code, c, shell, css, locales, names, site):
     body = shell
     canonical = f"{SITE}/" if code == "en" else f"{SITE}/{code}/"
 
@@ -214,6 +312,9 @@ def render(code, c, shell, css, locales, names):
         "blockRelease": release_block(c),
         "blockFaq": faq_block(c),
         "blockLangs": langs_block(code, names),
+        "blockWorkflows": workflows_block(c),
+        "workflowsHref": site["workflowsHref"],
+        "nav.signIn": SIGN_IN[code],
         "ctaStrings": json.dumps(
             {"downloadFor": c["cta"]["downloadFor"], "version": c["cta"]["version"]},
             ensure_ascii=False,
@@ -253,14 +354,24 @@ PAGES = {
 }
 
 
+# Account and billing pages: built for both domains, kept out of the sitemap.
+# Paths are relative to the site root.
+HIDDEN_PAGES = {
+    "login/index.html": "login.html",
+    "account/index.html": "account.html",
+    "billing/success.html": "billing-success.html",
+    "billing/cancel.html": "billing-cancel.html",
+}
+
+
 def design_version():
     """Cache-busting hash for the shared homepage stylesheet and script."""
     assets = ROOT / "assets"
     return hashlib.sha256((assets / "landing.css").read_bytes() + (assets / "landing.js").read_bytes()).hexdigest()[:12]
 
 
-def render_doc(name, css, doc_css):
-    page = (ROOT / "src" / PAGES[name]).read_text(encoding="utf-8")
+def render_doc(src, css, doc_css):
+    page = (ROOT / "src" / src).read_text(encoding="utf-8")
     page = (
         page.replace("{{css}}", css)
         .replace("{{docCss}}", doc_css)
@@ -269,32 +380,61 @@ def render_doc(name, css, doc_css):
     )
     leftover = page.split("{{")[1:]
     if leftover:
-        sys.exit(name + ": unresolved placeholder {{" + leftover[0].split("}}")[0] + "}}")
+        sys.exit(src + ": unresolved placeholder {{" + leftover[0].split("}}")[0] + "}}")
     return page
+
+
+def build_site(key, site, shell, css, doc_css, base_locales, names):
+    out_root = site["out"]
+    out_root.mkdir(parents=True, exist_ok=True)
+    locales = dict(base_locales)
+    if site["overrides"]:
+        extra = json.loads((ROOT / "content" / site["overrides"]).read_text(encoding="utf-8"))
+        locales["en"] = merge(locales["en"], extra)
+
+    for code in ORDER:
+        page = render(code, locales[code], shell, css, locales, names, site)
+        out = out_root / "index.html" if code == "en" else out_root / code / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(page, encoding="utf-8")
+        print(f"  {key:15} {code:3} -> {out.relative_to(ROOT)}  ({len(page) // 1024} KB)")
+
+    for name, src in PAGES.items():
+        (out_root / name).mkdir(parents=True, exist_ok=True)
+        (out_root / name / "index.html").write_text(render_doc(src, css, doc_css), encoding="utf-8")
+    for path, src in HIDDEN_PAGES.items():
+        (out_root / path).parent.mkdir(parents=True, exist_ok=True)
+        (out_root / path).write_text(render_doc(src, css, doc_css), encoding="utf-8")
+    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}")
+
+    # locales that were dropped from ORDER should not linger as stale pages
+    for path in out_root.iterdir():
+        if path.is_dir() and len(path.name) == 2 and path.name not in ORDER:
+            shutil.rmtree(path)
+            print(f"  removed stale {path.relative_to(ROOT)}/")
+
+
+def copy_static(out_root):
+    """The second domain needs the files GitHub Pages serves from the repo root."""
+    for name in ("assets", "app.png", "logo.png"):
+        src = ROOT / name
+        dst = out_root / name
+        if src.is_dir():
+            shutil.copytree(src, dst, dirs_exist_ok=True)
+        else:
+            shutil.copy2(src, dst)
 
 
 def main():
     shell = (ROOT / "src" / "shell.html").read_text(encoding="utf-8")
     css = (ROOT / "src" / "_css.html").read_text(encoding="utf-8")
+    doc_css = (ROOT / "src" / "_doc-css.html").read_text(encoding="utf-8")
     locales = {code: load(code) for code in ORDER}
     names = {code: locales[code]["name"] for code in ORDER}
 
-    for code in ORDER:
-        page = render(code, locales[code], shell, css, locales, names)
-        if code == "en":
-            out = ROOT / "index.html"
-        else:
-            (ROOT / code).mkdir(exist_ok=True)
-            out = ROOT / code / "index.html"
-        out.write_text(page, encoding="utf-8")
-        print(f"  {code:3} -> {out.relative_to(ROOT)}  ({len(page) // 1024} KB)")
-
-    doc_css = (ROOT / "src" / "_doc-css.html").read_text(encoding="utf-8")
-    for name in PAGES:
-        page = render_doc(name, css, doc_css)
-        (ROOT / name).mkdir(exist_ok=True)
-        (ROOT / name / "index.html").write_text(page, encoding="utf-8")
-        print(f"  {name:8} -> {name}/index.html  ({len(page) // 1024} KB)")
+    for key, site in SITES.items():
+        build_site(key, site, shell, css, doc_css, locales, names)
+    copy_static(SITES["skalatec"]["out"])
 
     urls = "\n".join(
         "  <url><loc>%s</loc></url>" % (SITE + "/" if code == "en" else f"{SITE}/{code}/")
@@ -310,13 +450,11 @@ def main():
     (ROOT / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8"
     )
+    # The mirror points crawlers at the primary site's sitemap.
+    (SITES["skalatec"]["out"] / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8"
+    )
     print("  sitemap.xml, robots.txt")
-
-    # locales that were dropped from ORDER should not linger as stale pages
-    for path in ROOT.iterdir():
-        if path.is_dir() and len(path.name) == 2 and path.name not in ORDER:
-            shutil.rmtree(path)
-            print(f"  removed stale {path.name}/")
 
 
 if __name__ == "__main__":

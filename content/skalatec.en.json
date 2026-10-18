@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "title": "Blade, statistics and the work you repeat",
+    "description": "Ask in plain language. Blade runs your analysis in R, explains the result, and saves the steps as a workflow you can run again.",
+    "ogTitle": "Blade, statistics and the work you repeat",
+    "ogDescription": "Ask in plain language. Blade runs your analysis in R, explains the result, and saves the steps as a workflow you can run again."
+  },
+  "hero": {
+    "lede": "Blade handles the heavy lifting, then saves the steps as a workflow you can run again next month."
+  },
+  "workflows": {
+    "title": "Do the analysis once. Run it again next month.",
+    "text": "Save a finished session as a workflow: the goal, the R script that worked, and an example of the result. Next time, point it at new files.",
+    "steps": [
+      {
+        "label": "01 / Capture",
+        "title": "A session becomes a workflow",
+        "text": "Blade saves the goal, the script that worked, and an example of the output."
+      },
+      {
+        "label": "02 / Repeat",
+        "title": "New files, same steps",
+        "text": "Run the workflow on this month's data. Blade adapts to small changes, like a renamed column."
+      },
+      {
+        "label": "03 / Share",
+        "title": "Hand the process on",
+        "text": "Export one <code>.bladeworkflow</code> file. Anyone with Blade can import it and run it."
+      }
+    ]
+  }
+}

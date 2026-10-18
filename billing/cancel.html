@@ -1,6 +1,53 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Checkout closed · Blade</title>
-<meta name="robots" content="noindex">
-<style>body{margin:0;background:#f6f5f2;color:#171717;font:16px/1.5 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}.card{background:#fff;border:1px solid #ddd8cf;border-radius:16px;max-width:440px;padding:32px;box-shadow:0 12px 40px #00000012}h1{font-size:24px;margin:0 0 10px}p{color:#5b5750;margin:0}a{color:#ff4900}</style></head>
-<body><main class="card"><h1>Checkout closed</h1><p>No payment was completed. <a href="/pricing">Return to pricing</a> whenever you are ready.</p></main></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Checkout closed &middot; Blade</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f8f7f3" />
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1373789871610184');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /></noscript>
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
+<link rel="stylesheet" href="/assets/landing.css?v=6d4846af20e2" />
+<link rel="stylesheet" href="/assets/auth.css?v=6d4846af20e2" />
+</head>
+<body class="auth-page">
+<div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+<nav class="nav wrap" aria-label="Primary">
+  <a class="wordmark" href="/" aria-label="Blade home"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
+  <div class="nav-links"><a href="/pricing">Pricing</a></div>
+  <a class="nav-cta" href="/#get">Get Blade</a>
+</nav>
+<main class="auth-main" id="main">
+  <section class="auth-card" aria-labelledby="t">
+    <span class="auth-kicker">No charge made</span>
+    <h1 id="t">Checkout closed</h1>
+    <p class="lead">No payment was completed. You can start checkout again whenever you are ready.</p>
+    <a class="btn" href="/pricing">Back to pricing</a><a class="btn ghost" href="/account">Your account</a>
+  </section>
+</main>
+<footer class="auth-foot">
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade home"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+</body>
+</html>

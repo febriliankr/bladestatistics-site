@@ -26,6 +26,29 @@ python3 build.py
 Never hand-edit `index.html` or a `<code>/index.html`. The next build overwrites
 it.
 
+## Two domains, one site
+
+The same source serves two domains.
+
+- **bladestatistics.com** is the primary site: the repository root, served by
+  GitHub Pages.
+- **blade.skalatec.com** is the same site with a broader English pitch. Its
+  copy changes live in `content/skalatec.en.json`, merged over `en.json`. Only
+  content that defines `workflows` gets the workflows section. The build writes
+  it to `skalatec/dist/` (ignored by git), and the Cloudflare Worker in
+  `skalatec/` serves it:
+
+  ```
+  python3 build.py
+  cd skalatec && npx wrangler deploy
+  ```
+
+Canonical URLs on both point at bladestatistics.com. Buying Pro is identical on
+both: `/pricing`, then `/login` and `/account` for a signed-in buyer, and
+`/billing/success` or `/billing/cancel` when Xendit sends them back. The account
+and billing pages come from `src/login.html`, `src/account.html`, and
+`src/billing-*.html`, and stay out of the sitemap.
+
 ## Languages
 
 English is the root; the twelve translations live in two-letter directories.

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Payment received &middot; Blade</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#f8f7f3" />
+{{pixel}}
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
+<link rel="stylesheet" href="/assets/landing.css?v={{designVersion}}" />
+<link rel="stylesheet" href="/assets/auth.css?v={{designVersion}}" />
+</head>
+<body class="auth-page">
+<div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+<nav class="nav wrap" aria-label="Primary">
+  <a class="wordmark" href="/" aria-label="Blade home"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
+  <div class="nav-links"><a href="/pricing">Pricing</a></div>
+  <a class="nav-cta" href="/#get">Get Blade</a>
+</nav>
+<main class="auth-main" id="main">
+  <section class="auth-card" aria-labelledby="t">
+    <span class="auth-kicker">Payment received</span>
+    <h1 id="t">Blade Pro is yours</h1>
+    <p class="lead" id="msg">Thank you! Pro is active on the email you paid with. Download Blade, then sign in with that same email to use it.</p>
+    <div id="actions"><a class="btn" href="/#get">Download Blade</a><a class="btn ghost" href="/account">View your account</a></div>
+  </section>
+</main>
+<footer class="auth-foot">
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade home"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+<script>
+// A web checkout returns with ?ref=<checkout reference>, which doubles as the
+// Meta event id the server-side Purchase uses, so the two dedupe. The desktop
+// app's checkout returns without one.
+(function () {
+  var m = (location.search.match(/[?&]ref=([^&]+)/) || [])[1];
+  var ref = "";
+  try { ref = m ? decodeURIComponent(m) : ""; } catch (e) {}
+  if (!/^[A-Za-z0-9._-]{1,128}$/.test(ref)) ref = "";
+  if (ref && typeof fbq === "function")
+    fbq("track", "Purchase", { value: 299000, currency: "IDR" }, { eventID: ref });
+  if (ref) return;
+  document.getElementById("t").textContent = "Payment received";
+  document.getElementById("msg").innerHTML =
+    "Return to <strong>Blade Desktop</strong>. Pro activates there automatically as soon as Xendit confirms the payment.";
+  document.getElementById("actions").hidden = true;
+})();
+</script>
+</body>
+</html>
