@@ -5,10 +5,11 @@
   "ogLocale": "zh_CN",
   "langLabel": "语言",
   "meta": {
-    "title": "Blade，不用统计软件的统计",
-    "description": "用自己的话提问。Blade 在 R 中运行分析，并解释结果。",
-    "ogTitle": "Blade，不用统计软件的统计",
-    "ogDescription": "用自己的话提问。Blade 在 R 中运行分析，并解释结果。"
+    "title": "专为统计分析打造的 AI 智能体 · Blade",
+    "description": "繁重的工作交给 Blade，你可以专注于发现真正重要的洞见。",
+    "ogTitle": "专为统计分析打造的 AI 智能体",
+    "ogDescription": "繁重的工作交给 Blade，你可以专注于发现真正重要的洞见。",
+    "ogImage": "https://bladestatistics.com/share/zh.jpg"
   },
   "hero": {
     "h1a": "专为",
@@ -276,7 +277,6 @@
     "resultsText": "在同一处查看表格、图形和假设检验。",
     "script": "保留 R 脚本",
     "scriptText": "检查代码、再次运行，或分享给同事。",
-    "preview": "应用界面示意图",
     "download": "支持 macOS 和 Windows。文件保留在你的电脑上。",
     "install": "安装说明",
     "workspaceTitle": "每项研究，都有自己的工作区。",

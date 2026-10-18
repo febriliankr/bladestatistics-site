@@ -5,10 +5,11 @@
   "ogLocale": "ja_JP",
   "langLabel": "言語",
   "meta": {
-    "title": "Blade、統計ソフトのいらない統計",
-    "description": "いつもの言葉で質問。Blade が R で分析を実行し、結果を説明します。",
-    "ogTitle": "Blade、統計ソフトのいらない統計",
-    "ogDescription": "いつもの言葉で質問。Blade が R で分析を実行し、結果を説明します。"
+    "title": "統計分析に特化した AI エージェント · Blade",
+    "description": "面倒な作業は Blade に任せて、本当に大切な発見に集中できます。",
+    "ogTitle": "統計分析に特化した AI エージェント",
+    "ogDescription": "面倒な作業は Blade に任せて、本当に大切な発見に集中できます。",
+    "ogImage": "https://bladestatistics.com/share/ja.jpg"
   },
   "hero": {
     "h1a": "",
@@ -276,7 +277,6 @@
     "resultsText": "表、グラフ、前提条件の確認をまとめて表示します。",
     "script": "R スクリプトを保存",
     "scriptText": "コードを確認し、再実行したり同僚と共有したりできます。",
-    "preview": "アプリ画面のイメージ",
     "download": "macOS と Windows に対応。ファイルは自分のコンピューターに残ります。",
     "install": "インストールについて",
     "workspaceTitle": "研究ごとに、ひとつのワークスペース。",

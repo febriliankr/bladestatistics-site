@@ -820,6 +820,147 @@ h2 {
   to { clip-path: inset(0 0 0 0); }
 }
 
+/* Ask demo. landing.js steps data-stage through type, sent, think and done.
+   Without a stage (no JS, reduced motion) the finished answer shows. */
+.ask-demo .mw {
+  position: relative;
+}
+.ask-demo .ask-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  flex: 1;
+  min-height: 0;
+  animation: none !important;
+}
+.ask-demo[data-stage="type"] .ask-chat,
+.ask-demo:not([data-stage="type"]) .m-file,
+.ask-demo:not([data-stage="type"]) .ask-data,
+.ask-demo[data-stage="sent"] .m-think,
+.ask-demo[data-stage="sent"] .ask-answer,
+.ask-demo[data-stage="think"] .ask-answer,
+.ask-demo:not([data-stage="think"]) .m-think {
+  display: none;
+}
+.ask-chat > *,
+.ask-answer > * {
+  animation: mock-up 0.4s var(--ease) both;
+}
+.ask-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+.ask-answer > :nth-child(2) { animation-delay: 0.25s; }
+.ask-answer > :nth-child(3) { animation-delay: 0.5s; }
+.m-user {
+  align-self: flex-end;
+  max-width: 82%;
+  margin: 0;
+  padding: 0.5em 0.8em;
+  border-radius: 0.8em;
+  background: #ecede7;
+}
+.m-think {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: var(--m-muted);
+}
+.m-spinner {
+  width: 1.35em;
+  height: 1.35em;
+  fill: currentColor;
+}
+.m-spinner rect {
+  animation: pulse-opacity 1.5s ease-in-out infinite both;
+}
+.m-spinner rect.o {
+  animation-name: pulse-opacity-dim;
+}
+@keyframes pulse-opacity {
+  0%, 40% { opacity: 0.4; animation-timing-function: steps(6); }
+  50%, 90% { opacity: 1; animation-timing-function: steps(6); }
+  100% { opacity: 0.4; }
+}
+@keyframes pulse-opacity-dim {
+  0%, 40% { opacity: 0.15; animation-timing-function: steps(4); }
+  50%, 90% { opacity: 0.35; animation-timing-function: steps(4); }
+  100% { opacity: 0.15; }
+}
+/* Same sweep as Blade Desktop's TextShimmer. */
+.m-shimmer {
+  color: transparent;
+  background-image:
+    linear-gradient(90deg, transparent calc(50% - 5.2ch), var(--m-fg) 50%, transparent calc(50% + 5.2ch)),
+    linear-gradient(var(--m-muted), var(--m-muted));
+  background-size: 360% 100%, 100% 100%;
+  background-position: 100% 0, 0 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer-sweep 1.2s linear infinite;
+}
+@keyframes text-shimmer-sweep {
+  0% { background-position: 100% 0, 0 0; }
+  100% { background-position: 0% 0, 0 0; }
+}
+.m-result td:nth-child(n + 2),
+.m-result th:nth-child(n + 2) {
+  white-space: nowrap;
+}
+.m-result td:first-child {
+  font-weight: 500;
+}
+.ask-input:empty::before {
+  content: "Ask Blade to work in this workspace…";
+  color: #a3a79e;
+}
+.ask-demo .m-compose p {
+  display: flex;
+  align-items: center;
+  animation: none;
+}
+.ask-demo .m-compose p:has(.ask-input:empty) .caret-blink {
+  order: -1;
+  margin: 0 2px 0 0;
+}
+.ask-demo .send {
+  transition: background 0.2s, transform 0.12s;
+}
+.ask-demo .m-compose:has(.ask-input:empty) .send {
+  background: #d4d6ce;
+}
+.ask-demo .send.press {
+  transform: scale(0.88);
+}
+.m-pointer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 1.3em;
+  height: 1.6em;
+  fill: #1f2320;
+  stroke: #fff;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: translate(var(--px, 120%), var(--py, 120%));
+  transition: transform 0.75s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.25s;
+  filter: drop-shadow(0 0.1em 0.15em #0003);
+  pointer-events: none;
+}
+.m-pointer.show {
+  opacity: 1;
+}
+.m-pointer.press {
+  transform: translate(var(--px), var(--py)) scale(0.85);
+  transition-duration: 0.1s;
+}
+
 /* Workspace window: sidebar plus file list, in a wider frame. */
 .ws-mock {
   display: flex;
@@ -959,12 +1100,6 @@ h2 {
   text-align: end;
   color: var(--m-muted);
   font-size: 0.85em;
-}
-.preview-stage figcaption {
-  font-size: 11px;
-  color: #6a7167;
-  text-align: center;
-  padding-top: 13px;
 }
 .feature-list {
   display: grid;
@@ -1512,10 +1647,6 @@ h2 {
   }
   .preview-panels {
     border-radius: 15px;
-  }
-  .preview-stage figcaption {
-    font-size: 10px;
-    padding-top: 10px;
   }
   .feature-list {
     gap: 3px;

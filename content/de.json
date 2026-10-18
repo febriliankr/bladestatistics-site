@@ -5,10 +5,11 @@
   "ogLocale": "de_DE",
   "langLabel": "Sprache",
   "meta": {
-    "title": "Blade, Statistik ohne Statistiksoftware",
-    "description": "Fragen Sie in Ihren eigenen Worten. Blade führt die Analyse in R aus und erklärt das Ergebnis.",
-    "ogTitle": "Blade, Statistik ohne Statistiksoftware",
-    "ogDescription": "Fragen Sie in Ihren eigenen Worten. Blade führt die Analyse in R aus und erklärt das Ergebnis."
+    "title": "Spezialisierte KI-Agenten für statistische Analysen · Blade",
+    "description": "Blade übernimmt die schwere Arbeit, damit Sie sich auf die Erkenntnisse konzentrieren können, die zählen.",
+    "ogTitle": "Spezialisierte KI-Agenten für statistische Analysen",
+    "ogDescription": "Blade übernimmt die schwere Arbeit, damit Sie sich auf die Erkenntnisse konzentrieren können, die zählen.",
+    "ogImage": "https://bladestatistics.com/share/de.jpg"
   },
   "hero": {
     "h1a": "Spezialisierte KI-Agenten für ",
@@ -276,7 +277,6 @@
     "resultsText": "Tabellen, Diagramme und Voraussetzungen an einem Ort prüfen.",
     "script": "Das R-Skript behalten",
     "scriptText": "Prüfen Sie den Code, führen Sie ihn erneut aus oder teilen Sie ihn mit Kollegen.",
-    "preview": "Illustrative App-Vorschauen",
     "download": "macOS und Windows. Ihre Dateien bleiben auf Ihrem Computer.",
     "install": "Installationshinweise",
     "workspaceTitle": "Ein Arbeitsbereich für jede Studie.",

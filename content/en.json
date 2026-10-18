@@ -5,10 +5,11 @@
   "ogLocale": "en_US",
   "langLabel": "Language",
   "meta": {
-    "title": "Blade, statistics without the statistics software",
-    "description": "Ask in plain language. Blade runs your analysis in R and explains the result.",
-    "ogTitle": "Blade, statistics without the statistics software",
-    "ogDescription": "Ask in plain language. Blade runs your analysis in R and explains the result."
+    "title": "Specialized AI agents for statistical analysis · Blade",
+    "description": "Blade handles the heavy lifting so you can focus on discovering insights that matter.",
+    "ogTitle": "Specialized AI agents for statistical analysis",
+    "ogDescription": "Blade handles the heavy lifting so you can focus on discovering insights that matter.",
+    "ogImage": "https://bladestatistics.com/share/en.jpg"
   },
   "hero": {
     "h1a": "Specialized AI agents for ",
@@ -276,7 +277,6 @@
     "resultsText": "Get tables, plots, and assumption checks in one place.",
     "script": "Keep the R script",
     "scriptText": "Review the code, run it again, or share it with a colleague.",
-    "preview": "Illustrative app previews",
     "download": "macOS and Windows. Your files stay on your computer.",
     "install": "Installation notes",
     "workspaceTitle": "A workspace for each study.",

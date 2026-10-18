@@ -5,10 +5,11 @@
   "ogLocale": "it_IT",
   "langLabel": "Lingua",
   "meta": {
-    "title": "Blade, statistica senza software di statistica",
-    "description": "Fai una domanda con parole tue. Blade esegue l’analisi in R e spiega il risultato.",
-    "ogTitle": "Blade, statistica senza software di statistica",
-    "ogDescription": "Fai una domanda con parole tue. Blade esegue l’analisi in R e spiega il risultato."
+    "title": "Agenti IA specializzati in analisi statistica · Blade",
+    "description": "Blade si occupa del lavoro pesante, così puoi concentrarti sulle scoperte che contano.",
+    "ogTitle": "Agenti IA specializzati in analisi statistica",
+    "ogDescription": "Blade si occupa del lavoro pesante, così puoi concentrarti sulle scoperte che contano.",
+    "ogImage": "https://bladestatistics.com/share/it.jpg"
   },
   "hero": {
     "h1a": "Agenti IA specializzati in ",
@@ -276,7 +277,6 @@
     "resultsText": "Trova tabelle, grafici e verifiche delle assunzioni in un unico posto.",
     "script": "Conserva lo script R",
     "scriptText": "Controlla il codice, eseguilo di nuovo o condividilo con un collega.",
-    "preview": "Anteprime illustrative dell’app",
     "download": "macOS e Windows. I file restano sul tuo computer.",
     "install": "Note di installazione",
     "workspaceTitle": "Uno spazio per ogni studio.",

@@ -5,10 +5,11 @@
   "ogLocale": "es_ES",
   "langLabel": "Idioma",
   "meta": {
-    "title": "Blade, estadística sin el programa de estadística",
-    "description": "Pregunta con tus propias palabras. Blade ejecuta el análisis en R y explica el resultado.",
-    "ogTitle": "Blade, estadística sin el programa de estadística",
-    "ogDescription": "Pregunta con tus propias palabras. Blade ejecuta el análisis en R y explica el resultado."
+    "title": "Agentes de IA especializados en análisis estadístico · Blade",
+    "description": "Blade se encarga del trabajo pesado para que te centres en descubrir lo que de verdad importa.",
+    "ogTitle": "Agentes de IA especializados en análisis estadístico",
+    "ogDescription": "Blade se encarga del trabajo pesado para que te centres en descubrir lo que de verdad importa.",
+    "ogImage": "https://bladestatistics.com/share/es.jpg"
   },
   "hero": {
     "h1a": "Agentes de IA especializados en ",
@@ -276,7 +277,6 @@
     "resultsText": "Consulta tablas, gráficos y comprobaciones de supuestos en un solo lugar.",
     "script": "Conserva el script de R",
     "scriptText": "Revisa el código, ejecútalo de nuevo o compártelo con un colega.",
-    "preview": "Vistas ilustrativas de la aplicación",
     "download": "macOS y Windows. Tus archivos permanecen en tu ordenador.",
     "install": "Notas de instalación",
     "workspaceTitle": "Un espacio para cada estudio.",

@@ -5,10 +5,11 @@
   "ogLocale": "id_ID",
   "langLabel": "Bahasa",
   "meta": {
-    "title": "Blade, statistik tanpa software statistik",
-    "description": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya.",
-    "ogTitle": "Blade, statistik tanpa software statistik",
-    "ogDescription": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya."
+    "title": "Agen AI khusus untuk analisis statistik · Blade",
+    "description": "Blade mengerjakan bagian terberatnya, jadi Anda bisa fokus menemukan insight yang penting.",
+    "ogTitle": "Agen AI khusus untuk analisis statistik",
+    "ogDescription": "Blade mengerjakan bagian terberatnya, jadi Anda bisa fokus menemukan insight yang penting.",
+    "ogImage": "https://bladestatistics.com/share/id.jpg"
   },
   "hero": {
     "h1a": "Agen AI khusus untuk ",
@@ -276,7 +277,6 @@
     "resultsText": "Lihat tabel, grafik, dan pemeriksaan asumsi di satu tempat.",
     "script": "Simpan skrip R",
     "scriptText": "Periksa kodenya, jalankan kembali, atau bagikan dengan rekan.",
-    "preview": "Ilustrasi pratinjau aplikasi",
     "download": "macOS dan Windows. File tetap di komputer Anda.",
     "install": "Catatan instalasi",
     "workspaceTitle": "Satu ruang kerja untuk setiap studi.",

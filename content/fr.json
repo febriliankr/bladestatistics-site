@@ -5,10 +5,11 @@
   "ogLocale": "fr_FR",
   "langLabel": "Langue",
   "meta": {
-    "title": "Blade, des statistiques sans logiciel de statistiques",
-    "description": "Posez votre question simplement. Blade effectue l’analyse dans R et explique le résultat.",
-    "ogTitle": "Blade, des statistiques sans logiciel de statistiques",
-    "ogDescription": "Posez votre question simplement. Blade effectue l’analyse dans R et explique le résultat."
+    "title": "Des agents IA spécialisés en analyse statistique · Blade",
+    "description": "Blade s’occupe du gros du travail pour que vous puissiez vous concentrer sur les découvertes qui comptent.",
+    "ogTitle": "Des agents IA spécialisés en analyse statistique",
+    "ogDescription": "Blade s’occupe du gros du travail pour que vous puissiez vous concentrer sur les découvertes qui comptent.",
+    "ogImage": "https://bladestatistics.com/share/fr.jpg"
   },
   "hero": {
     "h1a": "Des agents IA spécialisés en ",
@@ -276,7 +277,6 @@
     "resultsText": "Retrouvez tableaux, graphiques et vérifications des hypothèses au même endroit.",
     "script": "Conservez le script R",
     "scriptText": "Vérifiez le code, relancez-le ou partagez-le avec un collègue.",
-    "preview": "Aperçus illustratifs de l’application",
     "download": "macOS et Windows. Vos fichiers restent sur votre ordinateur.",
     "install": "Notes d’installation",
     "workspaceTitle": "Un espace pour chaque étude.",

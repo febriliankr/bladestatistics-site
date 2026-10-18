@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blade, 통계 소프트웨어 없는 통계</title>
-<meta name="description" content="평소 쓰는 말로 질문하세요. Blade가 R로 분석하고 결과를 설명합니다." />
+<title>통계 분석에 특화된 AI 에이전트 · Blade</title>
+<meta name="description" content="번거로운 작업은 Blade가 맡고, 당신은 중요한 인사이트 발견에 집중하세요." />
 <link rel="canonical" href="https://bladestatistics.com/ko/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
@@ -24,9 +24,9 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bladestatistics.com/ko/" />
 <meta property="og:locale" content="ko_KR" />
-<meta property="og:title" content="Blade, 통계 소프트웨어 없는 통계" />
-<meta property="og:description" content="평소 쓰는 말로 질문하세요. Blade가 R로 분석하고 결과를 설명합니다." />
-<meta property="og:image" content="https://bladestatistics.com/app.png" />
+<meta property="og:title" content="통계 분석에 특화된 AI 에이전트" />
+<meta property="og:description" content="번거로운 작업은 Blade가 맡고, 당신은 중요한 인사이트 발견에 집중하세요." />
+<meta property="og:image" content="https://bladestatistics.com/share/ko.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
 <script>
@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=309092f335fb" />
+<link rel="stylesheet" href="/assets/landing.css?v=2faa1ae2d79b" />
 </head>
 <body>
 
@@ -138,26 +138,44 @@ try {
     <div class="product-layout reveal">
       <figure class="preview-stage">
         <div class="preview-panels">
-<div class="app-preview mock" id="preview-ask" role="img" aria-label="데이터에 대해 질문하기">
+<div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="데이터에 대해 질문하기">
             <div class="mw">
               <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
               <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
               <div class="mw-body">
                 <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>4,240 rows · 16 columns</span></div>
-                <table class="m-table">
-                  <tr><th>age</th><th>sysBP</th><th>BMI</th><th>TenYearCHD</th></tr>
-                  <tr><td>39</td><td>106</td><td>26.97</td><td>0</td></tr>
-                  <tr><td>46</td><td>121</td><td>28.73</td><td>0</td></tr>
-                  <tr><td>48</td><td>127.5</td><td>25.34</td><td>0</td></tr>
-                  <tr><td>61</td><td>150</td><td>28.58</td><td>1</td></tr>
-                  <tr><td>46</td><td>130</td><td>23.1</td><td>0</td></tr>
-                  <tr><td>43</td><td>180</td><td>30.3</td><td>0</td></tr>
-                </table>
+                <div class="ask-data">
+                  <table class="m-table">
+                    <tr><th>age</th><th>sysBP</th><th>BMI</th><th>TenYearCHD</th></tr>
+                    <tr><td>39</td><td>106</td><td>26.97</td><td>0</td></tr>
+                    <tr><td>46</td><td>121</td><td>28.73</td><td>0</td></tr>
+                    <tr><td>48</td><td>127.5</td><td>25.34</td><td>0</td></tr>
+                    <tr><td>61</td><td>150</td><td>28.58</td><td>1</td></tr>
+                    <tr><td>46</td><td>130</td><td>23.1</td><td>0</td></tr>
+                    <tr><td>43</td><td>180</td><td>30.3</td><td>0</td></tr>
+                  </table>
+                </div>
+                <div class="ask-chat">
+                  <p class="m-user">Which risk factors relate most to ten-year CHD?</p>
+                  <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div>
+                  <div class="ask-answer">
+                    <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>Rscript framingham_stats.R</span><small>Done</small></div>
+                    <p class="m-msg">Age and systolic BP are the strongest, then hypertension and diastolic BP.</p>
+                    <table class="m-table m-result">
+                      <tr><th>with TenYearCHD</th><th>r</th><th>95% CI</th><th>p</th></tr>
+                      <tr><td>age</td><td>0.23</td><td>0.20 to 0.25</td><td>&lt; .001</td></tr>
+                      <tr><td>sysBP</td><td>0.22</td><td>0.19 to 0.24</td><td>&lt; .001</td></tr>
+                      <tr><td>prevalentHyp</td><td>0.18</td><td>0.15 to 0.21</td><td>&lt; .001</td></tr>
+                      <tr><td>diaBP</td><td>0.15</td><td>0.12 to 0.17</td><td>&lt; .001</td></tr>
+                    </table>
+                  </div>
+                </div>
                 <div class="m-compose">
-                  <p>Which risk factors relate most to ten-year CHD?<i class="caret-blink"></i></p>
+                  <p><span class="ask-input" data-prompt="Which risk factors relate most to ten-year CHD?"></span><i class="caret-blink"></i></p>
                   <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
                 </div>
               </div>
+              <svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
             </div>
           </div>
           <div class="app-preview mock" id="preview-results" role="img" aria-label="결과 읽기" hidden>
@@ -198,7 +216,6 @@ try {
             </div>
           </div>
         </div>
-        <figcaption>앱 화면 예시</figcaption>
       </figure>
       <div class="feature-list">
         <details class="feature-step" name="blade-preview" data-preview="preview-ask" open>
@@ -251,7 +268,6 @@ try {
             </div>
           </div>
         </div>
-        <figcaption>앱 화면 예시</figcaption>
       </figure>
     </div>
   </section>
@@ -309,7 +325,7 @@ try {
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=309092f335fb" defer></script>
+<script src="/assets/landing.js?v=2faa1ae2d79b" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points
