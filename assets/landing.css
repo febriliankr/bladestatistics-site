@@ -537,8 +537,7 @@ h2 {
   padding: 0.9em;
 }
 .m-file,
-.m-tool,
-.m-saved {
+.m-tool {
   display: flex;
   align-items: center;
   gap: 0.55em;
@@ -550,8 +549,7 @@ h2 {
   background: #f0f1ec;
 }
 .m-file span,
-.m-tool span,
-.m-saved span {
+.m-tool span {
   color: var(--m-muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -636,8 +634,7 @@ h2 {
 .m-tool {
   font-size: 0.9em;
 }
-.m-tool small,
-.m-saved small {
+.m-tool small {
   margin-inline-start: auto;
   font-size: 0.85em;
   color: var(--m-muted);
@@ -712,47 +709,6 @@ h2 {
   object-position: center top;
   border-radius: 0.3em;
 }
-.m-tabs {
-  display: flex;
-  gap: 0.3em;
-  border-bottom: 1px solid var(--m-line);
-  margin: -0.2em -0.9em 0;
-  padding: 0 0.9em;
-}
-.m-tabs span {
-  padding: 0.35em 0.8em;
-  color: var(--m-muted);
-  border-bottom: 2px solid transparent;
-}
-.m-tabs .on {
-  color: var(--m-fg);
-  border-color: var(--orange);
-}
-.m-code {
-  flex: 1;
-  margin: 0;
-  overflow: hidden;
-  font: 0.88em/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  white-space: pre;
-}
-.m-code i {
-  display: inline-block;
-  width: 2.2em;
-  font-style: normal;
-  color: #b0b4ab;
-}
-.m-code .f { color: #4f7a3f; }
-.m-code .s { color: #b8461b; }
-.m-code .k { color: #8a8f86; }
-.m-saved {
-  padding-top: 0.7em;
-  border-top: 1px solid var(--m-line);
-  font-size: 0.9em;
-}
-.m-saved small {
-  margin-inline-start: 0;
-}
-
 /* Mockup entrance. Each panel plays when its section scrolls in, and again
    whenever a feature step reveals it (display: none restarts animations).
    Reduced motion removes all of it and leaves the final state. */
@@ -790,9 +746,6 @@ h2 {
 .m-strip span:nth-child(3) { animation-delay: 0.82s; }
 .m-strip span:nth-child(4) { animation-delay: 0.88s; }
 .m-strip span:nth-child(5) { animation-delay: 0.94s; }
-.m-code {
-  animation: mock-lines 1.4s steps(12) 0.6s both !important;
-}
 .ws-side > :nth-child(1) { animation-delay: 0.35s; }
 .ws-side > :nth-child(2) { animation-delay: 0.42s; }
 .ws-side > :nth-child(3) { animation-delay: 0.49s; }
@@ -818,10 +771,6 @@ h2 {
 @keyframes mock-type {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 -1em 0 0); }
-}
-@keyframes mock-lines {
-  from { clip-path: inset(0 0 100% 0); }
-  to { clip-path: inset(0 0 0 0); }
 }
 
 /* Ask demo. landing.js steps data-stage through type, sent, think and done.
@@ -963,6 +912,228 @@ h2 {
 .m-pointer.press {
   transform: translate(var(--px), var(--py)) scale(0.85);
   transition-duration: 0.1s;
+}
+
+/* Script window: real tabs a visitor can switch, an R file that writes
+   itself and runs, the data, and the saved output. landing.js drives it. */
+.script-demo .mw-body {
+  gap: 0;
+  padding-top: 0;
+}
+.m-tabs {
+  display: flex;
+  gap: 0.2em;
+  margin: 0 -0.9em;
+  padding: 0 0.6em;
+  border-bottom: 1px solid var(--m-line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.m-tabs button {
+  flex: none;
+  padding: 0.6em 0.75em 0.5em;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 0.92em;
+  color: var(--m-muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.m-tabs button:hover {
+  color: var(--m-fg);
+}
+.m-tabs button[aria-selected="true"] {
+  color: var(--m-fg);
+  border-color: var(--orange);
+}
+.m-tabs button:focus-visible,
+.run-btn:focus-visible,
+.m-pane:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
+  border-radius: 0.3em;
+}
+.m-pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  margin: 0 -0.9em -0.9em;
+}
+.m-pane[hidden] {
+  display: none;
+}
+.script-demo .m-pane {
+  overflow: hidden;
+  animation: mock-up 0.3s var(--ease) both;
+}
+.script-demo .pane-r {
+  animation: none;
+}
+.m-run {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em 0.9em;
+  font-size: 0.85em;
+  color: var(--m-muted);
+}
+.run-status > span {
+  display: none;
+  align-items: center;
+  gap: 0.45em;
+}
+.script-demo[data-run="idle"] .st-idle,
+.script-demo[data-run="busy"] .st-busy,
+.script-demo[data-run="done"] .st-done,
+.script-demo:not([data-run]) .st-done {
+  display: inline-flex;
+}
+.run-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3em 0.75em;
+  border: 0;
+  border-radius: 0.45em;
+  background: var(--orange);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.12s;
+}
+.run-btn:hover {
+  background: var(--orange-hover);
+}
+.run-btn.press {
+  transform: scale(0.92);
+}
+.run-btn svg {
+  width: 0.85em;
+  height: 0.85em;
+  fill: currentColor;
+}
+.m-code {
+  flex: none;
+  margin: 0;
+  padding: 0.2em 0 0.6em;
+  overflow: hidden;
+  font: 0.86em/1.75 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+.m-code .cl {
+  display: block;
+  padding: 0 0.9em;
+  white-space: pre;
+  transition: background 0.25s, opacity 0.25s;
+}
+.script-demo[data-type] .m-code .cl {
+  opacity: 0;
+}
+.script-demo[data-type] .m-code .cl.on {
+  opacity: 1;
+}
+.m-code .cl.cur {
+  background: #fdf0e9;
+  box-shadow: inset 2px 0 var(--orange);
+}
+.m-code i {
+  display: inline-block;
+  width: 2em;
+  font-style: normal;
+  color: #b0b4ab;
+}
+.m-code .f { color: #4f7a3f; }
+.m-code .s { color: #b8461b; }
+.m-code .k { color: #8a8f86; }
+.m-console {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--m-line);
+  background: #f6f6f3;
+  transform: translateY(100%);
+  transition: transform 0.55s var(--ease);
+}
+.script-demo:not([data-run]) .m-console,
+.script-demo[data-run="busy"] .m-console,
+.script-demo[data-run="done"] .m-console {
+  transform: none;
+}
+.m-console p {
+  margin: 0;
+  padding: 0.35em 0.9em;
+  border-bottom: 1px solid var(--m-line);
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--m-muted);
+}
+.m-console pre,
+.pane-out pre {
+  flex: 1;
+  margin: 0;
+  padding: 0.5em 0.9em;
+  overflow: auto;
+  font: 0.72em/1.5 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: #3a3f38;
+  overscroll-behavior: contain;
+}
+.m-console pre {
+  position: relative;
+}
+.m-console .ol {
+  display: block;
+  white-space: pre;
+}
+.script-demo[data-run="busy"] .m-console .ol {
+  visibility: hidden;
+}
+.script-demo[data-run="busy"] .m-console .ol.on {
+  visibility: visible;
+}
+.pane-out pre {
+  white-space: pre;
+  background: #fff;
+}
+.script-demo .pane-csv {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.m-sheet {
+  border-collapse: collapse;
+  font-size: 0.82em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.m-sheet th,
+.m-sheet td {
+  padding: 0.35em 0.7em;
+  border-bottom: 1px solid var(--m-line);
+  border-inline-end: 1px solid var(--m-line);
+  text-align: end;
+}
+.m-sheet tr:first-child th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f3f4ef;
+  color: var(--m-muted);
+  font-weight: 500;
+  text-align: start;
+}
+.m-sheet th:first-child {
+  position: sticky;
+  left: 0;
+  background: #f3f4ef;
+  color: #a3a79e;
+  font-weight: 400;
+}
+.m-sheet tr:first-child th:first-child {
+  z-index: 2;
 }
 
 /* Workspace window: sidebar plus file list, in a wider frame. */

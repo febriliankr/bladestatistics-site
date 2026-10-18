@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=fe64966f755b" />
+<link rel="stylesheet" href="/assets/landing.css?v=02e6c5333ae6" />
 </head>
 <body>
 
@@ -205,25 +205,88 @@ try {
               </div>
             </div>
           </div>
-          <div class="app-preview mock" id="preview-script" role="img" aria-label="Das R-Skript behalten" hidden>
+          <div class="app-preview mock script-demo" id="preview-script" role="group" aria-label="Das R-Skript behalten" hidden>
             <div class="mw">
               <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
               <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
               <div class="mw-body">
-                <div class="m-tabs"><span class="on">framingham_analysis.R</span><span>framingham.csv</span></div>
-                <pre class="m-code"><code><i>1</i><span class="f">library</span>(ggplot2)
-<i>2</i>df &lt;- <span class="f">read.csv</span>(<span class="s">"framingham.csv"</span>)
-<i>3</i>cols &lt;- <span class="f">setdiff</span>(<span class="f">names</span>(df), <span class="f">c</span>(<span class="s">"education"</span>, <span class="s">"BPMeds"</span>))
-<i>4</i>
-<i>5</i><span class="k"># Correlations between risk factors</span>
-<i>6</i>cor_mat &lt;- <span class="f">cor</span>(df[cols],
-<i>7</i>               use = <span class="s">"pairwise.complete.obs"</span>)
-<i>8</i>cor_melt &lt;- reshape2::<span class="f">melt</span>(cor_mat)
-<i>9</i>p &lt;- <span class="f">ggplot</span>(cor_melt, <span class="f">aes</span>(Var1, Var2, fill = value)) +
-<i>10</i>  <span class="f">geom_tile</span>(color = <span class="s">"white"</span>) +
-<i>11</i>  <span class="f">scale_fill_gradient2</span>()
-<i>12</i><span class="f">ggsave</span>(<span class="s">"R_fig3_correlation.png"</span>, p)</code></pre>
-                <div class="m-saved"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><span>Saved to Study A/framingham_analysis.R</span><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><small>Ran in 2.1 s</small></div>
+                <div class="m-tabs" role="tablist" aria-label="Files">
+                  <button type="button" role="tab" id="tab-r" aria-controls="pane-r" aria-selected="true">framingham_linear.R</button>
+                  <button type="button" role="tab" id="tab-csv" aria-controls="pane-csv" aria-selected="false" tabindex="-1">framingham.csv</button>
+                  <button type="button" role="tab" id="tab-out" aria-controls="pane-out" aria-selected="false" tabindex="-1">output.txt</button>
+                </div>
+                <div class="m-pane pane-r" id="pane-r" role="tabpanel" aria-labelledby="tab-r">
+                  <div class="m-run"><span class="run-status"><span class="st-idle">R 4.4</span><span class="st-busy"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:.2s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.9s;animation-delay:.9s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.2s;animation-delay:.5s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.6s;animation-delay:.1s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.1s;animation-delay:1.2s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.7s;animation-delay:.4s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.3s;animation-delay:1s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.8s;animation-delay:.7s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.5s;animation-delay:.3s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.2s;animation-delay:1.4s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.9s;animation-delay:.6s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:1.1s"/></svg>Running</span><span class="st-done"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>Ran in 0.4 s</span></span><button type="button" class="run-btn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>Run</button></div>
+                  <pre class="m-code"><code><span class="cl"><i>1</i><span class="k"># Framingham -- linear regression output (OLS)</span></span><span class="cl"><i>2</i>df &lt;- <span class="f">read.csv</span>(<span class="s">&quot;framingham.csv&quot;</span>, check.names = <span class="s">FALSE</span>)</span><span class="cl"><i>3</i> </span><span class="cl"><i>4</i><span class="k"># 2. multiple: sysBP</span></span><span class="cl"><i>5</i>m2 &lt;- <span class="f">lm</span>(sysBP ~ age + male + BMI + heartRate + totChol,</span><span class="cl"><i>6</i>         data = df)</span><span class="cl"><i>7</i><span class="f">print</span>(<span class="f">summary</span>(m2))</span></code></pre>
+                  <div class="m-console" aria-live="off"><p>Console</p><pre><span class="ol">Call:</span><span class="ol">lm(formula = sysBP ~ age + male + BMI + heartRate + totChol, </span><span class="ol">    data = df)</span><span class="ol"> </span><span class="ol">Residuals:</span><span class="ol">    Min      1Q  Median      3Q     Max </span><span class="ol">-64.300 -12.481  -2.465   9.921 125.865 </span><span class="ol"> </span><span class="ol">Coefficients:</span><span class="ol">             Estimate Std. Error t value Pr(&gt;|t|)    </span><span class="ol">(Intercept) 22.531293   3.091221   7.289 3.72e-13 ***</span><span class="ol">age          0.864168   0.035665  24.230  &lt; 2e-16 ***</span><span class="ol">male        -1.128182   0.596856  -1.890   0.0588 .  </span><span class="ol">BMI          1.425642   0.072987  19.533  &lt; 2e-16 ***</span><span class="ol">heartRate    0.290839   0.024571  11.837  &lt; 2e-16 ***</span><span class="ol">totChol      0.036349   0.006852   5.305 1.19e-07 ***</span><span class="ol">---</span><span class="ol">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span><span class="ol"> </span><span class="ol">Residual standard error: 18.84 on 4165 degrees of freedom</span><span class="ol">  (69 observations deleted due to missingness)</span><span class="ol">Multiple R-squared:  0.2642,	Adjusted R-squared:  0.2633 </span><span class="ol">F-statistic: 299.1 on 5 and 4165 DF,  p-value: &lt; 2.2e-16</span></pre></div>
+                </div>
+                <div class="m-pane pane-csv" id="pane-csv" role="tabpanel" aria-labelledby="tab-csv" tabindex="0" hidden>
+                  <table class="m-sheet"><tr><th></th><th>male</th><th>age</th><th>education</th><th>currentSmoker</th><th>cigsPerDay</th><th>BPMeds</th><th>prevalentStroke</th><th>prevalentHyp</th><th>diabetes</th><th>totChol</th><th>sysBP</th><th>diaBP</th><th>BMI</th><th>heartRate</th><th>glucose</th><th>TenYearCHD</th></tr><tr><th>1</th><td>1</td><td>39</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>195</td><td>106</td><td>70</td><td>26.97</td><td>80</td><td>77</td><td>0</td></tr><tr><th>2</th><td>0</td><td>46</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>121</td><td>81</td><td>28.73</td><td>95</td><td>76</td><td>0</td></tr><tr><th>3</th><td>1</td><td>48</td><td>1</td><td>1</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>245</td><td>127.5</td><td>80</td><td>25.34</td><td>75</td><td>70</td><td>0</td></tr><tr><th>4</th><td>0</td><td>61</td><td>3</td><td>1</td><td>30</td><td>0</td><td>0</td><td>1</td><td>0</td><td>225</td><td>150</td><td>95</td><td>28.58</td><td>65</td><td>103</td><td>1</td></tr><tr><th>5</th><td>0</td><td>46</td><td>3</td><td>1</td><td>23</td><td>0</td><td>0</td><td>0</td><td>0</td><td>285</td><td>130</td><td>84</td><td>23.1</td><td>85</td><td>85</td><td>0</td></tr><tr><th>6</th><td>0</td><td>43</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>228</td><td>180</td><td>110</td><td>30.3</td><td>77</td><td>99</td><td>0</td></tr><tr><th>7</th><td>0</td><td>63</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>205</td><td>138</td><td>71</td><td>33.11</td><td>60</td><td>85</td><td>1</td></tr><tr><th>8</th><td>0</td><td>45</td><td>2</td><td>1</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>313</td><td>100</td><td>71</td><td>21.68</td><td>79</td><td>78</td><td>0</td></tr><tr><th>9</th><td>1</td><td>52</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>260</td><td>141.5</td><td>89</td><td>26.36</td><td>76</td><td>79</td><td>0</td></tr><tr><th>10</th><td>1</td><td>43</td><td>1</td><td>1</td><td>30</td><td>0</td><td>0</td><td>1</td><td>0</td><td>225</td><td>162</td><td>107</td><td>23.61</td><td>93</td><td>88</td><td>0</td></tr><tr><th>11</th><td>0</td><td>50</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>254</td><td>133</td><td>76</td><td>22.91</td><td>75</td><td>76</td><td>0</td></tr><tr><th>12</th><td>0</td><td>43</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>247</td><td>131</td><td>88</td><td>27.64</td><td>72</td><td>61</td><td>0</td></tr><tr><th>13</th><td>1</td><td>46</td><td>1</td><td>1</td><td>15</td><td>0</td><td>0</td><td>1</td><td>0</td><td>294</td><td>142</td><td>94</td><td>26.31</td><td>98</td><td>64</td><td>0</td></tr><tr><th>14</th><td>0</td><td>41</td><td>3</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>332</td><td>124</td><td>88</td><td>31.31</td><td>65</td><td>84</td><td>0</td></tr><tr><th>15</th><td>0</td><td>39</td><td>2</td><td>1</td><td>9</td><td>0</td><td>0</td><td>0</td><td>0</td><td>226</td><td>114</td><td>64</td><td>22.35</td><td>85</td><td>NA</td><td>0</td></tr><tr><th>16</th><td>0</td><td>38</td><td>2</td><td>1</td><td>20</td><td>0</td><td>0</td><td>1</td><td>0</td><td>221</td><td>140</td><td>90</td><td>21.35</td><td>95</td><td>70</td><td>1</td></tr><tr><th>17</th><td>1</td><td>48</td><td>3</td><td>1</td><td>10</td><td>0</td><td>0</td><td>1</td><td>0</td><td>232</td><td>138</td><td>90</td><td>22.37</td><td>64</td><td>72</td><td>0</td></tr><tr><th>18</th><td>0</td><td>46</td><td>2</td><td>1</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>291</td><td>112</td><td>78</td><td>23.38</td><td>80</td><td>89</td><td>1</td></tr><tr><th>19</th><td>0</td><td>38</td><td>2</td><td>1</td><td>5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>195</td><td>122</td><td>84.5</td><td>23.24</td><td>75</td><td>78</td><td>0</td></tr><tr><th>20</th><td>1</td><td>41</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>195</td><td>139</td><td>88</td><td>26.88</td><td>85</td><td>65</td><td>0</td></tr></table>
+                </div>
+                <div class="m-pane pane-out" id="pane-out" role="tabpanel" aria-labelledby="tab-out" tabindex="0" hidden>
+                  <pre>==============================================================================
+0. SAMPLE
+==============================================================================
+Rows: 4240   Columns: 16
+
+==============================================================================
+1. SIMPLE LINEAR REGRESSION: systolic BP ~ age
+==============================================================================
+
+Call:
+lm(formula = sysBP ~ age, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-57.382 -13.627  -2.627  10.182 148.042 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 82.14199    1.82570   44.99   &lt;2e-16 ***
+age          1.01276    0.03628   27.91   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 20.25 on 4238 degrees of freedom
+Multiple R-squared:  0.1553,	Adjusted R-squared:  0.1551 
+F-statistic:   779 on 1 and 4238 DF,  p-value: &lt; 2.2e-16
+
+
+Equation: sysBP = 82.142 + 1.0128 * age
+n = 4240, R2 = 0.1553, adj R2 = 0.1551, residual SE = 20.253 mmHg
+95% CI for slope: [0.9416, 1.0839]
+
+==============================================================================
+2. MULTIPLE LINEAR REGRESSION: sysBP ~ age + male + BMI + heartRate + totChol
+==============================================================================
+
+Call:
+lm(formula = sysBP ~ age + male + BMI + heartRate + totChol, 
+    data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-64.300 -12.481  -2.465   9.921 125.865 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 22.531293   3.091221   7.289 3.72e-13 ***
+age          0.864168   0.035665  24.230  &lt; 2e-16 ***
+male        -1.128182   0.596856  -1.890   0.0588 .  
+BMI          1.425642   0.072987  19.533  &lt; 2e-16 ***
+heartRate    0.290839   0.024571  11.837  &lt; 2e-16 ***
+totChol      0.036349   0.006852   5.305 1.19e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 18.84 on 4165 degrees of freedom
+  (69 observations deleted due to missingness)
+Multiple R-squared:  0.2642,	Adjusted R-squared:  0.2633 
+F-statistic: 299.1 on 5 and 4165 DF,  p-value: &lt; 2.2e-16
+
+
+n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
+                </div>
               </div>
             </div>
           </div>
@@ -337,7 +400,7 @@ try {
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=fe64966f755b" defer></script>
+<script src="/assets/landing.js?v=02e6c5333ae6" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

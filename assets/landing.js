@@ -140,12 +140,108 @@
     }, 1900);
   }
 
+  // The script preview writes framingham_linear.R line by line, presses Run,
+  // and streams the real console output. Its tabs work like an editor's.
+  var script = document.getElementById("preview-script");
+  var scriptTimers = [];
+  function clearScript() {
+    scriptTimers.forEach(clearTimeout);
+    scriptTimers = [];
+  }
+  function takeOver() {
+    auto = false;
+    stopTimer();
+  }
+  if (script) {
+    var tabs = [].slice.call(script.querySelectorAll('[role="tab"]'));
+    var codeLines = [].slice.call(script.querySelectorAll(".m-code .cl"));
+    var outLines = [].slice.call(script.querySelectorAll(".m-console .ol"));
+    var runBtn = script.querySelector(".run-btn");
+    var consoleBox = script.querySelector(".m-console pre");
+    var later = function (ms, fn) { scriptTimers.push(setTimeout(fn, ms)); };
+
+    var selectTab = function (tab, focus) {
+      tabs.forEach(function (other) {
+        var on = other === tab;
+        other.setAttribute("aria-selected", on ? "true" : "false");
+        other.tabIndex = on ? 0 : -1;
+        document.getElementById(other.getAttribute("aria-controls")).hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+
+    var run = function () {
+      runBtn.classList.add("press");
+      later(130, function () { runBtn.classList.remove("press"); });
+      if (reduce) {
+        script.setAttribute("data-run", "done");
+        return;
+      }
+      script.setAttribute("data-run", "busy");
+      consoleBox.scrollTop = 0;
+      outLines.forEach(function (line) { line.classList.remove("on"); });
+      outLines.forEach(function (line, n) {
+        later(700 + n * 55, function () {
+          line.classList.add("on");
+          var below = line.offsetTop + line.offsetHeight - consoleBox.clientHeight;
+          if (below > consoleBox.scrollTop) consoleBox.scrollTop = below + 6;
+        });
+      });
+      later(700 + outLines.length * 55 + 150, function () {
+        script.setAttribute("data-run", "done");
+      });
+    };
+
+    script.playScript = function () {
+      clearScript();
+      selectTab(tabs[0]);
+      if (reduce) return;
+      script.setAttribute("data-run", "idle");
+      script.setAttribute("data-type", "");
+      codeLines.forEach(function (line) { line.classList.remove("on", "cur"); });
+      codeLines.forEach(function (line, n) {
+        later(500 + n * 260, function () {
+          if (n) codeLines[n - 1].classList.remove("cur");
+          line.classList.add("on", "cur");
+        });
+      });
+      var typed = 500 + codeLines.length * 260;
+      later(typed + 350, function () {
+        codeLines[codeLines.length - 1].classList.remove("cur");
+        run();
+      });
+    };
+
+    tabs.forEach(function (tab, n) {
+      tab.addEventListener("click", function () {
+        takeOver();
+        selectTab(tab);
+      });
+      tab.addEventListener("keydown", function (event) {
+        var step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        event.preventDefault();
+        takeOver();
+        selectTab(tabs[(n + step + tabs.length) % tabs.length], true);
+      });
+    });
+
+    runBtn.addEventListener("click", function () {
+      takeOver();
+      clearScript();
+      codeLines.forEach(function (line) { line.classList.add("on"); line.classList.remove("cur"); });
+      run();
+    });
+  }
+
   function show(step) {
     previews.forEach(function (preview) {
       preview.hidden = preview.id !== step.dataset.preview;
     });
     clearInterval(galleryTimer);
+    clearScript();
     if (inView && step.dataset.preview === "preview-ask") playDemo();
+    if (inView && step.dataset.preview === "preview-script" && script) script.playScript();
     if (inView && step.dataset.preview === "preview-results") playGallery();
     schedule();
   }
@@ -191,6 +287,7 @@
       } else {
         stopTimer();
         clearInterval(galleryTimer);
+        clearScript();
         demoTimers.forEach(clearTimeout);
       }
     }, { threshold: 0.35 }).observe(stage);
