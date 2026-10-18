@@ -81,11 +81,12 @@ input:focus-visible {
 .hero {
   position: relative;
   isolation: isolate;
+  z-index: 1;
   min-height: 890px;
   min-height: min(850px, 100svh);
   background: var(--hero-bg);
   color: #252923;
-  overflow: clip;
+  overflow: visible;
 }
 .hero-landscape {
   position: absolute;
