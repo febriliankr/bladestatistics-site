@@ -11,10 +11,10 @@
     "ogDescription": "Ask in plain language. Blade runs your analysis in R and explains the result."
   },
   "hero": {
-    "h1a": "Statistics without the ",
-    "h1em": "statistics software",
-    "h1b": ".",
-    "lede": "Ask in plain language. Blade runs your analysis in R and explains the result."
+    "h1a": "Specialized AI agents for ",
+    "h1em": "statistical analysis",
+    "h1b": "",
+    "lede": "Blade handles the heavy lifting so you can focus on discovering insights that matter."
   },
   "cta": {
     "get": "Get Blade",
@@ -284,8 +284,7 @@
     "workspaceAlt": "Illustration of two workspaces and the data, R script, and results in Study A.",
     "leadersTitle": "Trusted by leaders.",
     "leadersText": "For business decisions and research that needs clear answers.",
-    "quotePlaceholder": "Placeholder quote",
-    "febrilianQuote": "“Blade keeps the data, analysis, and R script together, so our team can follow every result.”",
-    "elvanQuote": "“A study should stay together: the data, the analysis, and the conversation behind it.”"
+    "febrilianQuote": "“Honestly, our data, analysis, and R scripts used to be all over the place. Now everything lives in Blade, so the whole team can just open it and check the results together.”",
+    "elvanQuote": "“Picking a study back up used to mean digging through files for the data and notes. With Blade it's all already there, I just continue.”"
   }
 }

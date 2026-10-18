@@ -11,10 +11,10 @@
     "ogDescription": "Pergunte com suas palavras. O Blade executa a análise em R e explica o resultado."
   },
   "hero": {
-    "h1a": "Estatística sem o ",
-    "h1em": "software de estatística",
-    "h1b": ".",
-    "lede": "Pergunte com suas palavras. O Blade executa a análise em R e explica o resultado."
+    "h1a": "Agentes de IA especializados em ",
+    "h1em": "análise estatística",
+    "h1b": "",
+    "lede": "O Blade cuida do trabalho pesado para você se concentrar nas descobertas que importam."
   },
   "cta": {
     "get": "Baixar o Blade",
@@ -284,7 +284,6 @@
     "workspaceAlt": "Ilustração de dois espaços de trabalho e dos dados, script R e resultados de Study A.",
     "leadersTitle": "A confiança de quem lidera.",
     "leadersText": "Para decisões de negócios e pesquisas que precisam de respostas claras.",
-    "quotePlaceholder": "Exemplo de depoimento",
     "febrilianQuote": "“O Blade reúne dados, análises e scripts R para que nossa equipe possa acompanhar cada resultado.”",
     "elvanQuote": "“Um estudo deve ficar junto: os dados, a análise e a conversa por trás dele.”"
   }

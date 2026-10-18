@@ -11,10 +11,10 @@
     "ogDescription": "Fragen Sie in Ihren eigenen Worten. Blade führt die Analyse in R aus und erklärt das Ergebnis."
   },
   "hero": {
-    "h1a": "Statistik ohne ",
-    "h1em": "Statistiksoftware",
-    "h1b": ".",
-    "lede": "Fragen Sie in Ihren eigenen Worten. Blade führt die Analyse in R aus und erklärt das Ergebnis."
+    "h1a": "Spezialisierte KI-Agenten für ",
+    "h1em": "statistische Analysen",
+    "h1b": "",
+    "lede": "Blade übernimmt die schwere Arbeit, damit Sie sich auf die Erkenntnisse konzentrieren können, die zählen."
   },
   "cta": {
     "get": "Blade holen",
@@ -284,7 +284,6 @@
     "workspaceAlt": "Illustration zweier Arbeitsbereiche sowie der Daten, des R-Skripts und der Ergebnisse in Study A.",
     "leadersTitle": "Führungskräfte vertrauen uns.",
     "leadersText": "Für Geschäftsentscheidungen und Forschung, die klare Antworten brauchen.",
-    "quotePlaceholder": "Beispielzitat",
     "febrilianQuote": "„Blade hält Daten, Analyse und R-Skript zusammen, damit unser Team jedes Ergebnis nachvollziehen kann.“",
     "elvanQuote": "„Eine Studie sollte zusammenbleiben: die Daten, die Analyse und die Gespräche dahinter.“"
   }

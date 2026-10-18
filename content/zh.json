@@ -11,10 +11,10 @@
     "ogDescription": "用自己的话提问。Blade 在 R 中运行分析，并解释结果。"
   },
   "hero": {
-    "h1a": "不用",
-    "h1em": "统计软件",
-    "h1b": "，也能做统计。",
-    "lede": "用自己的话提问。Blade 在 R 中运行分析，并解释结果。"
+    "h1a": "专为",
+    "h1em": "统计分析",
+    "h1b": "打造的 AI 智能体",
+    "lede": "繁重的工作交给 Blade，你可以专注于发现真正重要的洞见。"
   },
   "cta": {
     "get": "获取 Blade",
@@ -284,7 +284,6 @@
     "workspaceAlt": "两个工作区的示意图，展示 Study A 中的数据、R 脚本和结果。",
     "leadersTitle": "深受领导者信赖。",
     "leadersText": "为商业决策和研究，找到清晰的答案。",
-    "quotePlaceholder": "示例评价",
     "febrilianQuote": "“Blade 将数据、分析和 R 脚本保存在一起，让团队能够追溯每个结果。”",
     "elvanQuote": "“一项研究应该完整保留：数据、分析，以及背后的讨论。”"
   }
