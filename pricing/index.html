@@ -10,7 +10,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bladestatistics.com/pricing" />
 <meta property="og:title" content="Blade Free and Pro pricing" />
-<meta property="og:description" content="Start free, then get a month of unlimited prompts for Rp299.000 when you need it." />
+<meta property="og:description" content="Two prompts a day for free, or a month of unlimited prompts for Rp299.000." />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="color-scheme" content="light" />
 <meta name="theme-color" content="#f8f7f3" />
@@ -30,10 +30,10 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /></noscript>
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=bdd615234285" />
+<link rel="stylesheet" href="/assets/landing.css?v=c46d74b306a0" />
 <style>
   /* Pricing reuses the homepage system (landing.css): the daylight landscape,
-     sage-green pills, and warm panels. Only page-specific parts live here. */
+     logo-orange buttons, and warm panels. Only page-specific parts live here. */
   .pricing-hero { min-height: 0; }
   /* The artwork fills exactly the hero, so the hero's white fade covers its edge. */
   .pricing-hero .hero-landscape { inset: 0; height: auto; }
@@ -59,28 +59,6 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
     box-shadow: 0 18px 50px #2a35200f;
   }
   .plan.pro { border-color: #9fb08e; box-shadow: 0 22px 60px #2a35201c; }
-  .plan-label {
-    display: inline-flex;
-    align-self: flex-start;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 18px;
-    padding: 4px 12px;
-    border-radius: 100px;
-    background: #eceee6;
-    color: #4b5547;
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .plan.pro .plan-label { background: var(--green); color: #fffef9; }
-  .plan-label::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #9aa190;
-  }
-  .plan.pro .plan-label::before { background: #ef9b6d; box-shadow: 0 0 8px #ef9b6d88; }
   .plan h2 { margin: 0; font-size: 26px; letter-spacing: -0.035em; font-weight: 500; }
   .price { margin: 14px 0 6px; font-size: 40px; line-height: 1.1; font-weight: 450; letter-spacing: -0.05em; }
   .price span { color: var(--muted); font-size: 14px; letter-spacing: 0; }
@@ -125,8 +103,7 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
     display: grid;
     place-items: center;
     padding: 20px;
-    background: #1d261977;
-    backdrop-filter: blur(8px);
+    background: #1d2619a6;
   }
   .checkout-modal[hidden] { display: none; }
   .checkout-dialog {
@@ -221,18 +198,17 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
     <a class="nav-cta" href="/#get">Get Blade</a>
   </nav>
   <div class="hero-content wrap">
-    <h1>Start free. Go Pro when you need more.</h1>
-    <p class="lede">Both plans include the complete desktop app and the same local analysis tools. Pro changes prompt capacity, not where your data runs.</p>
+    <h1>Two prompts a day for free, or a month without limits.</h1>
+    <p class="lede">Both plans run the full desktop app. Your data files stay on your computer either way.</p>
   </div>
 </header>
 
 <main class="wrap">
   <div class="plans">
     <section class="plan" aria-labelledby="plan-free">
-      <span class="plan-label">Free</span>
       <h2 id="plan-free">Blade Free</h2>
       <p class="price">Rp0</p>
-      <p class="plan-summary">Enough room to try Blade on real work before paying.</p>
+      <p class="plan-summary">Enough to run one of your own datasets through Blade before you pay.</p>
       <ul class="features">
         <li>5 prompts during your first 24 hours</li>
         <li>2 prompts per day after the first day</li>
@@ -247,16 +223,15 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
     </section>
 
     <section class="plan pro" aria-labelledby="plan-pro">
-      <span class="plan-label">Pro</span>
       <h2 id="plan-pro">Blade Pro</h2>
       <p class="price">Rp299.000 <span>for one month</span></p>
-      <p class="plan-summary">Unlimited prompts for focused projects and frequent analysis.</p>
+      <p class="plan-summary">For the weeks when two prompts a day will not get the analysis done.</p>
       <ul class="features">
         <li>Unlimited prompts while Pro is active</li>
         <li>All desktop analysis tools</li>
         <li>Data files stay on your computer</li>
-        <li>Secure checkout with QRIS or bank virtual account</li>
-        <li>No automatic renewal</li>
+        <li>Pay with QRIS or a bank virtual account</li>
+        <li>One payment covers one month and never renews</li>
       </ul>
       <div class="action">
         <button class="btn purchase-btn" type="button" id="open-checkout">Get Blade Pro</button>
@@ -285,7 +260,7 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
       </div>
       <div>
         <h3>Where does payment happen?</h3>
-        <p>Xendit hosts the secure checkout and offers QRIS or supported bank virtual accounts.</p>
+        <p>On a Xendit checkout page. Pick QRIS, or a virtual account from BCA, BNI, BRI, Mandiri, or Permata.</p>
       </div>
     </div>
   </section>
@@ -429,7 +404,7 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
     var paymentMethod = selected ? selected.value : '';
     msg.hidden = true;
     btn.disabled = true;
-    btn.textContent = 'Starting secure checkout...';
+    btn.textContent = 'Opening Xendit…';
     if (typeof fbq === 'function') {
       fbq('track', 'InitiateCheckout', { value: PRICE, currency: 'IDR' });
     }

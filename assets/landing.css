@@ -6,6 +6,9 @@
   --line: #dedfd6;
   --panel: #fffefa;
   --green: #2e3c2a;
+  /* Logo orange (#ff4900) deepened just enough for AA white text. */
+  --orange: #d43b00;
+  --orange-hover: #b53200;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 * {
@@ -78,7 +81,7 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--green);
+  background: var(--orange);
   color: #fffef9;
   border: 0;
   border-radius: 100px;
@@ -93,8 +96,8 @@ h2 {
     box-shadow 0.2s;
 }
 .btn:hover {
-  background: #45563d;
-  box-shadow: 0 4px 18px #26392112;
+  background: var(--orange-hover);
+  box-shadow: 0 4px 18px #b532001f;
 }
 .wordmark {
   display: inline-flex;
@@ -177,10 +180,10 @@ h2 {
   color: #192715;
 }
 .nav-cta {
-  border: 1px solid var(--green);
+  border: 1px solid var(--orange);
   border-radius: 100px;
   text-decoration: none;
-  background: var(--green);
+  background: var(--orange);
   color: #fffef9;
   padding: 7px 20px;
   font-size: 14px;
@@ -188,7 +191,8 @@ h2 {
   transition: background 0.2s;
 }
 .nav-cta:hover {
-  background: #45563d;
+  border-color: var(--orange-hover);
+  background: var(--orange-hover);
 }
 .hero-content {
   text-align: center;
