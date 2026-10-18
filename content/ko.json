@@ -276,13 +276,16 @@
     "resultsText": "표, 그래프, 가정 검토 결과를 한곳에서 확인하세요.",
     "script": "R 스크립트 보관하기",
     "scriptText": "코드를 검토하고 다시 실행하거나 동료와 공유하세요.",
-    "middle": "R과 함께하는 AI.",
-    "middleText": "Blade가 검정 방법을 고르고 가정을 확인하며 결과를 설명합니다. 모든 수치는 R이 계산합니다.",
     "preview": "앱 화면 예시",
     "download": "macOS와 Windows 지원. 파일은 내 컴퓨터에 그대로 남습니다.",
     "install": "설치 안내",
     "workspaceTitle": "연구마다 하나의 작업 공간.",
     "workspaceText": "데이터, 대화, R 스크립트를 한곳에 보관하세요. 프로젝트를 바꿔도 이어서 작업할 수 있습니다.",
-    "workspaceAlt": "두 작업 공간과 Study A의 데이터, R 스크립트, 결과를 보여주는 예시 이미지."
+    "workspaceAlt": "두 작업 공간과 Study A의 데이터, R 스크립트, 결과를 보여주는 예시 이미지.",
+    "leadersTitle": "리더들이 신뢰합니다.",
+    "leadersText": "명확한 답이 필요한 비즈니스 의사결정과 연구를 위해.",
+    "quotePlaceholder": "예시 인용문",
+    "febrilianQuote": "“Blade는 데이터, 분석, R 스크립트를 한곳에 모아 팀이 모든 결과를 확인할 수 있게 합니다.”",
+    "elvanQuote": "“연구의 데이터, 분석, 그리고 그 과정의 대화는 함께 보관되어야 합니다.”"
   }
 }

@@ -504,60 +504,67 @@ h2 {
   border-radius: 18px;
   background: #f2eee6;
 }
-/* Original cloud artwork forms the entire middle section. */
-.analysis-panel {
-  position: relative;
-  isolation: isolate;
-  min-height: 640px;
+.leaders-section {
+  padding-block: 90px;
+  background: #f5f4ed;
+}
+.leaders-intro {
+  max-width: 580px;
+  margin-bottom: 45px;
+}
+.leaders-intro p {
+  font-size: 17px;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+.leaders-grid {
   display: grid;
-  place-items: center;
-  overflow: hidden;
-  color: #fffef7;
-  text-align: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
-.panel-art {
-  position: absolute;
-  inset: 0;
-  z-index: -3;
+.leader-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 32px;
+  background: #fffefa;
+  border: 1px solid #e2e2d8;
+  border-radius: 18px;
 }
-.panel-art img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.leader-company {
+  margin: 0 0 26px;
+  font-size: 35px;
+  font-weight: 550;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
 }
-.analysis-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background: #143b4b40;
-  pointer-events: none;
+.leader-quote {
+  flex: 1;
+  margin-bottom: 32px;
 }
-.analysis-copy {
-  padding-block: 110px;
+.quote-status {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--muted);
 }
-.analysis-copy h2 {
-  font-size: clamp(34px, 3.8vw, 50px);
-  max-width: 740px;
-  margin-inline: auto;
-}
-.analysis-copy p {
-  max-width: 530px;
-  margin: 0 auto 34px;
-  font-size: 18px;
-  line-height: 1.75;
-  color: #fffdf0f0;
+.leader-quote blockquote {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
   text-wrap: pretty;
 }
-.light-btn {
-  background: #fffef8;
-  color: #243426;
-  padding-inline: 25px;
+.leader-profile h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 550;
+  line-height: 1.4;
 }
-.light-btn:hover {
-  background: #f1f1e7;
+.leader-role {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
 }
 /* Download controls sit inside the original lakeside footer artwork. */
 .landscape-footer {
@@ -934,6 +941,26 @@ h2 {
   .workspace-preview img {
     border-radius: 15px;
   }
+  .leaders-section {
+    padding-block: 60px;
+  }
+  .leaders-intro {
+    margin-bottom: 30px;
+  }
+  .leaders-intro p {
+    font-size: 15px;
+  }
+  .leaders-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .leader-quote blockquote {
+    font-size: 21px;
+  }
+  .leader-profile {
+    padding: 26px;
+    border-radius: 15px;
+  }
   .preview-panels {
     border-radius: 15px;
   }
@@ -962,24 +989,6 @@ h2 {
     margin-inline-start: 34px;
     line-height: 1.75;
     margin-top: 10px;
-  }
-  .analysis-panel {
-    min-height: 525px;
-  }
-  .analysis-copy {
-    padding-block: 90px;
-  }
-  .analysis-copy h2 {
-    font-size: 34px;
-    max-width: 330px;
-  }
-  .analysis-copy p {
-    font-size: 16px;
-    max-width: 310px;
-    margin-bottom: 29px;
-  }
-  .panel-art img {
-    object-position: 50% center;
   }
   .landscape-footer {
     padding-top: 75px;

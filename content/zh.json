@@ -276,13 +276,16 @@
     "resultsText": "在同一处查看表格、图形和假设检验。",
     "script": "保留 R 脚本",
     "scriptText": "检查代码、再次运行，或分享给同事。",
-    "middle": "与 R 一起工作的 AI。",
-    "middleText": "Blade 选择检验方法、检查假设并解释结果。每个数值都由 R 计算。",
     "preview": "应用界面示意图",
     "download": "支持 macOS 和 Windows。文件保留在你的电脑上。",
     "install": "安装说明",
     "workspaceTitle": "每项研究，都有自己的工作区。",
     "workspaceText": "数据、对话和 R 脚本集中保存。切换项目，随时接着做。",
-    "workspaceAlt": "两个工作区的示意图，展示 Study A 中的数据、R 脚本和结果。"
+    "workspaceAlt": "两个工作区的示意图，展示 Study A 中的数据、R 脚本和结果。",
+    "leadersTitle": "深受领导者信赖。",
+    "leadersText": "为商业决策和研究，找到清晰的答案。",
+    "quotePlaceholder": "示例评价",
+    "febrilianQuote": "“Blade 将数据、分析和 R 脚本保存在一起，让团队能够追溯每个结果。”",
+    "elvanQuote": "“一项研究应该完整保留：数据、分析，以及背后的讨论。”"
   }
 }

@@ -105,10 +105,25 @@ try {
     </div>
   </section>
 
-  <section class="analysis-panel" aria-labelledby="analysis-title">
-    <picture class="panel-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/analysis-clouds-mobile.webp" /><img src="/assets/analysis-clouds.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
-    <div class="analysis-copy wrap reveal"><h2 id="analysis-title">{{simple.middle}}</h2><p>{{simple.middleText}}</p><a class="btn light-btn" href="#get">{{cta.get}}</a></div>
+  <section class="leaders-section" id="leaders" aria-labelledby="leaders-title">
+    <div class="wrap">
+      <div class="leaders-intro reveal"><h2 id="leaders-title">{{simple.leadersTitle}}</h2><p>{{simple.leadersText}}</p></div>
+      <div class="leaders-grid reveal">
+        <article class="leader-profile" aria-labelledby="leader-febrilian">
+          <p class="leader-company">Skala</p>
+          <div class="leader-quote"><p class="quote-status">{{simple.quotePlaceholder}}</p><blockquote>{{simple.febrilianQuote}}</blockquote></div>
+          <div><h3 id="leader-febrilian">Febrilian</h3><p class="leader-role">CEO, Skala</p></div>
+        </article>
+        <article class="leader-profile" aria-labelledby="leader-elvan">
+          <p class="leader-company">Risetku</p>
+          <div class="leader-quote"><p class="quote-status">{{simple.quotePlaceholder}}</p><blockquote>{{simple.elvanQuote}}</blockquote></div>
+          <div><h3 id="leader-elvan">Elvan Wiyarta</h3><p class="leader-role">CEO, Risetku</p></div>
+        </article>
+      </div>
+    </div>
   </section>
+
+
 </main>
 
 <footer class="landscape-footer" id="get">

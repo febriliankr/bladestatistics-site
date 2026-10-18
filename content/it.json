@@ -276,13 +276,16 @@
     "resultsText": "Trova tabelle, grafici e verifiche delle assunzioni in un unico posto.",
     "script": "Conserva lo script R",
     "scriptText": "Controlla il codice, eseguilo di nuovo o condividilo con un collega.",
-    "middle": "IA che lavora con R.",
-    "middleText": "Blade sceglie un test, verifica le assunzioni e spiega i risultati. R calcola ogni numero.",
     "preview": "Anteprime illustrative dell’app",
     "download": "macOS e Windows. I file restano sul tuo computer.",
     "install": "Note di installazione",
     "workspaceTitle": "Uno spazio per ogni studio.",
     "workspaceText": "Tieni insieme dati, conversazioni e script R. Cambia progetto senza perdere il filo.",
-    "workspaceAlt": "Illustrazione di due spazi di lavoro con dati, script R e risultati di Study A."
+    "workspaceAlt": "Illustrazione di due spazi di lavoro con dati, script R e risultati di Study A.",
+    "leadersTitle": "La fiducia di chi guida.",
+    "leadersText": "Per decisioni aziendali e ricerche che richiedono risposte chiare.",
+    "quotePlaceholder": "Citazione di esempio",
+    "febrilianQuote": "“Blade riunisce dati, analisi e script R, così il nostro team può seguire ogni risultato.”",
+    "elvanQuote": "“Uno studio dovrebbe restare unito: i dati, l’analisi e la conversazione che lo accompagna.”"
   }
 }

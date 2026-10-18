@@ -276,13 +276,16 @@
     "resultsText": "Tabellen, Diagramme und Voraussetzungen an einem Ort prüfen.",
     "script": "Das R-Skript behalten",
     "scriptText": "Prüfen Sie den Code, führen Sie ihn erneut aus oder teilen Sie ihn mit Kollegen.",
-    "middle": "KI, die mit R arbeitet.",
-    "middleText": "Blade wählt einen Test, prüft Voraussetzungen und erklärt Ergebnisse. R berechnet jeden Wert.",
     "preview": "Illustrative App-Vorschauen",
     "download": "macOS und Windows. Ihre Dateien bleiben auf Ihrem Computer.",
     "install": "Installationshinweise",
     "workspaceTitle": "Ein Arbeitsbereich für jede Studie.",
     "workspaceText": "Daten, Gespräche und R-Skripte bleiben zusammen. Wechseln Sie Projekte, ohne den Faden zu verlieren.",
-    "workspaceAlt": "Illustration zweier Arbeitsbereiche sowie der Daten, des R-Skripts und der Ergebnisse in Study A."
+    "workspaceAlt": "Illustration zweier Arbeitsbereiche sowie der Daten, des R-Skripts und der Ergebnisse in Study A.",
+    "leadersTitle": "Führungskräfte vertrauen uns.",
+    "leadersText": "Für Geschäftsentscheidungen und Forschung, die klare Antworten brauchen.",
+    "quotePlaceholder": "Beispielzitat",
+    "febrilianQuote": "„Blade hält Daten, Analyse und R-Skript zusammen, damit unser Team jedes Ergebnis nachvollziehen kann.“",
+    "elvanQuote": "„Eine Studie sollte zusammenbleiben: die Daten, die Analyse und die Gespräche dahinter.“"
   }
 }

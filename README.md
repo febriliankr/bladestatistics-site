@@ -41,7 +41,7 @@ per session. Choosing from the switcher in the top bar stores the pick in
 
 ## Page structure
 
-The homepage has a hero, an interactive app preview, a compact workspace section, an illustrated R section, and a download footer. All thirteen languages use this structure. Short page copy lives under `simple` in each content file.
+The homepage has a hero, an interactive app preview, a compact workspace section, a leadership section, and a download footer. All thirteen languages use this structure. Short page copy lives under `simple` in each content file.
 
 `assets/landing.css` styles the homepage. Pricing and legal pages retain `src/_css.html`. The build adds a hash of the homepage CSS and JavaScript to both asset URLs.
 
@@ -61,3 +61,5 @@ Download links point at `dl.skalatec.com` (Cloudflare R2), the same builds the
 workflows page at blade.skalatec.com serves. A new desktop version means editing
 the four `.dl a` hrefs and sizes in `src/shell.html`, then the version in each
 `content/*.json` under `get.h2`.
+
+Leadership cards use explicitly labelled placeholder quotes. Replace the `simple.febrilianQuote` and `simple.elvanQuote` fields in each locale when final wording is supplied.

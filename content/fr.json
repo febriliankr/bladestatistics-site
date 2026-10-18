@@ -276,13 +276,16 @@
     "resultsText": "Retrouvez tableaux, graphiques et vérifications des hypothèses au même endroit.",
     "script": "Conservez le script R",
     "scriptText": "Vérifiez le code, relancez-le ou partagez-le avec un collègue.",
-    "middle": "Une IA qui travaille avec R.",
-    "middleText": "Blade choisit un test, vérifie les hypothèses et explique les résultats. R calcule chaque valeur.",
     "preview": "Aperçus illustratifs de l’application",
     "download": "macOS et Windows. Vos fichiers restent sur votre ordinateur.",
     "install": "Notes d’installation",
     "workspaceTitle": "Un espace pour chaque étude.",
     "workspaceText": "Gardez vos données, conversations et scripts R ensemble. Changez de projet sans perdre le fil.",
-    "workspaceAlt": "Illustration de deux espaces de travail et des données, du script R et des résultats de Study A."
+    "workspaceAlt": "Illustration de deux espaces de travail et des données, du script R et des résultats de Study A.",
+    "leadersTitle": "La confiance des dirigeants.",
+    "leadersText": "Pour les décisions et les recherches qui exigent des réponses claires.",
+    "quotePlaceholder": "Exemple de témoignage",
+    "febrilianQuote": "« Blade réunit les données, l’analyse et le script R pour que notre équipe puisse suivre chaque résultat. »",
+    "elvanQuote": "« Une étude doit rester complète : les données, l’analyse et les échanges qui l’accompagnent. »"
   }
 }

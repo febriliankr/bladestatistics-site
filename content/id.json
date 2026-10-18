@@ -276,13 +276,16 @@
     "resultsText": "Lihat tabel, grafik, dan pemeriksaan asumsi di satu tempat.",
     "script": "Simpan skrip R",
     "scriptText": "Periksa kodenya, jalankan kembali, atau bagikan dengan rekan.",
-    "middle": "AI yang bekerja dengan R.",
-    "middleText": "Blade memilih uji, memeriksa asumsi, dan menjelaskan hasil. R menghitung setiap angka.",
     "preview": "Ilustrasi pratinjau aplikasi",
     "download": "macOS dan Windows. File tetap di komputer Anda.",
     "install": "Catatan instalasi",
     "workspaceTitle": "Satu ruang kerja untuk setiap studi.",
     "workspaceText": "Simpan data, percakapan, dan skrip R bersama. Pindah proyek tanpa kehilangan progres.",
-    "workspaceAlt": "Ilustrasi dua ruang kerja serta data, skrip R, dan hasil dalam Study A."
+    "workspaceAlt": "Ilustrasi dua ruang kerja serta data, skrip R, dan hasil dalam Study A.",
+    "leadersTitle": "Dipercaya para pemimpin.",
+    "leadersText": "Untuk keputusan bisnis dan riset yang membutuhkan jawaban jelas.",
+    "quotePlaceholder": "Contoh kutipan",
+    "febrilianQuote": "“Blade menyatukan data, analisis, dan skrip R, sehingga tim kami bisa menelusuri setiap hasil.”",
+    "elvanQuote": "“Sebuah studi sebaiknya tetap utuh: data, analisis, dan percakapan di baliknya.”"
   }
 }

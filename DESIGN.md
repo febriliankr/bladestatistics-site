@@ -1,6 +1,6 @@
 # Landing page design
 
-The shorter statistics homepage follows the section layouts of [Duna](https://duna.com/). It uses a landscape hero, one interactive product preview, a compact workspace preview, a full-width illustrated middle section, and an image-based download footer.
+The shorter statistics homepage follows the section layouts of [Duna](https://duna.com/). It uses a landscape hero, one interactive product preview, a compact workspace preview, a compact leadership section, and an image-based download footer.
 
 All new artwork was created with the built-in GPT Image tool. No Duna images or source code were copied. The app panels are labelled as illustrative previews.
 
@@ -9,7 +9,7 @@ All new artwork was created with the built-in GPT Image tool. No Duna images or 
 | Use              | Workspace paths                                                     |
 | ---------------- | ------------------------------------------------------------------- |
 | Hero             | `assets/daylight-lake.webp`, `assets/daylight-lake-mobile.webp`     |
-| Middle section   | `assets/analysis-clouds.webp`, `assets/analysis-clouds-mobile.webp` |
+| Archived middle section | `assets/analysis-clouds.webp`, `assets/analysis-clouds-mobile.webp` |
 | Footer           | `assets/footer-garden.webp`, `assets/footer-garden-mobile.webp`     |
 | Data preview     | `assets/preview-ask.webp`                                           |
 | Results preview  | `assets/preview-results.webp`                                       |
@@ -60,3 +60,7 @@ All thirteen locales use short translated copy. The full content remains availab
 ## Build and deployment
 
 Run `python3 build.py`, commit the source and generated pages, then push `master`. GitHub Pages serves https://bladestatistics.com/.
+
+## Leadership section
+
+The two cards use the names and titles supplied by the site owner: Febrilian, CEO of Skala, and Elvan Wiyarta, CEO of Risetku. Their sample quotes are visibly labelled as placeholders in every locale. They are not presented as verified testimonials. The cloud section was removed from the homepage; its generated artwork is retained in the repository.

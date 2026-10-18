@@ -276,13 +276,16 @@
     "resultsText": "Get tables, plots, and assumption checks in one place.",
     "script": "Keep the R script",
     "scriptText": "Review the code, run it again, or share it with a colleague.",
-    "middle": "AI that works in R.",
-    "middleText": "Blade chooses a test, checks assumptions, and explains the results. R calculates every number.",
     "preview": "Illustrative app previews",
     "download": "macOS and Windows. Your files stay on your computer.",
     "install": "Installation notes",
     "workspaceTitle": "A workspace for each study.",
     "workspaceText": "Keep data, conversations, and R scripts together. Switch projects without losing your place.",
-    "workspaceAlt": "Illustration of two workspaces and the data, R script, and results in Study A."
+    "workspaceAlt": "Illustration of two workspaces and the data, R script, and results in Study A.",
+    "leadersTitle": "Trusted by leaders.",
+    "leadersText": "For business decisions and research that needs clear answers.",
+    "quotePlaceholder": "Placeholder quote",
+    "febrilianQuote": "“Blade keeps the data, analysis, and R script together, so our team can follow every result.”",
+    "elvanQuote": "“A study should stay together: the data, the analysis, and the conversation behind it.”"
   }
 }

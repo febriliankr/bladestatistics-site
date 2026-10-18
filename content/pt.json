@@ -276,13 +276,16 @@
     "resultsText": "Veja tabelas, gráficos e verificações de pressupostos em um só lugar.",
     "script": "Guarde o script R",
     "scriptText": "Revise o código, execute novamente ou compartilhe com um colega.",
-    "middle": "IA que trabalha com R.",
-    "middleText": "O Blade escolhe um teste, verifica pressupostos e explica os resultados. O R calcula cada número.",
     "preview": "Prévias ilustrativas do aplicativo",
     "download": "macOS e Windows. Seus arquivos ficam no seu computador.",
     "install": "Notas de instalação",
     "workspaceTitle": "Um espaço para cada estudo.",
     "workspaceText": "Mantenha dados, conversas e scripts R juntos. Troque de projeto sem perder o fio.",
-    "workspaceAlt": "Ilustração de dois espaços de trabalho e dos dados, script R e resultados de Study A."
+    "workspaceAlt": "Ilustração de dois espaços de trabalho e dos dados, script R e resultados de Study A.",
+    "leadersTitle": "A confiança de quem lidera.",
+    "leadersText": "Para decisões de negócios e pesquisas que precisam de respostas claras.",
+    "quotePlaceholder": "Exemplo de depoimento",
+    "febrilianQuote": "“O Blade reúne dados, análises e scripts R para que nossa equipe possa acompanhar cada resultado.”",
+    "elvanQuote": "“Um estudo deve ficar junto: os dados, a análise e a conversa por trás dele.”"
   }
 }
