@@ -8,19 +8,56 @@
   var auto = !reduce;
   var inView = false;
   var advanceTimer = null;
+  var remaining = 0;
+  var startedAt = 0;
+  var held = false;
   var demoTimers = [];
 
   function openStep() {
     return steps.filter(function (step) { return step.open; })[0] || steps[0];
   }
 
-  function schedule() {
+  function advance() {
+    var next = steps[(steps.indexOf(openStep()) + 1) % steps.length];
+    next.open = true;
+  }
+
+  function stopTimer() {
     clearTimeout(advanceTimer);
-    if (!auto || !inView || held) return;
-    advanceTimer = setTimeout(function () {
-      var next = steps[(steps.indexOf(openStep()) + 1) % steps.length];
-      next.open = true;
-    }, ADVANCE[openStep().dataset.preview] || 10000);
+    steps.forEach(function (step) { step.classList.remove("timing", "held"); });
+  }
+
+  function runTimer() {
+    startedAt = Date.now();
+    advanceTimer = setTimeout(advance, remaining);
+  }
+
+  // The open step carries a bar that fills until the next slide; it pauses
+  // with the slideshow and resumes from where it stopped.
+  function schedule() {
+    stopTimer();
+    if (!auto || !inView) return;
+    var step = openStep();
+    remaining = ADVANCE[step.dataset.preview] || 10000;
+    step.style.setProperty("--step-duration", remaining + "ms");
+    void step.offsetWidth;
+    step.classList.add("timing");
+    if (held) step.classList.add("held");
+    else runTimer();
+  }
+
+  function hold(on) {
+    if (on === held) return;
+    held = on;
+    var step = openStep();
+    if (!step.classList.contains("timing")) return;
+    step.classList.toggle("held", on);
+    if (on) {
+      clearTimeout(advanceTimer);
+      remaining = Math.max(0, remaining - (Date.now() - startedAt));
+    } else {
+      runTimer();
+    }
   }
 
   // The Ask preview plays a short session: the question types out, the
@@ -77,15 +114,47 @@
     at(typed + 4200, function () { demo.setAttribute("data-stage", "done"); });
   }
 
+  // The results preview steps through the figures R saved, about every two
+  // seconds, so all five pass within one slide.
+  var gallery = document.getElementById("preview-results");
+  var galleryTimer = null;
+  function playGallery() {
+    clearInterval(galleryTimer);
+    if (!gallery) return;
+    var shots = [].slice.call(gallery.querySelectorAll(".shot-stack img"));
+    var thumbs = [].slice.call(gallery.querySelectorAll(".m-strip span"));
+    var name = gallery.querySelector(".shot-name");
+    var size = gallery.querySelector(".shot-size");
+    var index = 0;
+    function select(n) {
+      index = n;
+      shots.forEach(function (img, k) { img.classList.toggle("on", k === n); });
+      thumbs.forEach(function (thumb, k) { thumb.classList.toggle("on", k === n); });
+      name.textContent = thumbs[n].getAttribute("data-name");
+      size.textContent = thumbs[n].getAttribute("data-size");
+    }
+    select(0);
+    if (reduce) return;
+    galleryTimer = setInterval(function () {
+      if (!held) select((index + 1) % shots.length);
+    }, 1900);
+  }
+
   function show(step) {
     previews.forEach(function (preview) {
       preview.hidden = preview.id !== step.dataset.preview;
     });
+    clearInterval(galleryTimer);
     if (inView && step.dataset.preview === "preview-ask") playDemo();
+    if (inView && step.dataset.preview === "preview-results") playGallery();
     schedule();
   }
 
   steps.forEach(function (step) {
+    var bar = document.createElement("span");
+    bar.className = "step-timer";
+    bar.setAttribute("aria-hidden", "true");
+    step.appendChild(bar);
     step.addEventListener("toggle", function () {
       if (!step.open) return;
       steps.forEach(function (other) {
@@ -96,17 +165,11 @@
     // A visitor choosing a step takes over from the slideshow.
     step.querySelector("summary").addEventListener("click", function () {
       auto = false;
-      clearTimeout(advanceTimer);
+      stopTimer();
     });
   });
 
   // Hold the slideshow while someone is pointing at or tabbing through it.
-  var held = false;
-  function hold(on) {
-    held = on;
-    if (on) clearTimeout(advanceTimer);
-    else schedule();
-  }
   if (stage) {
     stage.addEventListener("mouseenter", function () { hold(true); });
     stage.addEventListener("mouseleave", function () { hold(false); });
@@ -126,7 +189,8 @@
       if (inView) {
         show(openStep());
       } else {
-        clearTimeout(advanceTimer);
+        stopTimer();
+        clearInterval(galleryTimer);
         demoTimers.forEach(clearTimeout);
       }
     }, { threshold: 0.35 }).observe(stage);

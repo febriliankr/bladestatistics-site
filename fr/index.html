@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=2faa1ae2d79b" />
+<link rel="stylesheet" href="/assets/landing.css?v=fe64966f755b" />
 </head>
 <body>
 
@@ -141,7 +141,7 @@ try {
 <div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="Interrogez vos données">
             <div class="mw">
               <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
-              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
               <div class="mw-body">
                 <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>4,240 rows · 16 columns</span></div>
                 <div class="ask-data">
@@ -181,22 +181,34 @@ try {
           <div class="app-preview mock" id="preview-results" role="img" aria-label="Lisez les résultats" hidden>
             <div class="mw">
               <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
-              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
               <div class="mw-body">
-                <p class="m-msg">Age and systolic BP track most closely with ten-year CHD.</p>
+                <p class="m-msg">Done. Five figures from the Framingham data are in Study A.</p>
                 <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>Rscript framingham_analysis.R</span><small>Done</small></div>
                 <div class="m-shot">
-                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>R_fig3_correlation.png</b><span>PNG · 258 KB</span></p>
-                  <img src="/assets/r-correlation.webp" alt="" width="1000" height="800" loading="lazy" />
+                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b class="shot-name">R_fig4_age_sex.png</b><span class="shot-size">PNG · 76 KB</span></p>
+                  <div class="shot-stack">
+                    <img src="/assets/r-fig4-age-sex.webp" alt="" width="1000" height="625" loading="lazy" class="on" />
+                    <img src="/assets/r-fig3-correlation.webp" alt="" width="1000" height="800" loading="lazy" />
+                    <img src="/assets/r-fig6-feature-importance.webp" alt="" width="1000" height="667" loading="lazy" />
+                    <img src="/assets/r-fig5-bp-bmi.webp" alt="" width="1000" height="417" loading="lazy" />
+                    <img src="/assets/r-stat1-roc-threshold.webp" alt="" width="1000" height="462" loading="lazy" />
+                  </div>
                 </div>
-                <div class="m-thumb"><img src="/assets/r-framingham-analysis.webp" alt="" width="1000" height="665" loading="lazy" /><b>framingham_analysis.png</b><span>PNG · 360 KB</span></div>
+                <div class="m-strip">
+                  <span data-name="R_fig4_age_sex.png" data-size="PNG · 76 KB" class="on"><img src="/assets/r-fig4-age-sex.webp" alt="" width="1000" height="625" loading="lazy" /></span>
+                  <span data-name="R_fig3_correlation.png" data-size="PNG · 258 KB"><img src="/assets/r-fig3-correlation.webp" alt="" width="1000" height="800" loading="lazy" /></span>
+                  <span data-name="R_fig6_feature_importance.png" data-size="PNG · 88 KB"><img src="/assets/r-fig6-feature-importance.webp" alt="" width="1000" height="667" loading="lazy" /></span>
+                  <span data-name="R_fig5_bp_bmi.png" data-size="PNG · 86 KB"><img src="/assets/r-fig5-bp-bmi.webp" alt="" width="1000" height="417" loading="lazy" /></span>
+                  <span data-name="R_stat1_roc_threshold.png" data-size="PNG · 191 KB"><img src="/assets/r-stat1-roc-threshold.webp" alt="" width="1000" height="462" loading="lazy" /></span>
+                </div>
               </div>
             </div>
           </div>
           <div class="app-preview mock" id="preview-script" role="img" aria-label="Conservez le script R" hidden>
             <div class="mw">
               <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
-              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
               <div class="mw-body">
                 <div class="m-tabs"><span class="on">framingham_analysis.R</span><span>framingham.csv</span></div>
                 <pre class="m-code"><code><i>1</i><span class="f">library</span>(ggplot2)
@@ -254,7 +266,7 @@ try {
                 <p class="ws-session"><span>Survey reliability</span><small>3d</small></p>
               </aside>
               <div class="ws-main">
-                <div class="mw-head"><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A</span><span class="ready">Ready</span></div>
+                <div class="mw-head"><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A</span></div>
                 <div class="ws-files">
                   <p class="ws-title">Study A <span>4 files</span></p>
                   <ul>
@@ -325,7 +337,7 @@ try {
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=2faa1ae2d79b" defer></script>
+<script src="/assets/landing.js?v=fe64966f755b" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points
