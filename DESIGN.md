@@ -1,6 +1,6 @@
 # Landing page design
 
-The shorter statistics homepage follows the section layouts of [Duna](https://duna.com/). It uses a landscape hero, one interactive product preview, a full-width illustrated middle section, and an image-based download footer.
+The shorter statistics homepage follows the section layouts of [Duna](https://duna.com/). It uses a landscape hero, one interactive product preview, a compact workspace preview, a full-width illustrated middle section, and an image-based download footer.
 
 All new artwork was created with the built-in GPT Image tool. No Duna images or source code were copied. The app panels are labelled as illustrative previews.
 
@@ -13,6 +13,7 @@ All new artwork was created with the built-in GPT Image tool. No Duna images or 
 | Footer           | `assets/footer-garden.webp`, `assets/footer-garden-mobile.webp`     |
 | Data preview     | `assets/preview-ask.webp`                                           |
 | Results preview  | `assets/preview-results.webp`                                       |
+| Workspace preview | `assets/preview-workspace.webp` |
 | R script preview | `assets/preview-script.webp`                                        |
 
 The middle and footer originals are 1536 × 1024. Their mobile versions are 900 × 600. The previews are optimized to 1100 × 1100.
@@ -38,6 +39,15 @@ The middle and footer originals are 1536 × 1024. Their mobile versions are 900 
 ### script
 
 > Use case: ui-mockup. Asset type: standalone product preview illustration for a statistics desktop app. Square composition 1:1 on solid warm gray-green #eceee7 background. A single flat front-facing white code editor panel centered with ample empty margin, subtle 12px rounded corners, very fine pale-gray border and tiny natural shadow. No overlapping panels, no 3D perspective, no glass effect. Small top bar title 'Blade', small orange rounded-square app mark at left. Editor tab reads 'analysis.R'. Render just three readable R code lines in a restrained monospace font: 'study <- read.csv("study.csv")', 'fit <- lm(score ~ group, data = study)', 'summary(fit)'. Small muted line numbers. Sage green syntax accents and muted terracotta string accents on warm white. Beneath the editor, a clean compact file row with a simple document icon, label 'analysis.R', and a small green check mark. Keep the composition very minimal and legible. This is a polished illustrative app preview, not a website. No other labels, no browser frame, no neon, no gradients, no sparkles, no decorative objects, no watermark.
+
+### workspace
+
+> Use case: ui-mockup.
+Asset type: compact landscape thumbnail for the workspace management section of Blade Statistics.
+Create a beautiful restrained front-facing desktop app preview on a solid warm pale stone background #f2eee6. A single wide white application window, delicate border, softly rounded corners and extremely subtle natural shadow, centered with generous margins. Flat 2D, crisp dark charcoal sans-serif typography. Narrow warm-white sidebar on the left, main workspace file list on the right.
+Text verbatim: small app title "Blade"; sidebar heading "Workspaces"; two simple folder rows "Study A" (selected with pale sage highlight) and "Study B"; main title "Study A"; three spacious file rows "study.csv", "analysis.R", "results.csv", each with a small understated file icon. No other words or data. Tiny warm orange square app mark. Fine neutral dividers, small sage accents. Clear hierarchy and ample white space. Aspect ratio 3:2 landscape. Keep every label legible, no tiny dense details. No floating or overlapping cards, no browser frame, no gradients, no glow, no sparkles, no perspective, no 3D, no people, no decorative objects, no watermarks. This is an original illustrative product thumbnail, matching a quiet natural landscape website.
+
+The workspace preview is optimized to 1200 × 800 and labelled as illustrative.
 
 ## Implementation
 

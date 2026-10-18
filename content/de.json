@@ -280,6 +280,9 @@
     "middleText": "Blade wählt einen Test, prüft Voraussetzungen und erklärt Ergebnisse. R berechnet jeden Wert.",
     "preview": "Illustrative App-Vorschauen",
     "download": "macOS und Windows. Ihre Dateien bleiben auf Ihrem Computer.",
-    "install": "Installationshinweise"
+    "install": "Installationshinweise",
+    "workspaceTitle": "Ein Arbeitsbereich für jede Studie.",
+    "workspaceText": "Daten, Gespräche und R-Skripte bleiben zusammen. Wechseln Sie Projekte, ohne den Faden zu verlieren.",
+    "workspaceAlt": "Illustration zweier Arbeitsbereiche sowie der Daten, des R-Skripts und der Ergebnisse in Study A."
   }
 }

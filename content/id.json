@@ -280,6 +280,9 @@
     "middleText": "Blade memilih uji, memeriksa asumsi, dan menjelaskan hasil. R menghitung setiap angka.",
     "preview": "Ilustrasi pratinjau aplikasi",
     "download": "macOS dan Windows. File tetap di komputer Anda.",
-    "install": "Catatan instalasi"
+    "install": "Catatan instalasi",
+    "workspaceTitle": "Satu ruang kerja untuk setiap studi.",
+    "workspaceText": "Simpan data, percakapan, dan skrip R bersama. Pindah proyek tanpa kehilangan progres.",
+    "workspaceAlt": "Ilustrasi dua ruang kerja serta data, skrip R, dan hasil dalam Study A."
   }
 }

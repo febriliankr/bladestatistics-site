@@ -280,6 +280,9 @@
     "middleText": "O Blade escolhe um teste, verifica pressupostos e explica os resultados. O R calcula cada número.",
     "preview": "Prévias ilustrativas do aplicativo",
     "download": "macOS e Windows. Seus arquivos ficam no seu computador.",
-    "install": "Notas de instalação"
+    "install": "Notas de instalação",
+    "workspaceTitle": "Um espaço para cada estudo.",
+    "workspaceText": "Mantenha dados, conversas e scripts R juntos. Troque de projeto sem perder o fio.",
+    "workspaceAlt": "Ilustração de dois espaços de trabalho e dos dados, script R e resultados de Study A."
   }
 }

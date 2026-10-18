@@ -280,6 +280,9 @@
     "middleText": "Blade chooses a test, checks assumptions, and explains the results. R calculates every number.",
     "preview": "Illustrative app previews",
     "download": "macOS and Windows. Your files stay on your computer.",
-    "install": "Installation notes"
+    "install": "Installation notes",
+    "workspaceTitle": "A workspace for each study.",
+    "workspaceText": "Keep data, conversations, and R scripts together. Switch projects without losing your place.",
+    "workspaceAlt": "Illustration of two workspaces and the data, R script, and results in Study A."
   }
 }

@@ -280,6 +280,9 @@
     "middleText": "Blade sceglie un test, verifica le assunzioni e spiega i risultati. R calcola ogni numero.",
     "preview": "Anteprime illustrative dell’app",
     "download": "macOS e Windows. I file restano sul tuo computer.",
-    "install": "Note di installazione"
+    "install": "Note di installazione",
+    "workspaceTitle": "Uno spazio per ogni studio.",
+    "workspaceText": "Tieni insieme dati, conversazioni e script R. Cambia progetto senza perdere il filo.",
+    "workspaceAlt": "Illustrazione di due spazi di lavoro con dati, script R e risultati di Study A."
   }
 }

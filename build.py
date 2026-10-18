@@ -229,7 +229,7 @@ def render(code, c, shell, css, locales, names):
     for key, value in c["trust"]["cross"].items():
         scalars[f"cross.{key}"] = value
 
-    for key in ("meta.title", "meta.description", "meta.ogTitle", "meta.ogDescription", "shot.alt", "cta.more", "simple.ask", "simple.results", "simple.script"):
+    for key in ("meta.title", "meta.description", "meta.ogTitle", "meta.ogDescription", "shot.alt", "cta.more", "simple.ask", "simple.results", "simple.script", "simple.workspaceAlt"):
         scalars[key] = attr(scalars[key])
 
     for key, value in scalars.items():

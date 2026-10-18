@@ -95,6 +95,16 @@ try {
     </div>
   </section>
 
+  <section class="workspace-section wrap" id="workspaces" aria-labelledby="workspace-title">
+    <div class="workspace-layout reveal">
+      <div class="workspace-copy"><h2 id="workspace-title">{{simple.workspaceTitle}}</h2><p>{{simple.workspaceText}}</p></div>
+      <figure class="preview-stage workspace-preview">
+        <img src="/assets/preview-workspace.webp" alt="{{simple.workspaceAlt}}" width="1200" height="800" loading="lazy" />
+        <figcaption>{{simple.preview}}</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="analysis-panel" aria-labelledby="analysis-title">
     <picture class="panel-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/analysis-clouds-mobile.webp" /><img src="/assets/analysis-clouds.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
     <div class="analysis-copy wrap reveal"><h2 id="analysis-title">{{simple.middle}}</h2><p>{{simple.middleText}}</p><a class="btn light-btn" href="#get">{{cta.get}}</a></div>

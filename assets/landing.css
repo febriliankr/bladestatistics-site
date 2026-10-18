@@ -364,7 +364,7 @@ h2 {
 .lang-menu a[aria-current] {
   color: #5c744a;
 }
-/* A single product section with three native disclosure controls. */
+/* Product previews with three native disclosure controls. */
 .product-section {
   padding-top: 80px;
   padding-bottom: 112px;
@@ -476,6 +476,33 @@ h2 {
 }
 [dir="rtl"] .feature-step p {
   margin-left: 0;
+}
+.workspace-section {
+  padding-bottom: 112px;
+}
+.workspace-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 96px;
+  border-top: 1px solid var(--line);
+  padding-top: 80px;
+}
+.workspace-copy h2 {
+  max-width: 420px;
+}
+.workspace-copy p {
+  max-width: 400px;
+  margin-bottom: 0;
+  font-size: 17px;
+  color: var(--muted);
+}
+.workspace-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  background: #f2eee6;
 }
 /* Original cloud artwork forms the entire middle section. */
 .analysis-panel {
@@ -758,6 +785,9 @@ h2 {
   .product-layout {
     gap: 45px;
   }
+  .workspace-layout {
+    gap: 45px;
+  }
   .feature-step {
     padding: 16px;
   }
@@ -888,6 +918,21 @@ h2 {
   .product-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 25px;
+  }
+  .workspace-section {
+    padding-bottom: 65px;
+  }
+  .workspace-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding-top: 50px;
+  }
+  .workspace-copy p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .workspace-preview img {
+    border-radius: 15px;
   }
   .preview-panels {
     border-radius: 15px;

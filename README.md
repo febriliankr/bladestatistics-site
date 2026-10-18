@@ -41,13 +41,13 @@ per session. Choosing from the switcher in the top bar stores the pick in
 
 ## Page structure
 
-The homepage has a hero, an interactive app preview, an illustrated R section, and a download footer. All thirteen languages use this structure. Short page copy lives under `simple` in each content file.
+The homepage has a hero, an interactive app preview, a compact workspace section, an illustrated R section, and a download footer. All thirteen languages use this structure. Short page copy lives under `simple` in each content file.
 
 `assets/landing.css` styles the homepage. Pricing and legal pages retain `src/_css.html`. The build adds a hash of the homepage CSS and JavaScript to both asset URLs.
 
 ## Artwork and previews
 
-The landscapes and three app previews were generated with GPT Image. The previews are labelled as illustrations. `DESIGN.md` contains the prompts and asset paths.
+The landscapes and four app previews were generated with GPT Image. The previews are labelled as illustrations. `DESIGN.md` contains the prompts and asset paths.
 
 ## Motion and interaction
 

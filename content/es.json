@@ -280,6 +280,9 @@
     "middleText": "Blade elige una prueba, comprueba los supuestos y explica los resultados. R calcula cada número.",
     "preview": "Vistas ilustrativas de la aplicación",
     "download": "macOS y Windows. Tus archivos permanecen en tu ordenador.",
-    "install": "Notas de instalación"
+    "install": "Notas de instalación",
+    "workspaceTitle": "Un espacio para cada estudio.",
+    "workspaceText": "Reúne datos, conversaciones y scripts de R. Cambia de proyecto sin perder el hilo.",
+    "workspaceAlt": "Ilustración de dos espacios de trabajo y los datos, el script de R y los resultados de Study A."
   }
 }
