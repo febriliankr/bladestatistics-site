@@ -201,7 +201,7 @@ def render(code, c, shell, css, locales, names):
         "canonical": canonical,
         "ogLocale": c["ogLocale"],
         "css": css,
-        "designVersion": hashlib.sha256((ROOT / "assets" / "landing.css").read_bytes()).hexdigest()[:12],
+        "designVersion": hashlib.sha256((ROOT / "assets" / "landing.css").read_bytes() + (ROOT / "assets" / "landing.js").read_bytes()).hexdigest()[:12],
         "svgMac": MAC_SVG,
         "svgWin": WIN_SVG,
         "langLabel": c["langLabel"],
@@ -222,14 +222,14 @@ def render(code, c, shell, css, locales, names):
         % {"locales": json.dumps(ORDER), "current": code},
         "pixel": PIXEL_SCRIPT % {"pixel": PIXEL_ID},
     }
-    for section in ("meta", "hero", "cta", "shot", "spss", "how", "methods", "trust", "release", "get", "faq", "footer"):
+    for section in ("meta", "hero", "cta", "shot", "spss", "how", "methods", "trust", "release", "get", "faq", "footer", "simple"):
         for key, value in c[section].items():
             if isinstance(value, str):
                 scalars[f"{section}.{key}"] = value
     for key, value in c["trust"]["cross"].items():
         scalars[f"cross.{key}"] = value
 
-    for key in ("meta.title", "meta.description", "meta.ogTitle", "meta.ogDescription", "shot.alt", "cta.more"):
+    for key in ("meta.title", "meta.description", "meta.ogTitle", "meta.ogDescription", "shot.alt", "cta.more", "simple.ask", "simple.results", "simple.script"):
         scalars[key] = attr(scalars[key])
 
     for key, value in scalars.items():

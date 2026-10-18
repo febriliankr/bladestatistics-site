@@ -6,15 +6,15 @@
   "langLabel": "Lingua",
   "meta": {
     "title": "Blade, statistica senza software di statistica",
-    "description": "Chiedi dei tuoi dati in linguaggio comune. Blade sceglie il test e lo esegue in R sul tuo computer. Ricevi output APA, verifica delle assunzioni e lo script.",
+    "description": "Fai una domanda con parole tue. Blade esegue l’analisi in R e spiega il risultato.",
     "ogTitle": "Blade, statistica senza software di statistica",
-    "ogDescription": "Descrivi la domanda. Blade sceglie il test, lo esegue in R sul tuo computer e mostra il procedimento."
+    "ogDescription": "Fai una domanda con parole tue. Blade esegue l’analisi in R e spiega il risultato."
   },
   "hero": {
     "h1a": "Statistica senza ",
     "h1em": "software di statistica",
     "h1b": ".",
-    "lede": "Chiedi dei tuoi dati in linguaggio comune. Blade sceglie il test e lo esegue in R sul tuo computer. Ricevi output APA, verifica delle assunzioni e lo script."
+    "lede": "Fai una domanda con parole tue. Blade esegue l’analisi in R e spiega il risultato."
   },
   "cta": {
     "get": "Scarica Blade",
@@ -28,9 +28,18 @@
     "caption": "Una sessione: diagnostica di regressione, una curva ROC, un diagramma dei percorsi SEM. Ogni script è rimasto nella cartella."
   },
   "facts": [
-    ["46", "procedure statistiche, dalle descrittive ai SEM"],
-    ["R", "fa il calcolo dietro ogni risultato"],
-    ["0", "file di dati caricati da qualche parte"]
+    [
+      "46",
+      "procedure statistiche, dalle descrittive ai SEM"
+    ],
+    [
+      "R",
+      "fa il calcolo dietro ogni risultato"
+    ],
+    [
+      "0",
+      "file di dati caricati da qualche parte"
+    ]
   ],
   "spss": {
     "h2": "La finestra di dialogo non è mai stata la parte difficile.",
@@ -38,11 +47,31 @@
     "colOther": "Software di statistica a menu",
     "colBlade": "Blade",
     "rows": [
-      ["Arrivare a un risultato", "Trovare il menu, riempire la finestra, sperare nei valori predefiniti.", "Descrivere la domanda in una frase."],
-      ["Scegliere il test", "Devi saperlo prima di iniziare.", "Blade propone un metodo e spiega perché quello."],
-      ["Assunzioni", "Un menu a parte che devi ricordarti di aprire.", "Verificate e riportate accanto al risultato."],
-      ["Riprodurlo", "Solo se hai salvato tu la sintassi.", "Ogni analisi lascia codice R eseguibile nella cartella."],
-      ["I tuoi dati", "Importati nel mondo dello strumento.", "Letti dove sono. CSV, Excel, <code>.sav</code>, Parquet."]
+      [
+        "Arrivare a un risultato",
+        "Trovare il menu, riempire la finestra, sperare nei valori predefiniti.",
+        "Descrivere la domanda in una frase."
+      ],
+      [
+        "Scegliere il test",
+        "Devi saperlo prima di iniziare.",
+        "Blade propone un metodo e spiega perché quello."
+      ],
+      [
+        "Assunzioni",
+        "Un menu a parte che devi ricordarti di aprire.",
+        "Verificate e riportate accanto al risultato."
+      ],
+      [
+        "Riprodurlo",
+        "Solo se hai salvato tu la sintassi.",
+        "Ogni analisi lascia codice R eseguibile nella cartella."
+      ],
+      [
+        "I tuoi dati",
+        "Importati nel mondo dello strumento.",
+        "Letti dove sono. CSV, Excel, <code>.sav</code>, Parquet."
+      ]
     ]
   },
   "how": {
@@ -69,27 +98,85 @@
     "families": [
       {
         "h3": "Descrivere ed esplorare",
-        "chips": ["Descrittive", "Frequenze", "Tavole di contingenza", "Esplora", "Medie per gruppo", "Dati mancanti", "Ricodifica", "Calcola"]
+        "chips": [
+          "Descrittive",
+          "Frequenze",
+          "Tavole di contingenza",
+          "Esplora",
+          "Medie per gruppo",
+          "Dati mancanti",
+          "Ricodifica",
+          "Calcola"
+        ]
       },
       {
         "h3": "Confrontare gruppi",
-        "chips": ["Test t per campioni indipendenti", "Test t per campioni appaiati", "Test t a un campione", "ANOVA a una via e fattoriale", "ANOVA per misure ripetute", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon dei ranghi con segno", "Test dei segni", "Friedman", "McNemar", "Q di Cochran"]
+        "chips": [
+          "Test t per campioni indipendenti",
+          "Test t per campioni appaiati",
+          "Test t a un campione",
+          "ANOVA a una via e fattoriale",
+          "ANOVA per misure ripetute",
+          "MANOVA",
+          "Mann-Whitney",
+          "Kruskal-Wallis",
+          "Wilcoxon dei ranghi con segno",
+          "Test dei segni",
+          "Friedman",
+          "McNemar",
+          "Q di Cochran"
+        ]
       },
       {
         "h3": "Relazioni e modelli",
-        "chips": ["Pearson, Spearman, Kendall", "Correlazione parziale", "Regressione lineare", "Regressione logistica", "Regressione ordinale", "Regressione multinomiale", "Probit", "Stima delle curve", "Modelli misti"]
+        "chips": [
+          "Pearson, Spearman, Kendall",
+          "Correlazione parziale",
+          "Regressione lineare",
+          "Regressione logistica",
+          "Regressione ordinale",
+          "Regressione multinomiale",
+          "Probit",
+          "Stima delle curve",
+          "Modelli misti"
+        ]
       },
       {
         "h3": "Struttura e scale",
-        "chips": ["Analisi fattoriale esplorativa", "ACP", "Equazioni strutturali", "Attendibilità, alfa di Cronbach", "K-medie", "Cluster gerarchico", "Analisi discriminante", "Scaling multidimensionale", "Analisi delle corrispondenze", "Modelli tematici LDA"]
+        "chips": [
+          "Analisi fattoriale esplorativa",
+          "ACP",
+          "Equazioni strutturali",
+          "Attendibilità, alfa di Cronbach",
+          "K-medie",
+          "Cluster gerarchico",
+          "Analisi discriminante",
+          "Scaling multidimensionale",
+          "Analisi delle corrispondenze",
+          "Modelli tematici LDA"
+        ]
       },
       {
         "h3": "Categoriali",
-        "chips": ["Chi quadrato di adattamento", "Test binomiale", "Modelli loglineari", "Test delle successioni", "Kolmogorov-Smirnov", "Test esatto di Fisher"]
+        "chips": [
+          "Chi quadrato di adattamento",
+          "Test binomiale",
+          "Modelli loglineari",
+          "Test delle successioni",
+          "Kolmogorov-Smirnov",
+          "Test esatto di Fisher"
+        ]
       },
       {
         "h3": "Tempo, rischio, sintesi",
-        "chips": ["Kaplan-Meier", "Regressione di Cox", "Curve ROC", "Autocorrelazione", "ARIMA", "Meta-analisi"]
+        "chips": [
+          "Kaplan-Meier",
+          "Regressione di Cox",
+          "Curve ROC",
+          "Autocorrelazione",
+          "ARIMA",
+          "Meta-analisi"
+        ]
       }
     ]
   },
@@ -146,12 +233,30 @@
   "faq": {
     "h2": "Prima di scaricare.",
     "items": [
-      ["Devo saper usare R?", "No. Chiedi in linguaggio comune e leggi la spiegazione. L'R serve quando qualcuno vuole vedere il tuo lavoro. Gira da solo."],
-      ["Apre i miei file SPSS?", "Sì. I <code>.sav</code> di SPSS vengono letti tramite R, come CSV, TSV, Excel e Parquet. Le etichette di variabile e di valore restano."],
-      ["Posso fidarmi di un modello linguistico in statistica?", "Non per i conti, ed è per questo che non ne fa mai. Il modello sceglie la procedura e legge l'output. R calcola il risultato. Vedi la scelta e la sintassi."],
-      ["I miei dati escono dal computer?", "I tuoi file restano nella tua cartella. L'API ospitata pianifica l'analisi e conserva la trascrizione. Non riceve mai i tuoi dataset. Ogni scrittura e ogni comando chiede prima."],
-      ["Sostituisce uno statistico?", "Sostituisce le ore perse tra menu, sintassi e formattazione dell'output. Non giudica se il tuo disegno regge la conclusione. Dice quando una domanda va oltre i dati."],
-      ["E Linux?", "Non ancora pubblicato. Sopra ci sono le versioni per macOS e Windows."]
+      [
+        "Devo saper usare R?",
+        "No. Chiedi in linguaggio comune e leggi la spiegazione. L'R serve quando qualcuno vuole vedere il tuo lavoro. Gira da solo."
+      ],
+      [
+        "Apre i miei file SPSS?",
+        "Sì. I <code>.sav</code> di SPSS vengono letti tramite R, come CSV, TSV, Excel e Parquet. Le etichette di variabile e di valore restano."
+      ],
+      [
+        "Posso fidarmi di un modello linguistico in statistica?",
+        "Non per i conti, ed è per questo che non ne fa mai. Il modello sceglie la procedura e legge l'output. R calcola il risultato. Vedi la scelta e la sintassi."
+      ],
+      [
+        "I miei dati escono dal computer?",
+        "I tuoi file restano nella tua cartella. L'API ospitata pianifica l'analisi e conserva la trascrizione. Non riceve mai i tuoi dataset. Ogni scrittura e ogni comando chiede prima."
+      ],
+      [
+        "Sostituisce uno statistico?",
+        "Sostituisce le ore perse tra menu, sintassi e formattazione dell'output. Non giudica se il tuo disegno regge la conclusione. Dice quando una domanda va oltre i dati."
+      ],
+      [
+        "E Linux?",
+        "Non ancora pubblicato. Sopra ci sono le versioni per macOS e Windows."
+      ]
     ]
   },
   "footer": {
@@ -160,5 +265,21 @@
     "pricing": "Prezzi",
     "privacy": "Privacy",
     "terms": "Termini"
+  },
+  "simple": {
+    "hero": "Fai una domanda con parole tue. Blade esegue l’analisi in R e spiega il risultato.",
+    "title": "Dalla domanda al risultato.",
+    "text": "Apri una cartella. Fai una domanda. Ottieni tabelle, grafici e il codice R che li genera.",
+    "ask": "Fai domande sui tuoi dati",
+    "askText": "Apri file CSV, Excel o SPSS e descrivi cosa vuoi sapere.",
+    "results": "Leggi i risultati",
+    "resultsText": "Trova tabelle, grafici e verifiche delle assunzioni in un unico posto.",
+    "script": "Conserva lo script R",
+    "scriptText": "Controlla il codice, eseguilo di nuovo o condividilo con un collega.",
+    "middle": "IA che lavora con R.",
+    "middleText": "Blade sceglie un test, verifica le assunzioni e spiega i risultati. R calcola ogni numero.",
+    "preview": "Anteprime illustrative dell’app",
+    "download": "macOS e Windows. I file restano sul tuo computer.",
+    "install": "Note di installazione"
   }
 }

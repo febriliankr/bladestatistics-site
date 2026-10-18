@@ -6,15 +6,15 @@
   "langLabel": "Bahasa",
   "meta": {
     "title": "Blade, statistik tanpa software statistik",
-    "description": "Tanyakan soal data Anda dengan bahasa biasa. Blade memilih ujinya lalu menjalankannya di R pada komputer Anda. Anda menerima keluaran APA, cek asumsi, dan skripnya.",
+    "description": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya.",
     "ogTitle": "Blade, statistik tanpa software statistik",
-    "ogDescription": "Sebutkan pertanyaannya. Blade memilih uji, menjalankannya di R pada komputer Anda, dan menunjukkan caranya."
+    "ogDescription": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya."
   },
   "hero": {
     "h1a": "Statistik tanpa ",
     "h1em": "software statistik",
     "h1b": ".",
-    "lede": "Tanyakan soal data Anda dengan bahasa biasa. Blade memilih ujinya lalu menjalankannya di R pada komputer Anda. Anda menerima keluaran APA, cek asumsi, dan skripnya."
+    "lede": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya."
   },
   "cta": {
     "get": "Unduh Blade",
@@ -28,9 +28,18 @@
     "caption": "Satu sesi: diagnostik regresi, kurva ROC, diagram jalur SEM. Semua skrip tertinggal di folder."
   },
   "facts": [
-    ["46", "prosedur statistik, dari deskriptif sampai SEM"],
-    ["R", "menghitung angka di balik tiap hasil"],
-    ["0", "berkas data yang diunggah ke mana pun"]
+    [
+      "46",
+      "prosedur statistik, dari deskriptif sampai SEM"
+    ],
+    [
+      "R",
+      "menghitung angka di balik tiap hasil"
+    ],
+    [
+      "0",
+      "berkas data yang diunggah ke mana pun"
+    ]
   ],
   "spss": {
     "h2": "Kotak dialog tidak pernah jadi bagian yang sulit.",
@@ -38,11 +47,31 @@
     "colOther": "Software statistik berbasis menu",
     "colBlade": "Blade",
     "rows": [
-      ["Sampai ke hasil", "Cari menunya, isi kotaknya, berharap setelan bawaannya benar.", "Jelaskan pertanyaannya dalam satu kalimat."],
-      ["Memilih uji", "Anda harus sudah tahu sebelum mulai.", "Blade mengusulkan metode dan menyebut alasannya."],
-      ["Asumsi", "Menu terpisah yang harus Anda ingat untuk dibuka.", "Diperiksa dan dilaporkan di sebelah hasil."],
-      ["Mengulang", "Hanya kalau sintaksnya Anda simpan sendiri.", "Tiap analisis meninggalkan R yang bisa dijalankan."],
-      ["Data Anda", "Diimpor ke dunia milik aplikasi itu.", "Dibaca di tempat. CSV, Excel, <code>.sav</code>, Parquet."]
+      [
+        "Sampai ke hasil",
+        "Cari menunya, isi kotaknya, berharap setelan bawaannya benar.",
+        "Jelaskan pertanyaannya dalam satu kalimat."
+      ],
+      [
+        "Memilih uji",
+        "Anda harus sudah tahu sebelum mulai.",
+        "Blade mengusulkan metode dan menyebut alasannya."
+      ],
+      [
+        "Asumsi",
+        "Menu terpisah yang harus Anda ingat untuk dibuka.",
+        "Diperiksa dan dilaporkan di sebelah hasil."
+      ],
+      [
+        "Mengulang",
+        "Hanya kalau sintaksnya Anda simpan sendiri.",
+        "Tiap analisis meninggalkan R yang bisa dijalankan."
+      ],
+      [
+        "Data Anda",
+        "Diimpor ke dunia milik aplikasi itu.",
+        "Dibaca di tempat. CSV, Excel, <code>.sav</code>, Parquet."
+      ]
     ]
   },
   "how": {
@@ -69,27 +98,85 @@
     "families": [
       {
         "h3": "Deskripsi dan eksplorasi",
-        "chips": ["Statistik deskriptif", "Frekuensi", "Tabulasi silang", "Eksplorasi", "Rerata per kelompok", "Data hilang", "Rekode", "Hitung variabel"]
+        "chips": [
+          "Statistik deskriptif",
+          "Frekuensi",
+          "Tabulasi silang",
+          "Eksplorasi",
+          "Rerata per kelompok",
+          "Data hilang",
+          "Rekode",
+          "Hitung variabel"
+        ]
       },
       {
         "h3": "Membandingkan kelompok",
-        "chips": ["Uji t sampel bebas", "Uji t berpasangan", "Uji t satu sampel", "ANOVA satu jalur dan faktorial", "ANOVA ukuran berulang", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon bertanda", "Uji tanda", "Friedman", "McNemar", "Q Cochran"]
+        "chips": [
+          "Uji t sampel bebas",
+          "Uji t berpasangan",
+          "Uji t satu sampel",
+          "ANOVA satu jalur dan faktorial",
+          "ANOVA ukuran berulang",
+          "MANOVA",
+          "Mann-Whitney",
+          "Kruskal-Wallis",
+          "Wilcoxon bertanda",
+          "Uji tanda",
+          "Friedman",
+          "McNemar",
+          "Q Cochran"
+        ]
       },
       {
         "h3": "Hubungan dan model",
-        "chips": ["Pearson, Spearman, Kendall", "Korelasi parsial", "Regresi linear", "Regresi logistik", "Regresi ordinal", "Regresi multinomial", "Probit", "Estimasi kurva", "Model campuran"]
+        "chips": [
+          "Pearson, Spearman, Kendall",
+          "Korelasi parsial",
+          "Regresi linear",
+          "Regresi logistik",
+          "Regresi ordinal",
+          "Regresi multinomial",
+          "Probit",
+          "Estimasi kurva",
+          "Model campuran"
+        ]
       },
       {
         "h3": "Struktur dan skala",
-        "chips": ["Analisis faktor eksploratori", "PCA", "Model persamaan struktural", "Reliabilitas, alfa Cronbach", "K-means", "Klaster hierarkis", "Analisis diskriminan", "Penskalaan multidimensi", "Analisis korespondensi", "Model topik LDA"]
+        "chips": [
+          "Analisis faktor eksploratori",
+          "PCA",
+          "Model persamaan struktural",
+          "Reliabilitas, alfa Cronbach",
+          "K-means",
+          "Klaster hierarkis",
+          "Analisis diskriminan",
+          "Penskalaan multidimensi",
+          "Analisis korespondensi",
+          "Model topik LDA"
+        ]
       },
       {
         "h3": "Kategorik",
-        "chips": ["Chi-square kecocokan", "Uji binomial", "Model loglinear", "Uji runtun", "Kolmogorov-Smirnov", "Uji eksak Fisher"]
+        "chips": [
+          "Chi-square kecocokan",
+          "Uji binomial",
+          "Model loglinear",
+          "Uji runtun",
+          "Kolmogorov-Smirnov",
+          "Uji eksak Fisher"
+        ]
       },
       {
         "h3": "Waktu, risiko, sintesis",
-        "chips": ["Kaplan-Meier", "Regresi Cox", "Kurva ROC", "Autokorelasi", "ARIMA", "Meta-analisis"]
+        "chips": [
+          "Kaplan-Meier",
+          "Regresi Cox",
+          "Kurva ROC",
+          "Autokorelasi",
+          "ARIMA",
+          "Meta-analisis"
+        ]
       }
     ]
   },
@@ -146,12 +233,30 @@
   "faq": {
     "h2": "Sebelum mengunduh.",
     "items": [
-      ["Apakah saya perlu bisa R?", "Tidak. Anda bertanya dengan bahasa biasa lalu membaca penjelasannya. R ada untuk saat orang minta bukti kerja Anda. Ia jalan sendiri."],
-      ["Apakah berkas SPSS saya bisa dibuka?", "Bisa. Berkas <code>.sav</code> SPSS dibaca lewat R, begitu juga CSV, TSV, Excel, dan Parquet. Label variabel dan label nilai ikut terbaca."],
-      ["Amankah menyerahkan statistik ke model bahasa?", "Bukan untuk hitungannya, makanya ia tidak pernah menghitung. Model memilih prosedur dan membaca keluaran. R yang menghitung. Pilihan dan sintaksnya terlihat."],
-      ["Apakah data saya keluar dari komputer?", "Berkas Anda tetap di folder Anda. API terkelola menyusun analisis dan menyimpan transkrip. Ia tidak pernah menerima data Anda. Tiap penulisan dan perintah minta izin dulu."],
-      ["Apakah ini pengganti ahli statistik?", "Yang diganti adalah jam-jam yang habis di menu, sintaks, dan merapikan keluaran. Ia tidak menilai apakah desain Anda mendukung kesimpulan. Ia akan bilang kalau pertanyaannya melampaui datanya."],
-      ["Bagaimana dengan Linux?", "Belum dirilis. Versi macOS dan Windows ada di atas."]
+      [
+        "Apakah saya perlu bisa R?",
+        "Tidak. Anda bertanya dengan bahasa biasa lalu membaca penjelasannya. R ada untuk saat orang minta bukti kerja Anda. Ia jalan sendiri."
+      ],
+      [
+        "Apakah berkas SPSS saya bisa dibuka?",
+        "Bisa. Berkas <code>.sav</code> SPSS dibaca lewat R, begitu juga CSV, TSV, Excel, dan Parquet. Label variabel dan label nilai ikut terbaca."
+      ],
+      [
+        "Amankah menyerahkan statistik ke model bahasa?",
+        "Bukan untuk hitungannya, makanya ia tidak pernah menghitung. Model memilih prosedur dan membaca keluaran. R yang menghitung. Pilihan dan sintaksnya terlihat."
+      ],
+      [
+        "Apakah data saya keluar dari komputer?",
+        "Berkas Anda tetap di folder Anda. API terkelola menyusun analisis dan menyimpan transkrip. Ia tidak pernah menerima data Anda. Tiap penulisan dan perintah minta izin dulu."
+      ],
+      [
+        "Apakah ini pengganti ahli statistik?",
+        "Yang diganti adalah jam-jam yang habis di menu, sintaks, dan merapikan keluaran. Ia tidak menilai apakah desain Anda mendukung kesimpulan. Ia akan bilang kalau pertanyaannya melampaui datanya."
+      ],
+      [
+        "Bagaimana dengan Linux?",
+        "Belum dirilis. Versi macOS dan Windows ada di atas."
+      ]
     ]
   },
   "footer": {
@@ -160,5 +265,21 @@
     "pricing": "Harga",
     "privacy": "Privasi",
     "terms": "Ketentuan"
+  },
+  "simple": {
+    "hero": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya.",
+    "title": "Dari pertanyaan ke hasil.",
+    "text": "Buka folder. Ajukan pertanyaan. Dapatkan tabel, grafik, dan kode R di baliknya.",
+    "ask": "Tanyakan tentang data Anda",
+    "askText": "Buka file CSV, Excel, atau SPSS, lalu jelaskan apa yang ingin Anda ketahui.",
+    "results": "Baca hasilnya",
+    "resultsText": "Lihat tabel, grafik, dan pemeriksaan asumsi di satu tempat.",
+    "script": "Simpan skrip R",
+    "scriptText": "Periksa kodenya, jalankan kembali, atau bagikan dengan rekan.",
+    "middle": "AI yang bekerja dengan R.",
+    "middleText": "Blade memilih uji, memeriksa asumsi, dan menjelaskan hasil. R menghitung setiap angka.",
+    "preview": "Ilustrasi pratinjau aplikasi",
+    "download": "macOS dan Windows. File tetap di komputer Anda.",
+    "install": "Catatan instalasi"
   }
 }

@@ -25,7 +25,6 @@ try {
   }
 } catch (e) {}
 </script>
-{{css}}
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
@@ -38,7 +37,6 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a class="workflow-link" href="https://blade.skalatec.com/">{{footer.workflows}}</a>
         <a href="/pricing">{{footer.pricing}}</a>
       <details class="lang">
         <summary>
@@ -65,68 +63,48 @@ try {
     <span class="note" id="cta-note">{{cta.note}}</span>
     </div>
 </header>
-<main class="wrap main-content">
-<div class="shot">
-  <figure class="reveal">
-    <img src="/app.png" alt="{{shot.alt}}" width="1600" height="1011" loading="lazy" />
-  </figure>
-  <figcaption>{{shot.caption}}</figcaption>
-</div>
-
-  <div class="facts reveal">
-{{blockFacts}}
-  </div>
-
-  <section id="spss">
-    <h2 class="reveal">{{spss.h2}}</h2>
-    <p class="sub reveal">{{spss.sub}}</p>
-    <div class="cmp-scroll reveal">
-      <table class="cmp">
-        <thead>
-          <tr><th>&nbsp;</th><th>{{spss.colOther}}</th><th>{{spss.colBlade}}</th></tr>
-        </thead>
-        <tbody>
-{{blockRows}}
-        </tbody>
-      </table>
+<main>
+  <section class="product-section wrap" id="how" aria-labelledby="product-title">
+    <div class="section-intro reveal">
+      <div><h2 id="product-title">{{simple.title}}</h2><p>{{simple.text}}</p></div>
+      <a class="outline-link" href="/pricing">{{footer.pricing}} <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="product-layout reveal">
+      <figure class="preview-stage">
+        <div class="preview-panels">
+          <img class="app-preview" id="preview-ask" src="/assets/preview-ask.webp" alt="{{simple.ask}}" width="1100" height="1100" loading="lazy" />
+          <img class="app-preview" id="preview-results" src="/assets/preview-results.webp" alt="{{simple.results}}" width="1100" height="1100" loading="lazy" hidden />
+          <img class="app-preview" id="preview-script" src="/assets/preview-script.webp" alt="{{simple.script}}" width="1100" height="1100" loading="lazy" hidden />
+        </div>
+        <figcaption>{{simple.preview}}</figcaption>
+      </figure>
+      <div class="feature-list">
+        <details class="feature-step" name="blade-preview" data-preview="preview-ask" open>
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5h6l2 2h10v13H3V7Zm0 0h18"/></svg><span>{{simple.ask}}</span></summary>
+          <p>{{simple.askText}}</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-results">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v17h17M9 15V9m5 6V5m5 10v-4"/></svg><span>{{simple.results}}</span></summary>
+          <p>{{simple.resultsText}}</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-script">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg><span>{{simple.script}}</span></summary>
+          <p>{{simple.scriptText}}</p>
+        </details>
+      </div>
     </div>
   </section>
 
-  <section id="how">
-    <h2 class="reveal">{{how.h2}}</h2>
-    <ol class="steps">
-{{blockSteps}}
-    </ol>
+  <section class="analysis-panel" aria-labelledby="analysis-title">
+    <picture class="panel-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/analysis-clouds-mobile.webp" /><img src="/assets/analysis-clouds.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+    <div class="analysis-copy wrap reveal"><h2 id="analysis-title">{{simple.middle}}</h2><p>{{simple.middleText}}</p><a class="btn light-btn" href="#get">{{cta.get}}</a></div>
   </section>
+</main>
 
-  <section id="methods">
-    <h2 class="reveal">{{methods.h2}}</h2>
-    <p class="sub reveal">{{methods.sub}}</p>
-{{blockFamilies}}
-  </section>
-
-  <section id="trust">
-    <h2 class="reveal">{{trust.h2}}</h2>
-{{blockPoints}}
-    <div class="cross reveal">
-      <h3>{{cross.h3}}</h3>
-      <p>{{cross.p}}</p>
-      <a href="https://blade.skalatec.com/">{{cross.link}} &rarr;</a>
-    </div>
-  </section>
-
-  <section id="release">
-    <h2 class="reveal">{{release.h2}}</h2>
-    <p class="sub reveal">{{release.sub}}</p>
-    <ul class="release-list">
-{{blockRelease}}
-    </ul>
-  </section>
-
-  <section class="get" id="get">
-    <h2 class="reveal">{{get.h2}}</h2>
-    <p class="sub reveal">{{get.sub}}</p>
-
+<footer class="landscape-footer" id="get">
+  <picture class="footer-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/footer-garden-mobile.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+  <div class="download-content wrap">
+    <h2>{{cta.get}}</h2><p class="download-lede">{{simple.download}}</p>
     <div class="dl reveal" id="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.21/blade-desktop-0.2.21-mac-arm64.dmg">
         <span class="os">{{svgMac}} macOS</span>
@@ -145,24 +123,17 @@ try {
         <span class="meta">ARM &middot; 99 MB</span>
       </a>
     </div>
-    <p class="caveat">{{get.caveat}}</p>
-  </section>
 
-  <section class="faq" id="faq">
-    <h2 class="reveal">{{faq.h2}}</h2>
-{{blockFaq}}
-  </section>
-
-  <footer>
-    <span>{{footer.tagline}}</span>
-    <a href="https://blade.skalatec.com/">{{footer.workflows}}</a>
-    <a href="/pricing">{{footer.pricing}}</a>
-    <a href="/privacy">{{footer.privacy}}</a>
-    <a href="/terms">{{footer.terms}}</a>
-    <span class="spacer">PT Skala Teknologi Nusantara</span>
-  </footer>
-
-</main>
+    <details class="install-notes"><summary>{{simple.install}}</summary><p>{{get.caveat}}</p></details>
+  </div>
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="https://blade.skalatec.com/">{{footer.workflows}}</a><a href="/pricing">{{footer.pricing}}</a><a href="/privacy">{{footer.privacy}}</a><a href="/terms">{{footer.terms}}</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+<noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
+<script src="/assets/landing.js?v={{designVersion}}" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

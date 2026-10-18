@@ -39,25 +39,21 @@ A visitor whose browser prefers another available language is sent there once
 per session. Choosing from the switcher in the top bar stores the pick in
 `localStorage`, and a stored pick outranks the browser preference from then on.
 
-## Theme
+## Page structure
 
-The landing pages use `assets/landing.css` over the shared base stylesheet: an original GPT Image daylight landscape hero above warm, light statistics sections. `DESIGN.md` records the artwork prompt and asset details. Pricing and legal pages keep the shared device-aware theme. The home page remains translated in every supported language, including Arabic's right-to-left layout.
+The homepage has a hero, an interactive app preview, an illustrated R section, and a download footer. All thirteen languages use this structure. Short page copy lives under `simple` in each content file.
 
-## Motion
+`assets/landing.css` styles the homepage. Pricing and legal pages retain `src/_css.html`. The build adds a hash of the homepage CSS and JavaScript to both asset URLs.
 
-The hero animates once on load through CSS. Everything below it carries
-`class="reveal"` and fades up the first time it scrolls into view.
+## Artwork and previews
 
-Two switches turn all of it off, and both fail towards a visible page:
+The landscapes and three app previews were generated with GPT Image. The previews are labelled as illustrations. `DESIGN.md` contains the prompts and asset paths.
 
-- Without JavaScript the `js-reveal` class is never added, so the hidden state
-  never applies and the page renders complete.
-- With `prefers-reduced-motion: reduce` the script skips the class too, and a
-  media query neutralises the reveal rules as a second guard.
+## Motion and interaction
 
-The reveal measures `getBoundingClientRect` on scroll rather than using
-IntersectionObserver, and the whole block sits in a `try` that reveals
-everything on error. Hidden content is a worse failure than no animation.
+The preview uses native disclosure controls. `assets/landing.js` changes the image when a step opens. Without JavaScript, all three preview images are shown.
+
+Hero entrances and section reveals respect reduced motion. The download dropdown can cross the hero boundary and remains above the following section.
 
 ## Releases
 

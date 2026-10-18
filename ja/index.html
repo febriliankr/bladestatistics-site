@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blade、統計ソフトのいらない統計</title>
-<meta name="description" content="ふだんの言葉でデータについて尋ねてください。Bladeが検定を選び、お使いのパソコンのRで実行します。APA形式の出力、前提の確認、実行したスクリプトが残ります。" />
+<meta name="description" content="いつもの言葉で質問。Blade が R で分析を実行し、結果を説明します。" />
 <link rel="canonical" href="https://bladestatistics.com/ja/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
@@ -25,7 +25,7 @@
 <meta property="og:url" content="https://bladestatistics.com/ja/" />
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:title" content="Blade、統計ソフトのいらない統計" />
-<meta property="og:description" content="問いを書くだけです。Bladeが検定を選び、手元のRで実行し、その手順を見せます。" />
+<meta property="og:description" content="いつもの言葉で質問。Blade が R で分析を実行し、結果を説明します。" />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
@@ -78,540 +78,10 @@ try {
   }
 } catch (e) {}
 </script>
-<style>
-  :root {
-    color-scheme: dark light;
-    --bg: #0b0b0c;
-    --fg: #ededee;
-    --muted: #8b8b90;
-    --dim: #6a6a70;
-    --line: #232326;
-    --panel: #131315;
-    --panel-2: #17171a;
-    --hover: #1c1c1f;
-    --code-bg: #1a1a1d;
-    --brand: #ff4900;
-    /* brand orange on white is too weak for small text, so text and buttons
-       get their own darker value in light mode */
-    --brand-ink: #ff5c1a;
-    --brand-btn: #ff4900;
-    --brand-btn-hover: #ff6326;
-    --brand-wash: rgba(255, 73, 0, .035);
-    --brand-wash-hover: rgba(255, 73, 0, .075);
-    --shadow: 0 12px 32px rgba(0, 0, 0, .55);
-  }
-
-  /* the page follows the device: same layout, two palettes */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #ffffff;
-      --fg: #17171a;
-      --muted: #5d5d64;
-      --dim: #85858c;
-      --line: #e4e4e6;
-      --panel: #f8f8f7;
-      --panel-2: #f2f2f1;
-      --hover: #eeeeed;
-      --code-bg: #f0f0ee;
-      --brand: #ff4900;
-      --brand-ink: #c03700;
-      --brand-btn: #d13c00;
-      --brand-btn-hover: #b93500;
-      --brand-wash: rgba(255, 73, 0, .05);
-      --brand-wash-hover: rgba(255, 73, 0, .1);
-      --shadow: 0 12px 32px rgba(0, 0, 0, .12);
-    }
-    /* thinning the strokes helps on a dark ground and hurts on a light one */
-    body { -webkit-font-smoothing: auto; }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-      "Hiragino Sans", "Yu Gothic UI", "Malgun Gothic", "PingFang SC",
-      "Microsoft YaHei", "Noto Sans", "Nirmala UI", "Geeza Pro", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---- header / hero ---- */
-  header { padding: 88px 0 0; }
-  .logo { width: 56px; height: 56px; border-radius: 13px; display: block; }
-  h1 {
-    margin-top: 30px;
-    font-size: clamp(34px, 6vw, 52px);
-    line-height: 1.06;
-    letter-spacing: -.035em;
-    font-weight: 640;
-    margin: 0 0 18px;
-    max-width: 15ch;
-  }
-  h1 em { font-style: normal; color: var(--brand-ink); }
-  .lede { font-size: 18.5px; color: var(--muted); margin: 0 0 32px; max-width: 54ch; }
-
-  .btn {
-    display: inline-block;
-    background: var(--brand-btn);
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 550;
-    padding: 11px 22px;
-    border-radius: 9px;
-    transition: background .16s ease, transform .16s ease;
-  }
-  .btn:hover { background: var(--brand-btn-hover); }
-  .btn:active { transform: translateY(1px); }
-
-  /* adaptive CTA: primary button + variant dropdown */
-  .cta { position: relative; display: inline-flex; align-items: stretch; gap: 2px; vertical-align: middle; }
-  .cta .btn {
-    border-start-start-radius: 9px;
-    border-end-start-radius: 9px;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-  .cta .btn:only-child { border-radius: 9px; }
-  /* .cta .btn outranks a bare .caret rule, so this selector has to match it. */
-  .cta .caret {
-    border: 0;
-    cursor: pointer;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-    border-start-end-radius: 9px;
-    border-end-end-radius: 9px;
-  }
-  .caret svg { width: 10px; height: 6px; fill: #fff; transition: transform .18s ease; }
-  .caret[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .cta-menu {
-    position: absolute;
-    top: calc(100% + 6px);
-    inset-inline-start: 0;
-    z-index: 10;
-    min-width: 290px;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top left;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .cta-menu {
-    transform-origin: top right;
-  }
-  @keyframes menuIn {
-    from { opacity: 0; transform: translateY(-6px) scale(.97); }
-    to { opacity: 1; transform: none; }
-  }
-  .cta-menu a {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 11px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .cta-menu a:hover { background: var(--hover); }
-  .cta-menu svg { width: 15px; height: 15px; fill: currentColor; color: var(--muted); flex: none; }
-  .cta-menu a:hover svg { color: var(--fg); }
-  .cta-menu .meta { margin-inline-start: auto; font-size: 12px; color: var(--muted); }
-  .note { color: var(--muted); font-size: 14px; margin-inline-start: 16px; }
-
-  /* ---- screenshot ---- */
-  .shot {
-    margin: 52px auto 0;
-    max-width: 880px;
-    padding: 0 24px;
-  }
-  .shot figure {
-    margin: 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--panel);
-    line-height: 0;
-  }
-  .shot img { width: 100%; height: auto; display: block; }
-  .shot figcaption {
-    line-height: 1.6;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--dim);
-    text-align: center;
-  }
-
-  /* ---- facts band ---- */
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin: 56px 0 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--line);
-  }
-  .facts div { background: var(--panel); padding: 22px 20px; }
-  .facts b { display: block; font-size: 26px; font-weight: 620; letter-spacing: -.02em; }
-  .facts span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
-
-  /* ---- sections ---- */
-  section { padding: 80px 0 0; }
-  h2 {
-    font-size: clamp(24px, 3.4vw, 30px);
-    line-height: 1.15;
-    letter-spacing: -.025em;
-    font-weight: 620;
-    margin: 0 0 12px;
-  }
-  .sub { color: var(--muted); font-size: 16px; margin: 0 0 26px; max-width: 56ch; }
-
-  /* ---- comparison table ---- */
-  .cmp-scroll { overflow-x: auto; }
-  table.cmp {
-    width: 100%;
-    min-width: 520px;
-    border-collapse: collapse;
-    font-size: 14.5px;
-  }
-  table.cmp th, table.cmp td {
-    text-align: start;
-    padding: 15px 16px;
-    border-top: 1px solid var(--line);
-    vertical-align: top;
-  }
-  table.cmp thead th {
-    border-top: 0;
-    padding-top: 0;
-    font-size: 13px;
-    color: var(--dim);
-    font-weight: 500;
-  }
-  table.cmp thead th:last-child { color: var(--brand-ink); }
-  table.cmp td:first-child { color: var(--fg); width: 27%; font-weight: 550; }
-  table.cmp td:nth-child(2) { color: var(--dim); width: 36%; }
-  table.cmp td:last-child { color: var(--muted); }
-  table.cmp td:last-child { background: var(--brand-wash); }
-
-  /* ---- steps ---- */
-  .steps { counter-reset: s; margin: 0; padding: 0; list-style: none; }
-  .steps li {
-    counter-increment: s;
-    position: relative;
-    padding: 24px 0;
-    padding-inline-start: 46px;
-    border-top: 1px solid var(--line);
-  }
-  .steps li::before {
-    content: counter(s);
-    position: absolute;
-    inset-inline-start: 0;
-    top: 24px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    color: var(--muted);
-    font-size: 12.5px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .steps h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 5px; letter-spacing: -.01em; }
-  .steps p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  .quote {
-    margin: 14px 0 0;
-    padding: 13px 15px;
-    border-inline-start: 2px solid var(--brand);
-    background: var(--panel);
-    border-start-end-radius: 8px;
-    border-end-end-radius: 8px;
-    color: var(--fg);
-    font-size: 14.5px;
-  }
-
-  /* ---- method chips ---- */
-  .fam { padding: 20px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
-  .fam h3 { margin: 2px 0 0; font-size: 14px; font-weight: 600; color: var(--fg); letter-spacing: -.005em; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips span {
-    font-size: 12.5px;
-    color: var(--muted);
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 3px 9px;
-    line-height: 1.5;
-  }
-
-  /* ---- generic points ---- */
-  .point { padding: 26px 0; border-top: 1px solid var(--line); }
-  .point h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 6px; letter-spacing: -.01em; }
-  .point p { margin: 0; color: var(--muted); font-size: 15px; }
-  .point p + p { margin-top: 10px; }
-
-  /* ---- callout ---- */
-  .cross {
-    margin-top: 30px;
-    padding: 24px 22px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--panel);
-  }
-  .cross h3 { margin: 0 0 6px; font-size: 17px; font-weight: 620; }
-  .cross p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
-  .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
-  .cross a:hover { text-decoration: underline; }
-
-  /* ---- release notes ---- */
-  .release-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 34px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
-  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
-  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  /* ---- downloads ---- */
-  .get { padding: 80px 0 0; }
-  .get .sub { margin-bottom: 22px; }
-  .dl { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .dl a {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 14px 16px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--panel);
-    color: var(--fg);
-    text-decoration: none;
-    transition: border-color .16s ease, background .16s ease, transform .16s ease;
-  }
-  .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
-  .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
-  .dl svg { width: 16px; height: 16px; fill: currentColor; color: var(--muted); flex: none; transition: color .16s ease; }
-  .dl a:hover svg { color: var(--fg); }
-  .dl .meta { font-size: 13px; color: var(--muted); margin-inline-start: auto; }
-  .caveat { color: var(--muted); font-size: 13px; margin: 18px 0 0; }
-  .caveat b { color: var(--fg); font-weight: 550; }
-
-  /* ---- faq ---- */
-  .faq details {
-    border-top: 1px solid var(--line);
-    padding: 16px 0;
-  }
-  .faq summary {
-    cursor: pointer;
-    list-style: none;
-    font-size: 15.5px;
-    font-weight: 550;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::before {
-    content: "+";
-    color: var(--brand-ink);
-    font-weight: 500;
-    width: 12px;
-    flex: none;
-    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
-  }
-  .faq details[open] summary::before { transform: rotate(45deg); }
-  /* scoped to details so it cannot catch anything else in the section */
-  .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
-
-  footer {
-    margin-top: 72px;
-    padding: 28px 0 72px;
-    border-top: 1px solid var(--line);
-    color: var(--dim);
-    font-size: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    align-items: center;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--fg); }
-  footer .spacer { margin-inline-start: auto; }
-
-
-  /* ---- top bar and language switcher ---- */
-  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .topnav { display: flex; align-items: center; gap: 18px; }
-  .topnav-link {
-    color: var(--muted); text-decoration: none; font-size: 14px;
-    transition: color .16s ease;
-  }
-  .topnav-link:hover, .topnav-link[aria-current="page"] { color: var(--fg); }
-  .lang { position: relative; }
-  .lang summary {
-    list-style: none;
-    cursor: pointer;
-    color: var(--muted);
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    transition: color .16s ease;
-  }
-  .lang summary::-webkit-details-marker { display: none; }
-  .lang summary:hover { color: var(--fg); }
-  .lang summary svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
-  .lang-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    inset-inline-end: 0;
-    z-index: 20;
-    width: 190px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top right;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .lang-menu { transform-origin: top left; }
-  .lang-menu a {
-    display: block;
-    padding: 7px 10px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .lang-menu a:hover { background: var(--hover); }
-  .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
-
-
-  /* ---- motion ----
-     The hero animates on load. Everything below it waits until it scrolls
-     into view, and only when JS has added .js-reveal, so a page without
-     JavaScript renders complete and still. */
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
-  }
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .topbar,
-  header h1,
-  header .lede,
-  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
-  /* .note is inline, so a transform on it would be ignored */
-  header .note { animation: fade .55s ease both; }
-  .topbar { animation-delay: .02s; }
-  header h1 { animation-delay: .09s; }
-  header .lede { animation-delay: .17s; }
-  header .cta { animation-delay: .25s; }
-  header .note { animation-delay: .34s; }
-
-  .js-reveal .reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
-  }
-  .js-reveal .reveal.in { opacity: 1; transform: none; }
-
-  /* ---- hover detail ---- */
-  .dl a:hover { transform: translateY(-1px); }
-  .chips span { transition: border-color .16s ease, color .16s ease; }
-  .chips span:hover { border-color: var(--brand); color: var(--fg); }
-  table.cmp tbody td { transition: background .18s ease; }
-  table.cmp tbody tr:hover td:first-child,
-  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
-  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
-
-  /* Newer engines can transition to an intrinsic height. Older ones skip the
-     whole block and open instantly, which is what they did before. */
-  @supports selector(::details-content) {
-    :root { interpolate-size: allow-keywords; }
-    .faq details::details-content {
-      block-size: 0;
-      overflow: clip;
-      opacity: 0;
-      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
-      transition-behavior: allow-discrete;
-    }
-    .faq details[open]::details-content { block-size: auto; opacity: 1; }
-  }
-
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13.5px;
-    color: var(--fg);
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    padding: 1px 5px;
-    border-radius: 5px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
-  }
-  @media (max-width: 640px) {
-    header { padding-top: 56px; }
-    h1 { max-width: none; }
-    .note { display: block; margin: 14px 0 0; }
-    .dl { grid-template-columns: 1fr; }
-    .release-list { grid-template-columns: 1fr; }
-    .facts { grid-template-columns: 1fr; }
-    .fam { grid-template-columns: 1fr; gap: 10px; }
-    .shot { padding: 0 16px; }
-
-    /* The two-column comparison would need sideways scrolling here, so each
-       row becomes a small card with its own column labels instead. */
-    table.cmp { min-width: 0; }
-    table.cmp thead { display: none; }
-    table.cmp tbody tr { display: block; padding: 20px 0; border-top: 1px solid var(--line); }
-    table.cmp td { display: block; border: 0; padding: 0; }
-    /* the desktop percentage widths would keep these columns narrow */
-    table.cmp td:first-child,
-    table.cmp td:nth-child(2) { width: auto; }
-    table.cmp td:first-child { font-size: 16px; margin-bottom: 10px; }
-    table.cmp td:nth-child(2)::before,
-    table.cmp td:last-child::before {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 1px;
-    }
-    table.cmp td:nth-child(2)::before { content: "Point-and-click"; color: var(--dim); }
-    table.cmp td:last-child::before { content: "Blade"; color: var(--brand-ink); }
-    table.cmp td:last-child { background: none; margin-top: 12px; }
-  }
-</style>
-
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=b9a02dd63365" />
+<link rel="stylesheet" href="/assets/landing.css?v=59bea8e5e4bb" />
 </head>
 <body>
 
@@ -620,7 +90,6 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a class="workflow-link" href="https://blade.skalatec.com/">ワークフロー</a>
         <a href="/pricing">料金</a>
       <details class="lang">
         <summary>
@@ -648,7 +117,7 @@ try {
     </nav>
     <div class="hero-content wrap">
     <h1><em>統計ソフト</em>のいらない統計。</h1>
-    <p class="lede">ふだんの言葉でデータについて尋ねてください。Bladeが検定を選び、お使いのパソコンのRで実行します。APA形式の出力、前提の確認、そして実行したスクリプトが手元に残ります。</p>
+    <p class="lede">いつもの言葉で質問。Blade が R で分析を実行し、結果を説明します。</p>
     <span class="cta">
       <a class="btn" id="cta" href="#get">Bladeを入手</a>
       <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-controls="cta-menu" aria-expanded="false" aria-label="その他のダウンロード" hidden>
@@ -659,156 +128,48 @@ try {
     <span class="note" id="cta-note">macOSとWindows、ベータ版</span>
     </div>
 </header>
-<main class="wrap main-content">
-<div class="shot">
-  <figure class="reveal">
-    <img src="/app.png" alt="線形回帰のパネル、ロジスティック回帰のオッズ比を伴うROC曲線、構造方程式モデルのパス図、そして生成されたプロジェクトファイルを表示しているBlade Desktop。" width="1600" height="1011" loading="lazy" />
-  </figure>
-  <figcaption>ひとつのセッション：回帰診断、ROC曲線、SEMのパス図。スクリプトはすべてフォルダに残ります。</figcaption>
-</div>
-
-  <div class="facts reveal">
-    <div><b>46</b><span>統計手続き、記述統計からSEMまで</span></div>
-    <div><b>R</b><span>すべての結果の計算を担当</span></div>
-    <div><b>0</b><span>アップロードされるデータファイル</span></div>
-  </div>
-
-  <section id="spss">
-    <h2 class="reveal">難しかったのはダイアログではありません。</h2>
-    <p class="sub reveal">正しい検定を選ぶことが仕事です。使ってよいか確かめることもです。来年また同じ分析をすることもです。</p>
-    <div class="cmp-scroll reveal">
-      <table class="cmp">
-        <thead>
-          <tr><th>&nbsp;</th><th>メニュー式の統計ソフト</th><th>Blade</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>結果にたどり着く</td>
-            <td>メニューを探し、ダイアログを埋め、既定値が正しいことを願う。</td>
-            <td>問いを一文で書く。</td>
-          </tr>
-          <tr>
-            <td>検定を選ぶ</td>
-            <td>始める前に知っている必要がある。</td>
-            <td>Bladeが手法を提案し、理由を述べる。</td>
-          </tr>
-          <tr>
-            <td>前提条件</td>
-            <td>開くのを忘れがちな別メニュー。</td>
-            <td>確認され、結果の隣に示される。</td>
-          </tr>
-          <tr>
-            <td>再現する</td>
-            <td>自分で構文を保存していた場合だけ。</td>
-            <td>分析ごとに実行可能なRがフォルダに残る。</td>
-          </tr>
-          <tr>
-            <td>データ</td>
-            <td>ツール独自の形式に取り込まれる。</td>
-            <td>その場で読む。CSV、Excel、<code>.sav</code>、Parquet。</td>
-          </tr>
-        </tbody>
-      </table>
+<main>
+  <section class="product-section wrap" id="how" aria-labelledby="product-title">
+    <div class="section-intro reveal">
+      <div><h2 id="product-title">質問から結果まで。</h2><p>フォルダーを開いて質問するだけ。表やグラフと、その元になる R コードを確認できます。</p></div>
+      <a class="outline-link" href="/pricing">料金 <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="product-layout reveal">
+      <figure class="preview-stage">
+        <div class="preview-panels">
+          <img class="app-preview" id="preview-ask" src="/assets/preview-ask.webp" alt="データについて質問" width="1100" height="1100" loading="lazy" />
+          <img class="app-preview" id="preview-results" src="/assets/preview-results.webp" alt="結果を読む" width="1100" height="1100" loading="lazy" hidden />
+          <img class="app-preview" id="preview-script" src="/assets/preview-script.webp" alt="R スクリプトを保存" width="1100" height="1100" loading="lazy" hidden />
+        </div>
+        <figcaption>アプリ画面のイメージ</figcaption>
+      </figure>
+      <div class="feature-list">
+        <details class="feature-step" name="blade-preview" data-preview="preview-ask" open>
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5h6l2 2h10v13H3V7Zm0 0h18"/></svg><span>データについて質問</span></summary>
+          <p>CSV、Excel、SPSS ファイルを開き、知りたいことを伝えます。</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-results">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v17h17M9 15V9m5 6V5m5 10v-4"/></svg><span>結果を読む</span></summary>
+          <p>表、グラフ、前提条件の確認をまとめて表示します。</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-script">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg><span>R スクリプトを保存</span></summary>
+          <p>コードを確認し、再実行したり同僚と共有したりできます。</p>
+        </details>
+      </div>
     </div>
   </section>
 
-  <section id="how">
-    <h2 class="reveal">フォルダを指定し、尋ね、出力を読む。</h2>
-    <ol class="steps">
-      <li class="reveal">
-        <h3>データがすでにあるフォルダを開く</h3>
-        <p>取り込み作業もプロジェクト形式もありません。Bladeはファイルをその場所で読みます。出力はその隣に置かれます。</p>
-      </li>
-      <li class="reveal">
-        <h3>同僚に聞くように尋ねる</h3>
-        <p>Bladeは変数を読んで手法を選びます。何かを実行する前に、選んだ手法を伝えます。</p>
-        <p class="quote">「ベースライン得点と年齢を統制しても、治療群のアウトカムに差は残りますか」</p>
-      </li>
-      <li class="reveal">
-        <h3>結果を読み、そのまま持ち出す</h3>
-        <p>APA形式の出力、表、図、前提の確認、そして平易な解釈が得られます。その下にRの構文があります。どれでも書き出せます。</p>
-      </li>
-    </ol>
+  <section class="analysis-panel" aria-labelledby="analysis-title">
+    <picture class="panel-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/analysis-clouds-mobile.webp" /><img src="/assets/analysis-clouds.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+    <div class="analysis-copy wrap reveal"><h2 id="analysis-title">R と働く AI。</h2><p>Blade が検定を選び、前提条件を確認して結果を説明します。数値はすべて R が計算します。</p><a class="btn light-btn" href="#get">Bladeを入手</a></div>
   </section>
+</main>
 
-  <section id="methods">
-    <h2 class="reveal">46の手続き、すべて本物のRです。</h2>
-    <p class="sub reveal">どれもエージェントがRエンジンに対して呼び出すツールです。モデルはどれを使うかを選び、出力を読みます。数値を作ることはありません。</p>
-    <div class="fam reveal">
-      <h3>記述と探索</h3>
-      <div class="chips"><span>記述統計</span><span>度数分布</span><span>クロス集計</span><span>探索</span><span>群別平均</span><span>欠測値</span><span>再コード</span><span>変数の計算</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>群の比較</h3>
-      <div class="chips"><span>対応のないt検定</span><span>対応のあるt検定</span><span>1標本t検定</span><span>一元配置と要因分散分析</span><span>反復測定分散分析</span><span>MANOVA</span><span>マン・ホイットニー</span><span>クラスカル・ウォリス</span><span>ウィルコクソン符号順位</span><span>符号検定</span><span>フリードマン</span><span>マクネマー</span><span>コクランのQ</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>関連とモデル</h3>
-      <div class="chips"><span>ピアソン、スピアマン、ケンドール</span><span>偏相関</span><span>線形回帰</span><span>ロジスティック回帰</span><span>順序回帰</span><span>多項回帰</span><span>プロビット</span><span>曲線推定</span><span>混合効果モデル</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>構造と尺度</h3>
-      <div class="chips"><span>探索的因子分析</span><span>主成分分析</span><span>構造方程式モデリング</span><span>信頼性、クロンバックのα</span><span>k平均法</span><span>階層クラスター分析</span><span>判別分析</span><span>多次元尺度構成法</span><span>コレスポンデンス分析</span><span>LDAトピックモデル</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>カテゴリカル</h3>
-      <div class="chips"><span>適合度のカイ二乗検定</span><span>二項検定</span><span>対数線形モデル</span><span>連検定</span><span>コルモゴロフ・スミルノフ</span><span>フィッシャーの正確確率検定</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>時間、リスク、統合</h3>
-      <div class="chips"><span>カプラン・マイヤー</span><span>Cox回帰</span><span>ROC曲線</span><span>自己相関</span><span>ARIMA</span><span>メタ分析</span></div>
-    </div>
-  </section>
-
-  <section id="trust">
-    <h2 class="reveal">モデルが呼び出しを書き、Rが答えを計算します。</h2>
-    <div class="point reveal">
-      <h3>言語モデルが数値を推測することはありません</h3>
-      <p>Bladeのp値はRの手続きから出たものです。手で実行するのと同じ手続きです。モデルは手続きを選び、返ってきた結果を説明します。</p>
-    </div>
-    <div class="point reveal">
-      <h3>Rが警告すれば、そのまま見えます</h3>
-      <p>収束の警告、特異な当てはめ、前提の違反はならされずに届きます。失敗した分析は失敗したと伝えます。</p>
-    </div>
-    <div class="point reveal">
-      <h3>構文はその場に残ります</h3>
-      <p>分析ごとに実行可能なRがフォルダに書き出されます。指導教員、査読者、統計家に渡せます。Bladeなしで確認できます。</p>
-    </div>
-    <div class="point reveal">
-      <h3>あなたのパソコン、あなたのファイル</h3>
-      <p>Bladeはすでに入っているRとPythonを、あなたが選んだフォルダで使います。データファイルが送信されることはありません。ファイルの書き込みとコマンドはすべて承認を待ちます。</p>
-      <p>ホスト側のAPIは手順を組み立て、モデルの鍵を保持します。保存されるのはセッションの記録だけで、作業フォルダの中身は保存されません。</p>
-    </div>
-    <div class="point reveal">
-      <h3>作業は任せ、主張はあなたのものです</h3>
-      <p>Bladeは機械的な部分が速いだけです。研究デザインが結論を支えるかどうかは判断できません。そこはあなたの領分です。</p>
-    </div>
-    <div class="cross reveal">
-      <h3>そのまま残しておく</h3>
-      <p>分析をワークフローとして保存できます。来学期は新しいデータでワンクリックで動きます。1つのファイルとして同僚に渡すこともできます。</p>
-      <a href="https://blade.skalatec.com/">ワークフローの仕組みを見る &rarr;</a>
-    </div>
-  </section>
-
-  <section id="release">
-    <h2 class="reveal">0.2.21 の新機能</h2>
-    <p class="sub reveal">WAHAでWhatsAppに接続。</p>
-    <ul class="release-list">
-    <li class="reveal">
-      <h3>インストールして、スキャンして、接続</h3>
-      <p>Pluginsを開き、DockerでWAHAをローカル実行するかサーバーに接続し、WhatsAppでQRコードを読み取ります。</p>
-    </li>
-    <li class="reveal">
-      <h3>アクセス権と保存容量を管理</h3>
-      <p>ワークスペースごとに権限を選び、送信のたびに承認します。WhatsAppのデータやファイルは、多くの保存容量を使うことがあります。</p>
-    </li>
-    </ul>
-  </section>
-
-  <section class="get" id="get">
-    <h2 class="reveal">Blade Desktop 0.2.21 をダウンロード</h2>
-    <p class="sub reveal">ベータ版です。BladeにはRが必要で、初回起動時に確認し、RとPythonの導入も代行できます。</p>
-
+<footer class="landscape-footer" id="get">
+  <picture class="footer-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/footer-garden-mobile.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+  <div class="download-content wrap">
+    <h2>Bladeを入手</h2><p class="download-lede">macOS と Windows に対応。ファイルは自分のコンピューターに残ります。</p>
     <div class="dl reveal" id="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.21/blade-desktop-0.2.21-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
@@ -827,47 +188,17 @@ try {
         <span class="meta">ARM &middot; 99 MB</span>
       </a>
     </div>
-    <p class="caveat"><b>macOS：</b>PT Skala Teknologi Nusantaraの署名と公証済みで、通常どおり開きます。<b>Windows：</b>署名はまだのため、SmartScreenが一度警告します。詳細情報を押し、実行を選んでください。Linux版はまだ公開していません。</p>
-  </section>
 
-  <section class="faq" id="faq">
-    <h2 class="reveal">ダウンロードの前に。</h2>
-    <details class="reveal">
-      <summary>Rが書けなくても使えますか</summary>
-      <p>使えます。ふだんの言葉で尋ね、説明を読むだけです。Rは誰かに作業を見せるときのためにあります。実行は自動です。</p>
-    </details>
-    <details class="reveal">
-      <summary>SPSSのファイルは開けますか</summary>
-      <p>開けます。SPSSの<code>.sav</code>はRで読み込みます。CSV、TSV、Excel、Parquetも同様です。変数ラベルと値ラベルも残ります。</p>
-    </details>
-    <details class="reveal">
-      <summary>統計を言語モデルに任せて大丈夫ですか</summary>
-      <p>計算は任せていません。モデルは手続きを選んで出力を読み、計算はRが行います。選択も構文も見えます。</p>
-    </details>
-    <details class="reveal">
-      <summary>データはパソコンの外に出ますか</summary>
-      <p>ファイルはフォルダに残ります。ホスト側のAPIは分析を計画し、記録を保存します。データセットを受け取ることはありません。書き込みとコマンドは毎回確認します。</p>
-    </details>
-    <details class="reveal">
-      <summary>統計家の代わりになりますか</summary>
-      <p>メニュー、構文、出力整形に費やす時間の代わりになります。研究デザインが結論を支えるかは判断しません。データで答えられない問いはそう伝えます。</p>
-    </details>
-    <details class="reveal">
-      <summary>Linux版はありますか</summary>
-      <p>まだ公開していません。macOS版とWindows版は上にあります。</p>
-    </details>
-  </section>
-
-  <footer>
-    <span>Blade、エージェントによる統計解析。</span>
-    <a href="https://blade.skalatec.com/">ワークフロー</a>
-    <a href="/pricing">料金</a>
-    <a href="/privacy">プライバシー</a>
-    <a href="/terms">利用規約</a>
-    <span class="spacer">PT Skala Teknologi Nusantara</span>
-  </footer>
-
-</main>
+    <details class="install-notes"><summary>インストールについて</summary><p><b>macOS：</b>PT Skala Teknologi Nusantaraの署名と公証済みで、通常どおり開きます。<b>Windows：</b>署名はまだのため、SmartScreenが一度警告します。詳細情報を押し、実行を選んでください。Linux版はまだ公開していません。</p></details>
+  </div>
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="https://blade.skalatec.com/">ワークフロー</a><a href="/pricing">料金</a><a href="/privacy">プライバシー</a><a href="/terms">利用規約</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+<noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
+<script src="/assets/landing.js?v=59bea8e5e4bb" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

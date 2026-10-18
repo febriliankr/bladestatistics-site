@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blade, statistik tanpa software statistik</title>
-<meta name="description" content="Tanyakan soal data Anda dengan bahasa biasa. Blade memilih ujinya lalu menjalankannya di R pada komputer Anda. Anda menerima keluaran APA, cek asumsi, dan skripnya." />
+<meta name="description" content="Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya." />
 <link rel="canonical" href="https://bladestatistics.com/id/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
@@ -25,7 +25,7 @@
 <meta property="og:url" content="https://bladestatistics.com/id/" />
 <meta property="og:locale" content="id_ID" />
 <meta property="og:title" content="Blade, statistik tanpa software statistik" />
-<meta property="og:description" content="Sebutkan pertanyaannya. Blade memilih uji, menjalankannya di R pada komputer Anda, dan menunjukkan caranya." />
+<meta property="og:description" content="Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya." />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
@@ -78,540 +78,10 @@ try {
   }
 } catch (e) {}
 </script>
-<style>
-  :root {
-    color-scheme: dark light;
-    --bg: #0b0b0c;
-    --fg: #ededee;
-    --muted: #8b8b90;
-    --dim: #6a6a70;
-    --line: #232326;
-    --panel: #131315;
-    --panel-2: #17171a;
-    --hover: #1c1c1f;
-    --code-bg: #1a1a1d;
-    --brand: #ff4900;
-    /* brand orange on white is too weak for small text, so text and buttons
-       get their own darker value in light mode */
-    --brand-ink: #ff5c1a;
-    --brand-btn: #ff4900;
-    --brand-btn-hover: #ff6326;
-    --brand-wash: rgba(255, 73, 0, .035);
-    --brand-wash-hover: rgba(255, 73, 0, .075);
-    --shadow: 0 12px 32px rgba(0, 0, 0, .55);
-  }
-
-  /* the page follows the device: same layout, two palettes */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #ffffff;
-      --fg: #17171a;
-      --muted: #5d5d64;
-      --dim: #85858c;
-      --line: #e4e4e6;
-      --panel: #f8f8f7;
-      --panel-2: #f2f2f1;
-      --hover: #eeeeed;
-      --code-bg: #f0f0ee;
-      --brand: #ff4900;
-      --brand-ink: #c03700;
-      --brand-btn: #d13c00;
-      --brand-btn-hover: #b93500;
-      --brand-wash: rgba(255, 73, 0, .05);
-      --brand-wash-hover: rgba(255, 73, 0, .1);
-      --shadow: 0 12px 32px rgba(0, 0, 0, .12);
-    }
-    /* thinning the strokes helps on a dark ground and hurts on a light one */
-    body { -webkit-font-smoothing: auto; }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-      "Hiragino Sans", "Yu Gothic UI", "Malgun Gothic", "PingFang SC",
-      "Microsoft YaHei", "Noto Sans", "Nirmala UI", "Geeza Pro", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---- header / hero ---- */
-  header { padding: 88px 0 0; }
-  .logo { width: 56px; height: 56px; border-radius: 13px; display: block; }
-  h1 {
-    margin-top: 30px;
-    font-size: clamp(34px, 6vw, 52px);
-    line-height: 1.06;
-    letter-spacing: -.035em;
-    font-weight: 640;
-    margin: 0 0 18px;
-    max-width: 15ch;
-  }
-  h1 em { font-style: normal; color: var(--brand-ink); }
-  .lede { font-size: 18.5px; color: var(--muted); margin: 0 0 32px; max-width: 54ch; }
-
-  .btn {
-    display: inline-block;
-    background: var(--brand-btn);
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 550;
-    padding: 11px 22px;
-    border-radius: 9px;
-    transition: background .16s ease, transform .16s ease;
-  }
-  .btn:hover { background: var(--brand-btn-hover); }
-  .btn:active { transform: translateY(1px); }
-
-  /* adaptive CTA: primary button + variant dropdown */
-  .cta { position: relative; display: inline-flex; align-items: stretch; gap: 2px; vertical-align: middle; }
-  .cta .btn {
-    border-start-start-radius: 9px;
-    border-end-start-radius: 9px;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-  .cta .btn:only-child { border-radius: 9px; }
-  /* .cta .btn outranks a bare .caret rule, so this selector has to match it. */
-  .cta .caret {
-    border: 0;
-    cursor: pointer;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-    border-start-end-radius: 9px;
-    border-end-end-radius: 9px;
-  }
-  .caret svg { width: 10px; height: 6px; fill: #fff; transition: transform .18s ease; }
-  .caret[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .cta-menu {
-    position: absolute;
-    top: calc(100% + 6px);
-    inset-inline-start: 0;
-    z-index: 10;
-    min-width: 290px;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top left;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .cta-menu {
-    transform-origin: top right;
-  }
-  @keyframes menuIn {
-    from { opacity: 0; transform: translateY(-6px) scale(.97); }
-    to { opacity: 1; transform: none; }
-  }
-  .cta-menu a {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 11px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .cta-menu a:hover { background: var(--hover); }
-  .cta-menu svg { width: 15px; height: 15px; fill: currentColor; color: var(--muted); flex: none; }
-  .cta-menu a:hover svg { color: var(--fg); }
-  .cta-menu .meta { margin-inline-start: auto; font-size: 12px; color: var(--muted); }
-  .note { color: var(--muted); font-size: 14px; margin-inline-start: 16px; }
-
-  /* ---- screenshot ---- */
-  .shot {
-    margin: 52px auto 0;
-    max-width: 880px;
-    padding: 0 24px;
-  }
-  .shot figure {
-    margin: 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--panel);
-    line-height: 0;
-  }
-  .shot img { width: 100%; height: auto; display: block; }
-  .shot figcaption {
-    line-height: 1.6;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--dim);
-    text-align: center;
-  }
-
-  /* ---- facts band ---- */
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin: 56px 0 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--line);
-  }
-  .facts div { background: var(--panel); padding: 22px 20px; }
-  .facts b { display: block; font-size: 26px; font-weight: 620; letter-spacing: -.02em; }
-  .facts span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
-
-  /* ---- sections ---- */
-  section { padding: 80px 0 0; }
-  h2 {
-    font-size: clamp(24px, 3.4vw, 30px);
-    line-height: 1.15;
-    letter-spacing: -.025em;
-    font-weight: 620;
-    margin: 0 0 12px;
-  }
-  .sub { color: var(--muted); font-size: 16px; margin: 0 0 26px; max-width: 56ch; }
-
-  /* ---- comparison table ---- */
-  .cmp-scroll { overflow-x: auto; }
-  table.cmp {
-    width: 100%;
-    min-width: 520px;
-    border-collapse: collapse;
-    font-size: 14.5px;
-  }
-  table.cmp th, table.cmp td {
-    text-align: start;
-    padding: 15px 16px;
-    border-top: 1px solid var(--line);
-    vertical-align: top;
-  }
-  table.cmp thead th {
-    border-top: 0;
-    padding-top: 0;
-    font-size: 13px;
-    color: var(--dim);
-    font-weight: 500;
-  }
-  table.cmp thead th:last-child { color: var(--brand-ink); }
-  table.cmp td:first-child { color: var(--fg); width: 27%; font-weight: 550; }
-  table.cmp td:nth-child(2) { color: var(--dim); width: 36%; }
-  table.cmp td:last-child { color: var(--muted); }
-  table.cmp td:last-child { background: var(--brand-wash); }
-
-  /* ---- steps ---- */
-  .steps { counter-reset: s; margin: 0; padding: 0; list-style: none; }
-  .steps li {
-    counter-increment: s;
-    position: relative;
-    padding: 24px 0;
-    padding-inline-start: 46px;
-    border-top: 1px solid var(--line);
-  }
-  .steps li::before {
-    content: counter(s);
-    position: absolute;
-    inset-inline-start: 0;
-    top: 24px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    color: var(--muted);
-    font-size: 12.5px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .steps h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 5px; letter-spacing: -.01em; }
-  .steps p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  .quote {
-    margin: 14px 0 0;
-    padding: 13px 15px;
-    border-inline-start: 2px solid var(--brand);
-    background: var(--panel);
-    border-start-end-radius: 8px;
-    border-end-end-radius: 8px;
-    color: var(--fg);
-    font-size: 14.5px;
-  }
-
-  /* ---- method chips ---- */
-  .fam { padding: 20px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
-  .fam h3 { margin: 2px 0 0; font-size: 14px; font-weight: 600; color: var(--fg); letter-spacing: -.005em; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips span {
-    font-size: 12.5px;
-    color: var(--muted);
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 3px 9px;
-    line-height: 1.5;
-  }
-
-  /* ---- generic points ---- */
-  .point { padding: 26px 0; border-top: 1px solid var(--line); }
-  .point h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 6px; letter-spacing: -.01em; }
-  .point p { margin: 0; color: var(--muted); font-size: 15px; }
-  .point p + p { margin-top: 10px; }
-
-  /* ---- callout ---- */
-  .cross {
-    margin-top: 30px;
-    padding: 24px 22px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--panel);
-  }
-  .cross h3 { margin: 0 0 6px; font-size: 17px; font-weight: 620; }
-  .cross p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
-  .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
-  .cross a:hover { text-decoration: underline; }
-
-  /* ---- release notes ---- */
-  .release-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 34px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
-  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
-  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  /* ---- downloads ---- */
-  .get { padding: 80px 0 0; }
-  .get .sub { margin-bottom: 22px; }
-  .dl { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .dl a {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 14px 16px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--panel);
-    color: var(--fg);
-    text-decoration: none;
-    transition: border-color .16s ease, background .16s ease, transform .16s ease;
-  }
-  .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
-  .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
-  .dl svg { width: 16px; height: 16px; fill: currentColor; color: var(--muted); flex: none; transition: color .16s ease; }
-  .dl a:hover svg { color: var(--fg); }
-  .dl .meta { font-size: 13px; color: var(--muted); margin-inline-start: auto; }
-  .caveat { color: var(--muted); font-size: 13px; margin: 18px 0 0; }
-  .caveat b { color: var(--fg); font-weight: 550; }
-
-  /* ---- faq ---- */
-  .faq details {
-    border-top: 1px solid var(--line);
-    padding: 16px 0;
-  }
-  .faq summary {
-    cursor: pointer;
-    list-style: none;
-    font-size: 15.5px;
-    font-weight: 550;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::before {
-    content: "+";
-    color: var(--brand-ink);
-    font-weight: 500;
-    width: 12px;
-    flex: none;
-    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
-  }
-  .faq details[open] summary::before { transform: rotate(45deg); }
-  /* scoped to details so it cannot catch anything else in the section */
-  .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
-
-  footer {
-    margin-top: 72px;
-    padding: 28px 0 72px;
-    border-top: 1px solid var(--line);
-    color: var(--dim);
-    font-size: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    align-items: center;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--fg); }
-  footer .spacer { margin-inline-start: auto; }
-
-
-  /* ---- top bar and language switcher ---- */
-  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .topnav { display: flex; align-items: center; gap: 18px; }
-  .topnav-link {
-    color: var(--muted); text-decoration: none; font-size: 14px;
-    transition: color .16s ease;
-  }
-  .topnav-link:hover, .topnav-link[aria-current="page"] { color: var(--fg); }
-  .lang { position: relative; }
-  .lang summary {
-    list-style: none;
-    cursor: pointer;
-    color: var(--muted);
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    transition: color .16s ease;
-  }
-  .lang summary::-webkit-details-marker { display: none; }
-  .lang summary:hover { color: var(--fg); }
-  .lang summary svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
-  .lang-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    inset-inline-end: 0;
-    z-index: 20;
-    width: 190px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top right;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .lang-menu { transform-origin: top left; }
-  .lang-menu a {
-    display: block;
-    padding: 7px 10px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .lang-menu a:hover { background: var(--hover); }
-  .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
-
-
-  /* ---- motion ----
-     The hero animates on load. Everything below it waits until it scrolls
-     into view, and only when JS has added .js-reveal, so a page without
-     JavaScript renders complete and still. */
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
-  }
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .topbar,
-  header h1,
-  header .lede,
-  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
-  /* .note is inline, so a transform on it would be ignored */
-  header .note { animation: fade .55s ease both; }
-  .topbar { animation-delay: .02s; }
-  header h1 { animation-delay: .09s; }
-  header .lede { animation-delay: .17s; }
-  header .cta { animation-delay: .25s; }
-  header .note { animation-delay: .34s; }
-
-  .js-reveal .reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
-  }
-  .js-reveal .reveal.in { opacity: 1; transform: none; }
-
-  /* ---- hover detail ---- */
-  .dl a:hover { transform: translateY(-1px); }
-  .chips span { transition: border-color .16s ease, color .16s ease; }
-  .chips span:hover { border-color: var(--brand); color: var(--fg); }
-  table.cmp tbody td { transition: background .18s ease; }
-  table.cmp tbody tr:hover td:first-child,
-  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
-  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
-
-  /* Newer engines can transition to an intrinsic height. Older ones skip the
-     whole block and open instantly, which is what they did before. */
-  @supports selector(::details-content) {
-    :root { interpolate-size: allow-keywords; }
-    .faq details::details-content {
-      block-size: 0;
-      overflow: clip;
-      opacity: 0;
-      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
-      transition-behavior: allow-discrete;
-    }
-    .faq details[open]::details-content { block-size: auto; opacity: 1; }
-  }
-
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13.5px;
-    color: var(--fg);
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    padding: 1px 5px;
-    border-radius: 5px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
-  }
-  @media (max-width: 640px) {
-    header { padding-top: 56px; }
-    h1 { max-width: none; }
-    .note { display: block; margin: 14px 0 0; }
-    .dl { grid-template-columns: 1fr; }
-    .release-list { grid-template-columns: 1fr; }
-    .facts { grid-template-columns: 1fr; }
-    .fam { grid-template-columns: 1fr; gap: 10px; }
-    .shot { padding: 0 16px; }
-
-    /* The two-column comparison would need sideways scrolling here, so each
-       row becomes a small card with its own column labels instead. */
-    table.cmp { min-width: 0; }
-    table.cmp thead { display: none; }
-    table.cmp tbody tr { display: block; padding: 20px 0; border-top: 1px solid var(--line); }
-    table.cmp td { display: block; border: 0; padding: 0; }
-    /* the desktop percentage widths would keep these columns narrow */
-    table.cmp td:first-child,
-    table.cmp td:nth-child(2) { width: auto; }
-    table.cmp td:first-child { font-size: 16px; margin-bottom: 10px; }
-    table.cmp td:nth-child(2)::before,
-    table.cmp td:last-child::before {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 1px;
-    }
-    table.cmp td:nth-child(2)::before { content: "Point-and-click"; color: var(--dim); }
-    table.cmp td:last-child::before { content: "Blade"; color: var(--brand-ink); }
-    table.cmp td:last-child { background: none; margin-top: 12px; }
-  }
-</style>
-
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=b9a02dd63365" />
+<link rel="stylesheet" href="/assets/landing.css?v=59bea8e5e4bb" />
 </head>
 <body>
 
@@ -620,7 +90,6 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a class="workflow-link" href="https://blade.skalatec.com/">Alur kerja</a>
         <a href="/pricing">Harga</a>
       <details class="lang">
         <summary>
@@ -648,7 +117,7 @@ try {
     </nav>
     <div class="hero-content wrap">
     <h1>Statistik tanpa <em>software statistik</em>.</h1>
-    <p class="lede">Tanyakan soal data Anda dengan bahasa biasa. Blade memilih ujinya lalu menjalankannya di R pada komputer Anda. Anda menerima keluaran APA, cek asumsi, dan skripnya.</p>
+    <p class="lede">Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya.</p>
     <span class="cta">
       <a class="btn" id="cta" href="#get">Unduh Blade</a>
       <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-controls="cta-menu" aria-expanded="false" aria-label="Unduhan lain" hidden>
@@ -659,156 +128,48 @@ try {
     <span class="note" id="cta-note">macOS dan Windows, beta</span>
     </div>
 </header>
-<main class="wrap main-content">
-<div class="shot">
-  <figure class="reveal">
-    <img src="/app.png" alt="Blade Desktop menampilkan panel regresi linear, kurva ROC dengan rasio odds regresi logistik, dan diagram jalur model persamaan struktural, di samping berkas proyek yang dihasilkannya." width="1600" height="1011" loading="lazy" />
-  </figure>
-  <figcaption>Satu sesi: diagnostik regresi, kurva ROC, diagram jalur SEM. Semua skrip tertinggal di folder.</figcaption>
-</div>
-
-  <div class="facts reveal">
-    <div><b>46</b><span>prosedur statistik, dari deskriptif sampai SEM</span></div>
-    <div><b>R</b><span>menghitung angka di balik tiap hasil</span></div>
-    <div><b>0</b><span>berkas data yang diunggah ke mana pun</span></div>
-  </div>
-
-  <section id="spss">
-    <h2 class="reveal">Kotak dialog tidak pernah jadi bagian yang sulit.</h2>
-    <p class="sub reveal">Yang berat itu memilih uji yang tepat. Berat juga memastikan uji itu boleh dipakai. Berat juga mengulangnya tahun depan.</p>
-    <div class="cmp-scroll reveal">
-      <table class="cmp">
-        <thead>
-          <tr><th>&nbsp;</th><th>Software statistik berbasis menu</th><th>Blade</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Sampai ke hasil</td>
-            <td>Cari menunya, isi kotaknya, berharap setelan bawaannya benar.</td>
-            <td>Jelaskan pertanyaannya dalam satu kalimat.</td>
-          </tr>
-          <tr>
-            <td>Memilih uji</td>
-            <td>Anda harus sudah tahu sebelum mulai.</td>
-            <td>Blade mengusulkan metode dan menyebut alasannya.</td>
-          </tr>
-          <tr>
-            <td>Asumsi</td>
-            <td>Menu terpisah yang harus Anda ingat untuk dibuka.</td>
-            <td>Diperiksa dan dilaporkan di sebelah hasil.</td>
-          </tr>
-          <tr>
-            <td>Mengulang</td>
-            <td>Hanya kalau sintaksnya Anda simpan sendiri.</td>
-            <td>Tiap analisis meninggalkan R yang bisa dijalankan.</td>
-          </tr>
-          <tr>
-            <td>Data Anda</td>
-            <td>Diimpor ke dunia milik aplikasi itu.</td>
-            <td>Dibaca di tempat. CSV, Excel, <code>.sav</code>, Parquet.</td>
-          </tr>
-        </tbody>
-      </table>
+<main>
+  <section class="product-section wrap" id="how" aria-labelledby="product-title">
+    <div class="section-intro reveal">
+      <div><h2 id="product-title">Dari pertanyaan ke hasil.</h2><p>Buka folder. Ajukan pertanyaan. Dapatkan tabel, grafik, dan kode R di baliknya.</p></div>
+      <a class="outline-link" href="/pricing">Harga <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="product-layout reveal">
+      <figure class="preview-stage">
+        <div class="preview-panels">
+          <img class="app-preview" id="preview-ask" src="/assets/preview-ask.webp" alt="Tanyakan tentang data Anda" width="1100" height="1100" loading="lazy" />
+          <img class="app-preview" id="preview-results" src="/assets/preview-results.webp" alt="Baca hasilnya" width="1100" height="1100" loading="lazy" hidden />
+          <img class="app-preview" id="preview-script" src="/assets/preview-script.webp" alt="Simpan skrip R" width="1100" height="1100" loading="lazy" hidden />
+        </div>
+        <figcaption>Ilustrasi pratinjau aplikasi</figcaption>
+      </figure>
+      <div class="feature-list">
+        <details class="feature-step" name="blade-preview" data-preview="preview-ask" open>
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5h6l2 2h10v13H3V7Zm0 0h18"/></svg><span>Tanyakan tentang data Anda</span></summary>
+          <p>Buka file CSV, Excel, atau SPSS, lalu jelaskan apa yang ingin Anda ketahui.</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-results">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v17h17M9 15V9m5 6V5m5 10v-4"/></svg><span>Baca hasilnya</span></summary>
+          <p>Lihat tabel, grafik, dan pemeriksaan asumsi di satu tempat.</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-script">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg><span>Simpan skrip R</span></summary>
+          <p>Periksa kodenya, jalankan kembali, atau bagikan dengan rekan.</p>
+        </details>
+      </div>
     </div>
   </section>
 
-  <section id="how">
-    <h2 class="reveal">Tunjuk satu folder, tanya, baca keluarannya.</h2>
-    <ol class="steps">
-      <li class="reveal">
-        <h3>Buka folder tempat data Anda sudah tersimpan</h3>
-        <p>Tanpa langkah impor dan tanpa format proyek. Blade membaca berkas di tempatnya. Keluarannya muncul di sebelahnya.</p>
-      </li>
-      <li class="reveal">
-        <h3>Bertanyalah seperti kepada rekan kerja</h3>
-        <p>Blade membaca variabelnya lalu memilih metode. Pilihannya disebut sebelum apa pun dijalankan.</p>
-        <p class="quote">"Apakah kelompok perlakuan masih berbeda pada hasil setelah skor awal dan usia dikontrol?"</p>
-      </li>
-      <li class="reveal">
-        <h3>Baca hasilnya, lalu bawa pulang</h3>
-        <p>Anda dapat keluaran APA, tabel, grafik, cek asumsi, dan bacaan yang lugas. Sintaks R ada di bawahnya. Ekspor bagian mana pun.</p>
-      </li>
-    </ol>
+  <section class="analysis-panel" aria-labelledby="analysis-title">
+    <picture class="panel-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/analysis-clouds-mobile.webp" /><img src="/assets/analysis-clouds.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+    <div class="analysis-copy wrap reveal"><h2 id="analysis-title">AI yang bekerja dengan R.</h2><p>Blade memilih uji, memeriksa asumsi, dan menjelaskan hasil. R menghitung setiap angka.</p><a class="btn light-btn" href="#get">Unduh Blade</a></div>
   </section>
+</main>
 
-  <section id="methods">
-    <h2 class="reveal">Empat puluh enam prosedur, semuanya R sungguhan.</h2>
-    <p class="sub reveal">Tiap prosedur adalah alat yang dipanggil agen ke mesin R. Model memilih mana yang dijalankan lalu membaca keluarannya. Angkanya tidak pernah dari model.</p>
-    <div class="fam reveal">
-      <h3>Deskripsi dan eksplorasi</h3>
-      <div class="chips"><span>Statistik deskriptif</span><span>Frekuensi</span><span>Tabulasi silang</span><span>Eksplorasi</span><span>Rerata per kelompok</span><span>Data hilang</span><span>Rekode</span><span>Hitung variabel</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>Membandingkan kelompok</h3>
-      <div class="chips"><span>Uji t sampel bebas</span><span>Uji t berpasangan</span><span>Uji t satu sampel</span><span>ANOVA satu jalur dan faktorial</span><span>ANOVA ukuran berulang</span><span>MANOVA</span><span>Mann-Whitney</span><span>Kruskal-Wallis</span><span>Wilcoxon bertanda</span><span>Uji tanda</span><span>Friedman</span><span>McNemar</span><span>Q Cochran</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>Hubungan dan model</h3>
-      <div class="chips"><span>Pearson, Spearman, Kendall</span><span>Korelasi parsial</span><span>Regresi linear</span><span>Regresi logistik</span><span>Regresi ordinal</span><span>Regresi multinomial</span><span>Probit</span><span>Estimasi kurva</span><span>Model campuran</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>Struktur dan skala</h3>
-      <div class="chips"><span>Analisis faktor eksploratori</span><span>PCA</span><span>Model persamaan struktural</span><span>Reliabilitas, alfa Cronbach</span><span>K-means</span><span>Klaster hierarkis</span><span>Analisis diskriminan</span><span>Penskalaan multidimensi</span><span>Analisis korespondensi</span><span>Model topik LDA</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>Kategorik</h3>
-      <div class="chips"><span>Chi-square kecocokan</span><span>Uji binomial</span><span>Model loglinear</span><span>Uji runtun</span><span>Kolmogorov-Smirnov</span><span>Uji eksak Fisher</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>Waktu, risiko, sintesis</h3>
-      <div class="chips"><span>Kaplan-Meier</span><span>Regresi Cox</span><span>Kurva ROC</span><span>Autokorelasi</span><span>ARIMA</span><span>Meta-analisis</span></div>
-    </div>
-  </section>
-
-  <section id="trust">
-    <h2 class="reveal">Model menulis pemanggilannya. R menghitung jawabannya.</h2>
-    <div class="point reveal">
-      <h3>Tidak ada angka yang dikira-kira model bahasa</h3>
-      <p>Nilai p di Blade keluar dari prosedur R. Prosedurnya sama dengan yang Anda jalankan sendiri. Model memilih prosedur lalu menjelaskan hasilnya.</p>
-    </div>
-    <div class="point reveal">
-      <h3>Kalau R protes, Anda melihatnya</h3>
-      <p>Peringatan konvergensi, fit singular, dan asumsi yang dilanggar tampil apa adanya. Analisis yang gagal dinyatakan gagal.</p>
-    </div>
-    <div class="point reveal">
-      <h3>Sintaksnya tetap tinggal</h3>
-      <p>Tiap analisis menulis R yang bisa dijalankan ke folder Anda. Berikan ke pembimbing, reviewer, atau ahli statistik. Mereka bisa memeriksanya tanpa Blade.</p>
-    </div>
-    <div class="point reveal">
-      <h3>Komputer Anda, berkas Anda</h3>
-      <p>Blade memakai R dan Python yang sudah ada di komputer Anda, di folder pilihan Anda. Berkas data tidak pernah diunggah. Tiap penulisan berkas dan perintah menunggu persetujuan Anda.</p>
-      <p>API terkelola menyusun rencana kerja dan menyimpan kunci model. Yang tersimpan hanya transkrip sesi, bukan isi ruang kerja Anda.</p>
-    </div>
-    <div class="point reveal">
-      <h3>Bagian mekanisnya dikerjakan, klaimnya milik Anda</h3>
-      <p>Blade cepat di bagian yang mekanis. Ia tidak bisa menilai apakah desain Anda mendukung kesimpulan. Itu tetap urusan Anda.</p>
-    </div>
-    <div class="cross reveal">
-      <h3>Setelah itu, simpan</h3>
-      <p>Simpan sebuah analisis sebagai alur kerja. Semester depan ia jalan di data baru dengan sekali klik. Atau kirim ke rekan sebagai satu berkas.</p>
-      <a href="https://blade.skalatec.com/">Lihat cara kerja alur kerja &rarr;</a>
-    </div>
-  </section>
-
-  <section id="release">
-    <h2 class="reveal">Yang baru di 0.2.21</h2>
-    <p class="sub reveal">Hubungkan WhatsApp dengan WAHA.</p>
-    <ul class="release-list">
-    <li class="reveal">
-      <h3>Instal, pindai, hubungkan</h3>
-      <p>Buka Plugins, jalankan WAHA secara lokal dengan Docker atau hubungkan server, lalu pindai kode QR melalui WhatsApp.</p>
-    </li>
-    <li class="reveal">
-      <h3>Atur akses dan penyimpanan</h3>
-      <p>Pilih izin setiap workspace dan setujui setiap pengiriman. Data dan file WhatsApp dapat memakai banyak ruang penyimpanan.</p>
-    </li>
-    </ul>
-  </section>
-
-  <section class="get" id="get">
-    <h2 class="reveal">Unduh Blade Desktop 0.2.21</h2>
-    <p class="sub reveal">Beta. Blade butuh R, mengeceknya saat pertama dijalankan, dan bisa memasang R serta Python untuk Anda.</p>
-
+<footer class="landscape-footer" id="get">
+  <picture class="footer-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/footer-garden-mobile.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+  <div class="download-content wrap">
+    <h2>Unduh Blade</h2><p class="download-lede">macOS dan Windows. File tetap di komputer Anda.</p>
     <div class="dl reveal" id="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.21/blade-desktop-0.2.21-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
@@ -827,47 +188,17 @@ try {
         <span class="meta">ARM &middot; 99 MB</span>
       </a>
     </div>
-    <p class="caveat"><b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis.</p>
-  </section>
 
-  <section class="faq" id="faq">
-    <h2 class="reveal">Sebelum mengunduh.</h2>
-    <details class="reveal">
-      <summary>Apakah saya perlu bisa R?</summary>
-      <p>Tidak. Anda bertanya dengan bahasa biasa lalu membaca penjelasannya. R ada untuk saat orang minta bukti kerja Anda. Ia jalan sendiri.</p>
-    </details>
-    <details class="reveal">
-      <summary>Apakah berkas SPSS saya bisa dibuka?</summary>
-      <p>Bisa. Berkas <code>.sav</code> SPSS dibaca lewat R, begitu juga CSV, TSV, Excel, dan Parquet. Label variabel dan label nilai ikut terbaca.</p>
-    </details>
-    <details class="reveal">
-      <summary>Amankah menyerahkan statistik ke model bahasa?</summary>
-      <p>Bukan untuk hitungannya, makanya ia tidak pernah menghitung. Model memilih prosedur dan membaca keluaran. R yang menghitung. Pilihan dan sintaksnya terlihat.</p>
-    </details>
-    <details class="reveal">
-      <summary>Apakah data saya keluar dari komputer?</summary>
-      <p>Berkas Anda tetap di folder Anda. API terkelola menyusun analisis dan menyimpan transkrip. Ia tidak pernah menerima data Anda. Tiap penulisan dan perintah minta izin dulu.</p>
-    </details>
-    <details class="reveal">
-      <summary>Apakah ini pengganti ahli statistik?</summary>
-      <p>Yang diganti adalah jam-jam yang habis di menu, sintaks, dan merapikan keluaran. Ia tidak menilai apakah desain Anda mendukung kesimpulan. Ia akan bilang kalau pertanyaannya melampaui datanya.</p>
-    </details>
-    <details class="reveal">
-      <summary>Bagaimana dengan Linux?</summary>
-      <p>Belum dirilis. Versi macOS dan Windows ada di atas.</p>
-    </details>
-  </section>
-
-  <footer>
-    <span>Blade, analisis statistik berbasis agen.</span>
-    <a href="https://blade.skalatec.com/">Alur kerja</a>
-    <a href="/pricing">Harga</a>
-    <a href="/privacy">Privasi</a>
-    <a href="/terms">Ketentuan</a>
-    <span class="spacer">PT Skala Teknologi Nusantara</span>
-  </footer>
-
-</main>
+    <details class="install-notes"><summary>Catatan instalasi</summary><p><b>macOS:</b> ditandatangani dan dinotarisasi PT Skala Teknologi Nusantara, jadi terbuka normal. <b>Windows:</b> belum ditandatangani, jadi SmartScreen memperingatkan sekali. Klik More info lalu Run anyway. Linux belum dirilis.</p></details>
+  </div>
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="https://blade.skalatec.com/">Alur kerja</a><a href="/pricing">Harga</a><a href="/privacy">Privasi</a><a href="/terms">Ketentuan</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+<noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
+<script src="/assets/landing.js?v=59bea8e5e4bb" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

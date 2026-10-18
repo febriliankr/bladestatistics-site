@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Blade, सांख्यिकी सॉफ़्टवेयर के बिना सांख्यिकी</title>
-<meta name="description" content="अपने डेटा के बारे में आम भाषा में पूछिए। Blade परीक्षण चुनता है और उसे आपके कंप्यूटर पर R में चलाता है। आपको APA आउटपुट, अनुमान जाँच और स्क्रिप्ट मिलती है।" />
+<meta name="description" content="अपने शब्दों में पूछें। Blade R में विश्लेषण चलाता है और परिणाम समझाता है।" />
 <link rel="canonical" href="https://bladestatistics.com/hi/" />
 <link rel="alternate" hreflang="en" href="https://bladestatistics.com/" />
 <link rel="alternate" hreflang="es" href="https://bladestatistics.com/es/" />
@@ -25,7 +25,7 @@
 <meta property="og:url" content="https://bladestatistics.com/hi/" />
 <meta property="og:locale" content="hi_IN" />
 <meta property="og:title" content="Blade, सांख्यिकी सॉफ़्टवेयर के बिना सांख्यिकी" />
-<meta property="og:description" content="सवाल बताइए। Blade परीक्षण चुनता है, आपके कंप्यूटर की R में चलाता है और अपना काम दिखाता है।" />
+<meta property="og:description" content="अपने शब्दों में पूछें। Blade R में विश्लेषण चलाता है और परिणाम समझाता है।" />
 <meta property="og:image" content="https://bladestatistics.com/app.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
@@ -78,540 +78,10 @@ try {
   }
 } catch (e) {}
 </script>
-<style>
-  :root {
-    color-scheme: dark light;
-    --bg: #0b0b0c;
-    --fg: #ededee;
-    --muted: #8b8b90;
-    --dim: #6a6a70;
-    --line: #232326;
-    --panel: #131315;
-    --panel-2: #17171a;
-    --hover: #1c1c1f;
-    --code-bg: #1a1a1d;
-    --brand: #ff4900;
-    /* brand orange on white is too weak for small text, so text and buttons
-       get their own darker value in light mode */
-    --brand-ink: #ff5c1a;
-    --brand-btn: #ff4900;
-    --brand-btn-hover: #ff6326;
-    --brand-wash: rgba(255, 73, 0, .035);
-    --brand-wash-hover: rgba(255, 73, 0, .075);
-    --shadow: 0 12px 32px rgba(0, 0, 0, .55);
-  }
-
-  /* the page follows the device: same layout, two palettes */
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #ffffff;
-      --fg: #17171a;
-      --muted: #5d5d64;
-      --dim: #85858c;
-      --line: #e4e4e6;
-      --panel: #f8f8f7;
-      --panel-2: #f2f2f1;
-      --hover: #eeeeed;
-      --code-bg: #f0f0ee;
-      --brand: #ff4900;
-      --brand-ink: #c03700;
-      --brand-btn: #d13c00;
-      --brand-btn-hover: #b93500;
-      --brand-wash: rgba(255, 73, 0, .05);
-      --brand-wash-hover: rgba(255, 73, 0, .1);
-      --shadow: 0 12px 32px rgba(0, 0, 0, .12);
-    }
-    /* thinning the strokes helps on a dark ground and hurts on a light one */
-    body { -webkit-font-smoothing: auto; }
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-      "Hiragino Sans", "Yu Gothic UI", "Malgun Gothic", "PingFang SC",
-      "Microsoft YaHei", "Noto Sans", "Nirmala UI", "Geeza Pro", sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-
-  /* ---- header / hero ---- */
-  header { padding: 88px 0 0; }
-  .logo { width: 56px; height: 56px; border-radius: 13px; display: block; }
-  h1 {
-    margin-top: 30px;
-    font-size: clamp(34px, 6vw, 52px);
-    line-height: 1.06;
-    letter-spacing: -.035em;
-    font-weight: 640;
-    margin: 0 0 18px;
-    max-width: 15ch;
-  }
-  h1 em { font-style: normal; color: var(--brand-ink); }
-  .lede { font-size: 18.5px; color: var(--muted); margin: 0 0 32px; max-width: 54ch; }
-
-  .btn {
-    display: inline-block;
-    background: var(--brand-btn);
-    color: #fff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 550;
-    padding: 11px 22px;
-    border-radius: 9px;
-    transition: background .16s ease, transform .16s ease;
-  }
-  .btn:hover { background: var(--brand-btn-hover); }
-  .btn:active { transform: translateY(1px); }
-
-  /* adaptive CTA: primary button + variant dropdown */
-  .cta { position: relative; display: inline-flex; align-items: stretch; gap: 2px; vertical-align: middle; }
-  .cta .btn {
-    border-start-start-radius: 9px;
-    border-end-start-radius: 9px;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-  }
-  .cta .btn:only-child { border-radius: 9px; }
-  /* .cta .btn outranks a bare .caret rule, so this selector has to match it. */
-  .cta .caret {
-    border: 0;
-    cursor: pointer;
-    padding: 0 12px;
-    display: flex;
-    align-items: center;
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-    border-start-end-radius: 9px;
-    border-end-end-radius: 9px;
-  }
-  .caret svg { width: 10px; height: 6px; fill: #fff; transition: transform .18s ease; }
-  .caret[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .cta-menu {
-    position: absolute;
-    top: calc(100% + 6px);
-    inset-inline-start: 0;
-    z-index: 10;
-    min-width: 290px;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top left;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .cta-menu {
-    transform-origin: top right;
-  }
-  @keyframes menuIn {
-    from { opacity: 0; transform: translateY(-6px) scale(.97); }
-    to { opacity: 1; transform: none; }
-  }
-  .cta-menu a {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 11px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .cta-menu a:hover { background: var(--hover); }
-  .cta-menu svg { width: 15px; height: 15px; fill: currentColor; color: var(--muted); flex: none; }
-  .cta-menu a:hover svg { color: var(--fg); }
-  .cta-menu .meta { margin-inline-start: auto; font-size: 12px; color: var(--muted); }
-  .note { color: var(--muted); font-size: 14px; margin-inline-start: 16px; }
-
-  /* ---- screenshot ---- */
-  .shot {
-    margin: 52px auto 0;
-    max-width: 880px;
-    padding: 0 24px;
-  }
-  .shot figure {
-    margin: 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--panel);
-    line-height: 0;
-  }
-  .shot img { width: 100%; height: auto; display: block; }
-  .shot figcaption {
-    line-height: 1.6;
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--dim);
-    text-align: center;
-  }
-
-  /* ---- facts band ---- */
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin: 56px 0 0;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--line);
-  }
-  .facts div { background: var(--panel); padding: 22px 20px; }
-  .facts b { display: block; font-size: 26px; font-weight: 620; letter-spacing: -.02em; }
-  .facts span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; }
-
-  /* ---- sections ---- */
-  section { padding: 80px 0 0; }
-  h2 {
-    font-size: clamp(24px, 3.4vw, 30px);
-    line-height: 1.15;
-    letter-spacing: -.025em;
-    font-weight: 620;
-    margin: 0 0 12px;
-  }
-  .sub { color: var(--muted); font-size: 16px; margin: 0 0 26px; max-width: 56ch; }
-
-  /* ---- comparison table ---- */
-  .cmp-scroll { overflow-x: auto; }
-  table.cmp {
-    width: 100%;
-    min-width: 520px;
-    border-collapse: collapse;
-    font-size: 14.5px;
-  }
-  table.cmp th, table.cmp td {
-    text-align: start;
-    padding: 15px 16px;
-    border-top: 1px solid var(--line);
-    vertical-align: top;
-  }
-  table.cmp thead th {
-    border-top: 0;
-    padding-top: 0;
-    font-size: 13px;
-    color: var(--dim);
-    font-weight: 500;
-  }
-  table.cmp thead th:last-child { color: var(--brand-ink); }
-  table.cmp td:first-child { color: var(--fg); width: 27%; font-weight: 550; }
-  table.cmp td:nth-child(2) { color: var(--dim); width: 36%; }
-  table.cmp td:last-child { color: var(--muted); }
-  table.cmp td:last-child { background: var(--brand-wash); }
-
-  /* ---- steps ---- */
-  .steps { counter-reset: s; margin: 0; padding: 0; list-style: none; }
-  .steps li {
-    counter-increment: s;
-    position: relative;
-    padding: 24px 0;
-    padding-inline-start: 46px;
-    border-top: 1px solid var(--line);
-  }
-  .steps li::before {
-    content: counter(s);
-    position: absolute;
-    inset-inline-start: 0;
-    top: 24px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--line);
-    background: var(--panel);
-    color: var(--muted);
-    font-size: 12.5px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .steps h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 5px; letter-spacing: -.01em; }
-  .steps p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  .quote {
-    margin: 14px 0 0;
-    padding: 13px 15px;
-    border-inline-start: 2px solid var(--brand);
-    background: var(--panel);
-    border-start-end-radius: 8px;
-    border-end-end-radius: 8px;
-    color: var(--fg);
-    font-size: 14.5px;
-  }
-
-  /* ---- method chips ---- */
-  .fam { padding: 20px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
-  .fam h3 { margin: 2px 0 0; font-size: 14px; font-weight: 600; color: var(--fg); letter-spacing: -.005em; }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips span {
-    font-size: 12.5px;
-    color: var(--muted);
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 3px 9px;
-    line-height: 1.5;
-  }
-
-  /* ---- generic points ---- */
-  .point { padding: 26px 0; border-top: 1px solid var(--line); }
-  .point h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 6px; letter-spacing: -.01em; }
-  .point p { margin: 0; color: var(--muted); font-size: 15px; }
-  .point p + p { margin-top: 10px; }
-
-  /* ---- callout ---- */
-  .cross {
-    margin-top: 30px;
-    padding: 24px 22px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--panel);
-  }
-  .cross h3 { margin: 0 0 6px; font-size: 17px; font-weight: 620; }
-  .cross p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
-  .cross a { color: var(--brand-ink); text-decoration: none; font-weight: 550; font-size: 15px; }
-  .cross a:hover { text-decoration: underline; }
-
-  /* ---- release notes ---- */
-  .release-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 34px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .release-list li { padding: 22px 0; border-top: 1px solid var(--line); }
-  .release-list h3 { margin: 0 0 6px; font-size: 16.5px; font-weight: 600; letter-spacing: 0; }
-  .release-list p { margin: 0; color: var(--muted); font-size: 15px; }
-
-  /* ---- downloads ---- */
-  .get { padding: 80px 0 0; }
-  .get .sub { margin-bottom: 22px; }
-  .dl { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .dl a {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 14px 16px;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    background: var(--panel);
-    color: var(--fg);
-    text-decoration: none;
-    transition: border-color .16s ease, background .16s ease, transform .16s ease;
-  }
-  .dl a:hover { border-color: var(--brand); background: var(--panel-2); }
-  .dl .os { font-size: 15px; font-weight: 550; display: flex; align-items: center; gap: 9px; }
-  .dl svg { width: 16px; height: 16px; fill: currentColor; color: var(--muted); flex: none; transition: color .16s ease; }
-  .dl a:hover svg { color: var(--fg); }
-  .dl .meta { font-size: 13px; color: var(--muted); margin-inline-start: auto; }
-  .caveat { color: var(--muted); font-size: 13px; margin: 18px 0 0; }
-  .caveat b { color: var(--fg); font-weight: 550; }
-
-  /* ---- faq ---- */
-  .faq details {
-    border-top: 1px solid var(--line);
-    padding: 16px 0;
-  }
-  .faq summary {
-    cursor: pointer;
-    list-style: none;
-    font-size: 15.5px;
-    font-weight: 550;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::before {
-    content: "+";
-    color: var(--brand-ink);
-    font-weight: 500;
-    width: 12px;
-    flex: none;
-    transition: transform .22s cubic-bezier(.2, .7, .3, 1);
-  }
-  .faq details[open] summary::before { transform: rotate(45deg); }
-  /* scoped to details so it cannot catch anything else in the section */
-  .faq details p { margin: 10px 0 0; margin-inline-start: 22px; color: var(--muted); font-size: 15px; }
-
-  footer {
-    margin-top: 72px;
-    padding: 28px 0 72px;
-    border-top: 1px solid var(--line);
-    color: var(--dim);
-    font-size: 14px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 18px;
-    align-items: center;
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--fg); }
-  footer .spacer { margin-inline-start: auto; }
-
-
-  /* ---- top bar and language switcher ---- */
-  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-  .topnav { display: flex; align-items: center; gap: 18px; }
-  .topnav-link {
-    color: var(--muted); text-decoration: none; font-size: 14px;
-    transition: color .16s ease;
-  }
-  .topnav-link:hover, .topnav-link[aria-current="page"] { color: var(--fg); }
-  .lang { position: relative; }
-  .lang summary {
-    list-style: none;
-    cursor: pointer;
-    color: var(--muted);
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    transition: color .16s ease;
-  }
-  .lang summary::-webkit-details-marker { display: none; }
-  .lang summary:hover { color: var(--fg); }
-  .lang summary svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
-  .lang-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    inset-inline-end: 0;
-    z-index: 20;
-    width: 190px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 5px;
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    background: var(--panel);
-    box-shadow: var(--shadow);
-    transform-origin: top right;
-    animation: menuIn .16s cubic-bezier(.2, .8, .3, 1);
-  }
-  [dir="rtl"] .lang-menu { transform-origin: top left; }
-  .lang-menu a {
-    display: block;
-    padding: 7px 10px;
-    border-radius: 7px;
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 14px;
-    transition: background .13s ease;
-  }
-  .lang-menu a:hover { background: var(--hover); }
-  .lang-menu a[aria-current="true"] { color: var(--brand-ink); }
-
-
-  /* ---- motion ----
-     The hero animates on load. Everything below it waits until it scrolls
-     into view, and only when JS has added .js-reveal, so a page without
-     JavaScript renders complete and still. */
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: none; }
-  }
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .topbar,
-  header h1,
-  header .lede,
-  header .cta { animation: rise .55s cubic-bezier(.2, .7, .3, 1) both; }
-  /* .note is inline, so a transform on it would be ignored */
-  header .note { animation: fade .55s ease both; }
-  .topbar { animation-delay: .02s; }
-  header h1 { animation-delay: .09s; }
-  header .lede { animation-delay: .17s; }
-  header .cta { animation-delay: .25s; }
-  header .note { animation-delay: .34s; }
-
-  .js-reveal .reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .6s cubic-bezier(.2, .7, .3, 1), transform .6s cubic-bezier(.2, .7, .3, 1);
-  }
-  .js-reveal .reveal.in { opacity: 1; transform: none; }
-
-  /* ---- hover detail ---- */
-  .dl a:hover { transform: translateY(-1px); }
-  .chips span { transition: border-color .16s ease, color .16s ease; }
-  .chips span:hover { border-color: var(--brand); color: var(--fg); }
-  table.cmp tbody td { transition: background .18s ease; }
-  table.cmp tbody tr:hover td:first-child,
-  table.cmp tbody tr:hover td:nth-child(2) { background: var(--panel); }
-  table.cmp tbody tr:hover td:last-child { background: var(--brand-wash-hover); }
-
-  /* Newer engines can transition to an intrinsic height. Older ones skip the
-     whole block and open instantly, which is what they did before. */
-  @supports selector(::details-content) {
-    :root { interpolate-size: allow-keywords; }
-    .faq details::details-content {
-      block-size: 0;
-      overflow: clip;
-      opacity: 0;
-      transition: block-size .3s ease, opacity .24s ease, content-visibility .3s;
-      transition-behavior: allow-discrete;
-    }
-    .faq details[open]::details-content { block-size: auto; opacity: 1; }
-  }
-
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13.5px;
-    color: var(--fg);
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    padding: 1px 5px;
-    border-radius: 5px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-    .js-reveal .reveal { opacity: 1 !important; transform: none !important; }
-  }
-  @media (max-width: 640px) {
-    header { padding-top: 56px; }
-    h1 { max-width: none; }
-    .note { display: block; margin: 14px 0 0; }
-    .dl { grid-template-columns: 1fr; }
-    .release-list { grid-template-columns: 1fr; }
-    .facts { grid-template-columns: 1fr; }
-    .fam { grid-template-columns: 1fr; gap: 10px; }
-    .shot { padding: 0 16px; }
-
-    /* The two-column comparison would need sideways scrolling here, so each
-       row becomes a small card with its own column labels instead. */
-    table.cmp { min-width: 0; }
-    table.cmp thead { display: none; }
-    table.cmp tbody tr { display: block; padding: 20px 0; border-top: 1px solid var(--line); }
-    table.cmp td { display: block; border: 0; padding: 0; }
-    /* the desktop percentage widths would keep these columns narrow */
-    table.cmp td:first-child,
-    table.cmp td:nth-child(2) { width: auto; }
-    table.cmp td:first-child { font-size: 16px; margin-bottom: 10px; }
-    table.cmp td:nth-child(2)::before,
-    table.cmp td:last-child::before {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 1px;
-    }
-    table.cmp td:nth-child(2)::before { content: "Point-and-click"; color: var(--dim); }
-    table.cmp td:last-child::before { content: "Blade"; color: var(--brand-ink); }
-    table.cmp td:last-child { background: none; margin-top: 12px; }
-  }
-</style>
-
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=b9a02dd63365" />
+<link rel="stylesheet" href="/assets/landing.css?v=59bea8e5e4bb" />
 </head>
 <body>
 
@@ -620,7 +90,6 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a class="workflow-link" href="https://blade.skalatec.com/">वर्कफ़्लो</a>
         <a href="/pricing">मूल्य</a>
       <details class="lang">
         <summary>
@@ -648,7 +117,7 @@ try {
     </nav>
     <div class="hero-content wrap">
     <h1>सांख्यिकी, <em>सांख्यिकी सॉफ़्टवेयर</em> के बिना।</h1>
-    <p class="lede">अपने डेटा के बारे में आम भाषा में पूछिए। Blade परीक्षण चुनता है और उसे आपके कंप्यूटर पर R में चलाता है। आपको APA आउटपुट, अनुमान जाँच और स्क्रिप्ट मिलती है।</p>
+    <p class="lede">अपने शब्दों में पूछें। Blade R में विश्लेषण चलाता है और परिणाम समझाता है।</p>
     <span class="cta">
       <a class="btn" id="cta" href="#get">Blade डाउनलोड करें</a>
       <button class="btn caret" id="cta-more" type="button" aria-haspopup="menu" aria-controls="cta-menu" aria-expanded="false" aria-label="अन्य डाउनलोड" hidden>
@@ -659,156 +128,48 @@ try {
     <span class="note" id="cta-note">macOS और Windows, बीटा</span>
     </div>
 </header>
-<main class="wrap main-content">
-<div class="shot">
-  <figure class="reveal">
-    <img src="/app.png" alt="Blade Desktop में रैखिक प्रतिगमन पैनल, लॉजिस्टिक प्रतिगमन के ऑड्स अनुपात के साथ ROC वक्र, और संरचनात्मक समीकरण मॉडल का पथ आरेख, साथ में बनाई गई प्रोजेक्ट फ़ाइलें।" width="1600" height="1011" loading="lazy" />
-  </figure>
-  <figcaption>एक सत्र: प्रतिगमन निदान, ROC वक्र, SEM पथ आरेख। हर स्क्रिप्ट फ़ोल्डर में रह गई।</figcaption>
-</div>
-
-  <div class="facts reveal">
-    <div><b>46</b><span>सांख्यिकीय प्रक्रियाएँ, वर्णनात्मक से SEM तक</span></div>
-    <div><b>R</b><span>हर परिणाम के पीछे की गणना करता है</span></div>
-    <div><b>0</b><span>डेटा फ़ाइलें कहीं भी अपलोड हुईं</span></div>
-  </div>
-
-  <section id="spss">
-    <h2 class="reveal">मुश्किल काम कभी डायलॉग बॉक्स नहीं था।</h2>
-    <p class="sub reveal">सही परीक्षण चुनना ही असली काम है। यह जाँचना भी कि आप उसे चला सकते थे। अगले साल नए डेटा पर दोहराना भी।</p>
-    <div class="cmp-scroll reveal">
-      <table class="cmp">
-        <thead>
-          <tr><th>&nbsp;</th><th>मेन्यू वाले सांख्यिकी सॉफ़्टवेयर</th><th>Blade</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>परिणाम तक पहुँचना</td>
-            <td>मेन्यू ढूँढ़िए, बॉक्स भरिए, डिफ़ॉल्ट सही होने की उम्मीद कीजिए।</td>
-            <td>सवाल एक वाक्य में लिखिए।</td>
-          </tr>
-          <tr>
-            <td>परीक्षण चुनना</td>
-            <td>शुरू करने से पहले ही पता होना चाहिए।</td>
-            <td>Blade तरीका सुझाता है और कारण बताता है।</td>
-          </tr>
-          <tr>
-            <td>अनुमान</td>
-            <td>अलग मेन्यू, जिसे खोलना याद रखना पड़ता है।</td>
-            <td>जाँचे जाते हैं और परिणाम के साथ दिखते हैं।</td>
-          </tr>
-          <tr>
-            <td>दोहराना</td>
-            <td>तभी, जब सिंटैक्स आपने खुद सहेजा हो।</td>
-            <td>हर विश्लेषण चलने योग्य R फ़ोल्डर में छोड़ता है।</td>
-          </tr>
-          <tr>
-            <td>आपका डेटा</td>
-            <td>टूल की अपनी दुनिया में आयात होता है।</td>
-            <td>जहाँ है वहीं पढ़ा जाता है। CSV, Excel, <code>.sav</code>, Parquet।</td>
-          </tr>
-        </tbody>
-      </table>
+<main>
+  <section class="product-section wrap" id="how" aria-labelledby="product-title">
+    <div class="section-intro reveal">
+      <div><h2 id="product-title">सवाल से नतीजे तक।</h2><p>फ़ोल्डर खोलें। सवाल पूछें। तालिकाएँ, ग्राफ़ और उनके पीछे का R कोड पाएँ।</p></div>
+      <a class="outline-link" href="/pricing">मूल्य <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="product-layout reveal">
+      <figure class="preview-stage">
+        <div class="preview-panels">
+          <img class="app-preview" id="preview-ask" src="/assets/preview-ask.webp" alt="अपने डेटा के बारे में पूछें" width="1100" height="1100" loading="lazy" />
+          <img class="app-preview" id="preview-results" src="/assets/preview-results.webp" alt="परिणाम पढ़ें" width="1100" height="1100" loading="lazy" hidden />
+          <img class="app-preview" id="preview-script" src="/assets/preview-script.webp" alt="R स्क्रिप्ट सहेजें" width="1100" height="1100" loading="lazy" hidden />
+        </div>
+        <figcaption>ऐप के उदाहरणात्मक दृश्य</figcaption>
+      </figure>
+      <div class="feature-list">
+        <details class="feature-step" name="blade-preview" data-preview="preview-ask" open>
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5h6l2 2h10v13H3V7Zm0 0h18"/></svg><span>अपने डेटा के बारे में पूछें</span></summary>
+          <p>CSV, Excel या SPSS फ़ाइलें खोलें और बताएँ कि आप क्या जानना चाहते हैं।</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-results">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v17h17M9 15V9m5 6V5m5 10v-4"/></svg><span>परिणाम पढ़ें</span></summary>
+          <p>तालिकाएँ, ग्राफ़ और मान्यताओं की जाँच एक ही जगह देखें।</p>
+        </details>
+        <details class="feature-step" name="blade-preview" data-preview="preview-script">
+          <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></svg><span>R स्क्रिप्ट सहेजें</span></summary>
+          <p>कोड जाँचें, दोबारा चलाएँ या किसी सहकर्मी के साथ साझा करें।</p>
+        </details>
+      </div>
     </div>
   </section>
 
-  <section id="how">
-    <h2 class="reveal">एक फ़ोल्डर दिखाइए, पूछिए, आउटपुट पढ़िए।</h2>
-    <ol class="steps">
-      <li class="reveal">
-        <h3>वह फ़ोल्डर खोलिए जहाँ डेटा पहले से है</h3>
-        <p>न आयात का चरण, न प्रोजेक्ट फ़ॉर्मैट। Blade फ़ाइलें वहीं पढ़ता है। आउटपुट उन्हीं के बगल में आता है।</p>
-      </li>
-      <li class="reveal">
-        <h3>जैसे किसी सहकर्मी से पूछते, वैसे पूछिए</h3>
-        <p>Blade चर पढ़कर तरीका चुनता है। कुछ भी चलाने से पहले वह अपना चुनाव बताता है।</p>
-        <p class="quote">«आधार अंक और आयु को नियंत्रित करने के बाद भी क्या उपचार समूह का परिणाम अलग है?»</p>
-      </li>
-      <li class="reveal">
-        <h3>परिणाम पढ़िए, फिर साथ ले जाइए</h3>
-        <p>आपको APA आउटपुट, तालिकाएँ, ग्राफ़, अनुमान जाँच और सीधी व्याख्या मिलती है। नीचे R सिंटैक्स रहता है। जो चाहें निर्यात कीजिए।</p>
-      </li>
-    </ol>
+  <section class="analysis-panel" aria-labelledby="analysis-title">
+    <picture class="panel-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/analysis-clouds-mobile.webp" /><img src="/assets/analysis-clouds.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+    <div class="analysis-copy wrap reveal"><h2 id="analysis-title">R के साथ काम करने वाला AI।</h2><p>Blade परीक्षण चुनता है, मान्यताएँ जाँचता है और परिणाम समझाता है। हर संख्या R से आती है।</p><a class="btn light-btn" href="#get">Blade डाउनलोड करें</a></div>
   </section>
+</main>
 
-  <section id="methods">
-    <h2 class="reveal">छियालीस प्रक्रियाएँ, सब असली R में।</h2>
-    <p class="sub reveal">हर प्रक्रिया एक औज़ार है जिसे एजेंट R इंजन पर चलाता है। मॉडल तय करता है कि कौन सी चलेगी और आउटपुट पढ़ता है। संख्याएँ वह नहीं बनाता।</p>
-    <div class="fam reveal">
-      <h3>वर्णन और अन्वेषण</h3>
-      <div class="chips"><span>वर्णनात्मक सांख्यिकी</span><span>आवृत्तियाँ</span><span>क्रॉस सारणी</span><span>अन्वेषण</span><span>समूहवार माध्य</span><span>अनुपस्थित मान</span><span>पुनःकोडिंग</span><span>चर की गणना</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>समूहों की तुलना</h3>
-      <div class="chips"><span>स्वतंत्र प्रतिदर्श t परीक्षण</span><span>युग्मित t परीक्षण</span><span>एक प्रतिदर्श t परीक्षण</span><span>एकमार्गी और गुणनखंडीय ANOVA</span><span>पुनरावृत्त माप ANOVA</span><span>MANOVA</span><span>मान-व्हिटनी</span><span>क्रुस्कल-वालिस</span><span>विलकॉक्सन चिह्नित कोटि</span><span>चिह्न परीक्षण</span><span>फ्रीडमैन</span><span>मैकनेमार</span><span>कोक्रेन Q</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>संबंध और मॉडल</h3>
-      <div class="chips"><span>पियर्सन, स्पीयरमैन, केंडल</span><span>आंशिक सहसंबंध</span><span>रैखिक प्रतिगमन</span><span>लॉजिस्टिक प्रतिगमन</span><span>क्रमसूचक प्रतिगमन</span><span>बहुपद प्रतिगमन</span><span>प्रोबिट</span><span>वक्र आकलन</span><span>मिश्रित मॉडल</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>संरचना और मापनी</h3>
-      <div class="chips"><span>अन्वेषी कारक विश्लेषण</span><span>प्रमुख घटक विश्लेषण</span><span>संरचनात्मक समीकरण मॉडल</span><span>विश्वसनीयता, क्रोनबाख अल्फा</span><span>K-मीन्स</span><span>पदानुक्रमिक क्लस्टरिंग</span><span>विभेदक विश्लेषण</span><span>बहुआयामी मापन</span><span>संगति विश्लेषण</span><span>LDA विषय मॉडल</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>श्रेणीबद्ध</h3>
-      <div class="chips"><span>काई वर्ग सुसंगति</span><span>द्विपद परीक्षण</span><span>लॉगलीनियर मॉडल</span><span>रन परीक्षण</span><span>कोलमोगोरोव-स्मिरनोव</span><span>फिशर सटीक परीक्षण</span></div>
-    </div>
-    <div class="fam reveal">
-      <h3>समय, जोखिम, संश्लेषण</h3>
-      <div class="chips"><span>कापलान-मायर</span><span>कॉक्स प्रतिगमन</span><span>ROC वक्र</span><span>स्वसहसंबंध</span><span>ARIMA</span><span>मेटा-विश्लेषण</span></div>
-    </div>
-  </section>
-
-  <section id="trust">
-    <h2 class="reveal">मॉडल कॉल लिखता है। R उत्तर की गणना करता है।</h2>
-    <div class="point reveal">
-      <h3>कोई संख्या भाषा मॉडल नहीं अनुमानता</h3>
-      <p>Blade का p मान R की प्रक्रिया से निकला है। वही प्रक्रिया, जो आप हाथ से चलाते। मॉडल प्रक्रिया चुनता है और लौटे परिणाम की व्याख्या करता है।</p>
-    </div>
-    <div class="point reveal">
-      <h3>R शिकायत करे तो आपको दिखता है</h3>
-      <p>अभिसरण चेतावनियाँ, विलक्षण फ़िट और टूटे अनुमान बिना नरमी के सामने आते हैं। असफल विश्लेषण खुद बता देता है।</p>
-    </div>
-    <div class="point reveal">
-      <h3>सिंटैक्स वहीं रह जाता है</h3>
-      <p>हर विश्लेषण चलने योग्य R आपके फ़ोल्डर में लिखता है। इसे मार्गदर्शक, समीक्षक या सांख्यिकीविद् को दीजिए। वे Blade के बिना जाँच सकते हैं।</p>
-    </div>
-    <div class="point reveal">
-      <h3>आपका कंप्यूटर, आपकी फ़ाइलें</h3>
-      <p>Blade आपके कंप्यूटर के पहले से मौजूद R और Python का उपयोग करता है, आपके चुने फ़ोल्डर में। डेटा फ़ाइलें कभी अपलोड नहीं होतीं। हर फ़ाइल लेखन और हर कमांड आपकी अनुमति का इंतज़ार करता है।</p>
-      <p>होस्टेड API काम की योजना बनाता है और मॉडल कुंजियाँ रखता है। वह सत्र का प्रतिलेख सहेजता है, आपके कार्यक्षेत्र से कुछ नहीं।</p>
-    </div>
-    <div class="point reveal">
-      <h3>यांत्रिक काम यह करता है, दावा आपका</h3>
-      <p>Blade यांत्रिक हिस्से में तेज़ है। यह तय नहीं कर सकता कि आपका डिज़ाइन निष्कर्ष सँभालता है या नहीं। वह आपका ही रहता है।</p>
-    </div>
-    <div class="cross reveal">
-      <h3>फिर इसे रख लीजिए</h3>
-      <p>एक विश्लेषण को वर्कफ़्लो के रूप में सहेजिए। अगले सत्र में यह नए डेटा पर एक क्लिक में चलेगा। या एक फ़ाइल के रूप में सहकर्मी तक जाएगा।</p>
-      <a href="https://blade.skalatec.com/">देखिए वर्कफ़्लो कैसे चलते हैं &rarr;</a>
-    </div>
-  </section>
-
-  <section id="release">
-    <h2 class="reveal">0.2.21 में नया क्या है</h2>
-    <p class="sub reveal">WAHA से WhatsApp जोड़ें।</p>
-    <ul class="release-list">
-    <li class="reveal">
-      <h3>इंस्टॉल करें, स्कैन करें, जोड़ें</h3>
-      <p>Plugins खोलें, Docker से अपने कंप्यूटर पर WAHA चलाएँ या सर्वर जोड़ें, फिर WhatsApp में QR कोड स्कैन करें।</p>
-    </li>
-    <li class="reveal">
-      <h3>एक्सेस और स्टोरेज नियंत्रित करें</h3>
-      <p>हर वर्कस्पेस की अनुमति चुनें और हर बार भेजने की मंज़ूरी दें। WhatsApp डेटा और फ़ाइलें बहुत अधिक स्टोरेज ले सकती हैं।</p>
-    </li>
-    </ul>
-  </section>
-
-  <section class="get" id="get">
-    <h2 class="reveal">Blade Desktop 0.2.21 डाउनलोड करें</h2>
-    <p class="sub reveal">बीटा। Blade को R चाहिए, पहली बार चलने पर वह जाँचता है और आपके लिए R तथा Python स्थापित कर सकता है।</p>
-
+<footer class="landscape-footer" id="get">
+  <picture class="footer-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/footer-garden-mobile.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+  <div class="download-content wrap">
+    <h2>Blade डाउनलोड करें</h2><p class="download-lede">macOS और Windows। आपकी फ़ाइलें आपके कंप्यूटर पर रहती हैं।</p>
     <div class="dl reveal" id="dl">
       <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.21/blade-desktop-0.2.21-mac-arm64.dmg">
         <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
@@ -827,47 +188,17 @@ try {
         <span class="meta">ARM &middot; 99 MB</span>
       </a>
     </div>
-    <p class="caveat"><b>macOS:</b> PT Skala Teknologi Nusantara द्वारा हस्ताक्षरित और नोटराइज़्ड, इसलिए सामान्य रूप से खुलता है। <b>Windows:</b> अभी हस्ताक्षरित नहीं, इसलिए SmartScreen एक बार चेतावनी देता है। More info दबाइए, फिर Run anyway। Linux अभी जारी नहीं हुआ।</p>
-  </section>
 
-  <section class="faq" id="faq">
-    <h2 class="reveal">डाउनलोड से पहले।</h2>
-    <details class="reveal">
-      <summary>क्या मुझे R आना चाहिए?</summary>
-      <p>नहीं। आप आम भाषा में पूछते हैं और व्याख्या पढ़ते हैं। R तब काम आता है जब कोई आपका काम देखना चाहे। वह अपने आप चलता है।</p>
-    </details>
-    <details class="reveal">
-      <summary>क्या यह मेरी SPSS फ़ाइलें खोलेगा?</summary>
-      <p>हाँ। SPSS की <code>.sav</code> फ़ाइलें R से पढ़ी जाती हैं, और CSV, TSV, Excel तथा Parquet भी। चर और मान लेबल बने रहते हैं।</p>
-    </details>
-    <details class="reveal">
-      <summary>क्या सांख्यिकी भाषा मॉडल को सौंपी जा सकती है?</summary>
-      <p>गणित नहीं, इसीलिए वह गणित करता ही नहीं। मॉडल प्रक्रिया चुनता है और आउटपुट पढ़ता है। गणना R करता है। चुनाव और सिंटैक्स दोनों दिखते हैं।</p>
-    </details>
-    <details class="reveal">
-      <summary>क्या मेरा डेटा कंप्यूटर से बाहर जाता है?</summary>
-      <p>आपकी फ़ाइलें आपके फ़ोल्डर में रहती हैं। होस्टेड API विश्लेषण की योजना बनाता है और प्रतिलेख सहेजता है। आपका डेटासेट उस तक नहीं जाता। हर लेखन और कमांड पहले पूछता है।</p>
-    </details>
-    <details class="reveal">
-      <summary>क्या यह सांख्यिकीविद् की जगह लेता है?</summary>
-      <p>यह मेन्यू, सिंटैक्स और आउटपुट सजाने में गए घंटों की जगह लेता है। यह तय नहीं करता कि डिज़ाइन निष्कर्ष सँभालता है या नहीं। डेटा से बाहर का सवाल हो तो बता देता है।</p>
-    </details>
-    <details class="reveal">
-      <summary>Linux का क्या?</summary>
-      <p>अभी जारी नहीं हुआ। macOS और Windows के संस्करण ऊपर हैं।</p>
-    </details>
-  </section>
-
-  <footer>
-    <span>Blade, एजेंट आधारित सांख्यिकीय विश्लेषण।</span>
-    <a href="https://blade.skalatec.com/">वर्कफ़्लो</a>
-    <a href="/pricing">मूल्य</a>
-    <a href="/privacy">गोपनीयता</a>
-    <a href="/terms">शर्तें</a>
-    <span class="spacer">PT Skala Teknologi Nusantara</span>
-  </footer>
-
-</main>
+    <details class="install-notes"><summary>इंस्टॉलेशन संबंधी जानकारी</summary><p><b>macOS:</b> PT Skala Teknologi Nusantara द्वारा हस्ताक्षरित और नोटराइज़्ड, इसलिए सामान्य रूप से खुलता है। <b>Windows:</b> अभी हस्ताक्षरित नहीं, इसलिए SmartScreen एक बार चेतावनी देता है। More info दबाइए, फिर Run anyway। Linux अभी जारी नहीं हुआ।</p></details>
+  </div>
+  <div class="footer-bottom wrap">
+    <a class="wordmark" href="/" aria-label="Blade"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <nav aria-label="Footer"><a href="https://blade.skalatec.com/">वर्कफ़्लो</a><a href="/pricing">मूल्य</a><a href="/privacy">गोपनीयता</a><a href="/terms">शर्तें</a></nav>
+    <small>PT Skala Teknologi Nusantara</small>
+  </div>
+</footer>
+<noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
+<script src="/assets/landing.js?v=59bea8e5e4bb" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

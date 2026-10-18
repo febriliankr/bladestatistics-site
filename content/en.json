@@ -6,15 +6,15 @@
   "langLabel": "Language",
   "meta": {
     "title": "Blade, statistics without the statistics software",
-    "description": "Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them.",
+    "description": "Ask in plain language. Blade runs your analysis in R and explains the result.",
     "ogTitle": "Blade, statistics without the statistics software",
-    "ogDescription": "Describe the question. Blade picks the test, runs it in R on your machine, and shows its work."
+    "ogDescription": "Ask in plain language. Blade runs your analysis in R and explains the result."
   },
   "hero": {
     "h1a": "Statistics without the ",
     "h1em": "statistics software",
     "h1b": ".",
-    "lede": "Ask about your data in plain language. Blade picks the test and runs it in R on your machine. You get APA output, assumption checks, and the script behind them."
+    "lede": "Ask in plain language. Blade runs your analysis in R and explains the result."
   },
   "cta": {
     "get": "Get Blade",
@@ -28,9 +28,18 @@
     "caption": "One session: regression diagnostics, an ROC curve, an SEM path diagram. Every script stayed in the folder."
   },
   "facts": [
-    ["46", "statistical procedures, descriptives through SEM"],
-    ["R", "runs the arithmetic behind every result"],
-    ["0", "data files uploaded anywhere"]
+    [
+      "46",
+      "statistical procedures, descriptives through SEM"
+    ],
+    [
+      "R",
+      "runs the arithmetic behind every result"
+    ],
+    [
+      "0",
+      "data files uploaded anywhere"
+    ]
   ],
   "spss": {
     "h2": "The dialog box was never the hard part.",
@@ -38,11 +47,31 @@
     "colOther": "Point-and-click stats software",
     "colBlade": "Blade",
     "rows": [
-      ["Getting to a result", "Find the menu, fill in the dialog, hope the defaults are right.", "Describe the question in a sentence."],
-      ["Choosing the test", "You have to know before you start.", "Blade proposes a method and says why that one."],
-      ["Assumptions", "A separate menu you have to remember to open.", "Checked and reported next to the result."],
-      ["Reproducing it", "Only if you saved the syntax yourself.", "Every analysis leaves runnable R in the folder."],
-      ["Your data", "Imported into the tool's own world.", "Read in place. CSV, Excel, <code>.sav</code>, Parquet."]
+      [
+        "Getting to a result",
+        "Find the menu, fill in the dialog, hope the defaults are right.",
+        "Describe the question in a sentence."
+      ],
+      [
+        "Choosing the test",
+        "You have to know before you start.",
+        "Blade proposes a method and says why that one."
+      ],
+      [
+        "Assumptions",
+        "A separate menu you have to remember to open.",
+        "Checked and reported next to the result."
+      ],
+      [
+        "Reproducing it",
+        "Only if you saved the syntax yourself.",
+        "Every analysis leaves runnable R in the folder."
+      ],
+      [
+        "Your data",
+        "Imported into the tool's own world.",
+        "Read in place. CSV, Excel, <code>.sav</code>, Parquet."
+      ]
     ]
   },
   "how": {
@@ -69,27 +98,85 @@
     "families": [
       {
         "h3": "Describe and explore",
-        "chips": ["Descriptives", "Frequencies", "Crosstabs", "Explore", "Means by group", "Missing data", "Recode", "Compute"]
+        "chips": [
+          "Descriptives",
+          "Frequencies",
+          "Crosstabs",
+          "Explore",
+          "Means by group",
+          "Missing data",
+          "Recode",
+          "Compute"
+        ]
       },
       {
         "h3": "Compare groups",
-        "chips": ["Independent t-test", "Paired t-test", "One-sample t-test", "One-way and factorial ANOVA", "Repeated measures ANOVA", "MANOVA", "Mann-Whitney", "Kruskal-Wallis", "Wilcoxon signed-rank", "Sign test", "Friedman", "McNemar", "Cochran's Q"]
+        "chips": [
+          "Independent t-test",
+          "Paired t-test",
+          "One-sample t-test",
+          "One-way and factorial ANOVA",
+          "Repeated measures ANOVA",
+          "MANOVA",
+          "Mann-Whitney",
+          "Kruskal-Wallis",
+          "Wilcoxon signed-rank",
+          "Sign test",
+          "Friedman",
+          "McNemar",
+          "Cochran's Q"
+        ]
       },
       {
         "h3": "Relationships and models",
-        "chips": ["Pearson, Spearman, Kendall", "Partial correlation", "Linear regression", "Logistic regression", "Ordinal regression", "Multinomial regression", "Probit", "Curve estimation", "Mixed models"]
+        "chips": [
+          "Pearson, Spearman, Kendall",
+          "Partial correlation",
+          "Linear regression",
+          "Logistic regression",
+          "Ordinal regression",
+          "Multinomial regression",
+          "Probit",
+          "Curve estimation",
+          "Mixed models"
+        ]
       },
       {
         "h3": "Structure and scales",
-        "chips": ["Exploratory factor analysis", "PCA", "Structural equation modelling", "Reliability, Cronbach's alpha", "K-means", "Hierarchical clustering", "Discriminant analysis", "Multidimensional scaling", "Correspondence analysis", "LDA topic models"]
+        "chips": [
+          "Exploratory factor analysis",
+          "PCA",
+          "Structural equation modelling",
+          "Reliability, Cronbach's alpha",
+          "K-means",
+          "Hierarchical clustering",
+          "Discriminant analysis",
+          "Multidimensional scaling",
+          "Correspondence analysis",
+          "LDA topic models"
+        ]
       },
       {
         "h3": "Categorical",
-        "chips": ["Chi-square goodness of fit", "Binomial test", "Loglinear models", "Runs test", "Kolmogorov-Smirnov", "Fisher's exact"]
+        "chips": [
+          "Chi-square goodness of fit",
+          "Binomial test",
+          "Loglinear models",
+          "Runs test",
+          "Kolmogorov-Smirnov",
+          "Fisher's exact"
+        ]
       },
       {
         "h3": "Time, risk, synthesis",
-        "chips": ["Kaplan-Meier", "Cox regression", "ROC curves", "Autocorrelation", "ARIMA", "Meta-analysis"]
+        "chips": [
+          "Kaplan-Meier",
+          "Cox regression",
+          "ROC curves",
+          "Autocorrelation",
+          "ARIMA",
+          "Meta-analysis"
+        ]
       }
     ]
   },
@@ -141,17 +228,35 @@
   "get": {
     "h2": "Download Blade Desktop 0.2.21",
     "sub": "Beta. Blade needs R, checks for it on first launch, and can install R and Python for you.",
-    "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara, so it opens normally. <b>Windows:</b> not signed yet, so SmartScreen warns once. Click More info, then Run anyway. Linux is not published yet."
+    "caveat": "<b>macOS:</b> signed and notarized by PT Skala Teknologi Nusantara. <b>Windows:</b> unsigned, so SmartScreen warns once. Click More info, then Run anyway. Linux is not available yet."
   },
   "faq": {
     "h2": "Before you download.",
     "items": [
-      ["Do I need to know R?", "No. You ask in plain language and read the explanation. The R is there for when someone asks to see your work. It runs on its own."],
-      ["Will it open my SPSS files?", "Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV, Excel and Parquet. Variable and value labels survive."],
-      ["Can I trust a language model with statistics?", "Not with the arithmetic, which is why it never does any. The model picks the procedure and reads the output. R computes the result. You see both the choice and the syntax."],
-      ["Does my data leave my computer?", "Your data files stay in your folder. The hosted API plans the analysis and stores the session transcript. It never receives your datasets. Every write and command asks first."],
-      ["Is this a replacement for a statistician?", "It replaces the hours lost to menus, syntax and reformatting output. It cannot judge whether your design supports your conclusion. It will say when a question is beyond the data."],
-      ["What about Linux?", "Not published yet. The macOS and Windows builds are above."]
+      [
+        "Do I need to know R?",
+        "No. You ask in plain language and read the explanation. The R is there for when someone asks to see your work. It runs on its own."
+      ],
+      [
+        "Will it open my SPSS files?",
+        "Yes. SPSS <code>.sav</code> files read through R, along with CSV, TSV, Excel and Parquet. Variable and value labels survive."
+      ],
+      [
+        "Can I trust a language model with statistics?",
+        "Not with the arithmetic, which is why it never does any. The model picks the procedure and reads the output. R computes the result. You see both the choice and the syntax."
+      ],
+      [
+        "Does my data leave my computer?",
+        "Your data files stay in your folder. The hosted API plans the analysis and stores the session transcript. It never receives your datasets. Every write and command asks first."
+      ],
+      [
+        "Is this a replacement for a statistician?",
+        "It replaces the hours lost to menus, syntax and reformatting output. It cannot judge whether your design supports your conclusion. It will say when a question is beyond the data."
+      ],
+      [
+        "What about Linux?",
+        "Not published yet. The macOS and Windows builds are above."
+      ]
     ]
   },
   "footer": {
@@ -160,5 +265,21 @@
     "pricing": "Pricing",
     "privacy": "Privacy",
     "terms": "Terms"
+  },
+  "simple": {
+    "hero": "Ask in plain language. Blade runs your analysis in R and explains the result.",
+    "title": "From question to result.",
+    "text": "Open a folder. Ask a question. Get tables, plots, and the R behind them.",
+    "ask": "Ask about your data",
+    "askText": "Open CSV, Excel, or SPSS files and tell Blade what you want to know.",
+    "results": "Read the results",
+    "resultsText": "Get tables, plots, and assumption checks in one place.",
+    "script": "Keep the R script",
+    "scriptText": "Review the code, run it again, or share it with a colleague.",
+    "middle": "AI that works in R.",
+    "middleText": "Blade chooses a test, checks assumptions, and explains the results. R calculates every number.",
+    "preview": "Illustrative app previews",
+    "download": "macOS and Windows. Your files stay on your computer.",
+    "install": "Installation notes"
   }
 }
