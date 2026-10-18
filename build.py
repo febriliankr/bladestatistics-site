@@ -6,6 +6,7 @@ Run `python3 build.py` after editing any content file, then commit the output.
 """
 
 import html
+import hashlib
 import json
 import pathlib
 import shutil
@@ -200,6 +201,7 @@ def render(code, c, shell, css, locales, names):
         "canonical": canonical,
         "ogLocale": c["ogLocale"],
         "css": css,
+        "designVersion": hashlib.sha256((ROOT / "assets" / "landing.css").read_bytes()).hexdigest()[:12],
         "svgMac": MAC_SVG,
         "svgWin": WIN_SVG,
         "langLabel": c["langLabel"],
