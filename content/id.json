@@ -268,8 +268,8 @@
   },
   "simple": {
     "hero": "Tanya dengan bahasa biasa. Blade menjalankan analisis di R dan menjelaskan hasilnya.",
-    "title": "Dari pertanyaan ke hasil.",
-    "text": "Buka folder. Ajukan pertanyaan. Dapatkan tabel, grafik, dan kode R di baliknya.",
+    "title": "Semudah ChatGPT, tapi lokal.",
+    "text": "Buka folder, lalu bertanya dengan bahasa sehari-hari. Blade menjalankan R di komputer Anda, jadi tabel, grafik, dan skripnya cepat didapat.",
     "ask": "Tanyakan tentang data Anda",
     "askText": "Buka file CSV, Excel, atau SPSS, lalu jelaskan apa yang ingin Anda ketahui.",
     "results": "Baca hasilnya",

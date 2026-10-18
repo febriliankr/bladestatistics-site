@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=6d4846af20e2" />
+<link rel="stylesheet" href="/assets/landing.css?v=309092f335fb" />
 </head>
 <body>
 
@@ -132,7 +132,7 @@ try {
 <main>
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
-      <div><h2 id="product-title">질문에서 결과까지.</h2><p>폴더를 열고 질문하세요. 표, 그래프, 그리고 결과를 만든 R 코드를 받으세요.</p></div>
+      <div><h2 id="product-title">ChatGPT처럼 쉽지만, 로컬에서.</h2><p>폴더를 열고 평소 쓰는 말로 질문하세요. Blade가 내 컴퓨터에서 R을 실행하므로 표, 그래프, 스크립트를 빠르게 받을 수 있습니다.</p></div>
       <a class="outline-link" href="/pricing">요금 <span aria-hidden="true">↗</span></a>
     </div>
     <div class="product-layout reveal">
@@ -140,21 +140,21 @@ try {
         <div class="preview-panels">
 <div class="app-preview mock" id="preview-ask" role="img" aria-label="데이터에 대해 질문하기">
             <div class="mw">
-              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>Compare the two groups</b></span></div>
-              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> Compare the two groups</span><span class="ready">Ready</span></div>
+              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
               <div class="mw-body">
-                <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>study.csv</b><span>40 rows · 3 columns</span></div>
+                <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>4,240 rows · 16 columns</span></div>
                 <table class="m-table">
-                  <tr><th>group</th><th>baseline</th><th>score</th></tr>
-                  <tr><td>control</td><td>52</td><td>68</td></tr>
-                  <tr><td>control</td><td>47</td><td>71</td></tr>
-                  <tr><td>control</td><td>58</td><td>69</td></tr>
-                  <tr><td>treatment</td><td>50</td><td>82</td></tr>
-                  <tr><td>treatment</td><td>55</td><td>85</td></tr>
-                  <tr><td>treatment</td><td>49</td><td>80</td></tr>
+                  <tr><th>age</th><th>sysBP</th><th>BMI</th><th>TenYearCHD</th></tr>
+                  <tr><td>39</td><td>106</td><td>26.97</td><td>0</td></tr>
+                  <tr><td>46</td><td>121</td><td>28.73</td><td>0</td></tr>
+                  <tr><td>48</td><td>127.5</td><td>25.34</td><td>0</td></tr>
+                  <tr><td>61</td><td>150</td><td>28.58</td><td>1</td></tr>
+                  <tr><td>46</td><td>130</td><td>23.1</td><td>0</td></tr>
+                  <tr><td>43</td><td>180</td><td>30.3</td><td>0</td></tr>
                 </table>
                 <div class="m-compose">
-                  <p>Does score differ between the two groups?<i class="caret-blink"></i></p>
+                  <p>Which risk factors relate most to ten-year CHD?<i class="caret-blink"></i></p>
                   <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
                 </div>
               </div>
@@ -162,44 +162,38 @@ try {
           </div>
           <div class="app-preview mock" id="preview-results" role="img" aria-label="결과 읽기" hidden>
             <div class="mw">
-              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>Compare the two groups</b></span></div>
-              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> Compare the two groups</span><span class="ready">Ready</span></div>
+              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
               <div class="mw-body">
-                <p class="m-msg">Treatment scored about 15 points higher. Both groups passed the normality and variance checks first.</p>
-                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>R.Run</b><span>shapiro.test by group</span><small>Done</small></div>
-                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>R.Run</b><span>t.test(score ~ group)</span><small>Done</small></div>
-                <div class="m-card">
-                  <p class="m-card-title">Score by group</p>
-                  <svg class="m-plot" viewBox="0 0 160 130" aria-hidden="true">
-                    <path class="axis" d="M14 10v108h140"/>
-                    <text x="10" y="32.0">90</text><text x="10" y="76.0">70</text><text x="10" y="120.0">50</text>
-                    <path class="grid" d="M14 30.0h140M14 74.0h140"/>
-                    <circle cx="30" cy="78.4" r="2.6" class="c"/><circle cx="36" cy="71.8" r="2.6" class="c"/><circle cx="42" cy="76.2" r="2.6" class="c"/><circle cx="33" cy="93.8" r="2.6" class="c"/><circle cx="45" cy="87.2" r="2.6" class="c"/><circle cx="39" cy="100.4" r="2.6" class="c"/><circle cx="27" cy="82.8" r="2.6" class="c"/><circle cx="48" cy="69.6" r="2.6" class="c"/><circle cx="35" cy="107.0" r="2.6" class="c"/><circle cx="41" cy="65.2" r="2.6" class="c"/><circle cx="112" cy="47.6" r="2.6" class="t"/><circle cx="118" cy="41.0" r="2.6" class="t"/><circle cx="124" cy="52.0" r="2.6" class="t"/><circle cx="115" cy="58.6" r="2.6" class="t"/><circle cx="127" cy="34.4" r="2.6" class="t"/><circle cx="121" cy="54.2" r="2.6" class="t"/><circle cx="109" cy="43.2" r="2.6" class="t"/><circle cx="130" cy="60.8" r="2.6" class="t"/><circle cx="117" cy="27.8" r="2.6" class="t"/><circle cx="124" cy="38.8" r="2.6" class="t"/>
-                    <path class="mean c" d="M24 81.0h30"/><path class="mean t" d="M106 45.8h30"/>
-                    <text x="39" y="128" class="lab">control</text><text x="121" y="128" class="lab">treatment</text>
-                  </svg>
-                  <div class="m-stats"><span><b>t(38)</b> 4.21</span><span><b>p</b> &lt; .001</span><span><b>d</b> 1.33</span></div>
+                <p class="m-msg">Age and systolic BP track most closely with ten-year CHD.</p>
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>Rscript framingham_analysis.R</span><small>Done</small></div>
+                <div class="m-shot">
+                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>R_fig3_correlation.png</b><span>PNG · 258 KB</span></p>
+                  <img src="/assets/r-correlation.webp" alt="" width="1000" height="800" loading="lazy" />
                 </div>
+                <div class="m-thumb"><img src="/assets/r-framingham-analysis.webp" alt="" width="1000" height="665" loading="lazy" /><b>framingham_analysis.png</b><span>PNG · 360 KB</span></div>
               </div>
             </div>
           </div>
           <div class="app-preview mock" id="preview-script" role="img" aria-label="R 스크립트 보관하기" hidden>
             <div class="mw">
-              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>Compare the two groups</b></span></div>
-              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> Compare the two groups</span><span class="ready">Ready</span></div>
+              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span><span class="ready">Ready</span></div>
               <div class="mw-body">
-                <div class="m-tabs"><span class="on">analysis.R</span><span>results.csv</span></div>
-                <pre class="m-code"><code><i>1</i><span class="f">library</span>(readr)
-<i>2</i>study &lt;- <span class="f">read_csv</span>(<span class="s">"study.csv"</span>)
-<i>3</i>
-<i>4</i><span class="k"># Check assumptions per group</span>
-<i>5</i><span class="f">by</span>(study$score, study$group, shapiro.test)
-<i>6</i><span class="f">var.test</span>(score ~ group, data = study)
-<i>7</i>
-<i>8</i>fit &lt;- <span class="f">t.test</span>(score ~ group, data = study,
-<i>9</i>              var.equal = <span class="s">TRUE</span>)
-<i>10</i>fit</code></pre>
-                <div class="m-saved"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><span>Saved to Study A/analysis.R</span><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><small>Ran in 0.4 s</small></div>
+                <div class="m-tabs"><span class="on">framingham_analysis.R</span><span>framingham.csv</span></div>
+                <pre class="m-code"><code><i>1</i><span class="f">library</span>(ggplot2)
+<i>2</i>df &lt;- <span class="f">read.csv</span>(<span class="s">"framingham.csv"</span>)
+<i>3</i>cols &lt;- <span class="f">setdiff</span>(<span class="f">names</span>(df), <span class="f">c</span>(<span class="s">"education"</span>, <span class="s">"BPMeds"</span>))
+<i>4</i>
+<i>5</i><span class="k"># Correlations between risk factors</span>
+<i>6</i>cor_mat &lt;- <span class="f">cor</span>(df[cols],
+<i>7</i>               use = <span class="s">"pairwise.complete.obs"</span>)
+<i>8</i>cor_melt &lt;- reshape2::<span class="f">melt</span>(cor_mat)
+<i>9</i>p &lt;- <span class="f">ggplot</span>(cor_melt, <span class="f">aes</span>(Var1, Var2, fill = value)) +
+<i>10</i>  <span class="f">geom_tile</span>(color = <span class="s">"white"</span>) +
+<i>11</i>  <span class="f">scale_fill_gradient2</span>()
+<i>12</i><span class="f">ggsave</span>(<span class="s">"R_fig3_correlation.png"</span>, p)</code></pre>
+                <div class="m-saved"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><span>Saved to Study A/framingham_analysis.R</span><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><small>Ran in 2.1 s</small></div>
               </div>
             </div>
           </div>
@@ -237,7 +231,7 @@ try {
                 <span class="ws-new">+ New session</span>
                 <p class="ws-label">Sessions</p>
                 <p class="ws-folder"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A<small>2</small></p>
-                <p class="ws-session on"><span>Compare the two groups</span><small>2m</small></p>
+                <p class="ws-session on"><span>CHD risk factors</span><small>2m</small></p>
                 <p class="ws-session"><span>Check assumptions</span><small>1h</small></p>
                 <p class="ws-folder"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study B<small>1</small></p>
                 <p class="ws-session"><span>Survey reliability</span><small>3d</small></p>
@@ -247,10 +241,10 @@ try {
                 <div class="ws-files">
                   <p class="ws-title">Study A <span>4 files</span></p>
                   <ul>
-                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>study.csv</b><span>CSV · 3 KB</span><small>2m</small></li>
-                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>analysis.R</b><span>R · 1 KB</span><small>2m</small></li>
-                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>results.csv</b><span>CSV · 1 KB</span><small>2m</small></li>
-                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>fig1_score_by_group.png</b><span>PNG · 84 KB</span><small>1h</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>CSV · 192 KB</span><small>2m</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham_analysis.R</b><span>R · 6 KB</span><small>2m</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>R_fig3_correlation.png</b><span>PNG · 258 KB</span><small>2m</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham_analysis.png</b><span>PNG · 360 KB</span><small>1h</small></li>
                   </ul>
                 </div>
               </div>
@@ -311,11 +305,11 @@ try {
   <div class="footer-bottom wrap">
     <a class="wordmark" href="/"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
     <nav aria-label="Footer"><a href="https://blade.skalatec.com/#workflows">워크플로</a><a href="/pricing">요금</a><a href="/privacy">개인정보처리방침</a><a href="/terms">이용약관</a></nav>
-    <small>PT Skala Teknologi Nusantara</small>
+    <small>PT Riset Digital Nusantara</small>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=6d4846af20e2" defer></script>
+<script src="/assets/landing.js?v=309092f335fb" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

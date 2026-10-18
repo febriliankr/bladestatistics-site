@@ -268,8 +268,8 @@
   },
   "simple": {
     "hero": "Ask in plain language. Blade runs your analysis in R and explains the result.",
-    "title": "From question to result.",
-    "text": "Open a folder. Ask a question. Get tables, plots, and the R behind them.",
+    "title": "As easy as ChatGPT, but local.",
+    "text": "Open a folder and ask in plain language. Blade runs R on your computer, so tables, plots, and the script come back quickly.",
     "ask": "Ask about your data",
     "askText": "Open CSV, Excel, or SPSS files and tell Blade what you want to know.",
     "results": "Read the results",

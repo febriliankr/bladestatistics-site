@@ -268,8 +268,8 @@
   },
   "simple": {
     "hero": "Pergunte com suas palavras. O Blade executa a análise em R e explica o resultado.",
-    "title": "Da pergunta ao resultado.",
-    "text": "Abra uma pasta. Faça uma pergunta. Receba tabelas, gráficos e o código R por trás deles.",
+    "title": "Tão fácil quanto o ChatGPT, mas local.",
+    "text": "Abra uma pasta e pergunte com suas palavras. O Blade executa o R no seu computador, então tabelas, gráficos e script chegam rápido.",
     "ask": "Pergunte sobre seus dados",
     "askText": "Abra arquivos CSV, Excel ou SPSS e diga o que deseja saber.",
     "results": "Leia os resultados",

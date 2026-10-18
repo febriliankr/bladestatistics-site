@@ -268,8 +268,8 @@
   },
   "simple": {
     "hero": "Fragen Sie in Ihren eigenen Worten. Blade führt die Analyse in R aus und erklärt das Ergebnis.",
-    "title": "Von der Frage zum Ergebnis.",
-    "text": "Öffnen Sie einen Ordner. Stellen Sie eine Frage. Erhalten Sie Tabellen, Diagramme und den zugehörigen R-Code.",
+    "title": "So einfach wie ChatGPT, aber lokal.",
+    "text": "Öffnen Sie einen Ordner und fragen Sie in Ihren eigenen Worten. Blade führt R auf Ihrem Computer aus, damit Tabellen, Grafiken und Skript schnell vorliegen.",
     "ask": "Fragen zu Ihren Daten",
     "askText": "Öffnen Sie CSV-, Excel- oder SPSS-Dateien und beschreiben Sie Ihre Frage.",
     "results": "Ergebnisse lesen",

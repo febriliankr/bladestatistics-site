@@ -427,7 +427,6 @@ h2 {
   display: flex;
   width: 100%;
   aspect-ratio: 1;
-  animation: preview-in 0.4s var(--ease);
 }
 .app-preview[hidden] {
   display: none;
@@ -660,65 +659,59 @@ h2 {
   font-size: 0.85em;
   color: var(--m-muted);
 }
-.m-card {
-  flex: 1;
-  min-height: 0;
+.m-shot {
   display: flex;
   flex-direction: column;
-  padding: 0.75em 0.85em;
+  flex: 1;
+  min-height: 0;
   border: 1px solid var(--m-line);
   border-radius: 0.7em;
   background: #fff;
+  overflow: hidden;
 }
-.m-card-title {
+.m-shot p {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
   margin: 0;
-  font-weight: 600;
+  padding: 0.5em 0.75em;
+  border-bottom: 1px solid var(--m-line);
+  font-size: 0.9em;
+  white-space: nowrap;
 }
-.m-plot {
+.m-shot p span,
+.m-thumb span {
+  margin-inline-start: auto;
+  color: var(--m-muted);
+  font-size: 0.9em;
+}
+.m-shot img {
   flex: 1;
   min-height: 0;
   width: 100%;
+  object-fit: contain;
+  padding: 0.4em;
 }
-.m-plot text {
-  font-size: 7px;
-  fill: var(--m-muted);
-  text-anchor: end;
-}
-.m-plot .lab {
-  text-anchor: middle;
-}
-.m-plot .axis,
-.m-plot .grid {
-  fill: none;
-  stroke: #d6d8d0;
-  stroke-width: 0.8;
-}
-.m-plot .grid {
-  stroke-dasharray: 2 2;
-}
-.m-plot circle.c { fill: #8fa57f; }
-.m-plot circle.t { fill: #e2774a; }
-.m-plot .mean {
-  stroke-width: 1.6;
-  stroke-linecap: round;
-}
-.m-plot .mean.c { stroke: var(--m-green); }
-.m-plot .mean.t { stroke: var(--orange); }
-.m-stats {
+.m-thumb {
   display: flex;
-  gap: 0.5em;
-  font-variant-numeric: tabular-nums;
-}
-.m-stats span {
-  padding: 0.25em 0.6em;
-  border-radius: 0.45em;
-  background: #f0f1ec;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.4em 0.75em 0.4em 0.4em;
+  border: 1px solid var(--m-line);
+  border-radius: 0.6em;
+  background: #fff;
   font-size: 0.9em;
+  white-space: nowrap;
 }
-.m-stats b {
-  font-weight: 400;
-  font-style: italic;
-  color: var(--m-muted);
+.m-thumb img {
+  width: 3.4em;
+  height: 2.3em;
+  object-fit: cover;
+  border-radius: 0.3em;
+  border: 1px solid var(--m-line);
+}
+.m-thumb b {
+  font-weight: 500;
 }
 .m-tabs {
   display: flex;
@@ -759,6 +752,72 @@ h2 {
 }
 .m-saved small {
   margin-inline-start: 0;
+}
+
+/* Mockup entrance. Each panel plays when its section scrolls in, and again
+   whenever a feature step reveals it (display: none restarts animations).
+   Reduced motion removes all of it and leaves the final state. */
+.mock .mw {
+  animation: mock-rise 0.7s var(--ease) 0.1s both;
+}
+.mw-body > *,
+.ws-side > *,
+.ws-files li,
+.m-table tr {
+  animation: mock-up 0.5s var(--ease) both;
+}
+.mw-body > :nth-child(1) { animation-delay: 0.35s; }
+.mw-body > :nth-child(2) { animation-delay: 0.45s; }
+.mw-body > :nth-child(3) { animation-delay: 0.55s; }
+.mw-body > :nth-child(4) { animation-delay: 0.65s; }
+.m-table tr:nth-child(1) { animation-delay: 0.5s; }
+.m-table tr:nth-child(2) { animation-delay: 0.56s; }
+.m-table tr:nth-child(3) { animation-delay: 0.62s; }
+.m-table tr:nth-child(4) { animation-delay: 0.68s; }
+.m-table tr:nth-child(5) { animation-delay: 0.74s; }
+.m-table tr:nth-child(6) { animation-delay: 0.8s; }
+.m-table tr:nth-child(7) { animation-delay: 0.86s; }
+.m-compose {
+  animation-delay: 0.9s !important;
+}
+.m-compose p {
+  animation: mock-type 1.3s steps(42) 1.3s both;
+}
+.m-shot img {
+  animation: mock-up 0.6s var(--ease) 0.8s both;
+}
+.m-code {
+  animation: mock-lines 1.4s steps(12) 0.6s both !important;
+}
+.ws-side > :nth-child(1) { animation-delay: 0.35s; }
+.ws-side > :nth-child(2) { animation-delay: 0.42s; }
+.ws-side > :nth-child(3) { animation-delay: 0.49s; }
+.ws-side > :nth-child(4) { animation-delay: 0.56s; }
+.ws-side > :nth-child(5) { animation-delay: 0.63s; }
+.ws-side > :nth-child(6) { animation-delay: 0.7s; }
+.ws-side > :nth-child(7) { animation-delay: 0.77s; }
+.ws-side > :nth-child(8) { animation-delay: 0.84s; }
+.ws-files li:nth-child(1) { animation-delay: 0.6s; }
+.ws-files li:nth-child(2) { animation-delay: 0.7s; }
+.ws-files li:nth-child(3) { animation-delay: 0.8s; }
+.ws-files li:nth-child(4) { animation-delay: 0.9s; }
+.js-reveal .reveal:not(.in) .mock,
+.js-reveal .reveal:not(.in) .mock * {
+  animation-play-state: paused !important;
+}
+@keyframes mock-rise {
+  from { opacity: 0; transform: translateY(1.4em) scale(0.97); }
+}
+@keyframes mock-up {
+  from { opacity: 0; transform: translateY(0.5em); }
+}
+@keyframes mock-type {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 -1em 0 0); }
+}
+@keyframes mock-lines {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 
 /* Workspace window: sidebar plus file list, in a wider frame. */
