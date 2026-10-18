@@ -41,7 +41,7 @@ per session. Choosing from the switcher in the top bar stores the pick in
 
 ## Theme
 
-The landing pages use `assets/landing.css` over the shared base stylesheet: an original GPT Image night-sky hero above warm, light statistics sections. `DESIGN.md` records the artwork prompt and asset details. Pricing and legal pages keep the shared device-aware theme. The home page remains translated in every supported language, including Arabic's right-to-left layout.
+The landing pages use `assets/landing.css` over the shared base stylesheet: an original GPT Image daylight landscape hero above warm, light statistics sections. `DESIGN.md` records the artwork prompt and asset details. Pricing and legal pages keep the shared device-aware theme. The home page remains translated in every supported language, including Arabic's right-to-left layout.
 
 ## Motion
 
