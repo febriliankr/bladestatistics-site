@@ -9,7 +9,7 @@
     "lede": "Blade handles the heavy lifting, then saves the steps as a workflow you can run again next month."
   },
   "workflows": {
-    "title": "Do the analysis once. Run it again next month.",
+    "title": "Do the analysis once. Run it again next month",
     "text": "Save a finished session as a workflow: the goal, the R script that worked, and an example of the result. Next time, point it at new files.",
     "steps": [
       {

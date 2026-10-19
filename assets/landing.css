@@ -1296,9 +1296,8 @@ h2 {
   border-radius: 20px;
   background: var(--panel);
   padding: 32px;
-  box-shadow: 0 18px 50px #2a35200f;
 }
-.plan.pro { border-color: #9fb08e; box-shadow: 0 22px 60px #2a35201c; }
+.plan.pro { border-color: #9fb08e; }
 .plan h2,
 .plan h3 { margin: 0; font-size: 26px; letter-spacing: -0.035em; font-weight: 500; }
 .price { margin: 14px 0 6px; font-size: 40px; line-height: 1.1; font-weight: 450; letter-spacing: -0.05em; }
