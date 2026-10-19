@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=02e6c5333ae6" />
+<link rel="stylesheet" href="/assets/landing.css?v=6b8e8b56a8df" />
 </head>
 <body>
 
@@ -90,7 +90,7 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a href="/pricing">价格</a>
+        <a href="#pricing">价格</a>
         <a href="/login">登录</a>
       <details class="lang">
         <summary>
@@ -130,13 +130,34 @@ try {
     </div>
 </header>
 <main>
+  <section class="research-section wrap" id="research" aria-labelledby="research-title">
+    <div class="research-layout reveal">
+      <div class="research-copy">
+        <h2 id="research-title">做研究已经够难了，统计分析不该再难。</h2>
+        <p>588 项临床研究的负责人被问到项目在哪些环节遇到了困难。</p>
+        <p class="research-close">收集数据已经花了你足够多的时间，何必再花时间学统计软件？</p>
+      </div>
+      <figure class="survey">
+        <ol>
+          <li><span class="sv-label">患者招募</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">44.3%</span></li>
+          <li><span class="sv-label">数据收集</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">26.7%</span></li>
+          <li class="hl"><strong class="sv-label">数据分析与解读</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">21.5%</span></li>
+          <li><span class="sv-label">研究设计</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">20.4%</span></li>
+          <li><span class="sv-label">论文发表</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">20.2%</span></li>
+        </ol>
+        <figcaption>报告各项困难的研究所占比例。 <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">像 ChatGPT 一样简单，但在本地运行。</h2><p>打开文件夹，用自己的话提问。Blade 在你的电脑上运行 R，表格、图表和脚本很快就能拿到。</p></div>
-      <a class="outline-link" href="/pricing">价格 <span aria-hidden="true">↗</span></a>
+      <a class="outline-link" href="#pricing">价格</a>
     </div>
     <div class="product-layout reveal">
       <figure class="preview-stage">
+        <button class="replay" type="button" aria-label="重新播放预览" title="重新播放预览"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.7-4M2.5 2v3.5H6"/></svg></button>
         <div class="preview-panels">
 <div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="向数据提问">
             <div class="mw">
@@ -365,6 +386,28 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
     </div>
   </section>
 
+  <section class="pricing-section wrap" id="pricing" aria-labelledby="pricing-title">
+    <div class="section-intro reveal">
+      <div><h2 id="pricing-title">两个方案，同一个应用。</h2><p>两者都包含完整的桌面应用，R 在你的电脑上运行。Pro 适合截止日期临近、需要整天使用 Blade 的那几周。</p></div>
+      <a class="outline-link" href="/pricing">价格详情</a>
+    </div>
+    <div class="plans reveal">
+      <section class="plan" aria-labelledby="home-plan-free">
+        <h3 id="home-plan-free">Blade Free</h3>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">看看 Blade 能用你自己的数据做什么。</p>
+        <ul class="features"><li>完整的桌面应用</li><li>在你的电脑上用 R 分析</li><li>每天几个问题</li></ul>
+        <div class="action"><a class="btn ghost" href="#get">下载 Blade</a><p class="action-note">支持 macOS 和 Windows。</p></div>
+      </section>
+      <section class="plan pro" aria-labelledby="home-plan-pro">
+        <h3 id="home-plan-pro">Blade Pro</h3>
+        <p class="price">Rp299.000 <span>一个月</span></p>
+        <p class="plan-summary">适合截止日期和繁忙的研究月份。</p>
+        <ul class="features"><li>包含 Free 的全部功能</li><li>工作需要多少就问多少</li><li>一次付款，不自动续费</li></ul>
+        <div class="action"><a class="btn" href="/pricing#checkout">获取 Blade Pro</a><p class="action-note">使用 QRIS 或银行虚拟账户付款。</p></div>
+      </section>
+    </div>
+  </section>
 
 </main>
 
@@ -400,7 +443,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=02e6c5333ae6" defer></script>
+<script src="/assets/landing.js?v=6b8e8b56a8df" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

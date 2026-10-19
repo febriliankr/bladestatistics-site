@@ -372,6 +372,122 @@ h2 {
 .lang-menu a[aria-current] {
   color: #5c744a;
 }
+/* Research section: one survey, five horizontal bars, analysis highlighted. */
+.research-section {
+  padding-top: 110px;
+  padding-bottom: 20px;
+}
+.research-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 96px;
+  align-items: center;
+}
+.research-copy h2 {
+  max-width: 480px;
+}
+.research-copy p {
+  max-width: 440px;
+  margin: 0 0 18px;
+  font-size: 17px;
+  color: var(--muted);
+}
+.research-copy .research-close {
+  margin: 0;
+  color: var(--fg);
+}
+.survey {
+  margin: 0;
+}
+.survey ol {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.survey li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 4.2em;
+  align-items: center;
+  gap: 7px 14px;
+}
+.sv-label {
+  grid-column: 1 / -1;
+  font-size: 15px;
+  color: #4b5547;
+}
+.sv-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #eceee6;
+  overflow: hidden;
+}
+.sv-fill {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  border-radius: 4px;
+  background: #a9b19c;
+  transform-origin: left;
+  animation: sv-grow 0.9s var(--ease) both;
+}
+[dir="rtl"] .sv-fill {
+  transform-origin: right;
+}
+.survey li:nth-child(2) .sv-fill { animation-delay: 0.08s; }
+.survey li:nth-child(3) .sv-fill { animation-delay: 0.16s; }
+.survey li:nth-child(4) .sv-fill { animation-delay: 0.24s; }
+.survey li:nth-child(5) .sv-fill { animation-delay: 0.32s; }
+.js-reveal .reveal:not(.in) .sv-fill {
+  animation-play-state: paused;
+}
+@keyframes sv-grow {
+  from { transform: scaleX(0); }
+}
+.sv-value {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  text-align: end;
+}
+.survey li.hl .sv-label,
+.survey li.hl .sv-value {
+  color: var(--fg);
+  font-weight: 600;
+}
+.survey li.hl .sv-fill {
+  background: var(--orange);
+}
+.survey figcaption {
+  margin-top: 24px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.survey figcaption a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .research-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+}
+@media (max-width: 640px) {
+  .research-section {
+    padding-top: 70px;
+  }
+  .research-copy p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .sv-label {
+    font-size: 14px;
+  }
+}
+
 /* Product previews with three native disclosure controls. */
 .product-section {
   padding-top: 80px;
@@ -1134,6 +1250,107 @@ h2 {
 }
 .m-sheet tr:first-child th:first-child {
   z-index: 2;
+}
+
+/* Plan cards, shared by the homepage pricing section and /pricing. */
+.plans {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--panel);
+  padding: 32px;
+  box-shadow: 0 18px 50px #2a35200f;
+}
+.plan.pro { border-color: #9fb08e; box-shadow: 0 22px 60px #2a35201c; }
+.plan h2,
+.plan h3 { margin: 0; font-size: 26px; letter-spacing: -0.035em; font-weight: 500; }
+.price { margin: 14px 0 6px; font-size: 40px; line-height: 1.1; font-weight: 450; letter-spacing: -0.05em; }
+.price span { color: var(--muted); font-size: 14px; letter-spacing: 0; }
+.plan-summary { min-height: 54px; margin: 0; color: var(--muted); font-size: 15px; }
+.features { list-style: none; margin: 24px 0 28px; padding: 0; border-top: 1px solid var(--line); }
+.features li {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  color: #4b5547;
+  font-size: 14px;
+}
+.features li::before { content: "✓"; color: #6f8b5f; font-weight: 600; }
+.plan .action { margin-top: auto; }
+.plan .btn { display: flex; width: 100%; padding: 13px 23px; }
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid #c9cfbf; }
+.btn.ghost:hover { background: #f0f2eb; box-shadow: none; }
+.action-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
+@media (max-width: 760px) {
+  .plans { grid-template-columns: minmax(0, 1fr); }
+  .plan-summary { min-height: 0; }
+}
+@media (max-width: 640px) {
+  .plan { padding: 24px 22px; border-radius: 18px; }
+  .price { font-size: 34px; }
+}
+.pricing-section {
+  padding-block: 90px 110px;
+}
+.pricing-section .plans {
+  max-width: none;
+}
+
+/* Replay button over the product preview. */
+.preview-stage {
+  position: relative;
+}
+.replay {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #d9dcd1;
+  border-radius: 50%;
+  background: #fffefacc;
+  color: #4b5547;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.4s var(--ease);
+}
+.replay::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+}
+.replay:hover {
+  background: #fff;
+  color: var(--fg);
+}
+.replay:active {
+  transform: rotate(-120deg);
+}
+.replay:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+.replay svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* Workspace window: sidebar plus file list, in a wider frame. */

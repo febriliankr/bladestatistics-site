@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=02e6c5333ae6" />
+<link rel="stylesheet" href="/assets/landing.css?v=6b8e8b56a8df" />
 </head>
 <body>
 
@@ -90,7 +90,7 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a href="/pricing">मूल्य</a>
+        <a href="#pricing">मूल्य</a>
         <a href="/login">साइन इन</a>
       <details class="lang">
         <summary>
@@ -130,13 +130,34 @@ try {
     </div>
 </header>
 <main>
+  <section class="research-section wrap" id="research" aria-labelledby="research-title">
+    <div class="research-layout reveal">
+      <div class="research-copy">
+        <h2 id="research-title">रिसर्च पहले से ही कठिन है। सांख्यिकीय विश्लेषण कठिन नहीं होना चाहिए।</h2>
+        <p>588 क्लिनिकल स्टडीज़ के शोधकर्ताओं से पूछा गया कि उनके प्रोजेक्ट किन चरणों में मुश्किल में पड़े।</p>
+        <p class="research-close">आप डेटा इकट्ठा करने में पहले ही काफ़ी समय लगा चुके हैं। अब सांख्यिकी सॉफ़्टवेयर सीखने में और समय क्यों लगाएँ?</p>
+      </div>
+      <figure class="survey">
+        <ol>
+          <li><span class="sv-label">मरीज़ों की भर्ती</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">44.3%</span></li>
+          <li><span class="sv-label">डेटा संग्रह</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">26.7%</span></li>
+          <li class="hl"><strong class="sv-label">डेटा विश्लेषण और व्याख्या</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">21.5%</span></li>
+          <li><span class="sv-label">स्टडी डिज़ाइन</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">20.4%</span></li>
+          <li><span class="sv-label">प्रकाशन</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">20.2%</span></li>
+        </ol>
+        <figcaption>हर कठिनाई बताने वाली स्टडीज़ का प्रतिशत। <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">ChatGPT जितना आसान, पर लोकल।</h2><p>फ़ोल्डर खोलें और अपने शब्दों में पूछें। Blade आपके कंप्यूटर पर R चलाता है, इसलिए टेबल, ग्राफ़ और स्क्रिप्ट जल्दी मिलते हैं।</p></div>
-      <a class="outline-link" href="/pricing">मूल्य <span aria-hidden="true">↗</span></a>
+      <a class="outline-link" href="#pricing">मूल्य</a>
     </div>
     <div class="product-layout reveal">
       <figure class="preview-stage">
+        <button class="replay" type="button" aria-label="प्रीव्यू दोबारा चलाएँ" title="प्रीव्यू दोबारा चलाएँ"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.7-4M2.5 2v3.5H6"/></svg></button>
         <div class="preview-panels">
 <div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="अपने डेटा के बारे में पूछें">
             <div class="mw">
@@ -365,6 +386,28 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
     </div>
   </section>
 
+  <section class="pricing-section wrap" id="pricing" aria-labelledby="pricing-title">
+    <div class="section-intro reveal">
+      <div><h2 id="pricing-title">दो प्लान, एक ही ऐप।</h2><p>दोनों में पूरा डेस्कटॉप ऐप है, और R आपके कंप्यूटर पर चलता है। Pro उन हफ़्तों के लिए है जब डेडलाइन के कारण आप पूरा दिन Blade में काम करते हैं।</p></div>
+      <a class="outline-link" href="/pricing">कीमत का विवरण</a>
+    </div>
+    <div class="plans reveal">
+      <section class="plan" aria-labelledby="home-plan-free">
+        <h3 id="home-plan-free">Blade Free</h3>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">देखें कि Blade आपके अपने डेटा के साथ क्या करता है।</p>
+        <ul class="features"><li>पूरा डेस्कटॉप ऐप</li><li>आपके कंप्यूटर पर R में विश्लेषण</li><li>हर दिन कुछ सवाल</li></ul>
+        <div class="action"><a class="btn ghost" href="#get">Blade डाउनलोड करें</a><p class="action-note">macOS और Windows पर चलता है।</p></div>
+      </section>
+      <section class="plan pro" aria-labelledby="home-plan-pro">
+        <h3 id="home-plan-pro">Blade Pro</h3>
+        <p class="price">Rp299.000 <span>एक महीने के लिए</span></p>
+        <p class="plan-summary">डेडलाइन और व्यस्त रिसर्च महीनों के लिए।</p>
+        <ul class="features"><li>Free की सारी सुविधाएँ</li><li>जितना काम को चाहिए, उतना पूछें</li><li>एक बार भुगतान, कोई ऑटो-रिन्यूअल नहीं</li></ul>
+        <div class="action"><a class="btn" href="/pricing#checkout">Blade Pro लें</a><p class="action-note">QRIS या बैंक वर्चुअल अकाउंट से भुगतान करें।</p></div>
+      </section>
+    </div>
+  </section>
 
 </main>
 
@@ -400,7 +443,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=02e6c5333ae6" defer></script>
+<script src="/assets/landing.js?v=6b8e8b56a8df" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=02e6c5333ae6" />
+<link rel="stylesheet" href="/assets/landing.css?v=6b8e8b56a8df" />
 </head>
 <body>
 
@@ -90,7 +90,7 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a href="/pricing">Preise</a>
+        <a href="#pricing">Preise</a>
         <a href="/login">Anmelden</a>
       <details class="lang">
         <summary>
@@ -130,13 +130,34 @@ try {
     </div>
 </header>
 <main>
+  <section class="research-section wrap" id="research" aria-labelledby="research-title">
+    <div class="research-layout reveal">
+      <div class="research-copy">
+        <h2 id="research-title">Forschung ist schwer genug. Statistische Analyse sollte es nicht sein.</h2>
+        <p>Studienleiter von 588 klinischen Studien wurden gefragt, wo ihre Projekte auf Schwierigkeiten stießen.</p>
+        <p class="research-close">Sie haben schon genug Zeit mit dem Erheben Ihrer Daten verbracht. Warum noch mehr in Statistiksoftware stecken?</p>
+      </div>
+      <figure class="survey">
+        <ol>
+          <li><span class="sv-label">Patientenrekrutierung</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">44,3 %</span></li>
+          <li><span class="sv-label">Datenerhebung</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">26,7 %</span></li>
+          <li class="hl"><strong class="sv-label">Datenanalyse und Interpretation</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">21,5 %</span></li>
+          <li><span class="sv-label">Studiendesign</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">20,4 %</span></li>
+          <li><span class="sv-label">Publikation</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">20,2 %</span></li>
+        </ol>
+        <figcaption>Anteil der Studien, die die jeweilige Schwierigkeit nannten. <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">So einfach wie ChatGPT, aber lokal.</h2><p>Öffnen Sie einen Ordner und fragen Sie in Ihren eigenen Worten. Blade führt R auf Ihrem Computer aus, damit Tabellen, Grafiken und Skript schnell vorliegen.</p></div>
-      <a class="outline-link" href="/pricing">Preise <span aria-hidden="true">↗</span></a>
+      <a class="outline-link" href="#pricing">Preise</a>
     </div>
     <div class="product-layout reveal">
       <figure class="preview-stage">
+        <button class="replay" type="button" aria-label="Vorschau wiederholen" title="Vorschau wiederholen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.7-4M2.5 2v3.5H6"/></svg></button>
         <div class="preview-panels">
 <div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="Fragen zu Ihren Daten">
             <div class="mw">
@@ -365,6 +386,28 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
     </div>
   </section>
 
+  <section class="pricing-section wrap" id="pricing" aria-labelledby="pricing-title">
+    <div class="section-intro reveal">
+      <div><h2 id="pricing-title">Zwei Tarife, dieselbe App.</h2><p>Beide enthalten die vollständige Desktop-App mit R auf Ihrem Computer. Pro ist für die Wochen, in denen Sie eine Frist den ganzen Tag in Blade hält.</p></div>
+      <a class="outline-link" href="/pricing">Preisdetails</a>
+    </div>
+    <div class="plans reveal">
+      <section class="plan" aria-labelledby="home-plan-free">
+        <h3 id="home-plan-free">Blade Free</h3>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">Sehen Sie, was Blade mit Ihren eigenen Daten macht.</p>
+        <ul class="features"><li>Die vollständige Desktop-App</li><li>Analyse in R auf Ihrem Computer</li><li>Einige Fragen pro Tag</li></ul>
+        <div class="action"><a class="btn ghost" href="#get">Blade herunterladen</a><p class="action-note">Läuft auf macOS und Windows.</p></div>
+      </section>
+      <section class="plan pro" aria-labelledby="home-plan-pro">
+        <h3 id="home-plan-pro">Blade Pro</h3>
+        <p class="price">Rp299.000 <span>für einen Monat</span></p>
+        <p class="plan-summary">Für Fristen und intensive Forschungsmonate.</p>
+        <ul class="features"><li>Alles aus Free</li><li>Fragen Sie so viel, wie die Arbeit braucht</li><li>Eine Zahlung, keine automatische Verlängerung</li></ul>
+        <div class="action"><a class="btn" href="/pricing#checkout">Blade Pro holen</a><p class="action-note">Bezahlen Sie mit QRIS oder einem virtuellen Bankkonto.</p></div>
+      </section>
+    </div>
+  </section>
 
 </main>
 
@@ -400,7 +443,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=02e6c5333ae6" defer></script>
+<script src="/assets/landing.js?v=6b8e8b56a8df" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

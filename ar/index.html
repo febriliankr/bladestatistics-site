@@ -81,7 +81,7 @@ try {
 <meta name="theme-color" content="#f8f7f3" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=02e6c5333ae6" />
+<link rel="stylesheet" href="/assets/landing.css?v=6b8e8b56a8df" />
 </head>
 <body>
 
@@ -90,7 +90,7 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a href="/pricing">الأسعار</a>
+        <a href="#pricing">الأسعار</a>
         <a href="/login">تسجيل الدخول</a>
       <details class="lang">
         <summary>
@@ -130,13 +130,34 @@ try {
     </div>
 </header>
 <main>
+  <section class="research-section wrap" id="research" aria-labelledby="research-title">
+    <div class="research-layout reveal">
+      <div class="research-copy">
+        <h2 id="research-title">البحث صعب بما يكفي. لا ينبغي أن يكون التحليل الإحصائي كذلك.</h2>
+        <p>سُئل باحثو 588 دراسة سريرية عن المراحل التي واجهت فيها مشاريعهم صعوبات.</p>
+        <p class="research-close">لقد أمضيت وقتًا كافيًا في جمع بياناتك. فلماذا تمضي المزيد في تعلّم برامج الإحصاء؟</p>
+      </div>
+      <figure class="survey">
+        <ol>
+          <li><span class="sv-label">تجنيد المرضى</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">44.3%</span></li>
+          <li><span class="sv-label">جمع البيانات</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">26.7%</span></li>
+          <li class="hl"><strong class="sv-label">تحليل البيانات وتفسيرها</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">21.5%</span></li>
+          <li><span class="sv-label">تصميم الدراسة</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">20.4%</span></li>
+          <li><span class="sv-label">النشر</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">20.2%</span></li>
+        </ol>
+        <figcaption>نسبة الدراسات التي أبلغت عن كل صعوبة. <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">بسهولة ChatGPT، لكن محليًا.</h2><p>افتح مجلدًا واسأل بكلماتك. يشغّل Blade لغة R على جهازك، فتحصل على الجداول والرسوم والسكربت بسرعة.</p></div>
-      <a class="outline-link" href="/pricing">الأسعار <span aria-hidden="true">↗</span></a>
+      <a class="outline-link" href="#pricing">الأسعار</a>
     </div>
     <div class="product-layout reveal">
       <figure class="preview-stage">
+        <button class="replay" type="button" aria-label="إعادة تشغيل المعاينة" title="إعادة تشغيل المعاينة"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.7-4M2.5 2v3.5H6"/></svg></button>
         <div class="preview-panels">
 <div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="اسأل عن بياناتك">
             <div class="mw">
@@ -365,6 +386,28 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
     </div>
   </section>
 
+  <section class="pricing-section wrap" id="pricing" aria-labelledby="pricing-title">
+    <div class="section-intro reveal">
+      <div><h2 id="pricing-title">باقتان، والتطبيق نفسه.</h2><p>تتضمن كلتاهما تطبيق سطح المكتب الكامل مع R على جهازك. باقة Pro للأسابيع التي يبقيك فيها موعد التسليم في Blade طوال اليوم.</p></div>
+      <a class="outline-link" href="/pricing">تفاصيل الأسعار</a>
+    </div>
+    <div class="plans reveal">
+      <section class="plan" aria-labelledby="home-plan-free">
+        <h3 id="home-plan-free">Blade Free</h3>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">اكتشف ما يفعله Blade ببياناتك.</p>
+        <ul class="features"><li>تطبيق سطح المكتب الكامل</li><li>تحليل بلغة R على جهازك</li><li>بضعة أسئلة يوميًا</li></ul>
+        <div class="action"><a class="btn ghost" href="#get">تنزيل Blade</a><p class="action-note">يعمل على macOS وWindows.</p></div>
+      </section>
+      <section class="plan pro" aria-labelledby="home-plan-pro">
+        <h3 id="home-plan-pro">Blade Pro</h3>
+        <p class="price">Rp299.000 <span>لمدة شهر</span></p>
+        <p class="plan-summary">لمواعيد التسليم وأشهر البحث المزدحمة.</p>
+        <ul class="features"><li>كل ما في Free</li><li>اسأل بقدر ما يحتاجه العمل</li><li>دفعة واحدة، دون تجديد تلقائي</li></ul>
+        <div class="action"><a class="btn" href="/pricing#checkout">احصل على Blade Pro</a><p class="action-note">ادفع عبر QRIS أو حساب بنكي افتراضي.</p></div>
+      </section>
+    </div>
+  </section>
 
 </main>
 
@@ -400,7 +443,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=02e6c5333ae6" defer></script>
+<script src="/assets/landing.js?v=6b8e8b56a8df" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points

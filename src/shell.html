@@ -37,7 +37,7 @@ try {
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
-        <a href="/pricing">{{footer.pricing}}</a>
+        <a href="#pricing">{{footer.pricing}}</a>
         <a href="/login">{{nav.signIn}}</a>
       <details class="lang">
         <summary>
@@ -65,13 +65,34 @@ try {
     </div>
 </header>
 <main>
+  <section class="research-section wrap" id="research" aria-labelledby="research-title">
+    <div class="research-layout reveal">
+      <div class="research-copy">
+        <h2 id="research-title">{{simple.researchTitle}}</h2>
+        <p>{{simple.researchText}}</p>
+        <p class="research-close">{{simple.researchClose}}</p>
+      </div>
+      <figure class="survey">
+        <ol>
+          <li><span class="sv-label">{{simple.bar1}}</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">{{simple.v1}}</span></li>
+          <li><span class="sv-label">{{simple.bar2}}</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">{{simple.v2}}</span></li>
+          <li class="hl"><strong class="sv-label">{{simple.bar3}}</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">{{simple.v3}}</span></li>
+          <li><span class="sv-label">{{simple.bar4}}</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">{{simple.v4}}</span></li>
+          <li><span class="sv-label">{{simple.bar5}}</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">{{simple.v5}}</span></li>
+        </ol>
+        <figcaption>{{simple.researchNote}} <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">{{simple.title}}</h2><p>{{simple.text}}</p></div>
-      <a class="outline-link" href="/pricing">{{footer.pricing}} <span aria-hidden="true">↗</span></a>
+      <a class="outline-link" href="#pricing">{{footer.pricing}}</a>
     </div>
     <div class="product-layout reveal">
       <figure class="preview-stage">
+        <button class="replay" type="button" aria-label="{{simple.replay}}" title="{{simple.replay}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8a5.5 5.5 0 1 0 1.7-4M2.5 2v3.5H6"/></svg></button>
         <div class="preview-panels">
 <div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="{{simple.ask}}">
             <div class="mw">
@@ -300,6 +321,28 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
     </div>
   </section>
 
+  <section class="pricing-section wrap" id="pricing" aria-labelledby="pricing-title">
+    <div class="section-intro reveal">
+      <div><h2 id="pricing-title">{{simple.priceTitle}}</h2><p>{{simple.priceText}}</p></div>
+      <a class="outline-link" href="/pricing">{{simple.priceMore}}</a>
+    </div>
+    <div class="plans reveal">
+      <section class="plan" aria-labelledby="home-plan-free">
+        <h3 id="home-plan-free">Blade Free</h3>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">{{simple.freeSummary}}</p>
+        <ul class="features"><li>{{simple.freeF1}}</li><li>{{simple.freeF2}}</li><li>{{simple.freeF3}}</li></ul>
+        <div class="action"><a class="btn ghost" href="#get">{{simple.freeCta}}</a><p class="action-note">{{simple.freeNote}}</p></div>
+      </section>
+      <section class="plan pro" aria-labelledby="home-plan-pro">
+        <h3 id="home-plan-pro">Blade Pro</h3>
+        <p class="price">Rp299.000 <span>{{simple.proPer}}</span></p>
+        <p class="plan-summary">{{simple.proSummary}}</p>
+        <ul class="features"><li>{{simple.proF1}}</li><li>{{simple.proF2}}</li><li>{{simple.proF3}}</li></ul>
+        <div class="action"><a class="btn" href="/pricing#checkout">{{simple.proCta}}</a><p class="action-note">{{simple.proNote}}</p></div>
+      </section>
+    </div>
+  </section>
 
 </main>
 

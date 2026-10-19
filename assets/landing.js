@@ -265,6 +265,20 @@
     });
   });
 
+  // Replay restarts whichever preview is showing, entrance and all.
+  var replay = document.querySelector(".replay");
+  if (replay) {
+    replay.addEventListener("click", function () {
+      takeOver();
+      var step = openStep();
+      var panel = document.getElementById(step.dataset.preview);
+      panel.hidden = true;
+      void panel.offsetWidth;
+      inView = true;
+      show(step);
+    });
+  }
+
   // Hold the slideshow while someone is pointing at or tabbing through it.
   if (stage) {
     stage.addEventListener("mouseenter", function () { hold(true); });
