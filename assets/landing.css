@@ -372,119 +372,148 @@ h2 {
 .lang-menu a[aria-current] {
   color: #5c744a;
 }
-/* Research section: one survey, five horizontal bars, analysis highlighted. */
+/* Research section: small-multiple waffles, one square per 1% of studies.
+   Analysis is the highlighted pain point; hovering a chart brings it forward. */
 .research-section {
-  padding-top: 110px;
-  padding-bottom: 20px;
+  padding-top: 100px;
+  padding-bottom: 30px;
 }
-.research-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 96px;
-  align-items: center;
+.research-copy {
+  max-width: 620px;
+  margin-bottom: 46px;
 }
 .research-copy h2 {
-  max-width: 480px;
+  margin-bottom: 14px;
 }
 .research-copy p {
-  max-width: 440px;
-  margin: 0 0 18px;
-  font-size: 17px;
+  margin: 0;
+  font-size: 18px;
   color: var(--muted);
 }
-.research-copy .research-close {
-  margin: 0;
-  color: var(--fg);
-}
-.survey {
+.pain {
   margin: 0;
 }
-.survey ol {
+.pain-lead {
+  margin: 0 0 18px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #4b5547;
+}
+.pain-grid {
   display: grid;
-  gap: 18px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.survey li {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 4.2em;
-  align-items: center;
-  gap: 7px 14px;
+.pain-grid li {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px 16px;
+  border-radius: 16px;
+  transition: background 0.35s var(--ease), opacity 0.35s var(--ease), transform 0.35s var(--ease);
 }
-.sv-label {
-  grid-column: 1 / -1;
-  font-size: 15px;
-  color: #4b5547;
-}
-.sv-track {
-  height: 8px;
-  border-radius: 4px;
-  background: #eceee6;
-  overflow: hidden;
-}
-.sv-fill {
-  display: block;
-  width: var(--w);
-  height: 100%;
-  border-radius: 4px;
-  background: #a9b19c;
-  transform-origin: left;
-  animation: sv-grow 0.9s var(--ease) both;
-}
-[dir="rtl"] .sv-fill {
-  transform-origin: right;
-}
-.survey li:nth-child(2) .sv-fill { animation-delay: 0.08s; }
-.survey li:nth-child(3) .sv-fill { animation-delay: 0.16s; }
-.survey li:nth-child(4) .sv-fill { animation-delay: 0.24s; }
-.survey li:nth-child(5) .sv-fill { animation-delay: 0.32s; }
-.js-reveal .reveal:not(.in) .sv-fill {
-  animation-play-state: paused;
-}
-@keyframes sv-grow {
-  from { transform: scaleX(0); }
-}
-.sv-value {
-  font-size: 14px;
+.wf-value {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 450;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
+}
+.wf-label {
+  min-height: 2.8em;
+  margin: 6px 0 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
   color: var(--muted);
-  text-align: end;
 }
-.survey li.hl .sv-label,
-.survey li.hl .sv-value {
-  color: var(--fg);
+.pain-grid li.hl .wf-value {
+  color: var(--orange);
+}
+.pain-grid li.hl .wf-label {
   font-weight: 600;
+  color: var(--fg);
 }
-.survey li.hl .sv-fill {
+.wf-grid {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 3px;
+}
+.wf-grid i {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: #eceee6;
+  transition: background 0.35s var(--ease);
+}
+.wf-grid i.f {
+  background: #aab39d;
+  animation: wf-in 0.35s var(--ease) var(--d) both;
+}
+.pain-grid li.hl .wf-grid i.f {
   background: var(--orange);
 }
-.survey figcaption {
-  margin-top: 24px;
+.js-reveal .reveal:not(.in) .wf-grid i.f {
+  animation-play-state: paused;
+}
+@keyframes wf-in {
+  from { opacity: 0; transform: scale(0.4); }
+}
+@media (hover: hover) {
+  .pain-grid:hover li {
+    opacity: 0.45;
+  }
+  .pain-grid li:hover {
+    opacity: 1;
+    background: #f4f5ef;
+    transform: translateY(-3px);
+  }
+  .pain-grid li:hover .wf-grid i {
+    background: #e3e6dc;
+  }
+  .pain-grid li:hover .wf-grid i.f {
+    background: #7d8a6e;
+  }
+  .pain-grid li.hl:hover .wf-grid i.f {
+    background: var(--orange-hover);
+  }
+}
+.pain figcaption {
+  margin-top: 22px;
   font-size: 12px;
   line-height: 1.6;
   color: var(--muted);
 }
-.survey figcaption a {
+.pain figcaption a {
   color: inherit;
   text-underline-offset: 3px;
 }
 @media (max-width: 900px) {
-  .research-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
+  .pain-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 @media (max-width: 640px) {
   .research-section {
     padding-top: 70px;
   }
-  .research-copy p {
-    font-size: 15px;
-    line-height: 1.75;
+  .research-copy {
+    margin-bottom: 32px;
   }
-  .sv-label {
-    font-size: 14px;
+  .research-copy p {
+    font-size: 16px;
+  }
+  .pain-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .pain-grid li {
+    padding: 14px 10px 12px;
+  }
+  .wf-value {
+    font-size: 24px;
   }
 }
 
