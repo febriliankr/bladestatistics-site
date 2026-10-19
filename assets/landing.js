@@ -291,6 +291,18 @@
     demo.setAttribute("data-stage", "type");
   }
 
+  // The /demo deck plays the same previews, one per slide.
+  window.BladePreview = {
+    ask: playDemo,
+    gallery: playGallery,
+    script: function () { if (script) script.playScript(); },
+    stop: function () {
+      demoTimers.forEach(clearTimeout);
+      clearInterval(galleryTimer);
+      clearScript();
+    },
+  };
+
   if (stage && "IntersectionObserver" in window) {
     new IntersectionObserver(function (entries) {
       var visible = entries[0].isIntersecting;

@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Blade demo</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" />
+<link rel="stylesheet" href="/assets/landing.css?v=ecac6fe9929c" />
+<style>
+  /* A full-screen deck built from the homepage's own previews. One slide
+     shows at a time; landing.js plays each preview when its slide opens. */
+  html, body { height: 100%; }
+  body { overflow: hidden; background: #fff; }
+  .deck { position: fixed; inset: 0; }
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    padding: 88px clamp(20px, 6vw, 104px) 96px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .slide.on { display: grid; animation: slide-in 0.6s var(--ease) both; }
+  @keyframes slide-in { from { opacity: 0; transform: translateY(10px); } }
+
+  .split {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+  .copy h2 {
+    margin: 0 0 18px;
+    font-size: clamp(36px, 4.2vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    font-weight: 450;
+    text-wrap: balance;
+  }
+  .copy p {
+    max-width: 440px;
+    margin: 0;
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.6;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .copy .step {
+    display: block;
+    margin-bottom: 18px;
+    font-size: 15px;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .stage {
+    container-type: inline-size;
+    justify-self: center;
+    width: min(100%, calc(100svh - 200px));
+  }
+  .stage.wide { width: min(100%, calc((100svh - 200px) * 1.5)); }
+  .stage .app-preview .mock, .stage .mock { padding: 4%; }
+
+  /* Title and closing slides sit on the homepage landscape. */
+  .s-hero {
+    place-items: center;
+    text-align: center;
+    isolation: isolate;
+  }
+  .s-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, #fff0 10%, #ffffffb3 55%, #fff 88%),
+      url(/assets/daylight-lake.webp) center 30% / cover no-repeat;
+  }
+  .s-hero h1 {
+    max-width: 960px;
+    margin: 0 auto 22px;
+    font-size: clamp(42px, 6vw, 92px);
+    line-height: 1.02;
+    font-weight: 430;
+    letter-spacing: -0.06em;
+    text-wrap: balance;
+  }
+  .s-hero h1 em { font-style: normal; color: #303c2c; }
+  .s-hero p {
+    max-width: 560px;
+    margin: 0 auto;
+    font-size: clamp(17px, 1.6vw, 22px);
+    color: #5d6559;
+  }
+  .s-hero .cta { margin-top: 30px; }
+  .s-hero .url { display: block; margin-top: 16px; font-size: 14px; color: var(--muted); }
+
+  .s-wide { align-content: center; gap: 36px; }
+  .s-wide .copy { max-width: 760px; }
+  .s-wide .copy p { max-width: 560px; }
+  .s-wide .plans { max-width: 960px; margin: 0; }
+
+  /* Chrome: brand, counter, full screen, progress, previous and next. */
+  .deck-bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px clamp(20px, 4vw, 48px);
+    pointer-events: none;
+  }
+  .deck-bar > * { pointer-events: auto; }
+  .deck-bar .wordmark { font-size: 22px; }
+  .deck-bar .wordmark img { width: 26px; height: 26px; }
+  .deck-tools { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .deck-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: #fffefae6;
+    color: var(--fg);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .deck-btn:hover { background: #fff; border-color: #c9cfbf; }
+  .deck-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .deck-btn:disabled { opacity: 0.35; cursor: default; }
+  .deck-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .deck-nav {
+    position: fixed;
+    right: clamp(20px, 4vw, 48px);
+    bottom: 26px;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+  }
+  .deck-progress {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 10;
+    height: 3px;
+    background: #eceee6;
+  }
+  .deck-progress span {
+    display: block;
+    height: 100%;
+    background: var(--orange);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease);
+  }
+  .deck-hint {
+    position: fixed;
+    left: clamp(20px, 4vw, 48px);
+    bottom: 34px;
+    z-index: 10;
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 820px) {
+    .slide { padding: 76px 18px 96px; }
+    .split { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 22px; }
+    .copy h2 { margin-bottom: 10px; }
+    .copy .step { margin-bottom: 10px; font-size: 13px; }
+    .stage { width: min(100%, calc(100svh - 330px)); min-width: min(100%, 300px); }
+    .stage.wide { width: 100%; }
+    .s-wide { align-content: start; gap: 24px; }
+    .deck-hint { display: none; }
+    .deck-bar { padding: 16px 18px; }
+    .deck-nav { right: 18px; bottom: 22px; }
+    .slide .pain-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+    .slide .pain-grid li { padding: 10px 6px; }
+    .slide .wf-value { font-size: 20px; }
+    .slide .wf-label { min-height: 3.6em; margin: 4px 0 8px; font-size: 11px; }
+    .slide .wf-grid { gap: 2px; }
+    .slide .pain figcaption { margin-top: 12px; }
+    .slide .plans { gap: 12px; }
+    .slide .plan { padding: 20px; }
+    .slide .plan .features, .slide .plan .action-note { display: none; }
+    .slide .plan-summary { margin-bottom: 16px; }
+  }
+</style>
+</head>
+<body>
+<header class="deck-bar">
+  <a class="wordmark" href="/"><img src="/logo.png" alt="" width="26" height="26" /><span>Blade</span></a>
+  <div class="deck-tools">
+    <span id="deck-count" aria-live="polite">1 / 8</span>
+    <button class="deck-btn" type="button" id="deck-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
+  </div>
+</header>
+
+<main class="deck" id="deck">
+  <section class="slide s-hero" aria-label="Blade">
+    <div>
+      <h1>Specialized AI agents for <em>statistical analysis</em></h1>
+      <p>Blade handles the heavy lifting so you can focus on discovering insights that matter.</p>
+    </div>
+  </section>
+
+  <section class="slide s-wide" aria-label="The problem">
+    <div class="copy">
+      <h2>Research is hard. The statistics shouldn't be.</h2>
+      <p>Your data took months to collect. The analysis shouldn't.</p>
+    </div>
+    <figure class="pain">
+      <p class="pain-lead">Where 588 clinical studies got stuck:</p>
+      <ol class="pain-grid">
+          <li>
+            <p class="wf-value">44.3%</p>
+            <span class="wf-label">Patient recruitment</span>
+            <span class="wf-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:560ms"></i><i class="f" style="--d:574ms"></i><i class="f" style="--d:588ms"></i><i class="f" style="--d:602ms"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:420ms"></i><i class="f" style="--d:434ms"></i><i class="f" style="--d:448ms"></i><i class="f" style="--d:462ms"></i><i class="f" style="--d:476ms"></i><i class="f" style="--d:490ms"></i><i class="f" style="--d:504ms"></i><i class="f" style="--d:518ms"></i><i class="f" style="--d:532ms"></i><i class="f" style="--d:546ms"></i><i class="f" style="--d:280ms"></i><i class="f" style="--d:294ms"></i><i class="f" style="--d:308ms"></i><i class="f" style="--d:322ms"></i><i class="f" style="--d:336ms"></i><i class="f" style="--d:350ms"></i><i class="f" style="--d:364ms"></i><i class="f" style="--d:378ms"></i><i class="f" style="--d:392ms"></i><i class="f" style="--d:406ms"></i><i class="f" style="--d:140ms"></i><i class="f" style="--d:154ms"></i><i class="f" style="--d:168ms"></i><i class="f" style="--d:182ms"></i><i class="f" style="--d:196ms"></i><i class="f" style="--d:210ms"></i><i class="f" style="--d:224ms"></i><i class="f" style="--d:238ms"></i><i class="f" style="--d:252ms"></i><i class="f" style="--d:266ms"></i><i class="f" style="--d:0ms"></i><i class="f" style="--d:14ms"></i><i class="f" style="--d:28ms"></i><i class="f" style="--d:42ms"></i><i class="f" style="--d:56ms"></i><i class="f" style="--d:70ms"></i><i class="f" style="--d:84ms"></i><i class="f" style="--d:98ms"></i><i class="f" style="--d:112ms"></i><i class="f" style="--d:126ms"></i></span>
+          </li>
+          <li>
+            <p class="wf-value">26.7%</p>
+            <span class="wf-label">Data collection</span>
+            <span class="wf-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:280ms"></i><i class="f" style="--d:294ms"></i><i class="f" style="--d:308ms"></i><i class="f" style="--d:322ms"></i><i class="f" style="--d:336ms"></i><i class="f" style="--d:350ms"></i><i class="f" style="--d:364ms"></i><i></i><i></i><i></i><i class="f" style="--d:140ms"></i><i class="f" style="--d:154ms"></i><i class="f" style="--d:168ms"></i><i class="f" style="--d:182ms"></i><i class="f" style="--d:196ms"></i><i class="f" style="--d:210ms"></i><i class="f" style="--d:224ms"></i><i class="f" style="--d:238ms"></i><i class="f" style="--d:252ms"></i><i class="f" style="--d:266ms"></i><i class="f" style="--d:0ms"></i><i class="f" style="--d:14ms"></i><i class="f" style="--d:28ms"></i><i class="f" style="--d:42ms"></i><i class="f" style="--d:56ms"></i><i class="f" style="--d:70ms"></i><i class="f" style="--d:84ms"></i><i class="f" style="--d:98ms"></i><i class="f" style="--d:112ms"></i><i class="f" style="--d:126ms"></i></span>
+          </li>
+          <li class="hl">
+            <p class="wf-value">21.5%</p>
+            <strong class="wf-label">Data analysis and interpretation</strong>
+            <span class="wf-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:280ms"></i><i class="f" style="--d:294ms"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:140ms"></i><i class="f" style="--d:154ms"></i><i class="f" style="--d:168ms"></i><i class="f" style="--d:182ms"></i><i class="f" style="--d:196ms"></i><i class="f" style="--d:210ms"></i><i class="f" style="--d:224ms"></i><i class="f" style="--d:238ms"></i><i class="f" style="--d:252ms"></i><i class="f" style="--d:266ms"></i><i class="f" style="--d:0ms"></i><i class="f" style="--d:14ms"></i><i class="f" style="--d:28ms"></i><i class="f" style="--d:42ms"></i><i class="f" style="--d:56ms"></i><i class="f" style="--d:70ms"></i><i class="f" style="--d:84ms"></i><i class="f" style="--d:98ms"></i><i class="f" style="--d:112ms"></i><i class="f" style="--d:126ms"></i></span>
+          </li>
+          <li>
+            <p class="wf-value">20.4%</p>
+            <span class="wf-label">Study design</span>
+            <span class="wf-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:140ms"></i><i class="f" style="--d:154ms"></i><i class="f" style="--d:168ms"></i><i class="f" style="--d:182ms"></i><i class="f" style="--d:196ms"></i><i class="f" style="--d:210ms"></i><i class="f" style="--d:224ms"></i><i class="f" style="--d:238ms"></i><i class="f" style="--d:252ms"></i><i class="f" style="--d:266ms"></i><i class="f" style="--d:0ms"></i><i class="f" style="--d:14ms"></i><i class="f" style="--d:28ms"></i><i class="f" style="--d:42ms"></i><i class="f" style="--d:56ms"></i><i class="f" style="--d:70ms"></i><i class="f" style="--d:84ms"></i><i class="f" style="--d:98ms"></i><i class="f" style="--d:112ms"></i><i class="f" style="--d:126ms"></i></span>
+          </li>
+          <li>
+            <p class="wf-value">20.2%</p>
+            <span class="wf-label">Publication</span>
+            <span class="wf-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="f" style="--d:140ms"></i><i class="f" style="--d:154ms"></i><i class="f" style="--d:168ms"></i><i class="f" style="--d:182ms"></i><i class="f" style="--d:196ms"></i><i class="f" style="--d:210ms"></i><i class="f" style="--d:224ms"></i><i class="f" style="--d:238ms"></i><i class="f" style="--d:252ms"></i><i class="f" style="--d:266ms"></i><i class="f" style="--d:0ms"></i><i class="f" style="--d:14ms"></i><i class="f" style="--d:28ms"></i><i class="f" style="--d:42ms"></i><i class="f" style="--d:56ms"></i><i class="f" style="--d:70ms"></i><i class="f" style="--d:84ms"></i><i class="f" style="--d:98ms"></i><i class="f" style="--d:112ms"></i><i class="f" style="--d:126ms"></i></span>
+          </li>
+      </ol>
+      <figcaption>Each square is 1% of the 588 studies. <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+    </figure>
+  </section>
+
+  <section class="slide split" data-play="ask" aria-label="Ask about your data">
+    <div class="copy">
+      <span class="step">1. Ask</span>
+      <h2>Ask about your data in plain language.</h2>
+      <p>Open a folder with CSV, Excel, or SPSS files and type what you want to know.</p>
+    </div>
+    <div class="stage"><div class="app-preview mock ask-demo" id="preview-ask" role="img" aria-label="Ask about your data">
+            <div class="mw">
+              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
+              <div class="mw-body">
+                <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>4,240 rows · 16 columns</span></div>
+                <div class="ask-data">
+                  <table class="m-table">
+                    <tr><th>age</th><th>sysBP</th><th>BMI</th><th>TenYearCHD</th></tr>
+                    <tr><td>39</td><td>106</td><td>26.97</td><td>0</td></tr>
+                    <tr><td>46</td><td>121</td><td>28.73</td><td>0</td></tr>
+                    <tr><td>48</td><td>127.5</td><td>25.34</td><td>0</td></tr>
+                    <tr><td>61</td><td>150</td><td>28.58</td><td>1</td></tr>
+                    <tr><td>46</td><td>130</td><td>23.1</td><td>0</td></tr>
+                    <tr><td>43</td><td>180</td><td>30.3</td><td>0</td></tr>
+                  </table>
+                </div>
+                <div class="ask-chat">
+                  <p class="m-user">Which risk factors relate most to ten-year CHD?</p>
+                  <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div>
+                  <div class="ask-answer">
+                    <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>Rscript framingham_stats.R</span><small>Done</small></div>
+                    <p class="m-msg">Age and systolic BP are the strongest, then hypertension and diastolic BP.</p>
+                    <table class="m-table m-result">
+                      <tr><th>with TenYearCHD</th><th>r</th><th>95% CI</th><th>p</th></tr>
+                      <tr><td>age</td><td>0.23</td><td>0.20 to 0.25</td><td>&lt; .001</td></tr>
+                      <tr><td>sysBP</td><td>0.22</td><td>0.19 to 0.24</td><td>&lt; .001</td></tr>
+                      <tr><td>prevalentHyp</td><td>0.18</td><td>0.15 to 0.21</td><td>&lt; .001</td></tr>
+                      <tr><td>diaBP</td><td>0.15</td><td>0.12 to 0.17</td><td>&lt; .001</td></tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="m-compose">
+                  <p><span class="ask-input" data-prompt="Which risk factors relate most to ten-year CHD?"></span><i class="caret-blink"></i></p>
+                  <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
+                </div>
+              </div>
+              <svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+            </div>
+          </div></div>
+  </section>
+
+  <section class="slide split" data-play="gallery" aria-label="Read the results">
+    <div class="copy">
+      <span class="step">2. Read</span>
+      <h2>R runs the analysis on your computer.</h2>
+      <p>Tables, figures, and assumption checks land in the workspace as files you keep.</p>
+    </div>
+    <div class="stage"><div class="app-preview mock" id="preview-results" role="img" aria-label="Read the results">
+            <div class="mw">
+              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
+              <div class="mw-body">
+                <p class="m-msg">Done. Five figures from the Framingham data are in Study A.</p>
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>Rscript framingham_analysis.R</span><small>Done</small></div>
+                <div class="m-shot">
+                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b class="shot-name">R_fig4_age_sex.png</b><span class="shot-size">PNG · 76 KB</span></p>
+                  <div class="shot-stack">
+                    <img src="/assets/r-fig4-age-sex.webp" alt="" width="1000" height="625" loading="lazy" class="on" />
+                    <img src="/assets/r-fig3-correlation.webp" alt="" width="1000" height="800" loading="lazy" />
+                    <img src="/assets/r-fig6-feature-importance.webp" alt="" width="1000" height="667" loading="lazy" />
+                    <img src="/assets/r-fig5-bp-bmi.webp" alt="" width="1000" height="417" loading="lazy" />
+                    <img src="/assets/r-stat1-roc-threshold.webp" alt="" width="1000" height="462" loading="lazy" />
+                  </div>
+                </div>
+                <div class="m-strip">
+                  <span data-name="R_fig4_age_sex.png" data-size="PNG · 76 KB" class="on"><img src="/assets/r-fig4-age-sex.webp" alt="" width="1000" height="625" loading="lazy" /></span>
+                  <span data-name="R_fig3_correlation.png" data-size="PNG · 258 KB"><img src="/assets/r-fig3-correlation.webp" alt="" width="1000" height="800" loading="lazy" /></span>
+                  <span data-name="R_fig6_feature_importance.png" data-size="PNG · 88 KB"><img src="/assets/r-fig6-feature-importance.webp" alt="" width="1000" height="667" loading="lazy" /></span>
+                  <span data-name="R_fig5_bp_bmi.png" data-size="PNG · 86 KB"><img src="/assets/r-fig5-bp-bmi.webp" alt="" width="1000" height="417" loading="lazy" /></span>
+                  <span data-name="R_stat1_roc_threshold.png" data-size="PNG · 191 KB"><img src="/assets/r-stat1-roc-threshold.webp" alt="" width="1000" height="462" loading="lazy" /></span>
+                </div>
+              </div>
+            </div>
+          </div></div>
+  </section>
+
+  <section class="slide split" data-play="script" aria-label="Keep the R script">
+    <div class="copy">
+      <span class="step">3. Keep</span>
+      <h2>The R script is yours.</h2>
+      <p>Review the code, run it again, or send it to a colleague. Try the tabs.</p>
+    </div>
+    <div class="stage"><div class="app-preview mock script-demo" id="preview-script" role="group" aria-label="Keep the R script">
+            <div class="mw">
+              <div class="mw-bar"><i></i><i></i><i></i><span>Study A <b>CHD risk factors</b></span></div>
+              <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A <em>›</em> CHD risk factors</span></div>
+              <div class="mw-body">
+                <div class="m-tabs" role="tablist" aria-label="Files">
+                  <button type="button" role="tab" id="tab-r" aria-controls="pane-r" aria-selected="true">framingham_linear.R</button>
+                  <button type="button" role="tab" id="tab-csv" aria-controls="pane-csv" aria-selected="false" tabindex="-1">framingham.csv</button>
+                  <button type="button" role="tab" id="tab-out" aria-controls="pane-out" aria-selected="false" tabindex="-1">output.txt</button>
+                </div>
+                <div class="m-pane pane-r" id="pane-r" role="tabpanel" aria-labelledby="tab-r">
+                  <div class="m-run"><span class="run-status"><span class="st-idle">R 4.4</span><span class="st-busy"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:.2s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.9s;animation-delay:.9s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.2s;animation-delay:.5s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.6s;animation-delay:.1s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.1s;animation-delay:1.2s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.7s;animation-delay:.4s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.3s;animation-delay:1s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.8s;animation-delay:.7s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.5s;animation-delay:.3s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.2s;animation-delay:1.4s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.9s;animation-delay:.6s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:1.1s"/></svg>Running</span><span class="st-done"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>Ran in 0.4 s</span></span><button type="button" class="run-btn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg>Run</button></div>
+                  <pre class="m-code"><code><span class="cl"><i>1</i><span class="k"># Framingham -- linear regression output (OLS)</span></span><span class="cl"><i>2</i>df &lt;- <span class="f">read.csv</span>(<span class="s">&quot;framingham.csv&quot;</span>, check.names = <span class="s">FALSE</span>)</span><span class="cl"><i>3</i> </span><span class="cl"><i>4</i><span class="k"># 2. multiple: sysBP</span></span><span class="cl"><i>5</i>m2 &lt;- <span class="f">lm</span>(sysBP ~ age + male + BMI + heartRate + totChol,</span><span class="cl"><i>6</i>         data = df)</span><span class="cl"><i>7</i><span class="f">print</span>(<span class="f">summary</span>(m2))</span></code></pre>
+                  <div class="m-console" aria-live="off"><p>Console</p><pre><span class="ol">Call:</span><span class="ol">lm(formula = sysBP ~ age + male + BMI + heartRate + totChol, </span><span class="ol">    data = df)</span><span class="ol"> </span><span class="ol">Residuals:</span><span class="ol">    Min      1Q  Median      3Q     Max </span><span class="ol">-64.300 -12.481  -2.465   9.921 125.865 </span><span class="ol"> </span><span class="ol">Coefficients:</span><span class="ol">             Estimate Std. Error t value Pr(&gt;|t|)    </span><span class="ol">(Intercept) 22.531293   3.091221   7.289 3.72e-13 ***</span><span class="ol">age          0.864168   0.035665  24.230  &lt; 2e-16 ***</span><span class="ol">male        -1.128182   0.596856  -1.890   0.0588 .  </span><span class="ol">BMI          1.425642   0.072987  19.533  &lt; 2e-16 ***</span><span class="ol">heartRate    0.290839   0.024571  11.837  &lt; 2e-16 ***</span><span class="ol">totChol      0.036349   0.006852   5.305 1.19e-07 ***</span><span class="ol">---</span><span class="ol">Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span><span class="ol"> </span><span class="ol">Residual standard error: 18.84 on 4165 degrees of freedom</span><span class="ol">  (69 observations deleted due to missingness)</span><span class="ol">Multiple R-squared:  0.2642,	Adjusted R-squared:  0.2633 </span><span class="ol">F-statistic: 299.1 on 5 and 4165 DF,  p-value: &lt; 2.2e-16</span></pre></div>
+                </div>
+                <div class="m-pane pane-csv" id="pane-csv" role="tabpanel" aria-labelledby="tab-csv" tabindex="0" hidden>
+                  <table class="m-sheet"><tr><th></th><th>male</th><th>age</th><th>education</th><th>currentSmoker</th><th>cigsPerDay</th><th>BPMeds</th><th>prevalentStroke</th><th>prevalentHyp</th><th>diabetes</th><th>totChol</th><th>sysBP</th><th>diaBP</th><th>BMI</th><th>heartRate</th><th>glucose</th><th>TenYearCHD</th></tr><tr><th>1</th><td>1</td><td>39</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>195</td><td>106</td><td>70</td><td>26.97</td><td>80</td><td>77</td><td>0</td></tr><tr><th>2</th><td>0</td><td>46</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>250</td><td>121</td><td>81</td><td>28.73</td><td>95</td><td>76</td><td>0</td></tr><tr><th>3</th><td>1</td><td>48</td><td>1</td><td>1</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>245</td><td>127.5</td><td>80</td><td>25.34</td><td>75</td><td>70</td><td>0</td></tr><tr><th>4</th><td>0</td><td>61</td><td>3</td><td>1</td><td>30</td><td>0</td><td>0</td><td>1</td><td>0</td><td>225</td><td>150</td><td>95</td><td>28.58</td><td>65</td><td>103</td><td>1</td></tr><tr><th>5</th><td>0</td><td>46</td><td>3</td><td>1</td><td>23</td><td>0</td><td>0</td><td>0</td><td>0</td><td>285</td><td>130</td><td>84</td><td>23.1</td><td>85</td><td>85</td><td>0</td></tr><tr><th>6</th><td>0</td><td>43</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>228</td><td>180</td><td>110</td><td>30.3</td><td>77</td><td>99</td><td>0</td></tr><tr><th>7</th><td>0</td><td>63</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>205</td><td>138</td><td>71</td><td>33.11</td><td>60</td><td>85</td><td>1</td></tr><tr><th>8</th><td>0</td><td>45</td><td>2</td><td>1</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>313</td><td>100</td><td>71</td><td>21.68</td><td>79</td><td>78</td><td>0</td></tr><tr><th>9</th><td>1</td><td>52</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>260</td><td>141.5</td><td>89</td><td>26.36</td><td>76</td><td>79</td><td>0</td></tr><tr><th>10</th><td>1</td><td>43</td><td>1</td><td>1</td><td>30</td><td>0</td><td>0</td><td>1</td><td>0</td><td>225</td><td>162</td><td>107</td><td>23.61</td><td>93</td><td>88</td><td>0</td></tr><tr><th>11</th><td>0</td><td>50</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>254</td><td>133</td><td>76</td><td>22.91</td><td>75</td><td>76</td><td>0</td></tr><tr><th>12</th><td>0</td><td>43</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>247</td><td>131</td><td>88</td><td>27.64</td><td>72</td><td>61</td><td>0</td></tr><tr><th>13</th><td>1</td><td>46</td><td>1</td><td>1</td><td>15</td><td>0</td><td>0</td><td>1</td><td>0</td><td>294</td><td>142</td><td>94</td><td>26.31</td><td>98</td><td>64</td><td>0</td></tr><tr><th>14</th><td>0</td><td>41</td><td>3</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>332</td><td>124</td><td>88</td><td>31.31</td><td>65</td><td>84</td><td>0</td></tr><tr><th>15</th><td>0</td><td>39</td><td>2</td><td>1</td><td>9</td><td>0</td><td>0</td><td>0</td><td>0</td><td>226</td><td>114</td><td>64</td><td>22.35</td><td>85</td><td>NA</td><td>0</td></tr><tr><th>16</th><td>0</td><td>38</td><td>2</td><td>1</td><td>20</td><td>0</td><td>0</td><td>1</td><td>0</td><td>221</td><td>140</td><td>90</td><td>21.35</td><td>95</td><td>70</td><td>1</td></tr><tr><th>17</th><td>1</td><td>48</td><td>3</td><td>1</td><td>10</td><td>0</td><td>0</td><td>1</td><td>0</td><td>232</td><td>138</td><td>90</td><td>22.37</td><td>64</td><td>72</td><td>0</td></tr><tr><th>18</th><td>0</td><td>46</td><td>2</td><td>1</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td><td>291</td><td>112</td><td>78</td><td>23.38</td><td>80</td><td>89</td><td>1</td></tr><tr><th>19</th><td>0</td><td>38</td><td>2</td><td>1</td><td>5</td><td>0</td><td>0</td><td>0</td><td>0</td><td>195</td><td>122</td><td>84.5</td><td>23.24</td><td>75</td><td>78</td><td>0</td></tr><tr><th>20</th><td>1</td><td>41</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>195</td><td>139</td><td>88</td><td>26.88</td><td>85</td><td>65</td><td>0</td></tr></table>
+                </div>
+                <div class="m-pane pane-out" id="pane-out" role="tabpanel" aria-labelledby="tab-out" tabindex="0" hidden>
+                  <pre>==============================================================================
+0. SAMPLE
+==============================================================================
+Rows: 4240   Columns: 16
+
+==============================================================================
+1. SIMPLE LINEAR REGRESSION: systolic BP ~ age
+==============================================================================
+
+Call:
+lm(formula = sysBP ~ age, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-57.382 -13.627  -2.627  10.182 148.042 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 82.14199    1.82570   44.99   &lt;2e-16 ***
+age          1.01276    0.03628   27.91   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 20.25 on 4238 degrees of freedom
+Multiple R-squared:  0.1553,	Adjusted R-squared:  0.1551 
+F-statistic:   779 on 1 and 4238 DF,  p-value: &lt; 2.2e-16
+
+
+Equation: sysBP = 82.142 + 1.0128 * age
+n = 4240, R2 = 0.1553, adj R2 = 0.1551, residual SE = 20.253 mmHg
+95% CI for slope: [0.9416, 1.0839]
+
+==============================================================================
+2. MULTIPLE LINEAR REGRESSION: sysBP ~ age + male + BMI + heartRate + totChol
+==============================================================================
+
+Call:
+lm(formula = sysBP ~ age + male + BMI + heartRate + totChol, 
+    data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-64.300 -12.481  -2.465   9.921 125.865 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 22.531293   3.091221   7.289 3.72e-13 ***
+age          0.864168   0.035665  24.230  &lt; 2e-16 ***
+male        -1.128182   0.596856  -1.890   0.0588 .  
+BMI          1.425642   0.072987  19.533  &lt; 2e-16 ***
+heartRate    0.290839   0.024571  11.837  &lt; 2e-16 ***
+totChol      0.036349   0.006852   5.305 1.19e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 18.84 on 4165 degrees of freedom
+  (69 observations deleted due to missingness)
+Multiple R-squared:  0.2642,	Adjusted R-squared:  0.2633 
+F-statistic: 299.1 on 5 and 4165 DF,  p-value: &lt; 2.2e-16
+
+
+n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
+                </div>
+              </div>
+            </div>
+          </div></div>
+  </section>
+
+  <section class="slide split" aria-label="Workspaces">
+    <div class="copy">
+      <h2>A workspace for each study.</h2>
+      <p>Data, conversations, and scripts stay together. Switch projects without losing your place.</p>
+    </div>
+    <div class="stage wide"><div class="mock ws-mock" role="img" aria-label="Illustration of two workspaces and the data, R script, and results in Study A.">
+          <div class="mw">
+            <div class="mw-bar"><i></i><i></i><i></i><span>Blade Desktop</span></div>
+            <div class="ws-split">
+              <aside class="ws-side">
+                <p class="ws-brand"><img src="/logo.png" alt="" width="20" height="20" />Blade Desktop</p>
+                <span class="ws-new">+ New session</span>
+                <p class="ws-label">Sessions</p>
+                <p class="ws-folder"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A<small>2</small></p>
+                <p class="ws-session on"><span>CHD risk factors</span><small>2m</small></p>
+                <p class="ws-session"><span>Check assumptions</span><small>1h</small></p>
+                <p class="ws-folder"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study B<small>1</small></p>
+                <p class="ws-session"><span>Survey reliability</span><small>3d</small></p>
+              </aside>
+              <div class="ws-main">
+                <div class="mw-head"><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Study A</span></div>
+                <div class="ws-files">
+                  <p class="ws-title">Study A <span>4 files</span></p>
+                  <ul>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>CSV · 192 KB</span><small>2m</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham_analysis.R</b><span>R · 6 KB</span><small>2m</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>R_fig3_correlation.png</b><span>PNG · 258 KB</span><small>2m</small></li>
+                    <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham_analysis.png</b><span>PNG · 360 KB</span><small>1h</small></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+  </section>
+
+  <section class="slide s-wide" aria-label="Pricing">
+    <div class="copy">
+      <h2>From raw data to results you can report.</h2>
+    </div>
+    <div class="plans">
+      <section class="plan" aria-labelledby="home-plan-free">
+        <h3 id="home-plan-free">Blade Free</h3>
+        <p class="price">Rp0</p>
+        <p class="plan-summary">See what Blade does with your own dataset.</p>
+        <ul class="features"><li>The full desktop app</li><li>Analysis in R on your computer</li><li>A few questions each day</li></ul>
+        <div class="action"><a class="btn ghost" href="#get">Download Blade</a><p class="action-note">Runs on macOS and Windows.</p></div>
+      </section>
+      <section class="plan pro" aria-labelledby="home-plan-pro">
+        <h3 id="home-plan-pro">Blade Pro</h3>
+        <p class="price">Rp299.000 <span>for one month</span></p>
+        <p class="plan-summary">For deadlines and busy research months.</p>
+        <ul class="features"><li>Everything in Free</li><li>Ask as much as the work needs</li><li>One payment, no auto-renewal</li></ul>
+        <div class="action"><a class="btn" href="/pricing#checkout">Get Blade Pro</a><p class="action-note">Pay with QRIS or a bank virtual account.</p></div>
+      </section>
+    </div>
+  </section>
+
+  <section class="slide s-hero" aria-label="Try Blade">
+    <div>
+      <h1>Try it on your own data.</h1>
+      <p>Free to start. macOS and Windows.</p>
+      <div class="cta"><a class="btn" href="/#get">Download Blade</a></div>
+      <span class="url">bladestatistics.com</span>
+    </div>
+  </section>
+</main>
+
+<p class="deck-hint">Use ← → or space to move. F for full screen.</p>
+<nav class="deck-nav" aria-label="Slides">
+  <button class="deck-btn" type="button" id="deck-prev" aria-label="Previous slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
+  <button class="deck-btn" type="button" id="deck-next" aria-label="Next slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+</nav>
+<div class="deck-progress" aria-hidden="true"><span id="deck-bar"></span></div>
+
+<script src="/assets/landing.js?v=ecac6fe9929c" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var slides = [].slice.call(document.querySelectorAll(".slide"));
+  var count = document.getElementById("deck-count");
+  var bar = document.getElementById("deck-bar");
+  var prev = document.getElementById("deck-prev");
+  var next = document.getElementById("deck-next");
+  var current = -1;
+
+  function go(n) {
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    if (n === current) return;
+    current = n;
+    if (window.BladePreview) window.BladePreview.stop();
+    slides.forEach(function (slide, k) {
+      var on = k === n;
+      slide.classList.toggle("on", on);
+      slide.inert = !on;
+      slide.setAttribute("aria-hidden", on ? "false" : "true");
+    });
+    slides[n].scrollTop = 0;
+    count.textContent = n + 1 + " / " + slides.length;
+    bar.style.transform = "scaleX(" + (n + 1) / slides.length + ")";
+    prev.disabled = n === 0;
+    next.disabled = n === slides.length - 1;
+    history.replaceState(null, "", "#" + (n + 1));
+    var play = slides[n].getAttribute("data-play");
+    if (play && window.BladePreview) window.BladePreview[play]();
+  }
+
+  function fullScreen() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  }
+
+  prev.addEventListener("click", function () { go(current - 1); });
+  next.addEventListener("click", function () { go(current + 1); });
+  document.getElementById("deck-full").addEventListener("click", fullScreen);
+
+  // Arrow keys, space, and the page keys presentation clickers send.
+  document.addEventListener("keydown", function (event) {
+    if (event.target.closest('[role="tab"], input, select, textarea')) return;
+    var key = event.key;
+    if (key === "ArrowRight" || key === "PageDown" || key === " ") { event.preventDefault(); go(current + 1); }
+    else if (key === "ArrowLeft" || key === "PageUp") { event.preventDefault(); go(current - 1); }
+    else if (key === "Home") go(0);
+    else if (key === "End") go(slides.length - 1);
+    else if (key === "f" || key === "F") fullScreen();
+  });
+
+  // Swipe on touch screens, except inside panes that scroll on their own.
+  var startX = null, startY = 0;
+  document.addEventListener("touchstart", function (event) {
+    if (event.target.closest(".m-pane, .m-console, .pane-csv")) { startX = null; return; }
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener("touchend", function (event) {
+    if (startX === null) return;
+    var dx = event.changedTouches[0].clientX - startX;
+    var dy = event.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+
+  var fromHash = parseInt(location.hash.slice(1), 10);
+  go(isNaN(fromHash) ? 0 : fromHash - 1);
+});
+</script>
+</body>
+</html>

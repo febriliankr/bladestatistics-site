@@ -370,8 +370,49 @@ def design_version():
     return hashlib.sha256((assets / "landing.css").read_bytes() + (assets / "landing.js").read_bytes()).hexdigest()[:12]
 
 
-def render_doc(src, css, doc_css):
+# The demo deck reuses the homepage's mock windows, charts, and plan cards,
+# lifted from the rendered English page so the two can never drift apart.
+DEMO_BLOCKS = {
+    "ask": '<div class="app-preview mock ask-demo" id="preview-ask"',
+    "results": '<div class="app-preview mock" id="preview-results"',
+    "script": '<div class="app-preview mock script-demo" id="preview-script"',
+    "workspace": '<div class="mock ws-mock"',
+    "pain": '<figure class="pain reveal">',
+    "plans": '<div class="plans reveal">',
+}
+
+
+def extract_element(html, start):
+    """The element that begins with `start`, through its matching close tag."""
+    i = html.index(start)
+    tag = start[1:].split()[0].rstrip(">")
+    depth, pos = 0, i
+    while True:
+        opening = html.find("<" + tag, pos)
+        closing = html.find("</" + tag + ">", pos)
+        if opening != -1 and opening < closing:
+            depth += 1
+            pos = opening + len(tag) + 1
+        else:
+            depth -= 1
+            pos = closing + len(tag) + 3
+            if depth == 0:
+                return html[i:pos]
+
+
+def demo_blocks(en_page):
+    blocks = {}
+    for key, start in DEMO_BLOCKS.items():
+        block = extract_element(en_page, start)
+        first, rest = block.split(">", 1)
+        blocks["block." + key] = first.replace(" hidden", "").replace(" reveal", "") + ">" + rest
+    return blocks
+
+
+def render_doc(src, css, doc_css, extra=None):
     page = (ROOT / "src" / src).read_text(encoding="utf-8")
+    for key, value in (extra or {}).items():
+        page = page.replace("{{" + key + "}}", value)
     page = (
         page.replace("{{css}}", css)
         .replace("{{docCss}}", doc_css)
@@ -394,6 +435,8 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
 
     for code in ORDER:
         page = render(code, locales[code], shell, css, locales, names, site)
+        if code == "en":
+            en_page = page
         out = out_root / "index.html" if code == "en" else out_root / code / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(page, encoding="utf-8")
@@ -405,7 +448,11 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
     for path, src in HIDDEN_PAGES.items():
         (out_root / path).parent.mkdir(parents=True, exist_ok=True)
         (out_root / path).write_text(render_doc(src, css, doc_css), encoding="utf-8")
-    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}")
+    (out_root / "demo").mkdir(parents=True, exist_ok=True)
+    (out_root / "demo" / "index.html").write_text(
+        render_doc("demo.html", css, doc_css, demo_blocks(en_page)), encoding="utf-8"
+    )
+    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html")
 
     # locales that were dropped from ORDER should not linger as stale pages
     for path in out_root.iterdir():
