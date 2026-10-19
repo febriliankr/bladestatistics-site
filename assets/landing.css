@@ -562,9 +562,7 @@ h2 {
   min-width: 0;
 }
 .preview-panels {
-  background: #eceee7;
   border-radius: 20px;
-  overflow: hidden;
   aspect-ratio: 1;
   container-type: inline-size;
 }
@@ -1388,7 +1386,6 @@ h2 {
   aspect-ratio: 3 / 2;
   padding: 5%;
   border-radius: 18px;
-  background: #f2eee6;
   font-size: calc(100cqw / 50);
 }
 .workspace-preview {

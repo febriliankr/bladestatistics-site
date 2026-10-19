@@ -22,27 +22,20 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /></noscript>
-<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
-<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=c284081cca7a" />
-<link rel="stylesheet" href="/assets/auth.css?v=c284081cca7a" />
+<link rel="preload" as="image" href="/assets/footer-garden.webp" />
+<link rel="stylesheet" href="/assets/landing.css?v=2dc8c1cc9e4b" />
+<link rel="stylesheet" href="/assets/auth.css?v=2dc8c1cc9e4b" />
 </head>
-<body class="auth-page">
-<div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
-<nav class="nav wrap" aria-label="Primary">
-  <a class="wordmark" href="/" aria-label="Blade home"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
-  <div class="nav-links"><a href="/pricing">Pricing</a></div>
-  <a class="nav-cta" href="/#get">Get Blade</a>
-</nav>
-<main class="auth-main" id="main">
+<body class="auth-split">
+<div class="split">
+  <div class="split-art" aria-hidden="true"><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" fetchpriority="high" /></div>
+  <div class="split-side">
+    <a class="wordmark split-brand" href="/"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <main class="split-main" id="main">
       <!-- Step 1: email -->
       <section class="auth-card" id="step-email" aria-labelledby="email-title">
-        <span class="auth-kicker">WELCOME BACK</span>
         <h1 id="email-title">Sign in to Blade</h1>
-        <p class="lead">
-          We'll email you a 6-digit code. No password needed. New here? The same
-          code creates your account.
-        </p>
+        <p class="lead">We'll email you a 6-digit code. New here? The same code creates your account.</p>
         <form id="email-form" novalidate>
           <label class="field">
             <span>Email</span>
@@ -60,19 +53,13 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
           <button class="btn" type="submit" id="email-btn">Email me a code</button>
           <p class="form-msg" id="email-msg" role="alert" hidden></p>
         </form>
-        <p class="fine">
-          Bought Pro on the pricing page? Sign in with the email you paid with and it's already on your account.
-        </p>
+        <p class="fine">Paid for Pro on the website? Use that email and Pro is already on your account.</p>
       </section>
 
       <!-- Step 2: code -->
       <section class="auth-card" id="step-code" aria-labelledby="code-title" hidden>
-        <span class="auth-kicker">CHECK YOUR INBOX</span>
-        <h1 id="code-title" tabindex="-1">Enter your code</h1>
-        <p class="lead">
-          We sent a 6-digit code to <strong id="code-email"></strong>. It
-          expires in 10 minutes.
-        </p>
+        <h1 id="code-title" tabindex="-1">Check your email</h1>
+        <p class="lead">Enter the code we sent to <strong id="code-email"></strong>. It expires in 10 minutes.</p>
         <form id="code-form" novalidate>
           <label class="field">
             <span>Code</span>
@@ -152,15 +139,14 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
           <p class="form-msg" id="name-msg" role="alert" hidden></p>
         </form>
       </section>
-</main>
-<footer class="auth-foot">
-  <div class="footer-bottom wrap">
-    <a class="wordmark" href="/" aria-label="Blade home"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
-    <nav aria-label="Footer"><a href="/">Home</a><a href="/pricing">Pricing</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
-    <small>PT Riset Digital Nusantara</small>
+    </main>
+    <footer class="split-foot">
+      <nav aria-label="Footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></nav>
+      <small>PT Riset Digital Nusantara</small>
+    </footer>
   </div>
-</footer>
-    <script src="/assets/auth.js?v=c284081cca7a"></script>
+</div>
+    <script src="/assets/auth.js?v=2dc8c1cc9e4b"></script>
     <script>
       (function () {
         var A = window.BladeAuth;
