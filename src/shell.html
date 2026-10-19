@@ -65,26 +65,6 @@ try {
     </div>
 </header>
 <main>
-  <section class="research-section wrap" id="research" aria-labelledby="research-title">
-    <div class="research-layout reveal">
-      <div class="research-copy">
-        <h2 id="research-title">{{simple.researchTitle}}</h2>
-        <p>{{simple.researchText}}</p>
-        <p class="research-close">{{simple.researchClose}}</p>
-      </div>
-      <figure class="survey">
-        <ol>
-          <li><span class="sv-label">{{simple.bar1}}</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">{{simple.v1}}</span></li>
-          <li><span class="sv-label">{{simple.bar2}}</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">{{simple.v2}}</span></li>
-          <li class="hl"><strong class="sv-label">{{simple.bar3}}</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">{{simple.v3}}</span></li>
-          <li><span class="sv-label">{{simple.bar4}}</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">{{simple.v4}}</span></li>
-          <li><span class="sv-label">{{simple.bar5}}</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">{{simple.v5}}</span></li>
-        </ol>
-        <figcaption>{{simple.researchNote}} <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
-      </figure>
-    </div>
-  </section>
-
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">{{simple.title}}</h2><p>{{simple.text}}</p></div>
@@ -303,6 +283,26 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
     </div>
   </section>
 
+  <section class="research-section wrap" id="research" aria-labelledby="research-title">
+    <div class="research-layout reveal">
+      <div class="research-copy">
+        <h2 id="research-title">{{simple.researchTitle}}</h2>
+        <p>{{simple.researchText}}</p>
+        <p class="research-close">{{simple.researchClose}}</p>
+      </div>
+      <figure class="survey">
+        <ol>
+          <li><span class="sv-label">{{simple.bar1}}</span><span class="sv-track"><span class="sv-fill" style="--w:44.3%"></span></span><span class="sv-value">{{simple.v1}}</span></li>
+          <li><span class="sv-label">{{simple.bar2}}</span><span class="sv-track"><span class="sv-fill" style="--w:26.7%"></span></span><span class="sv-value">{{simple.v2}}</span></li>
+          <li class="hl"><strong class="sv-label">{{simple.bar3}}</strong><span class="sv-track"><span class="sv-fill" style="--w:21.5%"></span></span><span class="sv-value">{{simple.v3}}</span></li>
+          <li><span class="sv-label">{{simple.bar4}}</span><span class="sv-track"><span class="sv-fill" style="--w:20.4%"></span></span><span class="sv-value">{{simple.v4}}</span></li>
+          <li><span class="sv-label">{{simple.bar5}}</span><span class="sv-track"><span class="sv-fill" style="--w:20.2%"></span></span><span class="sv-value">{{simple.v5}}</span></li>
+        </ol>
+        <figcaption>{{simple.researchNote}} <a href="https://bmcmedresmethodol.biomedcentral.com/articles/10.1186/s12874-016-0151-1">Cullati et al., BMC Medical Research Methodology, 2016</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="leaders-section" id="leaders" aria-labelledby="leaders-title">
     <div class="wrap">
       <div class="leaders-intro reveal"><h2 id="leaders-title">{{simple.leadersTitle}}</h2><p>{{simple.leadersText}}</p></div>
@@ -323,7 +323,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
 
   <section class="pricing-section wrap" id="pricing" aria-labelledby="pricing-title">
     <div class="section-intro reveal">
-      <div><h2 id="pricing-title">{{simple.priceTitle}}</h2><p>{{simple.priceText}}</p></div>
+      <h2 id="pricing-title">{{simple.priceTitle}}</h2>
       <a class="outline-link" href="/pricing">{{simple.priceMore}}</a>
     </div>
     <div class="plans reveal">

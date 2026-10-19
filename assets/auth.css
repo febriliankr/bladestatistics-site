@@ -100,6 +100,39 @@
   outline: 2px solid #7b8b6e;
   outline-offset: 2px;
 }
+.field > label {
+  display: block;
+  margin-bottom: 7px;
+  color: #4b5547;
+  font-size: 13px;
+  font-weight: 500;
+}
+.phone-row {
+  display: flex;
+  gap: 8px;
+}
+.phone-row select {
+  flex: none;
+  padding: 0 34px 0 13px;
+  border: 1px solid #d9ddcf;
+  border-radius: 12px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0h10L5 6z' fill='%236a7167'/%3E%3C/svg%3E") no-repeat right 13px center;
+  color: var(--fg);
+  font-size: 16px;
+  appearance: none;
+  cursor: pointer;
+}
+.phone-row select:hover {
+  border-color: #b9c0ad;
+}
+.phone-row select:focus-visible {
+  outline: 2px solid #7b8b6e;
+  outline-offset: 2px;
+}
+.phone-row input {
+  flex: 1;
+  min-width: 0;
+}
 .field input.code {
   padding: 14px 10px 14px calc(10px + 0.32em);
   font: 500 26px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
