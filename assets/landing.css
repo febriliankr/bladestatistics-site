@@ -10,6 +10,13 @@
   --orange: #d43b00;
   --orange-hover: #b53200;
   --orange-press: #9a2b00;
+  /* Raised primary action, after the openbill brand button: a light-to-deep
+     gradient, a 1px top highlight, and a soft drop that grows on hover. */
+  --btn-face: linear-gradient(#d93f00, #c23300);
+  --btn-face-hover: linear-gradient(#dc4100, #c83500);
+  --btn-face-deep: linear-gradient(#c23300, #a92c00);
+  --btn-lift: inset 0 1px #ffffff40, 0 2px 4px #a92c0026;
+  --btn-lift-hover: inset 0 1px #ffffff4d, 0 3px 9px #a92c003d;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 * {
@@ -82,11 +89,13 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--orange);
+  background: var(--btn-face);
   color: #fffef9;
   border: 0;
   border-radius: 100px;
   text-decoration: none;
+  text-shadow: 0 1px 1px #6e1f004d;
+  box-shadow: var(--btn-lift);
   padding: 12px 23px;
   font-size: 14px;
   font-weight: 500;
@@ -94,11 +103,21 @@ h2 {
   cursor: pointer;
   transition:
     background 0.2s,
-    box-shadow 0.2s;
+    box-shadow 0.2s,
+    transform 0.1s;
 }
 .btn:hover {
-  background: var(--orange-hover);
-  box-shadow: 0 4px 18px #b532001f;
+  background: var(--btn-face-hover);
+  box-shadow: var(--btn-lift-hover);
+}
+.btn:active:not(:disabled),
+.nav-cta:active {
+  transform: scale(0.97);
+}
+.btn:focus-visible,
+.nav-cta:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
 }
 .wordmark {
   display: inline-flex;
@@ -157,9 +176,15 @@ h2 {
     #fff 97%
   );
 }
+/* The nav stays at the top. Its frosted backdrop fades in over the first
+   scroll, so the hero painting is untouched until the page moves. */
+.hero {
+  padding-top: 98px;
+}
 .nav {
-  position: relative;
-  z-index: 5;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -181,19 +206,21 @@ h2 {
   color: #192715;
 }
 .nav-cta {
-  border: 1px solid var(--orange);
+  border: 0;
   border-radius: 100px;
   text-decoration: none;
-  background: var(--orange);
+  background: var(--btn-face);
   color: #fffef9;
-  padding: 7px 20px;
+  text-shadow: 0 1px 1px #6e1f004d;
+  box-shadow: var(--btn-lift);
+  padding: 8px 21px;
   font-size: 14px;
   white-space: nowrap;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 .nav-cta:hover {
-  border-color: var(--orange-hover);
-  background: var(--orange-hover);
+  background: var(--btn-face-hover);
+  box-shadow: var(--btn-lift-hover);
 }
 .hero-content {
   text-align: center;
@@ -259,10 +286,10 @@ h2 {
   border-start-end-radius: 100px;
   border-end-end-radius: 100px;
   padding-inline: 13px;
-  background: var(--orange-hover);
+  background: var(--btn-face-deep);
 }
 .cta > .caret:hover {
-  background: var(--orange-press);
+  background: linear-gradient(#b53000, #9a2b00);
 }
 .caret svg {
   width: 10px;
@@ -514,6 +541,33 @@ h2 {
   }
   .wf-value {
     font-size: 24px;
+  }
+}
+
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 50%;
+  z-index: -1;
+  width: 100vw;
+  height: calc(100% + 28px);
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #ffffffd9 0%, #ffffffa6 55%, #fff0 100%);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent);
+  mask-image: linear-gradient(180deg, #000 62%, transparent);
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  .nav::before {
+    opacity: 0;
+    animation: nav-frost linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 120px;
+  }
+  @keyframes nav-frost {
+    to { opacity: 1; }
   }
 }
 
@@ -1315,7 +1369,7 @@ h2 {
 .features li::before { content: "✓"; color: #6f8b5f; font-weight: 600; }
 .plan .action { margin-top: auto; }
 .plan .btn { display: flex; width: 100%; padding: 13px 23px; }
-.btn.ghost { background: transparent; color: var(--fg); border: 1px solid #c9cfbf; }
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid #c9cfbf; text-shadow: none; box-shadow: none; }
 .btn.ghost:hover { background: #f0f2eb; box-shadow: none; }
 .action-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; text-align: center; }
 @media (max-width: 760px) {
@@ -1982,6 +2036,9 @@ h2 {
     min-height: 82px;
     gap: 16px;
   }
+  .hero {
+    padding-top: 82px;
+  }
   .wordmark {
     font-size: 23px;
     gap: 8px;
@@ -2211,6 +2268,9 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .nav::before {
+    opacity: 1 !important;
   }
   *,
   *::before,

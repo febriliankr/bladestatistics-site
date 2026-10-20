@@ -9,6 +9,15 @@
   flex-direction: column;
   background: #fff;
 }
+/* The nav is fixed (landing.css); keep its height clear above the card. */
+.auth-page {
+  padding-top: 98px;
+}
+@media (max-width: 640px) {
+  .auth-page {
+    padding-top: 82px;
+  }
+}
 .auth-page .hero-landscape {
   height: 560px;
 }
