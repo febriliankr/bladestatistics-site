@@ -82,3 +82,13 @@ Final prompt:
 The landing page follows the device color scheme, supports a remembered
 light/dark toggle, and follows later device-theme changes until a visitor
 makes an explicit choice. Without JavaScript it follows the device theme.
+
+### Softer moonlit revision
+
+The active dark artwork is `assets/moonlit-lake-soft.webp` and
+`assets/moonlit-lake-soft-mobile.webp`. Desktop uses the same optimized images
+as `login-landscape-dark-soft.webp` and `login-landscape-dark-soft-mobile.webp`.
+Generated with the built-in imagegen tool, using the original moonlit image as
+the edit target. Final prompt:
+
+> Use case: style-transfer. Edit target: supplied moonlit lake artwork used behind UI text. Make this same nighttime landscape substantially softer and quieter, with much subtler detail. Preserve the exact composition, moon position and scale, mountain and shoreline geometry, 1536x1024 framing and dark navy bottom fade. Use broad, delicate watercolor washes with misty atmospheric edges, lower local contrast, muted desaturated slate-blue tones. Simplify mountain textures, trees, foreground flowers, rocks, water ripples and cloud edges into gentle suggested shapes. Stars should be very sparse and faint. Give the moon a diffused, subdued glow with minimal visible surface detail; its reflection should be soft and restrained. Retain enough shape to read as a lake and mountains at night. Calm, airy painterly softness, not a digital blur or fog filter; no crisp microtexture, no dramatic highlights, no text, no UI. Bottom quarter fades to near-black navy #10141c.

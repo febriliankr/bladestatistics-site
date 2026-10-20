@@ -2328,8 +2328,8 @@ h2 {
   --line: #323c4c;
   --panel: #19212e;
   --green: #bccfc5;
-  --hero-image: url('/assets/moonlit-lake.webp');
-  --footer-image: url('/assets/moonlit-lake.webp');
+  --hero-image: url('/assets/moonlit-lake-soft.webp');
+  --footer-image: url('/assets/moonlit-lake-soft.webp');
 }
 :root[data-theme='dark'] ::selection { color: #fff; background: #385575; }
 :root[data-theme='dark'] .hero { background: var(--bg); }
@@ -2386,7 +2386,7 @@ h2 {
 :root[data-theme='dark'] .m-code .k { color: #a7b4c5; }
 :root[data-theme='dark'] .m-code .cl.cur { background: #3e2d29; }
 @media (max-width: 640px) {
-  :root[data-theme='dark'] { --hero-image: url('/assets/moonlit-lake-mobile.webp'); --footer-image: url('/assets/moonlit-lake-mobile.webp'); }
+  :root[data-theme='dark'] { --hero-image: url('/assets/moonlit-lake-soft-mobile.webp'); --footer-image: url('/assets/moonlit-lake-soft-mobile.webp'); }
   :root[data-theme='dark'] .hero::before { background: linear-gradient(180deg, #10141c12 18%, #10141c55 36%, #10141ce6 66%, var(--bg) 83%); }
 }
 
@@ -2401,8 +2401,8 @@ h2 {
   --line: #323c4c;
   --panel: #19212e;
   --green: #bccfc5;
-  --hero-image: url('/assets/moonlit-lake.webp');
-  --footer-image: url('/assets/moonlit-lake.webp');
+  --hero-image: url('/assets/moonlit-lake-soft.webp');
+  --footer-image: url('/assets/moonlit-lake-soft.webp');
 }
 :root:not([data-theme]) ::selection { color: #fff; background: #385575; }
 :root:not([data-theme]) .hero { background: var(--bg); }
@@ -2459,7 +2459,7 @@ h2 {
 :root:not([data-theme]) .m-code .k { color: #a7b4c5; }
 :root:not([data-theme]) .m-code .cl.cur { background: #3e2d29; }
 @media (max-width: 640px) {
-  :root:not([data-theme]) { --hero-image: url('/assets/moonlit-lake-mobile.webp'); --footer-image: url('/assets/moonlit-lake-mobile.webp'); }
+  :root:not([data-theme]) { --hero-image: url('/assets/moonlit-lake-soft-mobile.webp'); --footer-image: url('/assets/moonlit-lake-soft-mobile.webp'); }
   :root:not([data-theme]) .hero::before { background: linear-gradient(180deg, #10141c12 18%, #10141c55 36%, #10141ce6 66%, var(--bg) 83%); }
 }
 
