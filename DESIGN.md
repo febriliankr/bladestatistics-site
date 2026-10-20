@@ -66,3 +66,19 @@ Run `python3 build.py`, commit the source and generated pages, then push `master
 The two cards use the names and titles supplied by the site owner: Febrilian, CEO of Skala, and Elvan Wiyarta, CEO of Risetku. Their sample quotes are visibly labelled as placeholders in every locale. They are not presented as verified testimonials. The cloud section was removed from the homepage; its generated artwork is retained in the repository.
 
 The profile photos were downloaded from the owner-supplied Instagram profiles on October 18, 2026: [Febrilian](https://www.instagram.com/febrilian/) and [Elvan Wiyarta](https://www.instagram.com/elvanwiyarta/). The original JPEGs are stored at `assets/febrilian-profile.jpg` and `assets/elvan-wiyarta-profile.jpg`. They are displayed as 64-pixel circular portraits and are not AI-generated.
+
+## Moonlit theme
+
+Generated with the built-in imagegen tool from `assets/daylight-lake.webp`.
+The optimized outputs are `assets/moonlit-lake.webp` (1536 × 1024) and
+`assets/moonlit-lake-mobile.webp` (900 × 600). The same artwork is used by
+Blade Desktop as `login-landscape-dark.webp` and
+`login-landscape-dark-mobile.webp`.
+
+Final prompt:
+
+> Use case: lighting-weather. Edit target: the supplied painterly alpine lake background for the Blade landing page and desktop app. Create its dark nighttime counterpart, preserving the exact landscape composition, lake shore geometry, mountain silhouettes, foreground flowers and rocks, soft hand-painted watercolor texture, and wide 3:2 framing. Change only the time of day and illumination: deep midnight indigo sky with subtle scattered stars and soft moonlit clouds, blue-silver highlights on distant peaks and still lake reflections, muted blue-green shore vegetation. Overall dark, calm, elegant and legible behind white UI text. The lower quarter should softly dissolve into a solid near-black navy #10141c, matching how the daylight version fades into cream. No text, no logos, no UI, no large new objects; preserve the scenery. Output landscape 1536x1024.
+
+The landing page follows the device color scheme, supports a remembered
+light/dark toggle, and follows later device-theme changes until a visitor
+makes an explicit choice. Without JavaScript it follows the device theme.

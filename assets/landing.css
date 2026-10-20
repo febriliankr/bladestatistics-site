@@ -2283,3 +2283,186 @@ h2 {
     transform: none;
   }
 }
+
+/* Daylight and moonlight share the same scenery and responsive framing. */
+:root {
+  --hero-image: url('/assets/daylight-lake.webp');
+  --footer-image: url('/assets/footer-garden.webp');
+}
+.hero-landscape {
+  background: var(--hero-image) center top / cover no-repeat;
+  animation: landscape-in 2.4s var(--ease) both;
+}
+.footer-art {
+  background: var(--footer-image) center bottom / cover no-repeat;
+}
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.theme-toggle:hover { background: var(--panel); }
+.theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.theme-sun { display: none; }
+:root[data-theme='dark'] .theme-sun { display: block; }
+:root[data-theme='dark'] .theme-moon { display: none; }
+@media (max-width: 640px) {
+  :root { --hero-image: url('/assets/daylight-lake-mobile.webp'); --footer-image: url('/assets/footer-garden-mobile.webp'); }
+  .nav-links { gap: 12px; }
+  .nav { gap: 12px; }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #10141c;
+  --fg: #eef1f6;
+  --muted: #adb8c9;
+  --line: #323c4c;
+  --panel: #19212e;
+  --green: #bccfc5;
+  --hero-image: url('/assets/moonlit-lake.webp');
+  --footer-image: url('/assets/moonlit-lake.webp');
+}
+:root[data-theme='dark'] ::selection { color: #fff; background: #385575; }
+:root[data-theme='dark'] .hero { background: var(--bg); }
+:root[data-theme='dark'] .hero::before {
+  background: linear-gradient(180deg, #10141c12 25%, #10141c45 48%, #10141cdb 77%, var(--bg) 97%);
+}
+:root[data-theme='dark'] .nav::before {
+  background: linear-gradient(180deg, #10141ce6, #10141ca6 55%, #10141c00);
+}
+:root[data-theme='dark'] :is(.hero h1 em, .nav-links > a, .lang summary, .pain-lead, .features li, .download-lede, .install-notes, .note, .lede) { color: var(--muted); }
+:root[data-theme='dark'] .hero h1 em { color: #dce7f7; }
+:root[data-theme='dark'] :is(.nav-links > a:hover, .lang summary:hover, .install-notes b) { color: var(--fg); }
+:root[data-theme='dark'] :is(.cta-menu, .lang-menu, .leader-profile, .replay, .btn.ghost, .dl a) { border-color: var(--line); }
+:root[data-theme='dark'] :is(.cta-menu a:hover, .cta-menu a:focus-visible, .lang-menu a:hover, .outline-link:hover, .btn.ghost:hover, .feature-step[open]) { background: #222e3e; }
+:root[data-theme='dark'] .lang-menu a[aria-current] { color: #b6d6c4; }
+:root[data-theme='dark'] .wf-grid i { background: #283344; }
+:root[data-theme='dark'] .wf-grid i.f { background: #849aab; }
+:root[data-theme='dark'] .pain-grid li.hl .wf-grid i.f { background: #ef703d; }
+:root[data-theme='dark'] .pain-grid li.hl .wf-value { color: #ff9568; }
+:root[data-theme='dark'] .pain-grid li:hover { background: var(--panel); }
+:root[data-theme='dark'] .pain-grid li:hover .wf-grid i { background: #354459; }
+:root[data-theme='dark'] .pain-grid li:hover .wf-grid i.f { background: #a3bacb; }
+:root[data-theme='dark'] .pain-grid li.hl:hover .wf-grid i.f { background: #ef703d; }
+:root[data-theme='dark'] .leaders-section { background: #141b26; }
+:root[data-theme='dark'] .leader-profile { background: var(--panel); }
+:root[data-theme='dark'] .replay { background: #19212edb; color: var(--fg); }
+:root[data-theme='dark'] .replay:hover { background: #29364a; }
+:root[data-theme='dark'] .plan.pro { border-color: #748e84; }
+:root[data-theme='dark'] .features li::before { color: #a5c6ad; }
+:root[data-theme='dark'] .step-timer { background: #354258; }
+:root[data-theme='dark'] .landscape-footer { background: var(--bg); }
+:root[data-theme='dark'] .landscape-footer::before {
+  background: linear-gradient(0deg, var(--bg) 0, var(--bg) var(--footer-solid), #10141c00 var(--footer-fade)), linear-gradient(180deg, #10141caa, #10141c66 30%, #10141c33 75%);
+}
+:root[data-theme='dark'] .dl a { color: var(--fg); background: #19212ee6; }
+:root[data-theme='dark'] .dl a:hover { background: #29364a; border-color: #8299b3; }
+:root[data-theme='dark'] .dl .meta { color: var(--muted); }
+:root[data-theme='dark'] .install-notes p { background: #19212eed; }
+/* The illustrative app windows follow the page palette too. Exported plots
+   keep their original paper backgrounds. */
+:root[data-theme='dark'] .mock {
+  --m-bg: #18202b;
+  --m-side: #141b25;
+  --m-line: #344050;
+  --m-fg: #e6edf4;
+  --m-muted: #a5b3c4;
+  --m-green: #9cbd9f;
+}
+:root[data-theme='dark'] :is(.m-file, .m-table th, .m-sheet tr:first-child th, .m-sheet th:first-child, .m-console, .ws-session.on) { background: #263244; }
+:root[data-theme='dark'] :is(.m-compose, .m-shot, .pane-out pre, .m-strip span) { background: var(--m-bg); }
+:root[data-theme='dark'] :is(.mw-bar span, .m-console pre, .pane-out pre) { color: var(--m-fg); }
+:root[data-theme='dark'] .m-code .f { color: #a1c794; }
+:root[data-theme='dark'] .m-code .s { color: #efa686; }
+:root[data-theme='dark'] .m-code .k { color: #a7b4c5; }
+:root[data-theme='dark'] .m-code .cl.cur { background: #3e2d29; }
+@media (max-width: 640px) {
+  :root[data-theme='dark'] { --hero-image: url('/assets/moonlit-lake-mobile.webp'); --footer-image: url('/assets/moonlit-lake-mobile.webp'); }
+  :root[data-theme='dark'] .hero::before { background: linear-gradient(180deg, #10141c12 18%, #10141c55 36%, #10141ce6 66%, var(--bg) 83%); }
+}
+
+:root[data-theme='dark'] .m-user { background: #2b384c; }
+
+@media (prefers-color-scheme: dark) {
+:root:not([data-theme]) {
+  color-scheme: dark;
+  --bg: #10141c;
+  --fg: #eef1f6;
+  --muted: #adb8c9;
+  --line: #323c4c;
+  --panel: #19212e;
+  --green: #bccfc5;
+  --hero-image: url('/assets/moonlit-lake.webp');
+  --footer-image: url('/assets/moonlit-lake.webp');
+}
+:root:not([data-theme]) ::selection { color: #fff; background: #385575; }
+:root:not([data-theme]) .hero { background: var(--bg); }
+:root:not([data-theme]) .hero::before {
+  background: linear-gradient(180deg, #10141c12 25%, #10141c45 48%, #10141cdb 77%, var(--bg) 97%);
+}
+:root:not([data-theme]) .nav::before {
+  background: linear-gradient(180deg, #10141ce6, #10141ca6 55%, #10141c00);
+}
+:root:not([data-theme]) :is(.hero h1 em, .nav-links > a, .lang summary, .pain-lead, .features li, .download-lede, .install-notes, .note, .lede) { color: var(--muted); }
+:root:not([data-theme]) .hero h1 em { color: #dce7f7; }
+:root:not([data-theme]) :is(.nav-links > a:hover, .lang summary:hover, .install-notes b) { color: var(--fg); }
+:root:not([data-theme]) :is(.cta-menu, .lang-menu, .leader-profile, .replay, .btn.ghost, .dl a) { border-color: var(--line); }
+:root:not([data-theme]) :is(.cta-menu a:hover, .cta-menu a:focus-visible, .lang-menu a:hover, .outline-link:hover, .btn.ghost:hover, .feature-step[open]) { background: #222e3e; }
+:root:not([data-theme]) .lang-menu a[aria-current] { color: #b6d6c4; }
+:root:not([data-theme]) .wf-grid i { background: #283344; }
+:root:not([data-theme]) .wf-grid i.f { background: #849aab; }
+:root:not([data-theme]) .pain-grid li.hl .wf-grid i.f { background: #ef703d; }
+:root:not([data-theme]) .pain-grid li.hl .wf-value { color: #ff9568; }
+:root:not([data-theme]) .pain-grid li:hover { background: var(--panel); }
+:root:not([data-theme]) .pain-grid li:hover .wf-grid i { background: #354459; }
+:root:not([data-theme]) .pain-grid li:hover .wf-grid i.f { background: #a3bacb; }
+:root:not([data-theme]) .pain-grid li.hl:hover .wf-grid i.f { background: #ef703d; }
+:root:not([data-theme]) .leaders-section { background: #141b26; }
+:root:not([data-theme]) .leader-profile { background: var(--panel); }
+:root:not([data-theme]) .replay { background: #19212edb; color: var(--fg); }
+:root:not([data-theme]) .replay:hover { background: #29364a; }
+:root:not([data-theme]) .plan.pro { border-color: #748e84; }
+:root:not([data-theme]) .features li::before { color: #a5c6ad; }
+:root:not([data-theme]) .step-timer { background: #354258; }
+:root:not([data-theme]) .landscape-footer { background: var(--bg); }
+:root:not([data-theme]) .landscape-footer::before {
+  background: linear-gradient(0deg, var(--bg) 0, var(--bg) var(--footer-solid), #10141c00 var(--footer-fade)), linear-gradient(180deg, #10141caa, #10141c66 30%, #10141c33 75%);
+}
+:root:not([data-theme]) .dl a { color: var(--fg); background: #19212ee6; }
+:root:not([data-theme]) .dl a:hover { background: #29364a; border-color: #8299b3; }
+:root:not([data-theme]) .dl .meta { color: var(--muted); }
+:root:not([data-theme]) .install-notes p { background: #19212eed; }
+/* The illustrative app windows follow the page palette too. Exported plots
+   keep their original paper backgrounds. */
+:root:not([data-theme]) .mock {
+  --m-bg: #18202b;
+  --m-side: #141b25;
+  --m-line: #344050;
+  --m-fg: #e6edf4;
+  --m-muted: #a5b3c4;
+  --m-green: #9cbd9f;
+}
+:root:not([data-theme]) :is(.m-file, .m-table th, .m-sheet tr:first-child th, .m-sheet th:first-child, .m-console, .ws-session.on) { background: #263244; }
+:root:not([data-theme]) :is(.m-compose, .m-shot, .pane-out pre, .m-strip span) { background: var(--m-bg); }
+:root:not([data-theme]) :is(.mw-bar span, .m-console pre, .pane-out pre) { color: var(--m-fg); }
+:root:not([data-theme]) .m-code .f { color: #a1c794; }
+:root:not([data-theme]) .m-code .s { color: #efa686; }
+:root:not([data-theme]) .m-code .k { color: #a7b4c5; }
+:root:not([data-theme]) .m-code .cl.cur { background: #3e2d29; }
+@media (max-width: 640px) {
+  :root:not([data-theme]) { --hero-image: url('/assets/moonlit-lake-mobile.webp'); --footer-image: url('/assets/moonlit-lake-mobile.webp'); }
+  :root:not([data-theme]) .hero::before { background: linear-gradient(180deg, #10141c12 18%, #10141c55 36%, #10141ce6 66%, var(--bg) 83%); }
+}
+
+:root:not([data-theme]) .m-user { background: #2b384c; }
+
+}

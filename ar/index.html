@@ -30,6 +30,14 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="color-scheme" content="dark light" />
 <script>
+(function () {
+  var saved;
+  try { saved = localStorage.getItem('bladeTheme'); } catch (e) {}
+  document.documentElement.dataset.theme = saved === 'light' || saved === 'dark'
+    ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+})();
+</script>
+<script>
 // Runs before anything paints, so nobody sees the wrong language flash past.
 // A pick from the switcher is stored and outranks the browser's preference.
 (function () {
@@ -79,19 +87,25 @@ try {
 } catch (e) {}
 </script>
 <meta name="theme-color" content="#f8f7f3" />
-<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
-<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
-<link rel="stylesheet" href="/assets/landing.css?v=d28cbbf2dd5c" />
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px) and (prefers-color-scheme: light)" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: light)" />
+<link rel="preload" as="image" href="/assets/moonlit-lake.webp" media="(min-width: 641px) and (prefers-color-scheme: dark)" />
+<link rel="preload" as="image" href="/assets/moonlit-lake-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: dark)" />
+<link rel="stylesheet" href="/assets/landing.css?v=f798ee022cb5" />
 </head>
 <body>
 
 <header class="hero">
-  <div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+  <div class="hero-landscape" aria-hidden="true"></div>
     <nav class="nav wrap" aria-label="Primary">
       <a class="wordmark" href="/" aria-label="Blade"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
       <div class="nav-links">
         <a href="#pricing">الأسعار</a>
         <a href="/login">تسجيل الدخول</a>
+      <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode" hidden>
+        <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></svg>
+        <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      </button>
       <details class="lang">
         <summary>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 6h-2.95a15.6 15.6 0 00-1.38-3.56A8.03 8.03 0 0118.9 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.98 7.98 0 010-4h3.38a16.5 16.5 0 000 4H4.26zm.84 2h2.95c.32 1.25.79 2.45 1.38 3.56A7.99 7.99 0 015.1 16zm2.95-8H5.1a7.99 7.99 0 014.33-3.56A15.6 15.6 0 008.05 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66a14.7 14.7 0 010-4h4.68a14.7 14.7 0 010 4zm.23 5.56c.59-1.11 1.06-2.31 1.38-3.56h2.95a7.99 7.99 0 01-4.33 3.56zM16.36 14a16.5 16.5 0 000-4h3.38a7.98 7.98 0 010 4h-3.38z"/></svg>
@@ -430,7 +444,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
 </main>
 
 <footer class="landscape-footer" id="get">
-  <picture class="footer-art" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/footer-garden-mobile.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" loading="lazy" /></picture>
+  <div class="footer-art" aria-hidden="true"></div>
   <div class="download-content wrap">
     <h2>تنزيل Blade</h2><p class="download-lede">macOS وWindows. تبقى ملفاتك على جهازك.</p>
     <div class="dl reveal" id="dl">
@@ -461,7 +475,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=d28cbbf2dd5c" defer></script>
+<script src="/assets/landing.js?v=f798ee022cb5" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points
