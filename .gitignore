@@ -1,2 +1,6 @@
 skalatec/dist/
 __pycache__/
+cloudflare/dist/
+cloudflare/release.json
+cloudflare/rollback-*.json
+cloudflare/.wrangler/

@@ -1,0 +1,25 @@
+{
+  "name": "blade-website",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "r2_buckets": [
+    {
+      "binding": "SITE",
+      "bucket_name": "blade-website"
+    }
+  ],
+  "vars": {
+    "SITE_RELEASE": "d3cb1a1ece70f682f0ed"
+  },
+  "routes": [
+    {
+      "pattern": "bladestatistics.com/*",
+      "zone_name": "bladestatistics.com"
+    },
+    {
+      "pattern": "www.bladestatistics.com/*",
+      "zone_name": "bladestatistics.com"
+    }
+  ]
+}

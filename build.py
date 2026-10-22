@@ -5,7 +5,7 @@ English builds to /index.html, every other locale to /<code>/index.html.
 Run `python3 build.py` after editing any content file, then commit the output.
 
 One source, two domains. bladestatistics.com is built into the repository
-root and served by GitHub Pages. blade.skalatec.com is the same site with a
+root, staged into R2, and served by the blade-website Cloudflare Worker. blade.skalatec.com is the same site with a
 broader English pitch, built into skalatec/dist/ (not committed) and served
 by the Cloudflare Worker in skalatec/. Canonical URLs on both point at
 bladestatistics.com, so search engines treat it as the primary site.

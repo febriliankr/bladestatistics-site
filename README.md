@@ -1,7 +1,9 @@
 # bladestatistics.com
 
 Static landing page for Blade, the agentic statistical analysis desktop app.
-Served by GitHub Pages from `master`, custom domain in `CNAME`.
+Served from the private `blade-website` Cloudflare R2 bucket through the
+`blade-website` Worker at `bladestatistics.com`. GitHub stores the source.
+See [cloudflare/README.md](cloudflare/README.md) for deployment and rollback.
 
 ## Layout
 
@@ -9,8 +11,8 @@ Served by GitHub Pages from `master`, custom domain in `CNAME`.
 - `src/_css.html`: the `<style>` block, shared by every locale.
 - `content/<code>.json`: all the text for one language.
 - `build.py`: renders every locale, plus `sitemap.xml` and `robots.txt`.
-- `index.html` and `<code>/index.html`: generated output, committed so Pages
-  needs no CI.
+- `index.html` and `<code>/index.html`: generated output, committed for review. Only public output is
+  staged for R2 by `cloudflare/build.py`.
 - `app.png`, `logo.png`: assets, referenced with absolute paths so the
   subdirectory builds find them.
 
@@ -30,8 +32,9 @@ it.
 
 The same source serves two domains.
 
-- **bladestatistics.com** is the primary site: the repository root, served by
-  GitHub Pages.
+- **bladestatistics.com** is the primary site: generated from the repository
+  root, uploaded to versioned R2 prefixes and served by the `blade-website` Worker.
+  `www.bladestatistics.com` redirects to the apex. It does not depend on GitHub Pages.
 - **blade.skalatec.com** is the same site with a broader English pitch. Its
   copy changes live in `content/skalatec.en.json`, merged over `en.json`. Only
   content that defines `workflows` gets the workflows section. The build writes

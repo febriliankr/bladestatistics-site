@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test worker.test.mjs",
+    "build": "python3 build.py",
+    "deploy": "python3 deploy.py"
+  }
+}
