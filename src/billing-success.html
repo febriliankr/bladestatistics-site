@@ -7,7 +7,8 @@
 <meta name="robots" content="noindex" />
 <link rel="icon" href="/logo.png" />
 <meta name="color-scheme" content="light" />
-<meta name="theme-color" content="#f8f7f3" />
+<meta name="theme-color" content="#f8f7f3" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#10141c" media="(prefers-color-scheme: dark)" />
 {{pixel}}
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" media="(min-width: 641px)" />
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
@@ -15,7 +16,7 @@
 <link rel="stylesheet" href="/assets/auth.css?v={{designVersion}}" />
 </head>
 <body class="auth-page">
-<div class="hero-landscape" aria-hidden="true"><picture><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+<div class="hero-landscape" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="/assets/moonlit-lake-soft-mobile.webp" /><source media="(prefers-color-scheme: dark)" srcset="/assets/moonlit-lake-soft.webp" /><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
 <nav class="nav wrap" aria-label="Primary">
   <a class="wordmark" href="/" aria-label="Blade home"><img class="logo" src="/logo.png" alt="" width="32" height="32" /><span>Blade</span></a>
   <div class="nav-links"><a href="/pricing">Pricing</a></div>

@@ -7,7 +7,8 @@
 <meta name="robots" content="noindex" />
 <link rel="icon" href="/logo.png" />
 <meta name="color-scheme" content="light" />
-<meta name="theme-color" content="#f8f7f3" />
+<meta name="theme-color" content="#f8f7f3" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#10141c" media="(prefers-color-scheme: dark)" />
 {{pixel}}
 <link rel="preload" as="image" href="/assets/footer-garden.webp" />
 <link rel="stylesheet" href="/assets/landing.css?v={{designVersion}}" />
@@ -15,7 +16,7 @@
 </head>
 <body class="auth-split">
 <div class="split">
-  <div class="split-art" aria-hidden="true"><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" fetchpriority="high" /></div>
+  <div class="split-art" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/moonlit-lake-soft.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
   <div class="split-side">
     <a class="wordmark split-brand" href="/"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
     <main class="split-main" id="main">

@@ -1,5 +1,90 @@
 /* Sign-in, account, and billing pages. Loaded after landing.css: the homepage
    daylight landscape with one warm panel resting on it. */
+
+/* Every surface color is a token so the pages follow the device into dark
+   mode. These pages carry no theme toggle, so the dark set applies through
+   prefers-color-scheme (landing.css does the same for --bg, --fg and the
+   rest); the data-theme block covers a page that gains the toggle later. */
+:root {
+  --auth-bg: #fff;
+  --auth-side: #fbfaf6;
+  --auth-art: #f2eee2;
+  --auth-foot: #f8f7f3;
+  --auth-fade: linear-gradient(180deg, transparent 20%, #ffffff40 45%, #ffffffe0 78%, #fff 100%);
+  --auth-shadow: 0 24px 70px #2a35201f;
+  --auth-kicker: #5f6858;
+  --auth-label: #4b5547;
+  --auth-soft: #f0f2eb;
+  --auth-plan: #f6f7f1;
+  --auth-chip: #e5e8de;
+  --auth-chip-dot: #9aa190;
+  --auth-check: #6f8b5f;
+  --auth-ghost-line: #c9cfbf;
+  --auth-underline: #c7cbbf;
+  --auth-error: #a63f24;
+  --auth-ok: #4b6a45;
+  --auth-pending-line: #efd9c4;
+  --auth-pending-bg: #fbf1e7;
+  --auth-pending-fg: #6d4a2e;
+  --field-bg: #fff;
+  --field-line: #d9ddcf;
+  --field-line-hover: #b9c0ad;
+  --field-ring: #7b8b6e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --auth-bg: #10141c;
+    --auth-side: #10141c;
+    --auth-art: #141a24;
+    --auth-foot: #10141c;
+    --auth-fade: linear-gradient(180deg, #10141c12 20%, #10141c45 45%, #10141cdb 78%, #10141c 100%);
+    --auth-shadow: 0 24px 70px #00000073;
+    --auth-kicker: #a5b3c4;
+    --auth-label: #c6cfdc;
+    --auth-soft: #222e3e;
+    --auth-plan: #141b25;
+    --auth-chip: #263244;
+    --auth-chip-dot: #7d8ba0;
+    --auth-check: #9cc7a4;
+    --auth-ghost-line: #435064;
+    --auth-underline: #4f5d72;
+    --auth-error: #f08a72;
+    --auth-ok: #9cc7a4;
+    --auth-pending-line: #5a4232;
+    --auth-pending-bg: #2a2119;
+    --auth-pending-fg: #f0c9a6;
+    --field-bg: #141b25;
+    --field-line: #3a4658;
+    --field-line-hover: #56657c;
+    --field-ring: #849aab;
+  }
+}
+:root[data-theme='dark'] {
+  --auth-bg: #10141c;
+  --auth-side: #10141c;
+  --auth-art: #141a24;
+  --auth-foot: #10141c;
+  --auth-fade: linear-gradient(180deg, #10141c12 20%, #10141c45 45%, #10141cdb 78%, #10141c 100%);
+  --auth-shadow: 0 24px 70px #00000073;
+  --auth-kicker: #a5b3c4;
+  --auth-label: #c6cfdc;
+  --auth-soft: #222e3e;
+  --auth-plan: #141b25;
+  --auth-chip: #263244;
+  --auth-chip-dot: #7d8ba0;
+  --auth-check: #9cc7a4;
+  --auth-ghost-line: #435064;
+  --auth-underline: #4f5d72;
+  --auth-error: #f08a72;
+  --auth-ok: #9cc7a4;
+  --auth-pending-line: #5a4232;
+  --auth-pending-bg: #2a2119;
+  --auth-pending-fg: #f0c9a6;
+  --field-bg: #141b25;
+  --field-line: #3a4658;
+  --field-line-hover: #56657c;
+  --field-ring: #849aab;
+}
 .auth-page {
   position: relative;
   isolation: isolate;
@@ -7,7 +92,7 @@
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--auth-bg);
 }
 /* The nav is fixed (landing.css); keep its height clear above the card. */
 .auth-page {
@@ -28,7 +113,7 @@
   height: 560px;
   z-index: -2;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 20%, #ffffff40 45%, #ffffffe0 78%, #fff 100%);
+  background: var(--auth-fade);
 }
 .auth-main {
   flex: 1;
@@ -43,7 +128,7 @@
   border: 1px solid var(--line);
   border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 24px 70px #2a35201f;
+  box-shadow: var(--auth-shadow);
   animation: rise-in 1s var(--ease) 0.1s both;
 }
 .auth-card.wide {
@@ -75,7 +160,7 @@
 .auth-kicker {
   display: block;
   margin-bottom: 14px;
-  color: #5f6858;
+  color: var(--auth-kicker);
   font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -87,7 +172,7 @@
 .field > span {
   display: block;
   margin-bottom: 7px;
-  color: #4b5547;
+  color: var(--auth-label);
   font-size: 13px;
   font-weight: 500;
 }
@@ -95,24 +180,24 @@
   display: block;
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid #d9ddcf;
+  border: 1px solid var(--field-line);
   border-radius: 12px;
-  background: #fff;
+  background: var(--field-bg);
   color: var(--fg);
   font-size: 16px;
   transition: border-color 0.2s;
 }
 .field input:hover {
-  border-color: #b9c0ad;
+  border-color: var(--field-line-hover);
 }
 .field input:focus-visible {
-  outline: 2px solid #7b8b6e;
+  outline: 2px solid var(--field-ring);
   outline-offset: 2px;
 }
 .field > label {
   display: block;
   margin-bottom: 7px;
-  color: #4b5547;
+  color: var(--auth-label);
   font-size: 13px;
   font-weight: 500;
 }
@@ -123,19 +208,19 @@
 .phone-row select {
   flex: none;
   padding: 0 34px 0 13px;
-  border: 1px solid #d9ddcf;
+  border: 1px solid var(--field-line);
   border-radius: 12px;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0h10L5 6z' fill='%236a7167'/%3E%3C/svg%3E") no-repeat right 13px center;
+  background: var(--field-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0h10L5 6z' fill='%236a7167'/%3E%3C/svg%3E") no-repeat right 13px center;
   color: var(--fg);
   font-size: 16px;
   appearance: none;
   cursor: pointer;
 }
 .phone-row select:hover {
-  border-color: #b9c0ad;
+  border-color: var(--field-line-hover);
 }
 .phone-row select:focus-visible {
-  outline: 2px solid #7b8b6e;
+  outline: 2px solid var(--field-ring);
   outline-offset: 2px;
 }
 .phone-row input {
@@ -160,10 +245,10 @@
 .btn.ghost {
   background: transparent;
   color: var(--fg);
-  border: 1px solid #c9cfbf;
+  border: 1px solid var(--auth-ghost-line);
 }
 .btn.ghost:hover {
-  background: #f0f2eb;
+  background: var(--auth-soft);
   box-shadow: none;
 }
 .btn:disabled {
@@ -172,12 +257,12 @@
 }
 .form-msg {
   margin: 12px 0 0;
-  color: #a63f24;
+  color: var(--auth-error);
   font-size: 13px;
   line-height: 1.6;
 }
 .form-msg.ok {
-  color: #4b6a45;
+  color: var(--auth-ok);
 }
 .links {
   display: flex;
@@ -193,7 +278,7 @@
   color: var(--muted);
   font-size: 13px;
   text-decoration: underline;
-  text-decoration-color: #c7cbbf;
+  text-decoration-color: var(--auth-underline);
   text-underline-offset: 3px;
   cursor: pointer;
   transition: color 0.2s;
@@ -238,7 +323,7 @@
 .plan {
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: #f6f7f1;
+  background: var(--auth-plan);
   padding: 24px;
 }
 .plan-top {
@@ -265,8 +350,8 @@
   gap: 7px;
   padding: 4px 12px;
   border-radius: 100px;
-  background: #e5e8de;
-  color: #4b5547;
+  background: var(--auth-chip);
+  color: var(--auth-label);
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
@@ -276,11 +361,11 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #9aa190;
+  background: var(--auth-chip-dot);
 }
 .pill.pro {
   background: var(--green);
-  color: #fffef9;
+  color: var(--bg);
 }
 .pill.pro::before {
   background: #ef9b6d;
@@ -292,7 +377,7 @@
   margin: 20px 0 22px;
   padding: 0;
   list-style: none;
-  color: #4b5547;
+  color: var(--auth-label);
   font-size: 14px;
 }
 .perks li {
@@ -301,7 +386,7 @@
 }
 .perks li::before {
   content: "✓";
-  color: #6f8b5f;
+  color: var(--auth-check);
   font-weight: 600;
 }
 .plan-price {
@@ -322,17 +407,17 @@
 .pending {
   margin: 16px 0 10px;
   padding: 14px 16px;
-  border: 1px solid #efd9c4;
+  border: 1px solid var(--auth-pending-line);
   border-radius: 12px;
-  background: #fbf1e7;
-  color: #6d4a2e;
+  background: var(--auth-pending-bg);
+  color: var(--auth-pending-fg);
   font-size: 13px;
   line-height: 1.6;
 }
 .skeleton {
   height: 168px;
   border-radius: 16px;
-  background: linear-gradient(90deg, #f0f2eb, #f8f9f4, #f0f2eb);
+  background: linear-gradient(90deg, var(--auth-soft), var(--auth-plan), var(--auth-soft));
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
 }
@@ -354,14 +439,14 @@
   transition: background 0.2s, border-color 0.2s;
 }
 .next a:hover {
-  background: #f0f2eb;
-  border-color: #b9c0ad;
+  background: var(--auth-soft);
+  border-color: var(--field-line-hover);
 }
 .next a span:last-child {
   color: var(--muted);
 }
 .auth-foot {
-  background: #f8f7f3;
+  background: var(--auth-foot);
 }
 @keyframes shimmer {
   to {
@@ -399,7 +484,7 @@
 /* Sign-in: a tall painting on the left, one quiet form on the right. */
 .auth-split {
   margin: 0;
-  background: #fbfaf6;
+  background: var(--auth-side);
 }
 .split {
   display: grid;
@@ -413,7 +498,11 @@
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  background: #f2eee2;
+  background: var(--auth-art);
+}
+.split-art picture {
+  display: block;
+  height: 100%;
 }
 .split-art img {
   display: block;
@@ -458,7 +547,7 @@
 }
 .auth-split .field input,
 .auth-split .phone-row select {
-  background-color: #fff;
+  background-color: var(--field-bg);
 }
 .split-foot {
   display: flex;
