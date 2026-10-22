@@ -318,6 +318,10 @@
     "v5": "20.2%",
     "videoTitle": "观看 Blade 实际操作",
     "videoText": "看 Blade 如何分析真实数据集并解释发现。旁白为印尼语。",
-    "videoPlay": "播放 Blade 演示视频"
+    "videoPlay": "播放 Blade 演示视频",
+    "figureOpen": "查看大图",
+    "figureClose": "关闭",
+    "figurePrev": "上一张图",
+    "figureNext": "下一张图"
   }
 }

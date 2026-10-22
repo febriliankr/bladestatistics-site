@@ -318,6 +318,10 @@
     "v5": "20.2%",
     "videoTitle": "Blade 작동 모습 보기",
     "videoText": "Blade가 실제 데이터셋을 살펴보고 발견한 내용을 설명하는 모습을 확인하세요. 인도네시아어 내레이션입니다.",
-    "videoPlay": "Blade 데모 영상 재생"
+    "videoPlay": "Blade 데모 영상 재생",
+    "figureOpen": "원본 크기로 보기",
+    "figureClose": "닫기",
+    "figurePrev": "이전 그림",
+    "figureNext": "다음 그림"
   }
 }

@@ -318,6 +318,10 @@
     "v5": "20,2%",
     "videoTitle": "Veja o Blade em ação",
     "videoText": "Veja o Blade explorar um conjunto de dados real e explicar o que encontra. Narrado em indonésio.",
-    "videoPlay": "Reproduzir o vídeo de demonstração do Blade"
+    "videoPlay": "Reproduzir o vídeo de demonstração do Blade",
+    "figureOpen": "Ver em tamanho real",
+    "figureClose": "Fechar",
+    "figurePrev": "Figura anterior",
+    "figureNext": "Próxima figura"
   }
 }

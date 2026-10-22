@@ -2553,3 +2553,148 @@ h2 {
     height: 24px;
   }
 }
+
+/* ---- results figures: pick a thumbnail, open the main figure ---- */
+.shot-stack[role="button"] {
+  cursor: zoom-in;
+}
+.shot-stack[role="button"]:focus-visible,
+.m-strip span:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  border-radius: 0.45em;
+}
+.m-strip span {
+  cursor: pointer;
+}
+.m-strip span:not(.on):hover {
+  border-color: #c9cfbf;
+}
+.figure-box {
+  width: min(1040px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100svh - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--panel);
+  color: var(--fg);
+  box-shadow: 0 30px 90px #10141c4d;
+  overflow: visible;
+}
+.figure-box[open] {
+  animation: figure-in 0.35s var(--ease) both;
+}
+.figure-box::backdrop {
+  background: #10141cb3;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+@keyframes figure-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+.figure-box figure {
+  margin: 0;
+  padding: 22px 22px 16px;
+}
+.figure-box img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100svh - 140px);
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+}
+.figure-box figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 4px 0;
+  font-size: 14px;
+}
+.figure-box figcaption b {
+  font-weight: 550;
+}
+.figure-box figcaption span {
+  color: var(--muted);
+  font-size: 13px;
+}
+.figure-box button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--panel);
+  color: var(--fg);
+  cursor: pointer;
+  box-shadow: 0 6px 18px #10141c26;
+  transition: background 0.2s, transform 0.15s;
+}
+.figure-box button:hover {
+  background: #f0f2eb;
+}
+.figure-box button:active {
+  transform: scale(0.94);
+}
+.figure-box button svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.fb-close {
+  top: -14px;
+  inset-inline-end: -14px;
+}
+.fb-step {
+  top: 50%;
+  translate: 0 -50%;
+}
+.fb-prev {
+  inset-inline-start: -20px;
+}
+.fb-next {
+  inset-inline-end: -20px;
+}
+[dir="rtl"] .fb-step svg {
+  transform: scaleX(-1);
+}
+:root[data-theme='dark'] .figure-box button:hover {
+  background: #222e3e;
+}
+@media (max-width: 640px) {
+  .figure-box figure {
+    padding: 12px 12px 10px;
+  }
+  .fb-close {
+    top: 8px;
+    inset-inline-end: 8px;
+  }
+  .fb-step {
+    top: auto;
+    bottom: 8px;
+    translate: none;
+  }
+  .fb-prev {
+    inset-inline-start: auto;
+    inset-inline-end: 56px;
+  }
+  .fb-next {
+    inset-inline-end: 8px;
+  }
+  .figure-box figcaption {
+    padding-inline-end: 100px;
+    min-height: 40px;
+    flex-wrap: wrap;
+    gap: 2px 10px;
+  }
+}

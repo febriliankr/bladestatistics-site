@@ -318,6 +318,10 @@
     "v5": "20,2 %",
     "videoTitle": "Blade in Aktion",
     "videoText": "Sehen Sie, wie Blade einen echten Datensatz untersucht und erklärt, was es findet. Auf Indonesisch kommentiert.",
-    "videoPlay": "Demo-Video von Blade abspielen"
+    "videoPlay": "Demo-Video von Blade abspielen",
+    "figureOpen": "In voller Größe ansehen",
+    "figureClose": "Schließen",
+    "figurePrev": "Vorherige Abbildung",
+    "figureNext": "Nächste Abbildung"
   }
 }

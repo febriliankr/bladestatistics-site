@@ -318,6 +318,10 @@
     "v5": "20,2%",
     "videoTitle": "Blade all'opera",
     "videoText": "Guarda Blade esplorare un dataset reale e spiegare cosa trova. Narrato in indonesiano.",
-    "videoPlay": "Riproduci il video dimostrativo di Blade"
+    "videoPlay": "Riproduci il video dimostrativo di Blade",
+    "figureOpen": "Visualizza a grandezza intera",
+    "figureClose": "Chiudi",
+    "figurePrev": "Figura precedente",
+    "figureNext": "Figura successiva"
   }
 }

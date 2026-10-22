@@ -318,6 +318,10 @@
     "v5": "20,2 %",
     "videoTitle": "Blade en action",
     "videoText": "Regardez Blade explorer un vrai jeu de données et expliquer ce qu'il trouve. Commenté en indonésien.",
-    "videoPlay": "Lire la vidéo de démonstration de Blade"
+    "videoPlay": "Lire la vidéo de démonstration de Blade",
+    "figureOpen": "Voir en taille réelle",
+    "figureClose": "Fermer",
+    "figurePrev": "Figure précédente",
+    "figureNext": "Figure suivante"
   }
 }

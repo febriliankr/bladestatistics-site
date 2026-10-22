@@ -318,6 +318,10 @@
     "v5": "20.2%",
     "videoTitle": "Blade の動作を見る",
     "videoText": "Blade が実際のデータセットを調べ、わかったことを説明する様子をご覧ください。ナレーションはインドネシア語です。",
-    "videoPlay": "Blade のデモ動画を再生"
+    "videoPlay": "Blade のデモ動画を再生",
+    "figureOpen": "フルサイズで表示",
+    "figureClose": "閉じる",
+    "figurePrev": "前の図",
+    "figureNext": "次の図"
   }
 }

@@ -318,6 +318,10 @@
     "v5": "20,2%",
     "videoTitle": "Lihat Blade bekerja",
     "videoText": "Tonton Blade menelusuri dataset nyata dan menjelaskan temuannya.",
-    "videoPlay": "Putar video demo Blade"
+    "videoPlay": "Putar video demo Blade",
+    "figureOpen": "Lihat ukuran penuh",
+    "figureClose": "Tutup",
+    "figurePrev": "Gambar sebelumnya",
+    "figureNext": "Gambar berikutnya"
   }
 }

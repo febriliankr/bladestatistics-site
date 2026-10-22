@@ -318,6 +318,10 @@
     "v5": "20.2%",
     "videoTitle": "See Blade at work",
     "videoText": "Watch Blade explore a real dataset and explain what it finds. Narrated in Indonesian.",
-    "videoPlay": "Play the Blade demo video"
+    "videoPlay": "Play the Blade demo video",
+    "figureOpen": "View full size",
+    "figureClose": "Close",
+    "figurePrev": "Previous figure",
+    "figureNext": "Next figure"
   }
 }

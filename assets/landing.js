@@ -146,26 +146,80 @@
   // seconds, so all five pass within one slide.
   var gallery = document.getElementById("preview-results");
   var galleryTimer = null;
+  var shots = gallery ? [].slice.call(gallery.querySelectorAll(".shot-stack img")) : [];
+  var thumbs = gallery ? [].slice.call(gallery.querySelectorAll(".m-strip span")) : [];
+  var shotIndex = 0;
+  function selectShot(n) {
+    shotIndex = n;
+    shots.forEach(function (img, k) { img.classList.toggle("on", k === n); });
+    thumbs.forEach(function (thumb, k) { thumb.classList.toggle("on", k === n); });
+    gallery.querySelector(".shot-name").textContent = thumbs[n].getAttribute("data-name");
+    gallery.querySelector(".shot-size").textContent = thumbs[n].getAttribute("data-size");
+  }
   function playGallery() {
     clearInterval(galleryTimer);
     if (!gallery) return;
-    var shots = [].slice.call(gallery.querySelectorAll(".shot-stack img"));
-    var thumbs = [].slice.call(gallery.querySelectorAll(".m-strip span"));
-    var name = gallery.querySelector(".shot-name");
-    var size = gallery.querySelector(".shot-size");
-    var index = 0;
-    function select(n) {
-      index = n;
-      shots.forEach(function (img, k) { img.classList.toggle("on", k === n); });
-      thumbs.forEach(function (thumb, k) { thumb.classList.toggle("on", k === n); });
-      name.textContent = thumbs[n].getAttribute("data-name");
-      size.textContent = thumbs[n].getAttribute("data-size");
-    }
-    select(0);
+    selectShot(0);
     if (reduce) return;
     galleryTimer = setInterval(function () {
-      if (!held) select((index + 1) % shots.length);
+      if (!held) selectShot((shotIndex + 1) % shots.length);
     }, 1900);
+  }
+
+  // Picking a thumbnail shows that figure and stops the slideshow; the main
+  // figure opens full size, with arrows and keys to step through all five.
+  var box = document.getElementById("figure-box");
+  function showBoxShot(n) {
+    var thumb = thumbs[n];
+    var img = box.querySelector("img");
+    img.src = shots[n].getAttribute("src");
+    img.width = shots[n].width || 1000;
+    img.height = shots[n].height || 625;
+    img.alt = thumb.getAttribute("data-name");
+    box.querySelector("figcaption b").textContent = thumb.getAttribute("data-name");
+    box.querySelector("figcaption span").textContent = thumb.getAttribute("data-size");
+  }
+  function stepShot(by) {
+    selectShot((shotIndex + by + shots.length) % shots.length);
+    if (box && box.open) showBoxShot(shotIndex);
+  }
+  function pressable(el, fn) {
+    el.addEventListener("click", fn);
+    el.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(); }
+    });
+  }
+  if (gallery) {
+    thumbs.forEach(function (thumb, k) {
+      pressable(thumb, function () {
+        takeOver();
+        clearInterval(galleryTimer);
+        selectShot(k);
+      });
+    });
+    var stack = gallery.querySelector(".shot-stack");
+    if (box && typeof box.showModal === "function") {
+      pressable(stack, function () {
+        takeOver();
+        clearInterval(galleryTimer);
+        showBoxShot(shotIndex);
+        box.showModal();
+      });
+      box.querySelector(".fb-close").addEventListener("click", function () { box.close(); });
+      box.querySelector(".fb-prev").addEventListener("click", function () { stepShot(-1); });
+      box.querySelector(".fb-next").addEventListener("click", function () { stepShot(1); });
+      // A click on the backdrop lands on the dialog itself.
+      box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
+      box.addEventListener("keydown", function (e) {
+        var rtl = document.documentElement.dir === "rtl";
+        if (e.key === "ArrowRight") stepShot(rtl ? -1 : 1);
+        if (e.key === "ArrowLeft") stepShot(rtl ? 1 : -1);
+      });
+    } else {
+      stack.removeAttribute("role");
+      stack.removeAttribute("tabindex");
+      stack.removeAttribute("title");
+    }
   }
 
   // The script preview writes framingham_linear.R line by line, presses Run,
