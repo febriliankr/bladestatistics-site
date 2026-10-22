@@ -347,3 +347,21 @@
     }, { threshold: 0.35 }).observe(stage);
   }
 })();
+
+// Intro video: a poster that links to YouTube, swapped for the privacy-mode
+// player on click, so the page loads no YouTube code until someone asks.
+(function () {
+  var link = document.querySelector(".video-play");
+  if (!link) return;
+  link.addEventListener("click", function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/" + link.dataset.video + "?autoplay=1&rel=0&playsinline=1";
+    frame.title = link.getAttribute("aria-label");
+    frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    frame.allowFullscreen = true;
+    link.replaceWith(frame);
+    frame.focus();
+  });
+})();

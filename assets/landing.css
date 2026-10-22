@@ -2466,3 +2466,90 @@ h2 {
 :root:not([data-theme]) .m-user { background: #2b384c; }
 
 }
+
+/* ---- intro video ---- */
+.video-section {
+  padding-top: 96px;
+}
+.video-frame {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #10141c;
+  box-shadow: 0 24px 70px #2a35201f;
+}
+.video-frame iframe,
+.video-play,
+.video-play picture,
+.video-play img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-play img {
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.video-play::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #10141c00 45%, #10141c33);
+  pointer-events: none;
+}
+.video-play:focus-visible {
+  outline-offset: -5px;
+}
+.video-button {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--btn-face);
+  box-shadow: var(--btn-lift-hover), 0 12px 32px #10141c40;
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s;
+}
+.video-button svg {
+  width: 30px;
+  height: 30px;
+  margin-inline-start: 4px;
+  fill: #fffef9;
+}
+[dir="rtl"] .video-button svg {
+  margin-inline-start: 0;
+  margin-inline-end: 4px;
+}
+.video-play:hover img {
+  transform: scale(1.015);
+}
+.video-play:hover .video-button {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+.video-play:active .video-button {
+  transform: translate(-50%, -50%) scale(0.97);
+}
+@media (max-width: 640px) {
+  .video-section {
+    padding-top: 56px;
+  }
+  .video-frame {
+    border-radius: 16px;
+  }
+  .video-button {
+    width: 60px;
+    height: 60px;
+  }
+  .video-button svg {
+    width: 24px;
+    height: 24px;
+  }
+}

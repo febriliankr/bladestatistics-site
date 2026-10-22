@@ -91,7 +91,7 @@ try {
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: light)" />
 <link rel="preload" as="image" href="/assets/moonlit-lake-soft.webp" media="(min-width: 641px) and (prefers-color-scheme: dark)" />
 <link rel="preload" as="image" href="/assets/moonlit-lake-soft-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: dark)" />
-<link rel="stylesheet" href="/assets/landing.css?v=d40fd6848996" />
+<link rel="stylesheet" href="/assets/landing.css?v=4eb60afe4962" />
 </head>
 <body>
 
@@ -144,6 +144,20 @@ try {
     </div>
 </header>
 <main>
+  <section class="video-section wrap" id="demo-video" aria-labelledby="video-title">
+    <div class="section-intro reveal">
+      <div><h2 id="video-title">Blade 작동 모습 보기</h2><p>Blade가 실제 데이터셋을 살펴보고 발견한 내용을 설명하는 모습을 확인하세요. 인도네시아어 내레이션입니다.</p></div>
+    </div>
+    <figure class="video-frame reveal">
+      <a class="video-play" href="https://www.youtube.com/watch?v=Fu1rETvExOA" data-video="Fu1rETvExOA" target="_blank" rel="noopener" aria-label="Blade 데모 영상 재생">
+        <picture>
+          <source media="(max-width: 640px)" srcset="/assets/demo-video-mobile.webp" />
+          <img src="/assets/demo-video.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" />
+        </picture>
+        <span class="video-button" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      </a>
+    </figure>
+  </section>
   <section class="product-section wrap" id="how" aria-labelledby="product-title">
     <div class="section-intro reveal">
       <div><h2 id="product-title">ChatGPT처럼 쉽지만, 로컬에서</h2><p>폴더를 열고 평소 쓰는 말로 질문하세요. Blade가 내 컴퓨터에서 R을 실행하므로 표, 그래프, 스크립트를 빠르게 받을 수 있습니다.</p></div>
@@ -475,7 +489,7 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/landing.js?v=d40fd6848996" defer></script>
+<script src="/assets/landing.js?v=4eb60afe4962" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points
