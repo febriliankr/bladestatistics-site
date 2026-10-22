@@ -391,3 +391,32 @@
     frame.focus();
   });
 })();
+
+// Install notes slide open and shut instead of snapping: the summary click is
+// taken over and the details element's height animated between the two states.
+(function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  [].forEach.call(document.querySelectorAll("details.install-notes"), function (el) {
+    var summary = el.querySelector("summary");
+    var body = el.querySelector("p");
+    var anim = null, animClosing = false;
+    summary.addEventListener("click", function (e) {
+      if (reduce || !el.animate) return;
+      e.preventDefault();
+      var closing = anim ? !animClosing : el.open;
+      var start = el.offsetHeight;
+      if (anim) anim.cancel();
+      el.open = true;
+      var end = closing ? summary.offsetHeight : el.offsetHeight;
+      el.style.overflow = "hidden";
+      animClosing = closing;
+      anim = el.animate({ height: [start + "px", end + "px"] }, { duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
+      if (body) body.animate({ opacity: closing ? [1, 0] : [0, 1] }, { duration: closing ? 200 : 380, fill: "both" });
+      anim.onfinish = function () {
+        anim = null;
+        el.style.overflow = "";
+        if (closing) el.open = false;
+      };
+    });
+  });
+})();

@@ -18,7 +18,13 @@
     toggle.addEventListener('click', function () {
       preference = root.dataset.theme === 'dark' ? 'light' : 'dark';
       try { localStorage.setItem('bladeTheme', preference); } catch (e) {}
-      apply(preference);
+      // Crossfade the page, hero landscape included, where the browser can.
+      var next = preference;
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(function () { apply(next); });
+      } else {
+        apply(next);
+      }
     });
   }
   system.addEventListener('change', function (event) {

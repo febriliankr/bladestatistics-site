@@ -91,7 +91,7 @@ try {
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: light)" />
 <link rel="preload" as="image" href="/assets/moonlit-lake-soft.webp" media="(min-width: 641px) and (prefers-color-scheme: dark)" />
 <link rel="preload" as="image" href="/assets/moonlit-lake-soft-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: dark)" />
-<link rel="stylesheet" href="/assets/landing.css?v=a9db1f393170" />
+<link rel="stylesheet" href="/assets/landing.css?v=b60037012d9f" />
 </head>
 <body>
 
@@ -128,7 +128,7 @@ try {
         </div>
       </details>
       </div>
-      <a class="nav-cta" href="#get">Unduh Blade</a>
+      <a class="nav-cta" href="#get"><svg class="dl-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg>Unduh Blade</a>
     </nav>
     <div class="hero-content wrap">
     <h1>Agen AI khusus untuk <em>analisis statistik</em></h1>
@@ -387,8 +387,8 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
 
   <section class="research-section wrap" id="research" aria-labelledby="research-title">
     <div class="research-copy reveal">
-      <h2 id="research-title">Riset itu berat. Statistiknya tidak perlu</h2>
-      <p>Mengumpulkan data butuh berbulan-bulan. Analisisnya tidak perlu selama itu.</p>
+      <h2 id="research-title">Riset itu berat</h2>
+      <p>Mengumpulkan data butuh berbulan-bulan, analisisnya tidak perlu selama itu.</p>
     </div>
     <figure class="pain reveal">
       <p class="pain-lead">Di mana 588 studi klinis tersendat:</p>
@@ -451,14 +451,14 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
         <h3 id="home-plan-free">Blade Free</h3>
         <p class="price">Rp0</p>
         <p class="plan-summary">Lihat apa yang dikerjakan Blade dengan dataset Anda sendiri.</p>
-        <ul class="features"><li>Aplikasi desktop lengkap</li><li>Analisis R di komputer Anda</li><li>Beberapa pertanyaan setiap hari</li></ul>
+        <ul class="features"><li>Aplikasi desktop lengkap</li><li>Analisis statistik lokal dan cepat</li><li>Output terbatas</li></ul>
         <div class="action"><a class="btn ghost" href="#get">Unduh Blade</a><p class="action-note">Tersedia untuk macOS dan Windows.</p></div>
       </section>
       <section class="plan pro" aria-labelledby="home-plan-pro">
         <h3 id="home-plan-pro">Blade Pro</h3>
         <p class="price">Rp299.000 <span>untuk satu bulan</span></p>
         <p class="plan-summary">Untuk tenggat dan bulan riset yang padat.</p>
-        <ul class="features"><li>Semua fitur Free</li><li>Bertanya sebanyak yang dibutuhkan</li><li>Sekali bayar, tanpa perpanjangan otomatis</li></ul>
+        <ul class="features"><li>Semua fitur Free</li><li>Output lebih banyak</li><li>Analisis prioritas</li></ul>
         <div class="action"><a class="btn" href="/pricing#checkout">Dapatkan Blade Pro</a><p class="action-note">Bayar dengan QRIS atau virtual account bank.</p></div>
       </section>
     </div>
@@ -498,8 +498,8 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/theme.js?v=a9db1f393170" defer></script>
-<script src="/assets/landing.js?v=a9db1f393170" defer></script>
+<script src="/assets/theme.js?v=b60037012d9f" defer></script>
+<script src="/assets/landing.js?v=b60037012d9f" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points
@@ -556,7 +556,9 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   function render(build) {
     if (!build) return;
     btn.href = build.href;
-    btn.textContent = T.downloadFor.replace('%s', build.name);
+    // The OS logo leads the label, so the visitor sees at a glance which build they get.
+    btn.innerHTML = build.icon;
+    btn.appendChild(document.createTextNode(T.downloadFor.replace('%s', build.name)));
     var v = (build.href.match(/\/(\d+\.\d+\.\d+)\//) || [])[1];
     note.textContent = build.meta + (v ? ' · ' + T.version + ' ' + v : '');
     more.hidden = false;

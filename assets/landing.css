@@ -218,6 +218,29 @@ h2 {
   white-space: nowrap;
   transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.dl-icon {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#cta { gap: 9px; }
+#cta svg {
+  width: 16px;
+  height: 16px;
+  margin-top: -2px;
+  fill: currentColor;
+  flex: none;
+}
 .nav-cta:hover {
   background: var(--btn-face-hover);
   box-shadow: var(--btn-lift-hover);
@@ -2310,10 +2333,32 @@ h2 {
   cursor: pointer;
 }
 .theme-toggle:hover { background: var(--panel); }
-.theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.theme-sun { display: none; }
-:root[data-theme='dark'] .theme-sun { display: block; }
-:root[data-theme='dark'] .theme-moon { display: none; }
+/* Sun and moon share one cell and swap with a quarter turn. */
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.5s var(--ease), opacity 0.3s;
+}
+.theme-sun { opacity: 0; transform: rotate(-90deg) scale(0.4); }
+:root[data-theme='dark'] .theme-sun { opacity: 1; transform: none; }
+:root[data-theme='dark'] .theme-moon { opacity: 0; transform: rotate(90deg) scale(0.4); }
+/* theme.js crossfades the page through a view transition, so the hero
+   landscape and every color fade together. The toggle stays live on top so
+   its own swap reads instead of a double exposure. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.6s;
+  animation-timing-function: ease;
+}
+.theme-toggle { view-transition-name: theme-toggle; }
+::view-transition-old(theme-toggle) { display: none; }
+::view-transition-new(theme-toggle) { animation: none; }
 @media (max-width: 640px) {
   :root { --hero-image: url('/assets/daylight-lake-mobile.webp'); --footer-image: url('/assets/footer-garden-mobile.webp'); }
   .nav-links { gap: 12px; }

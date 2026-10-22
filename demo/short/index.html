@@ -9,7 +9,7 @@
 <meta name="color-scheme" content="light" />
 <meta name="theme-color" content="#ffffff" />
 <link rel="preload" as="image" href="/assets/daylight-lake.webp" />
-<link rel="stylesheet" href="/assets/landing.css?v=a9db1f393170" />
+<link rel="stylesheet" href="/assets/landing.css?v=b60037012d9f" />
 <style>
   /* The one-minute cut of /demo, paced for an Indonesian voice-over. It tells
      one story on the UCI student performance data instead of the feature tour.
@@ -68,6 +68,9 @@
   .ask-demo .ask-answer { flex: 1; min-height: 0; }
   .ask-answer > :nth-child(4) { animation-delay: 0.75s; }
   .ask-demo .m-result td { white-space: normal; }
+  /* The columns the next question is about. */
+  .ask-data .hl { background: #d43b0012; }
+  .ask-data th.hl { color: #b53200; font-weight: 600; }
   .ask-demo .m-shot img { display: block; flex: 1; min-height: 0; width: 100%; object-fit: contain; padding: 0.4em; }
   /* The figure slide runs full width under a short heading, in a landscape
      window, so the saved PNG stays legible. */
@@ -268,6 +271,8 @@
     .stage .mock { padding: 0; font-size: calc(100cqw / 29); }
     .stage .app-preview { aspect-ratio: 4 / 5; }
     .stage .m-result { font-size: 0.86em; }
+    /* Phones drop the two leading CSV columns so the grade columns stay in view. */
+    .ask-data tr > :nth-child(-n + 2) { display: none; }
     .stage .app-preview, .s-fig .app-preview { aspect-ratio: 3 / 4; }
     .s-fig { grid-template-rows: none; }
     .s-fig .copy h2 { font-size: 36px; }
@@ -358,8 +363,8 @@
     </div>
   </section>
 
-  <section class="slide split" data-dur="10" data-hold="400" data-think="2200" aria-label="Apa itu G1 sampai G3">
-    <p data-say>Saya nggak tahu G1 sampai G3 itu apa, jadi tanya lagi. Ternyata itu nilai di tiga periode, skala 0 sampai 19, dan batas lulusnya 10.</p>
+  <section class="slide split" data-dur="11" data-hold="2800" data-think="2200" aria-label="Apa itu G1 sampai G3">
+    <p data-say>Di ujung tabel ada kolom G1, G2, G3. Saya nggak tahu itu apa, jadi tanya lagi. Ternyata itu nilai di tiga periode, skala 0 sampai 19, dan batas lulusnya 10.</p>
     <div class="copy">
       <span class="step">2. Tanya lanjutan</span>
       <h2>Tidak paham kolomnya? Tanya saja</h2>
@@ -372,6 +377,17 @@
           <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Student performance</span></div>
           <div class="mw-body">
             <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>student-por.csv</b><span>649 rows · 33 columns</span></div>
+            <div class="ask-data">
+              <table class="m-table">
+                <tr><th>sex</th><th>age</th><th>studytime</th><th>failures</th><th>absences</th><th class="hl">G1</th><th class="hl">G2</th><th class="hl">G3</th></tr>
+                <tr><td>F</td><td>18</td><td>2</td><td>0</td><td>4</td><td class="hl">0</td><td class="hl">11</td><td class="hl">11</td></tr>
+                <tr><td>F</td><td>17</td><td>2</td><td>0</td><td>2</td><td class="hl">9</td><td class="hl">11</td><td class="hl">11</td></tr>
+                <tr><td>F</td><td>15</td><td>2</td><td>0</td><td>6</td><td class="hl">12</td><td class="hl">13</td><td class="hl">12</td></tr>
+                <tr><td>F</td><td>15</td><td>3</td><td>0</td><td>0</td><td class="hl">14</td><td class="hl">14</td><td class="hl">14</td></tr>
+                <tr><td>F</td><td>16</td><td>2</td><td>0</td><td>0</td><td class="hl">11</td><td class="hl">13</td><td class="hl">13</td></tr>
+                <tr><td>M</td><td>16</td><td>2</td><td>0</td><td>6</td><td class="hl">12</td><td class="hl">12</td><td class="hl">13</td></tr>
+              </table>
+            </div>
             <div class="ask-chat">
               <p class="m-user">what is G1 - G3</p>
               <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div>
@@ -398,7 +414,7 @@
     </div>
   </section>
 
-  <section class="slide s-fig" data-dur="15" data-hold="400" data-think="2400" data-zoom aria-label="Korelasi dan grafik">
+  <section class="slide s-fig" data-dur="14" data-hold="400" data-think="2400" data-zoom aria-label="Korelasi dan grafik">
     <p data-say>Sekarang minta lima variabel yang paling berkorelasi dengan nilai, sekalian grafiknya. Blade menulis kode Python, menjalankannya, dan menyimpan grafiknya. Tanpa coding manual, tanpa klik sana-sini di SPSS.</p>
     <div class="copy">
       <span class="step">3. Analisis</span>

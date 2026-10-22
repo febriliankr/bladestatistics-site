@@ -91,7 +91,7 @@ try {
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: light)" />
 <link rel="preload" as="image" href="/assets/moonlit-lake-soft.webp" media="(min-width: 641px) and (prefers-color-scheme: dark)" />
 <link rel="preload" as="image" href="/assets/moonlit-lake-soft-mobile.webp" media="(max-width: 640px) and (prefers-color-scheme: dark)" />
-<link rel="stylesheet" href="/assets/landing.css?v=a9db1f393170" />
+<link rel="stylesheet" href="/assets/landing.css?v=b60037012d9f" />
 </head>
 <body>
 
@@ -128,7 +128,7 @@ try {
         </div>
       </details>
       </div>
-      <a class="nav-cta" href="#get">Blade 받기</a>
+      <a class="nav-cta" href="#get"><svg class="dl-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg>Blade 받기</a>
     </nav>
     <div class="hero-content wrap">
     <h1><em>통계 분석</em>에 특화된 AI 에이전트</h1>
@@ -498,8 +498,8 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   </div>
 </footer>
 <noscript><style>.app-preview[hidden]{display:block!important}.preview-panels{display:grid;gap:16px;aspect-ratio:auto;overflow:visible}</style></noscript>
-<script src="/assets/theme.js?v=a9db1f393170" defer></script>
-<script src="/assets/landing.js?v=a9db1f393170" defer></script>
+<script src="/assets/theme.js?v=b60037012d9f" defer></script>
+<script src="/assets/landing.js?v=b60037012d9f" defer></script>
 
 <script>
 // The download table below is the source of truth; the hero button just points
@@ -556,7 +556,9 @@ n = 4171, R2 = 0.2642, adj R2 = 0.2633, F = 299.07, residual SE = 18.840</pre>
   function render(build) {
     if (!build) return;
     btn.href = build.href;
-    btn.textContent = T.downloadFor.replace('%s', build.name);
+    // The OS logo leads the label, so the visitor sees at a glance which build they get.
+    btn.innerHTML = build.icon;
+    btn.appendChild(document.createTextNode(T.downloadFor.replace('%s', build.name)));
     var v = (build.href.match(/\/(\d+\.\d+\.\d+)\//) || [])[1];
     note.textContent = build.meta + (v ? ' · ' + T.version + ' ' + v : '');
     more.hidden = false;
