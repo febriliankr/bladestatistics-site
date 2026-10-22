@@ -84,6 +84,8 @@
      around it steps aside, so the figure fills the window. */
   .ask-demo[data-stage="zoom"] :is(.m-user, .m-compose, .ask-answer > :not(.m-shot)) { display: none; }
   .ask-demo[data-stage="zoom"] .m-shot { animation: shot-open 0.45s var(--ease) both; }
+  /* The landscape window is short: four CSV rows keep the compose box in view. */
+  .s-fig .ask-data tr:nth-child(n + 6) { display: none; }
   @keyframes shot-open { from { opacity: 0.6; transform: scale(0.94); } }
 
   /* Findings: the top five, ranked as Blade reported them. */
@@ -277,6 +279,7 @@
     .s-fig { grid-template-rows: none; }
     .s-fig .copy h2 { font-size: 36px; }
     .s-fig .stage { width: 100%; }
+    .s-fig .ask-data tr:nth-child(n + 6) { display: table-row; }
     .s-fig .mock { font-size: calc(100cqw / 29); }
     .rank li { grid-template-columns: 14px 84px minmax(0, 1fr); gap: 0 10px; padding: 10px 0; }
     .rank b { font-size: 24px; }
@@ -311,8 +314,8 @@
     </div>
   </section>
 
-  <section class="slide split" data-dur="12" data-hold="2400" data-think="2400" aria-label="Data ini tentang apa">
-    <p data-say>Saya punya satu file CSV dan belum tahu isinya. Tanya saja: data ini tentang apa? Ternyata data performa siswa dari UCI: 649 siswa, 33 kolom, tanpa data kosong. Targetnya G3, nilai akhir.</p>
+  <section class="slide split" data-dur="11" data-hold="2200" data-think="2200" aria-label="Data ini tentang apa">
+    <p data-say>Saya punya satu file CSV dan belum tahu isinya. Tanya saja: data ini tentang apa? Ternyata data performa siswa UCI: 649 siswa, 33 kolom. Targetnya G3, nilai akhir.</p>
     <div class="copy">
       <span class="step">1. Kenali datanya</span>
       <h2>Satu file CSV. Belum tahu isinya</h2>
@@ -414,7 +417,7 @@
     </div>
   </section>
 
-  <section class="slide s-fig" data-dur="14" data-hold="400" data-think="2400" data-zoom aria-label="Korelasi dan grafik">
+  <section class="slide s-fig" data-dur="15" data-hold="2400" data-think="2000" data-zoom aria-label="Korelasi dan grafik">
     <p data-say>Sekarang minta lima variabel yang paling berkorelasi dengan nilai, sekalian grafiknya. Blade menulis kode Python, menjalankannya, dan menyimpan grafiknya. Tanpa coding manual, tanpa klik sana-sini di SPSS.</p>
     <div class="copy">
       <span class="step">3. Analisis</span>
@@ -428,6 +431,17 @@
           <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Student performance</span></div>
           <div class="mw-body">
             <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>student-por.csv</b><span>649 rows · 33 columns</span></div>
+            <div class="ask-data">
+              <table class="m-table">
+                <tr><th>sex</th><th>age</th><th>studytime</th><th>failures</th><th>absences</th><th class="hl">G1</th><th class="hl">G2</th><th class="hl">G3</th></tr>
+                <tr><td>F</td><td>18</td><td>2</td><td>0</td><td>4</td><td class="hl">0</td><td class="hl">11</td><td class="hl">11</td></tr>
+                <tr><td>F</td><td>17</td><td>2</td><td>0</td><td>2</td><td class="hl">9</td><td class="hl">11</td><td class="hl">11</td></tr>
+                <tr><td>F</td><td>15</td><td>2</td><td>0</td><td>6</td><td class="hl">12</td><td class="hl">13</td><td class="hl">12</td></tr>
+                <tr><td>F</td><td>15</td><td>3</td><td>0</td><td>0</td><td class="hl">14</td><td class="hl">14</td><td class="hl">14</td></tr>
+                <tr><td>F</td><td>16</td><td>2</td><td>0</td><td>0</td><td class="hl">11</td><td class="hl">13</td><td class="hl">13</td></tr>
+                <tr><td>M</td><td>16</td><td>2</td><td>0</td><td>6</td><td class="hl">12</td><td class="hl">12</td><td class="hl">13</td></tr>
+              </table>
+            </div>
             <div class="ask-chat">
               <p class="m-user">output top 5 strongest variable that correlates to grades, and also output the graph</p>
               <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running Python">Running Python</span></div>
