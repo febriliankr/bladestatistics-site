@@ -365,9 +365,10 @@ HIDDEN_PAGES = {
 
 
 def design_version():
-    """Cache-busting hash for the shared homepage stylesheet and script."""
+    """Cache-busting hash for the shared stylesheets and scripts."""
     assets = ROOT / "assets"
-    return hashlib.sha256((assets / "landing.css").read_bytes() + (assets / "landing.js").read_bytes()).hexdigest()[:12]
+    names = ("landing.css", "landing.js", "theme.js", "auth.css", "auth.js")
+    return hashlib.sha256(b"".join((assets / n).read_bytes() for n in names)).hexdigest()[:12]
 
 
 # The demo deck reuses the homepage's mock windows, charts, and plan cards,

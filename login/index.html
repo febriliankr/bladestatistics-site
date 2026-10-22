@@ -6,9 +6,16 @@
 <title>Sign in &middot; Blade</title>
 <meta name="robots" content="noindex" />
 <link rel="icon" href="/logo.png" />
-<meta name="color-scheme" content="light" />
-<meta name="theme-color" content="#f8f7f3" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#10141c" media="(prefers-color-scheme: dark)" />
+<meta name="color-scheme" content="dark light" />
+<meta name="theme-color" content="#f8f7f3" />
+<script>
+(function () {
+  var saved;
+  try { saved = localStorage.getItem('bladeTheme'); } catch (e) {}
+  document.documentElement.dataset.theme = saved === 'light' || saved === 'dark'
+    ? saved : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+})();
+</script>
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -23,15 +30,22 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt=""
 src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /></noscript>
-<link rel="preload" as="image" href="/assets/footer-garden.webp" />
-<link rel="stylesheet" href="/assets/landing.css?v=871d12af6c39" />
-<link rel="stylesheet" href="/assets/auth.css?v=871d12af6c39" />
+<link rel="preload" as="image" href="/assets/footer-garden.webp" media="(prefers-color-scheme: light)" />
+<link rel="preload" as="image" href="/assets/moonlit-lake-soft.webp" media="(prefers-color-scheme: dark)" />
+<link rel="stylesheet" href="/assets/landing.css?v=a9db1f393170" />
+<link rel="stylesheet" href="/assets/auth.css?v=a9db1f393170" />
 </head>
 <body class="auth-split">
 <div class="split">
-  <div class="split-art" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark)" srcset="/assets/moonlit-lake-soft.webp" /><img src="/assets/footer-garden.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
+  <div class="split-art" aria-hidden="true"></div>
   <div class="split-side">
-    <a class="wordmark split-brand" href="/"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+    <div class="split-top">
+      <a class="wordmark split-brand" href="/"><img src="/logo.png" alt="" width="28" height="28" /><span>Blade</span></a>
+      <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Dark mode" hidden>
+        <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></svg>
+        <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      </button>
+    </div>
     <main class="split-main" id="main">
       <!-- Step 1: email -->
       <section class="auth-card" id="step-email" aria-labelledby="email-title">
@@ -147,7 +161,8 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
     </footer>
   </div>
 </div>
-    <script src="/assets/auth.js?v=871d12af6c39"></script>
+    <script src="/assets/theme.js?v=a9db1f393170"></script>
+    <script src="/assets/auth.js?v=a9db1f393170"></script>
     <script>
       (function () {
         var A = window.BladeAuth;
