@@ -64,57 +64,58 @@
   }
   .stage .mock { padding: 4%; }
 
-  /* The groups table and the chart share the answer's height. */
+  /* Answers fill the window; the saved figure takes what the text leaves. */
   .ask-demo .ask-answer { flex: 1; min-height: 0; }
-  .ask-demo .m-shot > .chart { flex: 1; min-height: 0; display: block; width: 100%; height: 100%; padding: 0.4em 0.6em; }
-  .chart text { font-family: inherit; font-size: 13px; fill: #1f2320; }
-  .chart .lbl { text-anchor: end; }
-  .chart .val { fill: #767b72; font-variant-numeric: tabular-nums; }
-  .chart .ttl { font-size: 14px; font-weight: 600; }
-  .chart .neg { fill: var(--orange); }
-  .chart .pos { fill: #5d7a4f; }
-  .chart rect { transform-origin: 178px 0; animation: bar-grow 0.8s var(--ease) both; }
-  @keyframes bar-grow { from { transform: scaleX(0); } }
+  .ask-answer > :nth-child(4) { animation-delay: 0.75s; }
+  .ask-demo .m-result td { white-space: normal; }
+  .ask-demo .m-shot img { display: block; flex: 1; min-height: 0; width: 100%; object-fit: contain; padding: 0.4em; }
+  /* The figure slide runs full width under a short heading, in a landscape
+     window, so the saved PNG stays legible. */
+  .s-fig { grid-template-rows: auto minmax(0, 1fr); gap: 20px; }
+  .s-fig .copy h2 { margin-bottom: 8px; font-size: clamp(30px, 3vw, 46px); }
+  .s-fig .copy p { max-width: 720px; }
+  .s-fig .stage { width: min(100%, calc((100svh - 360px) * 1.78)); }
+  .s-fig .app-preview { aspect-ratio: 16 / 9; }
+  .s-fig .mock { font-size: calc(100cqw / 60); }
+  /* data-zoom: once the answer lands, the pointer opens the PNG and the chat
+     around it steps aside, so the figure fills the window. */
+  .ask-demo[data-stage="zoom"] :is(.m-user, .m-compose, .ask-answer > :not(.m-shot)) { display: none; }
+  .ask-demo[data-stage="zoom"] .m-shot { animation: shot-open 0.45s var(--ease) both; }
+  @keyframes shot-open { from { opacity: 0.6; transform: scale(0.94); } }
 
-  /* Findings: what pulls the final grade down and what lifts it. */
-  .s-wide { align-content: center; gap: 36px; }
-  .s-wide .copy { max-width: 760px; }
-  .finds {
+  /* Findings: the top five, ranked as Blade reported them. */
+  .rank { margin: 0; padding: 0; list-style: none; }
+  .rank li {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 48px;
-    margin: 0;
-    padding: 0;
-  }
-  .finds h3 { grid-column: span 1; margin: 0; font-size: 15px; font-weight: 500; }
-  .finds .down { color: var(--orange); }
-  .finds .up { color: #5d7a4f; }
-  .finds .fi {
-    display: flex;
+    grid-template-columns: 24px 136px minmax(0, 1fr);
     align-items: baseline;
-    gap: 14px;
-    padding: 16px 0;
+    gap: 0 16px;
+    padding: 14px 0;
     border-top: 1px solid var(--line);
-    font-size: clamp(17px, 1.6vw, 22px);
+    font-size: clamp(17px, 1.5vw, 22px);
     animation: mock-up 0.5s var(--ease) both;
   }
-  .finds .fi b {
-    flex: none;
-    min-width: 3.2em;
-    font-size: clamp(28px, 3vw, 44px);
+  .rank li:nth-child(1) { animation-delay: 0.15s; }
+  .rank li:nth-child(2) { animation-delay: 0.3s; }
+  .rank li:nth-child(3) { animation-delay: 0.45s; }
+  .rank li:nth-child(4) { animation-delay: 0.6s; }
+  .rank li:nth-child(5) { animation-delay: 0.75s; }
+  .rank .n { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .rank b {
+    font-size: clamp(26px, 2.6vw, 40px);
     font-weight: 450;
     letter-spacing: -0.04em;
     font-variant-numeric: tabular-nums;
   }
-  .finds .fi:nth-of-type(1), .finds .fi:nth-of-type(2) { animation-delay: 0.2s; }
-  .finds .fi:nth-of-type(3), .finds .fi:nth-of-type(4) { animation-delay: 0.4s; }
-  .finds .fi:nth-of-type(5), .finds .fi:nth-of-type(6) { animation-delay: 0.6s; }
-  .finds .note {
-    grid-column: 1 / -1;
-    margin: 8px 0 0;
+  .rank b.down { color: var(--orange); }
+  .rank b.up { color: #5d7a4f; }
+  .rank small { display: block; margin-top: 2px; font-size: 14px; color: var(--muted); }
+  .rank-note {
+    margin: 16px 0 0;
     font-size: 14px;
+    line-height: 1.55;
     color: var(--muted);
-    animation: mock-up 0.5s var(--ease) 0.9s both;
+    animation: mock-up 0.5s var(--ease) 1s both;
   }
 
   /* Title and closing slides sit on the homepage landscape. */
@@ -266,13 +267,14 @@
     .stage { width: 100%; }
     .stage .mock { padding: 0; font-size: calc(100cqw / 29); }
     .stage .app-preview { aspect-ratio: 4 / 5; }
-    .s-wide { align-content: start; gap: 28px; }
-    .finds { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    .finds h3 { margin-top: 18px; }
-    /* One column: all the downs first, then the ups. */
-    .finds h3.up, .finds .fi:has(.up) { order: 1; }
-    .finds .note { order: 2; }
-    .finds .fi { padding: 10px 0; }
+    .stage .m-result { font-size: 0.86em; }
+    .stage .app-preview, .s-fig .app-preview { aspect-ratio: 3 / 4; }
+    .s-fig { grid-template-rows: none; }
+    .s-fig .copy h2 { font-size: 36px; }
+    .s-fig .stage { width: 100%; }
+    .s-fig .mock { font-size: calc(100cqw / 29); }
+    .rank li { grid-template-columns: 14px 84px minmax(0, 1fr); gap: 0 10px; padding: 10px 0; }
+    .rank b { font-size: 24px; }
     .s-hero h1 { font-size: 44px; }
     .s-hero p { font-size: 18px; }
     .s-hero .url { font-size: 24px; }
@@ -286,16 +288,17 @@
 <body>
 <header class="deck-bar deck-chrome">
   <div class="deck-tools">
-    <span id="deck-count" aria-live="polite">1 / 5</span>
+    <span id="deck-count" aria-live="polite">1 / 6</span>
     <button class="deck-btn" type="button" id="deck-play" aria-label="Play the 60-second run" title="Play (P)"><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg></button>
     <button class="deck-btn" type="button" id="deck-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
   </div>
 </header>
 
 <main class="deck" id="deck">
-  <!-- data-dur is each slide's share of the 60 seconds; data-say is the line to read over it. -->
-  <section class="slide s-hero" data-dur="10" aria-label="Blade">
-    <p data-say>Ini Blade. Kita ubah data mentah jadi insight penelitian yang siap publish. Cara pakainya semudah ChatGPT, tinggal tanya. Bedanya, AI agent-nya jalan langsung di laptop kamu.</p>
+  <!-- data-dur is each slide's share of the 60 seconds; data-say is the line to read over it.
+       The three prompts and every number come from a real Blade run on student-por.csv. -->
+  <section class="slide s-hero" data-dur="6" aria-label="Blade">
+    <p data-say>Ini Blade. Ubah data mentah jadi insight siap publish. Semudah chat, dan AI-nya jalan langsung di laptop kamu.</p>
     <div>
       <span class="mark"><img src="/logo.png" alt="" width="44" height="44" />Blade</span>
       <h1>Dari data mentah ke <em>insight siap publish</em></h1>
@@ -303,12 +306,12 @@
     </div>
   </section>
 
-  <section class="slide split" data-dur="15" data-hold="3200" data-think="2600" aria-label="Tanya tentang data">
-    <p data-say>Contohnya, data performa siswa. Satu folder, satu file CSV, dan saya belum tahu isinya. Jadi tanya saja: data ini tentang apa? Blade jelaskan: 649 siswa, 33 kolom, dari keluarga sampai gaya hidup. Nilainya ada di G1, G2, G3.</p>
+  <section class="slide split" data-dur="12" data-hold="2400" data-think="2400" aria-label="Data ini tentang apa">
+    <p data-say>Saya punya satu file CSV dan belum tahu isinya. Tanya saja: data ini tentang apa? Ternyata data performa siswa dari UCI: 649 siswa, 33 kolom, tanpa data kosong. Targetnya G3, nilai akhir.</p>
     <div class="copy">
-      <span class="step">1. Tanya</span>
+      <span class="step">1. Kenali datanya</span>
       <h2>Satu file CSV. Belum tahu isinya</h2>
-      <p>Pilih folder kerja, lalu tanya dalam bahasa sehari-hari.</p>
+      <p>Pilih folder kerja, lalu tanya dalam bahasa sehari-hari. Blade membaca filenya sendiri.</p>
     </div>
     <div class="stage">
       <div class="app-preview mock ask-demo" role="img" aria-label="Tanya: what is this dataset about?">
@@ -329,23 +332,23 @@
               </table>
             </div>
             <div class="ask-chat">
-              <p class="m-user">What is this dataset about?</p>
+              <p class="m-user">what is this dataset about?</p>
               <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div>
               <div class="ask-answer">
-                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>python3 describe_data.py</span><small>Done</small></div>
-                <p class="m-msg">UCI Student Performance, Portuguese course: 649 students, 33 columns. Grades run 0 to 20; 10 passes.</p>
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Listed a folder and ran 2 commands</b><small>Done</small></div>
+                <p class="m-msg">UCI Student Performance, Portuguese course: 649 students, 33 columns, no missing values. Target: <b>G3</b>, the final grade (0 to 19, mean 11.9).</p>
                 <table class="m-table m-result">
                   <tr><th>Group</th><th>Columns</th></tr>
-                  <tr><td>Demographics</td><td>school, sex, age, address</td></tr>
-                  <tr><td>Family</td><td>famsize, Medu, Fedu, Mjob</td></tr>
-                  <tr><td>School</td><td>studytime, failures, higher</td></tr>
-                  <tr><td>Lifestyle</td><td>romantic, freetime, Dalc, Walc</td></tr>
-                  <tr><td>Outcomes</td><td>absences, G1, G2, G3</td></tr>
+                  <tr><td>Demographics</td><td>school (GP 423 / MS 226), sex, age 15 to 22</td></tr>
+                  <tr><td>Family</td><td>famsize, Pstatus, Medu, Fedu, Mjob, Fjob</td></tr>
+                  <tr><td>School</td><td>studytime, failures (549 have none), paid</td></tr>
+                  <tr><td>Lifestyle</td><td>higher (580 yes), internet, romantic, Dalc, Walc</td></tr>
+                  <tr><td>Outcomes</td><td>absences (mean 3.7), G1, G2, G3</td></tr>
                 </table>
               </div>
             </div>
             <div class="m-compose">
-              <p><span class="ask-input" data-prompt="What is this dataset about?"></span><i class="caret-blink"></i></p>
+              <p><span class="ask-input" data-prompt="what is this dataset about?"></span><i class="caret-blink"></i></p>
               <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
             </div>
           </div>
@@ -355,46 +358,37 @@
     </div>
   </section>
 
-  <section class="slide split" data-dur="14" data-hold="400" data-think="3600" aria-label="Cari korelasi">
-    <p data-say>Sekarang minta variabel yang paling berkorelasi dengan nilai akhir, sekalian grafiknya. Blade menulis kodenya sendiri dan menjalankannya di laptop. Tanpa coding manual, tanpa klik sana-sini di SPSS.</p>
+  <section class="slide split" data-dur="10" data-hold="400" data-think="2200" aria-label="Apa itu G1 sampai G3">
+    <p data-say>Saya nggak tahu G1 sampai G3 itu apa, jadi tanya lagi. Ternyata itu nilai di tiga periode, skala 0 sampai 19, dan batas lulusnya 10.</p>
     <div class="copy">
-      <span class="step">2. Analisis</span>
-      <h2>Korelasi dan grafik dalam satu permintaan</h2>
-      <p>Blade menulis dan menjalankan kodenya sendiri. Tanpa coding manual, tanpa klik sana-sini.</p>
+      <span class="step">2. Tanya lanjutan</span>
+      <h2>Tidak paham kolomnya? Tanya saja</h2>
+      <p>Blade menjelaskan arti tiap kolom, lengkap dengan angka dari data kamu.</p>
     </div>
     <div class="stage">
-      <div class="app-preview mock ask-demo" role="img" aria-label="Grafik korelasi dengan nilai akhir G3">
+      <div class="app-preview mock ask-demo" role="img" aria-label="Tanya: what is G1 - G3">
         <div class="mw">
           <div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>Student performance</b></span></div>
           <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Student performance</span></div>
           <div class="mw-body">
             <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>student-por.csv</b><span>649 rows · 33 columns</span></div>
             <div class="ask-chat">
-              <p class="m-user">Which variables correlate most with the final grade? Plot them.</p>
-              <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running Python">Running Python</span></div>
+              <p class="m-user">what is G1 - G3</p>
+              <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div>
               <div class="ask-answer">
-                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>python3 g3_correlations.py</span><small>Done</small></div>
-                <p class="m-msg">Past failures and plans for higher education lead. G1 and G2 left out.</p>
-                <div class="m-shot">
-                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>g3_correlations.png</b><span>PNG · 64 KB</span></p>
-                  <svg class="chart" viewBox="0 0 600 230" role="img" aria-label="Pearson r with G3">
-                    <text class="ttl" x="0" y="14">Pearson r with final grade G3</text>
-                    <text class="lbl" x="170" y="38">Past failures</text><rect class="neg" x="178" y="26" width="324" height="16" rx="2" style="animation-delay:0.10s"/><text class="val" x="508" y="38">−0.39</text>
-                    <text class="lbl" x="170" y="61">Wants higher education</text><rect class="pos" x="178" y="49" width="274" height="16" rx="2" style="animation-delay:0.16s"/><text class="val" x="458" y="61">+0.33</text>
-                    <text class="lbl" x="170" y="84">School MS vs GP</text><rect class="neg" x="178" y="72" width="234" height="16" rx="2" style="animation-delay:0.22s"/><text class="val" x="418" y="84">−0.28</text>
-                    <text class="lbl" x="170" y="107">Weekly study time</text><rect class="pos" x="178" y="95" width="206" height="16" rx="2" style="animation-delay:0.28s"/><text class="val" x="390" y="107">+0.25</text>
-                    <text class="lbl" x="170" y="130">Mother's education</text><rect class="pos" x="178" y="118" width="198" height="16" rx="2" style="animation-delay:0.34s"/><text class="val" x="382" y="130">+0.24</text>
-                    <text class="lbl" x="170" y="153">Father's education</text><rect class="pos" x="178" y="141" width="175" height="16" rx="2" style="animation-delay:0.40s"/><text class="val" x="359" y="153">+0.21</text>
-                    <text class="lbl" x="170" y="176">Weekday alcohol</text><rect class="neg" x="178" y="164" width="169" height="16" rx="2" style="animation-delay:0.46s"/><text class="val" x="353" y="176">−0.20</text>
-                    <text class="lbl" x="170" y="199">Weekend alcohol</text><rect class="neg" x="178" y="187" width="146" height="16" rx="2" style="animation-delay:0.52s"/><text class="val" x="330" y="199">−0.18</text>
-                    <rect class="pos" x="178" y="214" width="10" height="10" rx="2" style="animation:none"/><text x="193" y="223">raises grade</text>
-                    <rect class="neg" x="290" y="214" width="10" height="10" rx="2" style="animation:none"/><text x="305" y="223">lowers grade</text>
-                  </svg>
-                </div>
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Ran 2 commands</b><small>Done</small></div>
+                <p class="m-msg">The same students' grade at three points in the school year, on the Portuguese 0 to 19 scale. 10 is the pass mark.</p>
+                <table class="m-table m-result">
+                  <tr><th>Column</th><th>Meaning</th><th>Mean</th></tr>
+                  <tr><td>G1</td><td>First period grade</td><td>11.40</td></tr>
+                  <tr><td>G2</td><td>Second period grade</td><td>11.57</td></tr>
+                  <tr><td>G3</td><td>Final grade</td><td>11.91</td></tr>
+                </table>
+                <p class="m-msg">Pass rate 84.6% (549 of 649). Of 157 students who failed G1, 69 still passed G3.</p>
               </div>
             </div>
             <div class="m-compose">
-              <p><span class="ask-input" data-prompt="Which variables correlate most with the final grade? Plot them."></span><i class="caret-blink"></i></p>
+              <p><span class="ask-input" data-prompt="what is G1 - G3"></span><i class="caret-blink"></i></p>
               <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
             </div>
           </div>
@@ -404,28 +398,64 @@
     </div>
   </section>
 
-  <section class="slide split" data-dur="12" aria-label="Temuan">
-    <p data-say>Hasilnya menarik. Yang paling menurunkan nilai: pernah gagal sebelumnya, dan minum alkohol di hari sekolah. Yang paling menaikkan: keinginan lanjut kuliah dan jam belajar. Pendidikan ibu ternyata lebih berpengaruh daripada ayah.</p>
+  <section class="slide s-fig" data-dur="15" data-hold="400" data-think="2400" data-zoom aria-label="Korelasi dan grafik">
+    <p data-say>Sekarang minta lima variabel yang paling berkorelasi dengan nilai, sekalian grafiknya. Blade menulis kode Python, menjalankannya, dan menyimpan grafiknya. Tanpa coding manual, tanpa klik sana-sini di SPSS.</p>
     <div class="copy">
-      <span class="step">3. Insight</span>
-      <h2>Apa yang menentukan nilai akhir siswa</h2>
-      <p>Pendidikan ibu (r&nbsp;=&nbsp;0.24) ternyata lebih berpengaruh daripada pendidikan ayah (r&nbsp;=&nbsp;0.21).</p>
+      <span class="step">3. Analisis</span>
+      <h2>Korelasi dan grafik dalam satu permintaan</h2>
+      <p>Blade menulis dan menjalankan kode Python sendiri, lalu menyimpan grafiknya di folder kamu.</p>
     </div>
-    <div class="finds">
-      <h3 class="down">Menurunkan nilai</h3>
-      <h3 class="up">Menaikkan nilai</h3>
-      <div class="fi"><b class="down">−0.39</b>Pernah gagal sebelumnya</div>
-      <div class="fi"><b class="up">+0.33</b>Ingin lanjut kuliah</div>
-      <div class="fi"><b class="down">−0.20</b>Alkohol di hari sekolah</div>
-      <div class="fi"><b class="up">+0.25</b>Jam belajar per minggu</div>
-      <div class="fi"><b class="down">−0.18</b>Alkohol di akhir pekan</div>
-      <div class="fi"><b class="up">+0.24</b>Pendidikan ibu</div>
-      <p class="note">Pearson r dengan nilai akhir G3, n = 649.</p>
+    <div class="stage">
+      <div class="app-preview mock ask-demo" role="img" aria-label="Grafik lima korelasi terkuat dengan nilai akhir G3">
+        <div class="mw">
+          <div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>Student performance</b></span></div>
+          <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Student performance</span></div>
+          <div class="mw-body">
+            <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>student-por.csv</b><span>649 rows · 33 columns</span></div>
+            <div class="ask-chat">
+              <p class="m-user">output top 5 strongest variable that correlates to grades, and also output the graph</p>
+              <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running Python">Running Python</span></div>
+              <div class="ask-answer">
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Ran 4 commands and wrote 2 files</b><small>Done</small></div>
+                <p class="m-msg">Top 5 with G1 and G2 excluded: failures (−0.393), higher (+0.332), school (+0.284), studytime (+0.250), Medu (+0.240).</p>
+                <div class="m-shot">
+                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>grades_top_correlations_top5.png</b><span>PNG · 174 KB</span></p>
+                  <img src="/assets/g3-top-correlations.webp" alt="Panel A: Pearson r with final grade G3, top five in black. Panel B: final grade by number of past class failures." width="1800" height="803" />
+                </div>
+              </div>
+            </div>
+            <div class="m-compose">
+              <p><span class="ask-input" data-prompt="output top 5 strongest variable that correlates to grades, and also output the graph"></span><i class="caret-blink"></i></p>
+              <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
+            </div>
+          </div>
+          <svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="slide s-hero" data-dur="9" aria-label="Coba Blade">
-    <p data-say>Semua ini dalam satu menit. Coba dengan data kamu sendiri di bladestatistics.com.</p>
+  <section class="slide split" data-dur="11" aria-label="Temuan">
+    <p data-say>Hasilnya: yang paling kuat adalah pernah gagal kelas. Sekali gagal, rata-rata nilai akhir turun dari 12,5 ke 8,6, di bawah batas lulus. Lalu keinginan lanjut kuliah, sekolah, jam belajar, dan pendidikan ibu, yang ternyata lebih kuat daripada ayah.</p>
+    <div class="copy">
+      <span class="step">4. Insight</span>
+      <h2>Sekali gagal, nilai akhir jatuh di bawah batas lulus</h2>
+      <p>Rata-rata G3: 12.5 tanpa riwayat gagal (n&nbsp;=&nbsp;549), 8.6 setelah satu kali gagal (n&nbsp;=&nbsp;70). Batas lulus 10.</p>
+    </div>
+    <div class="finds">
+      <ol class="rank">
+        <li><span class="n">1</span><b class="down">−0.393</b><span>Pernah gagal kelas<small>Makin sering gagal, makin rendah nilai akhir</small></span></li>
+        <li><span class="n">2</span><b class="up">+0.332</b><span>Ingin lanjut kuliah<small>580 dari 649 siswa menjawab ya</small></span></li>
+        <li><span class="n">3</span><b class="up">+0.284</b><span>Sekolah GP, bukan MS<small>Sekolah asal ikut menentukan</small></span></li>
+        <li><span class="n">4</span><b class="up">+0.250</b><span>Jam belajar per minggu<small>Skala 1 sampai 4, dilaporkan sendiri</small></span></li>
+        <li><span class="n">5</span><b class="up">+0.240</b><span>Pendidikan ibu<small>Lebih kuat daripada pendidikan ayah (+0.212)</small></span></li>
+      </ol>
+      <p class="rank-note">Pearson r dengan G3, n = 649. G1 dan G2 tidak dihitung (r = 0.83 dan 0.92): itu nilai juga, bukan prediktor. Berikutnya: alkohol hari sekolah −0.205, akhir pekan −0.177.</p>
+    </div>
+  </section>
+
+  <section class="slide s-hero" data-dur="6" aria-label="Coba Blade">
+    <p data-say>Coba dengan data kamu sendiri di bladestatistics.com.</p>
     <div>
       <span class="mark"><img src="/logo.png" alt="" width="44" height="44" />Blade</span>
       <h1>Coba dengan data kamu sendiri</h1>
@@ -511,7 +541,21 @@ document.addEventListener("DOMContentLoaded", function () {
       pointer.classList.remove("show");
       demo.setAttribute("data-stage", "think");
     });
-    at(typed + 1600 + think, function () { demo.setAttribute("data-stage", "done"); });
+    var done = typed + 1600 + think;
+    at(done, function () { demo.setAttribute("data-stage", "done"); });
+    if (!slide.hasAttribute("data-zoom")) return;
+    at(done + 1300, function () {
+      var w = win.getBoundingClientRect();
+      var img = demo.querySelector(".m-shot img").getBoundingClientRect();
+      pointer.classList.add("show");
+      pointer.style.setProperty("--px", img.left - w.left + img.width * 0.5 + "px");
+      pointer.style.setProperty("--py", img.top - w.top + img.height * 0.5 + "px");
+    });
+    at(done + 2200, function () { pointer.classList.add("press"); });
+    at(done + 2350, function () {
+      pointer.classList.remove("press", "show");
+      demo.setAttribute("data-stage", "zoom");
+    });
   }
 
   // P runs the whole deck on the clock in data-dur, for a one-take recording.
