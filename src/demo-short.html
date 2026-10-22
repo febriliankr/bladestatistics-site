@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Blade demo singkat</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="preload" as="image" href="/assets/daylight-lake.webp" />
+<link rel="stylesheet" href="/assets/landing.css?v={{designVersion}}" />
+<style>
+  /* The one-minute cut of /demo, paced for an Indonesian voice-over. It tells
+     one story on the UCI student performance data instead of the feature tour.
+     P plays the deck on a 60-second clock, N shows the narration line.
+     data-theme pins light: the slide copy is written for a white page. */
+  html, body { height: 100%; }
+  body { overflow: hidden; background: #fff; }
+  .deck { position: fixed; inset: 0; }
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    padding: 88px clamp(20px, 6vw, 104px) 96px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .slide.on { display: grid; animation: slide-in 0.6s var(--ease) both; }
+  @keyframes slide-in { from { opacity: 0; transform: translateY(10px); } }
+
+  .split {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+  .copy h2 {
+    margin: 0 0 18px;
+    font-size: clamp(36px, 4.2vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.05em;
+    font-weight: 450;
+    text-wrap: balance;
+  }
+  .copy p {
+    max-width: 440px;
+    margin: 0;
+    font-size: clamp(16px, 1.4vw, 20px);
+    line-height: 1.6;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .copy .step {
+    display: block;
+    margin-bottom: 18px;
+    font-size: 15px;
+    color: var(--orange);
+    font-weight: 500;
+  }
+  .stage {
+    container-type: inline-size;
+    justify-self: center;
+    width: min(100%, calc(100svh - 200px));
+  }
+  .stage .mock { padding: 4%; }
+
+  /* The groups table and the chart share the answer's height. */
+  .ask-demo .ask-answer { flex: 1; min-height: 0; }
+  .ask-demo .m-shot > .chart { flex: 1; min-height: 0; display: block; width: 100%; height: 100%; padding: 0.4em 0.6em; }
+  .chart text { font-family: inherit; font-size: 13px; fill: #1f2320; }
+  .chart .lbl { text-anchor: end; }
+  .chart .val { fill: #767b72; font-variant-numeric: tabular-nums; }
+  .chart .ttl { font-size: 14px; font-weight: 600; }
+  .chart .neg { fill: var(--orange); }
+  .chart .pos { fill: #5d7a4f; }
+  .chart rect { transform-origin: 178px 0; animation: bar-grow 0.8s var(--ease) both; }
+  @keyframes bar-grow { from { transform: scaleX(0); } }
+
+  /* Findings: what pulls the final grade down and what lifts it. */
+  .s-wide { align-content: center; gap: 36px; }
+  .s-wide .copy { max-width: 760px; }
+  .finds {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 48px;
+    margin: 0;
+    padding: 0;
+  }
+  .finds h3 { grid-column: span 1; margin: 0; font-size: 15px; font-weight: 500; }
+  .finds .down { color: var(--orange); }
+  .finds .up { color: #5d7a4f; }
+  .finds .fi {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    font-size: clamp(17px, 1.6vw, 22px);
+    animation: mock-up 0.5s var(--ease) both;
+  }
+  .finds .fi b {
+    flex: none;
+    min-width: 3.2em;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 450;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+  .finds .fi:nth-of-type(1), .finds .fi:nth-of-type(2) { animation-delay: 0.2s; }
+  .finds .fi:nth-of-type(3), .finds .fi:nth-of-type(4) { animation-delay: 0.4s; }
+  .finds .fi:nth-of-type(5), .finds .fi:nth-of-type(6) { animation-delay: 0.6s; }
+  .finds .note {
+    grid-column: 1 / -1;
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    animation: mock-up 0.5s var(--ease) 0.9s both;
+  }
+
+  /* Title and closing slides sit on the homepage landscape. */
+  .s-hero {
+    place-items: center;
+    text-align: center;
+    isolation: isolate;
+  }
+  .s-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(180deg, #fff0 10%, #ffffffb3 55%, #fff 88%),
+      url(/assets/daylight-lake.webp) center 30% / cover no-repeat;
+  }
+  .s-hero h1 {
+    max-width: 960px;
+    margin: 0 auto 22px;
+    font-size: clamp(42px, 6vw, 92px);
+    line-height: 1.02;
+    font-weight: 430;
+    letter-spacing: -0.06em;
+    text-wrap: balance;
+  }
+  .s-hero h1 em { font-style: normal; color: #303c2c; }
+  .s-hero p {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: clamp(17px, 1.6vw, 22px);
+    color: #5d6559;
+  }
+  .s-hero .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: #192715;
+  }
+  .s-hero .mark img { width: 44px; height: 44px; }
+  .s-hero .url {
+    display: inline-block;
+    margin-top: 34px;
+    font-size: clamp(22px, 2.4vw, 34px);
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 2px solid var(--orange);
+    padding-bottom: 2px;
+  }
+
+  /* Chrome: counter, play, full screen, progress, previous and next. */
+  .deck-bar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 22px clamp(20px, 4vw, 48px);
+    pointer-events: none;
+  }
+  .deck-bar > * { pointer-events: auto; }
+  /* Controls fade out while the pointer rests, so a recording stays clean. */
+  .deck-chrome { transition: opacity 0.4s var(--ease); }
+  body.idle .deck-chrome { opacity: 0; pointer-events: none; }
+  body.idle { cursor: none; }
+  .deck-tools { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .deck-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: #fffefae6;
+    color: var(--fg);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .deck-btn:hover { background: #fff; border-color: #c9cfbf; }
+  .deck-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .deck-btn:disabled { opacity: 0.35; cursor: default; }
+  .deck-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  #deck-play .i-pause, body.playing #deck-play .i-play { display: none; }
+  body.playing #deck-play .i-pause { display: block; }
+  .deck-nav {
+    position: fixed;
+    right: clamp(20px, 4vw, 48px);
+    bottom: 26px;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+  }
+  .deck-progress {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 10;
+    height: 3px;
+    background: #eceee6;
+  }
+  .deck-progress span {
+    display: block;
+    height: 100%;
+    background: var(--orange);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease);
+  }
+  body.playing .deck-progress span { transition: transform 0.25s linear; }
+  .deck-hint {
+    position: fixed;
+    left: clamp(20px, 4vw, 48px);
+    bottom: 34px;
+    z-index: 10;
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  /* Teleprompter line. Hidden unless N is pressed, so it never lands in a take. */
+  .deck-notes {
+    position: fixed;
+    left: 50%;
+    bottom: 84px;
+    z-index: 11;
+    width: min(880px, calc(100% - 40px));
+    margin: 0;
+    padding: 16px 22px;
+    border-radius: 14px;
+    background: #1f2320eb;
+    color: #fff;
+    font-size: 19px;
+    line-height: 1.5;
+    transform: translateX(-50%);
+  }
+  .deck-notes small { display: block; margin-bottom: 4px; font-size: 12px; color: #ffffffa0; font-variant-numeric: tabular-nums; }
+  .deck-notes[hidden] { display: none; }
+  .slide [data-say] { display: none; }
+
+  @media (max-width: 820px) {
+    .slide { padding: 64px 24px 104px; }
+    .split { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 28px; }
+    .copy h2 { margin-bottom: 12px; font-size: 36px; }
+    .copy p { font-size: 17px; }
+    .copy .step { margin-bottom: 12px; font-size: 15px; }
+    .stage { width: 100%; }
+    .stage .mock { padding: 0; font-size: calc(100cqw / 29); }
+    .stage .app-preview { aspect-ratio: 4 / 5; }
+    .s-wide { align-content: start; gap: 28px; }
+    .finds { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .finds h3 { margin-top: 18px; }
+    /* One column: all the downs first, then the ups. */
+    .finds h3.up, .finds .fi:has(.up) { order: 1; }
+    .finds .note { order: 2; }
+    .finds .fi { padding: 10px 0; }
+    .s-hero h1 { font-size: 44px; }
+    .s-hero p { font-size: 18px; }
+    .s-hero .url { font-size: 24px; }
+    .deck-hint { display: none; }
+    .deck-bar { padding: 16px 18px; }
+    .deck-nav { right: 18px; bottom: 26px; }
+    .deck-notes { bottom: 84px; font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+<header class="deck-bar deck-chrome">
+  <div class="deck-tools">
+    <span id="deck-count" aria-live="polite">1 / 5</span>
+    <button class="deck-btn" type="button" id="deck-play" aria-label="Play the 60-second run" title="Play (P)"><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg></button>
+    <button class="deck-btn" type="button" id="deck-full" aria-label="Full screen" title="Full screen (F)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
+  </div>
+</header>
+
+<main class="deck" id="deck">
+  <!-- data-dur is each slide's share of the 60 seconds; data-say is the line to read over it. -->
+  <section class="slide s-hero" data-dur="10" aria-label="Blade">
+    <p data-say>Ini Blade. Kita ubah data mentah jadi insight penelitian yang siap publish. Cara pakainya semudah ChatGPT, tinggal tanya. Bedanya, AI agent-nya jalan langsung di laptop kamu.</p>
+    <div>
+      <span class="mark"><img src="/logo.png" alt="" width="44" height="44" />Blade</span>
+      <h1>Dari data mentah ke <em>insight siap publish</em></h1>
+      <p>Semudah chat. Tapi AI agent-nya bekerja langsung di laptop kamu.</p>
+    </div>
+  </section>
+
+  <section class="slide split" data-dur="15" data-hold="3200" data-think="2600" aria-label="Tanya tentang data">
+    <p data-say>Contohnya, data performa siswa. Satu folder, satu file CSV, dan saya belum tahu isinya. Jadi tanya saja: data ini tentang apa? Blade jelaskan: 649 siswa, 33 kolom, dari keluarga sampai gaya hidup. Nilainya ada di G1, G2, G3.</p>
+    <div class="copy">
+      <span class="step">1. Tanya</span>
+      <h2>Satu file CSV. Belum tahu isinya</h2>
+      <p>Pilih folder kerja, lalu tanya dalam bahasa sehari-hari.</p>
+    </div>
+    <div class="stage">
+      <div class="app-preview mock ask-demo" role="img" aria-label="Tanya: what is this dataset about?">
+        <div class="mw">
+          <div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>Student performance</b></span></div>
+          <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Student performance</span></div>
+          <div class="mw-body">
+            <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>student-por.csv</b><span>649 rows · 33 columns</span></div>
+            <div class="ask-data">
+              <table class="m-table">
+                <tr><th>school</th><th>sex</th><th>age</th><th>Medu</th><th>studytime</th><th>failures</th><th>G3</th></tr>
+                <tr><td>GP</td><td>F</td><td>18</td><td>4</td><td>2</td><td>0</td><td>11</td></tr>
+                <tr><td>GP</td><td>F</td><td>17</td><td>1</td><td>2</td><td>0</td><td>11</td></tr>
+                <tr><td>GP</td><td>F</td><td>15</td><td>1</td><td>2</td><td>0</td><td>12</td></tr>
+                <tr><td>GP</td><td>F</td><td>15</td><td>4</td><td>3</td><td>0</td><td>14</td></tr>
+                <tr><td>GP</td><td>F</td><td>16</td><td>3</td><td>2</td><td>0</td><td>13</td></tr>
+                <tr><td>GP</td><td>M</td><td>16</td><td>4</td><td>2</td><td>0</td><td>13</td></tr>
+              </table>
+            </div>
+            <div class="ask-chat">
+              <p class="m-user">What is this dataset about?</p>
+              <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div>
+              <div class="ask-answer">
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>python3 describe_data.py</span><small>Done</small></div>
+                <p class="m-msg">UCI Student Performance, Portuguese course: 649 students, 33 columns. Grades run 0 to 20; 10 passes.</p>
+                <table class="m-table m-result">
+                  <tr><th>Group</th><th>Columns</th></tr>
+                  <tr><td>Demographics</td><td>school, sex, age, address</td></tr>
+                  <tr><td>Family</td><td>famsize, Medu, Fedu, Mjob</td></tr>
+                  <tr><td>School</td><td>studytime, failures, higher</td></tr>
+                  <tr><td>Lifestyle</td><td>romantic, freetime, Dalc, Walc</td></tr>
+                  <tr><td>Outcomes</td><td>absences, G1, G2, G3</td></tr>
+                </table>
+              </div>
+            </div>
+            <div class="m-compose">
+              <p><span class="ask-input" data-prompt="What is this dataset about?"></span><i class="caret-blink"></i></p>
+              <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
+            </div>
+          </div>
+          <svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide split" data-dur="14" data-hold="400" data-think="3600" aria-label="Cari korelasi">
+    <p data-say>Sekarang minta variabel yang paling berkorelasi dengan nilai akhir, sekalian grafiknya. Blade menulis kodenya sendiri dan menjalankannya di laptop. Tanpa coding manual, tanpa klik sana-sini di SPSS.</p>
+    <div class="copy">
+      <span class="step">2. Analisis</span>
+      <h2>Korelasi dan grafik dalam satu permintaan</h2>
+      <p>Blade menulis dan menjalankan kodenya sendiri. Tanpa coding manual, tanpa klik sana-sini.</p>
+    </div>
+    <div class="stage">
+      <div class="app-preview mock ask-demo" role="img" aria-label="Grafik korelasi dengan nilai akhir G3">
+        <div class="mw">
+          <div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>Student performance</b></span></div>
+          <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Student performance</span></div>
+          <div class="mw-body">
+            <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>student-por.csv</b><span>649 rows · 33 columns</span></div>
+            <div class="ask-chat">
+              <p class="m-user">Which variables correlate most with the final grade? Plot them.</p>
+              <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running Python">Running Python</span></div>
+              <div class="ask-answer">
+                <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Shell.Exec</b><span>python3 g3_correlations.py</span><small>Done</small></div>
+                <p class="m-msg">Past failures and plans for higher education lead. G1 and G2 left out.</p>
+                <div class="m-shot">
+                  <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>g3_correlations.png</b><span>PNG · 64 KB</span></p>
+                  <svg class="chart" viewBox="0 0 600 230" role="img" aria-label="Pearson r with G3">
+                    <text class="ttl" x="0" y="14">Pearson r with final grade G3</text>
+                    <text class="lbl" x="170" y="38">Past failures</text><rect class="neg" x="178" y="26" width="324" height="16" rx="2" style="animation-delay:0.10s"/><text class="val" x="508" y="38">−0.39</text>
+                    <text class="lbl" x="170" y="61">Wants higher education</text><rect class="pos" x="178" y="49" width="274" height="16" rx="2" style="animation-delay:0.16s"/><text class="val" x="458" y="61">+0.33</text>
+                    <text class="lbl" x="170" y="84">School MS vs GP</text><rect class="neg" x="178" y="72" width="234" height="16" rx="2" style="animation-delay:0.22s"/><text class="val" x="418" y="84">−0.28</text>
+                    <text class="lbl" x="170" y="107">Weekly study time</text><rect class="pos" x="178" y="95" width="206" height="16" rx="2" style="animation-delay:0.28s"/><text class="val" x="390" y="107">+0.25</text>
+                    <text class="lbl" x="170" y="130">Mother's education</text><rect class="pos" x="178" y="118" width="198" height="16" rx="2" style="animation-delay:0.34s"/><text class="val" x="382" y="130">+0.24</text>
+                    <text class="lbl" x="170" y="153">Father's education</text><rect class="pos" x="178" y="141" width="175" height="16" rx="2" style="animation-delay:0.40s"/><text class="val" x="359" y="153">+0.21</text>
+                    <text class="lbl" x="170" y="176">Weekday alcohol</text><rect class="neg" x="178" y="164" width="169" height="16" rx="2" style="animation-delay:0.46s"/><text class="val" x="353" y="176">−0.20</text>
+                    <text class="lbl" x="170" y="199">Weekend alcohol</text><rect class="neg" x="178" y="187" width="146" height="16" rx="2" style="animation-delay:0.52s"/><text class="val" x="330" y="199">−0.18</text>
+                    <rect class="pos" x="178" y="214" width="10" height="10" rx="2" style="animation:none"/><text x="193" y="223">raises grade</text>
+                    <rect class="neg" x="290" y="214" width="10" height="10" rx="2" style="animation:none"/><text x="305" y="223">lowers grade</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="m-compose">
+              <p><span class="ask-input" data-prompt="Which variables correlate most with the final grade? Plot them."></span><i class="caret-blink"></i></p>
+              <div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
+            </div>
+          </div>
+          <svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide split" data-dur="12" aria-label="Temuan">
+    <p data-say>Hasilnya menarik. Yang paling menurunkan nilai: pernah gagal sebelumnya, dan minum alkohol di hari sekolah. Yang paling menaikkan: keinginan lanjut kuliah dan jam belajar. Pendidikan ibu ternyata lebih berpengaruh daripada ayah.</p>
+    <div class="copy">
+      <span class="step">3. Insight</span>
+      <h2>Apa yang menentukan nilai akhir siswa</h2>
+      <p>Pendidikan ibu (r&nbsp;=&nbsp;0.24) ternyata lebih berpengaruh daripada pendidikan ayah (r&nbsp;=&nbsp;0.21).</p>
+    </div>
+    <div class="finds">
+      <h3 class="down">Menurunkan nilai</h3>
+      <h3 class="up">Menaikkan nilai</h3>
+      <div class="fi"><b class="down">−0.39</b>Pernah gagal sebelumnya</div>
+      <div class="fi"><b class="up">+0.33</b>Ingin lanjut kuliah</div>
+      <div class="fi"><b class="down">−0.20</b>Alkohol di hari sekolah</div>
+      <div class="fi"><b class="up">+0.25</b>Jam belajar per minggu</div>
+      <div class="fi"><b class="down">−0.18</b>Alkohol di akhir pekan</div>
+      <div class="fi"><b class="up">+0.24</b>Pendidikan ibu</div>
+      <p class="note">Pearson r dengan nilai akhir G3, n = 649.</p>
+    </div>
+  </section>
+
+  <section class="slide s-hero" data-dur="9" aria-label="Coba Blade">
+    <p data-say>Semua ini dalam satu menit. Coba dengan data kamu sendiri di bladestatistics.com.</p>
+    <div>
+      <span class="mark"><img src="/logo.png" alt="" width="44" height="44" />Blade</span>
+      <h1>Coba dengan data kamu sendiri</h1>
+      <p>Gratis untuk mulai, di macOS dan Windows.</p>
+      <a class="url" href="https://bladestatistics.com/id/">bladestatistics.com</a>
+    </div>
+  </section>
+</main>
+
+<p class="deck-notes" id="deck-notes" hidden></p>
+<p class="deck-hint deck-chrome">← → atau spasi untuk pindah. P putar 60 detik, N naskah, F layar penuh.</p>
+<nav class="deck-nav deck-chrome" aria-label="Slides">
+  <button class="deck-btn" type="button" id="deck-prev" aria-label="Previous slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
+  <button class="deck-btn" type="button" id="deck-next" aria-label="Next slide"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+</nav>
+<div class="deck-progress" aria-hidden="true"><span id="deck-bar"></span></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var slides = [].slice.call(document.querySelectorAll(".slide"));
+  var count = document.getElementById("deck-count");
+  var bar = document.getElementById("deck-bar");
+  var prev = document.getElementById("deck-prev");
+  var next = document.getElementById("deck-next");
+  var notes = document.getElementById("deck-notes");
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var durs = slides.map(function (s) { return +s.getAttribute("data-dur") * 1000; });
+  var total = durs.reduce(function (a, b) { return a + b; }, 0);
+  var starts = durs.map(function (_, k) { return durs.slice(0, k).reduce(function (a, b) { return a + b; }, 0); });
+  var current = -1;
+  var timers = [];
+
+  // Same session as the homepage Ask preview: the question types out, the
+  // pointer clicks send, Blade thinks, then the answer arrives. data-hold
+  // keeps the CSV on screen first; data-think sets how long Blade works.
+  function playAsk(slide) {
+    var demo = slide.querySelector(".ask-demo");
+    if (!demo || reduce) return;
+    var input = demo.querySelector(".ask-input");
+    var send = demo.querySelector(".send");
+    var pointer = demo.querySelector(".m-pointer");
+    var win = demo.querySelector(".mw");
+    var prompt = input.getAttribute("data-prompt");
+    var hold = +slide.getAttribute("data-hold") || 700;
+    var think = +slide.getAttribute("data-think") || 2600;
+    var at = function (ms, fn) { timers.push(setTimeout(fn, ms)); };
+
+    demo.setAttribute("data-stage", "type");
+    input.textContent = "";
+    pointer.className.baseVal = "m-pointer";
+    send.classList.remove("press");
+
+    for (var i = 1; i <= prompt.length; i++) {
+      (function (n) {
+        at(hold + n * 34, function () { input.textContent = prompt.slice(0, n); });
+      })(i);
+    }
+    var typed = hold + prompt.length * 34;
+
+    at(typed + 200, function () {
+      var w = win.getBoundingClientRect();
+      var b = send.getBoundingClientRect();
+      pointer.style.transition = "none";
+      pointer.style.setProperty("--px", w.width * 0.78 + "px");
+      pointer.style.setProperty("--py", w.height * 1.05 + "px");
+      void pointer.getBoundingClientRect();
+      pointer.style.transition = "";
+      pointer.classList.add("show");
+      pointer.style.setProperty("--px", b.left - w.left + b.width * 0.45 + "px");
+      pointer.style.setProperty("--py", b.top - w.top + b.height * 0.4 + "px");
+    });
+    at(typed + 1100, function () {
+      pointer.classList.add("press");
+      send.classList.add("press");
+    });
+    at(typed + 1250, function () {
+      pointer.classList.remove("press");
+      send.classList.remove("press");
+      input.textContent = "";
+      demo.setAttribute("data-stage", "sent");
+    });
+    at(typed + 1600, function () {
+      pointer.classList.remove("show");
+      demo.setAttribute("data-stage", "think");
+    });
+    at(typed + 1600 + think, function () { demo.setAttribute("data-stage", "done"); });
+  }
+
+  // P runs the whole deck on the clock in data-dur, for a one-take recording.
+  var playing = false, playStart = 0, clock = null;
+  function tick() {
+    var t = Date.now() - playStart;
+    if (t >= total) { stopPlay(); return; }
+    var n = 0;
+    while (n < slides.length - 1 && t >= starts[n + 1]) n++;
+    if (n !== current) go(n, true);
+    bar.style.transform = "scaleX(" + t / total + ")";
+  }
+  function startPlay() {
+    playing = true;
+    playStart = Date.now() - starts[Math.max(current, 0)];
+    document.body.classList.add("playing");
+    go(Math.max(current, 0), true, true);
+    clock = setInterval(tick, 250);
+  }
+  function stopPlay() {
+    playing = false;
+    clearInterval(clock);
+    document.body.classList.remove("playing");
+    bar.style.transform = "scaleX(" + (current + 1) / slides.length + ")";
+  }
+
+  function showNote() {
+    var say = slides[current].querySelector("[data-say]");
+    var mark = Math.round(starts[current] / 1000);
+    notes.innerHTML = "<small>0:" + String(mark).padStart(2, "0") + " · " + durs[current] / 1000 + " s</small>";
+    notes.appendChild(document.createTextNode(say ? say.textContent : ""));
+  }
+
+  function go(n, fromClock, replay) {
+    // Past the closing slide, the deck hands over to the website.
+    if (n >= slides.length && current === slides.length - 1) {
+      location.href = "https://bladestatistics.com/id/";
+      return;
+    }
+    if (playing && !fromClock) stopPlay();
+    n = Math.max(0, Math.min(slides.length - 1, n));
+    if (n === current && !replay) return;
+    current = n;
+    timers.forEach(clearTimeout);
+    timers = [];
+    slides.forEach(function (slide, k) {
+      var on = k === n;
+      // Restarting the class replays the slide's entrance animations.
+      slide.classList.remove("on");
+      if (on) { void slide.offsetWidth; slide.classList.add("on"); }
+      slide.inert = !on;
+      slide.setAttribute("aria-hidden", on ? "false" : "true");
+    });
+    slides[n].scrollTop = 0;
+    count.textContent = n + 1 + " / " + slides.length;
+    if (!playing) bar.style.transform = "scaleX(" + (n + 1) / slides.length + ")";
+    prev.disabled = n === 0;
+    next.setAttribute("aria-label", n === slides.length - 1 ? "Open bladestatistics.com" : "Next slide");
+    history.replaceState(null, "", "#" + (n + 1));
+    showNote();
+    playAsk(slides[n]);
+  }
+
+  function fullScreen() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+  }
+  function togglePlay() { if (playing) stopPlay(); else startPlay(); }
+
+  prev.addEventListener("click", function () { go(current - 1); });
+  next.addEventListener("click", function () { go(current + 1); });
+  document.getElementById("deck-full").addEventListener("click", fullScreen);
+  document.getElementById("deck-play").addEventListener("click", togglePlay);
+
+  // Arrow keys, space, and the page keys presentation clickers send.
+  document.addEventListener("keydown", function (event) {
+    if (event.target.closest("input, select, textarea")) return;
+    var key = event.key;
+    if (key === "ArrowRight" || key === "PageDown" || key === " ") { event.preventDefault(); go(current + 1); }
+    else if (key === "ArrowLeft" || key === "PageUp") { event.preventDefault(); go(current - 1); }
+    else if (key === "Home") go(0);
+    else if (key === "End") go(slides.length - 1);
+    else if (key === "f" || key === "F") fullScreen();
+    else if (key === "p" || key === "P") togglePlay();
+    else if (key === "n" || key === "N") notes.hidden = !notes.hidden;
+  });
+
+  // Swipe on touch screens.
+  var startX = null, startY = 0;
+  document.addEventListener("touchstart", function (event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener("touchend", function (event) {
+    if (startX === null) return;
+    var dx = event.changedTouches[0].clientX - startX;
+    var dy = event.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(current + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+
+  var idleTimer = null;
+  function wake() {
+    document.body.classList.remove("idle");
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () { document.body.classList.add("idle"); }, 2200);
+  }
+  ["mousemove", "pointerdown", "touchstart", "focusin"].forEach(function (type) {
+    document.addEventListener(type, wake, { passive: true });
+  });
+  wake();
+
+  var fromHash = parseInt(location.hash.slice(1), 10);
+  go(isNaN(fromHash) ? 0 : fromHash - 1);
+});
+</script>
+</body>
+</html>

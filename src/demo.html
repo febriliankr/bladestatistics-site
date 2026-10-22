@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="/assets/landing.css?v={{designVersion}}" />
 <style>
   /* A full-screen deck built from the homepage's own previews. One slide
-     shows at a time; landing.js plays each preview when its slide opens. */
+     shows at a time; landing.js plays each preview when its slide opens.
+     data-theme pins light: the slide copy is written for a white page. */
   html, body { height: 100%; }
   body { overflow: hidden; background: #fff; }
   .deck { position: fixed; inset: 0; }
@@ -326,7 +327,6 @@
 </nav>
 <div class="deck-progress" aria-hidden="true"><span id="deck-bar"></span></div>
 
-<script src="/assets/theme.js?v={{designVersion}}" defer></script>
 <script src="/assets/landing.js?v={{designVersion}}" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {

@@ -453,7 +453,12 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
     (out_root / "demo" / "index.html").write_text(
         render_doc("demo.html", css, doc_css, demo_blocks(en_page)), encoding="utf-8"
     )
-    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html")
+    # The one-minute Indonesian cut stands alone: its mocks tell their own story.
+    (out_root / "demo" / "short").mkdir(parents=True, exist_ok=True)
+    (out_root / "demo" / "short" / "index.html").write_text(
+        render_doc("demo-short.html", css, doc_css), encoding="utf-8"
+    )
+    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html, demo/short/index.html")
 
     # locales that were dropped from ORDER should not linger as stale pages
     for path in out_root.iterdir():
