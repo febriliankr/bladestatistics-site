@@ -87,6 +87,10 @@
   /* The landscape window is short: four CSV rows keep the compose box in view. */
   .s-fig .ask-data tr:nth-child(n + 6) { display: none; }
   @keyframes shot-open { from { opacity: 0.6; transform: scale(0.94); } }
+  /* Then the pointer clicks into panel A, backs out, and clicks into panel B.
+     The image moves inside the frame; the frame itself stays put. */
+  .ask-demo .shot-zoom { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+  .ask-demo .shot-zoom img { height: 100%; transform-origin: 0 0; transition: transform 0.85s var(--ease); }
 
   /* Findings: the top five, ranked as Blade reported them. */
   .rank { margin: 0; padding: 0; list-style: none; }
@@ -318,8 +322,8 @@
     <p data-say>Saya punya satu file CSV dan belum tahu isinya. Tanya saja: data ini tentang apa? Ternyata data performa siswa UCI: 649 siswa, 33 kolom. Targetnya G3, nilai akhir.</p>
     <div class="copy">
       <span class="step">1. Kenali datanya</span>
-      <h2>Satu file CSV. Belum tahu isinya</h2>
-      <p>Pilih folder kerja, lalu tanya dalam bahasa sehari-hari. Blade membaca filenya sendiri.</p>
+      <h2>Punya CSV tapi nggak tahu isinya apa?</h2>
+      <p>Tinggal pilih folder terus tanya aja pakai bahasa sehari-hari, Blade yang baca filenya.</p>
     </div>
     <div class="stage">
       <div class="app-preview mock ask-demo" role="img" aria-label="Tanya: what is this dataset about?">
@@ -370,8 +374,8 @@
     <p data-say>Di ujung tabel ada kolom G1, G2, G3. Saya nggak tahu itu apa, jadi tanya lagi. Ternyata itu nilai di tiga periode, skala 0 sampai 19, dan batas lulusnya 10.</p>
     <div class="copy">
       <span class="step">2. Tanya lanjutan</span>
-      <h2>Tidak paham kolomnya? Tanya saja</h2>
-      <p>Blade menjelaskan arti tiap kolom, lengkap dengan angka dari data kamu.</p>
+      <h2>Bingung G1, G2, G3 itu apaan?</h2>
+      <p>Tanya aja, Blade jelasin artinya lengkap pakai angka dari data kamu sendiri.</p>
     </div>
     <div class="stage">
       <div class="app-preview mock ask-demo" role="img" aria-label="Tanya: what is G1 - G3">
@@ -417,12 +421,12 @@
     </div>
   </section>
 
-  <section class="slide s-fig" data-dur="15" data-hold="2400" data-think="2000" data-zoom aria-label="Korelasi dan grafik">
+  <section class="slide s-fig" data-dur="15" data-hold="2000" data-think="1600" data-zoom aria-label="Korelasi dan grafik">
     <p data-say>Sekarang minta lima variabel yang paling berkorelasi dengan nilai, sekalian grafiknya. Blade menulis kode Python, menjalankannya, dan menyimpan grafiknya. Tanpa coding manual, tanpa klik sana-sini di SPSS.</p>
     <div class="copy">
       <span class="step">3. Analisis</span>
-      <h2>Korelasi dan grafik dalam satu permintaan</h2>
-      <p>Blade menulis dan menjalankan kode Python sendiri, lalu menyimpan grafiknya di folder kamu.</p>
+      <h2>Korelasi plus grafiknya, sekali chat beres.</h2>
+      <p>Blade nulis dan jalanin kode Python-nya sendiri, terus grafiknya langsung nongol di folder kamu.</p>
     </div>
     <div class="stage">
       <div class="app-preview mock ask-demo" role="img" aria-label="Grafik lima korelasi terkuat dengan nilai akhir G3">
@@ -450,7 +454,7 @@
                 <p class="m-msg">Top 5 with G1 and G2 excluded: failures (−0.393), higher (+0.332), school (+0.284), studytime (+0.250), Medu (+0.240).</p>
                 <div class="m-shot">
                   <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>grades_top_correlations_top5.png</b><span>PNG · 174 KB</span></p>
-                  <img src="/assets/g3-top-correlations.webp" alt="Panel A: Pearson r with final grade G3, top five in black. Panel B: final grade by number of past class failures." width="1800" height="803" />
+                  <div class="shot-zoom"><img src="/assets/g3-top-correlations.webp" alt="Panel A: Pearson r with final grade G3, top five in black. Panel B: final grade by number of past class failures." width="1800" height="803" /></div>
                 </div>
               </div>
             </div>
@@ -469,8 +473,8 @@
     <p data-say>Hasilnya: yang paling kuat adalah pernah gagal kelas. Sekali gagal, rata-rata nilai akhir turun dari 12,5 ke 8,6, di bawah batas lulus. Lalu keinginan lanjut kuliah, sekolah, jam belajar, dan pendidikan ibu, yang ternyata lebih kuat daripada ayah.</p>
     <div class="copy">
       <span class="step">4. Insight</span>
-      <h2>Sekali gagal, nilai akhir jatuh di bawah batas lulus</h2>
-      <p>Rata-rata G3: 12.5 tanpa riwayat gagal (n&nbsp;=&nbsp;549), 8.6 setelah satu kali gagal (n&nbsp;=&nbsp;70). Batas lulus 10.</p>
+      <h2>Sekali gagal kelas, nilai akhirnya langsung jeblok.</h2>
+      <p>Rata-rata G3 anjlok dari 12.5 (n&nbsp;=&nbsp;549) jadi 8.6 (n&nbsp;=&nbsp;70) setelah sekali gagal, padahal batas lulusnya 10.</p>
     </div>
     <div class="finds">
       <ol class="rank">
@@ -574,18 +578,57 @@ document.addEventListener("DOMContentLoaded", function () {
     var done = typed + 1600 + think;
     at(done, function () { demo.setAttribute("data-stage", "done"); });
     if (!slide.hasAttribute("data-zoom")) return;
-    at(done + 1300, function () {
-      var w = win.getBoundingClientRect();
-      var img = demo.querySelector(".m-shot img").getBoundingClientRect();
+    var shot = demo.querySelector(".m-shot img");
+    shot.style.transform = "";
+    // Where a point of the PNG (as fractions of its width and height) sits
+    // inside the img box: object-fit: contain letterboxes it, so the drawn
+    // picture is smaller than the element and centred in it.
+    function drawn() {
+      var box = shot.getBoundingClientRect();
+      var cs = getComputedStyle(shot);
+      var pad = parseFloat(cs.paddingLeft) || 0;
+      var iw = box.width - 2 * pad, ih = box.height - 2 * pad;
+      var ratio = shot.naturalWidth / shot.naturalHeight || 1800 / 804;
+      var cw = Math.min(iw, ih * ratio), ch = cw / ratio;
+      return { box: box, x: pad + (iw - cw) / 2, y: pad + (ih - ch) / 2, w: cw, h: ch };
+    }
+    function aim(fx, fy) {
+      var w = win.getBoundingClientRect(), d = drawn();
       pointer.classList.add("show");
-      pointer.style.setProperty("--px", img.left - w.left + img.width * 0.5 + "px");
-      pointer.style.setProperty("--py", img.top - w.top + img.height * 0.5 + "px");
-    });
-    at(done + 2200, function () { pointer.classList.add("press"); });
-    at(done + 2350, function () {
+      pointer.style.setProperty("--px", d.box.left - w.left + d.x + d.w * fx + "px");
+      pointer.style.setProperty("--py", d.box.top - w.top + d.y + d.h * fy + "px");
+    }
+    function click(then) {
+      pointer.classList.add("press");
+      at(150, function () { pointer.classList.remove("press"); if (then) then(); });
+    }
+    // Each panel's horizontal extent in the saved figure and the point to
+    // centre on (the top five bars in A, the boxes in B), as PNG fractions.
+    var PANELS = { a: { x0: 0.03, x1: 0.58, fx: 0.31, fy: 0.27 }, b: { x0: 0.585, x1: 0.99, fx: 0.79, fy: 0.42 } };
+    function zoomTo(name) {
+      var p = PANELS[name], d = drawn(), W = d.box.width, H = d.box.height;
+      // Fill the frame's width with the panel. The PNG is 1800px wide, so
+      // even the cap stays sharp.
+      var scale = Math.min(3.2, W / ((p.x1 - p.x0) * d.w));
+      var tx = W / 2 - (d.x + d.w * p.fx) * scale;
+      var ty = H / 2 - (d.y + d.h * p.fy) * scale;
+      // Keep the picture covering the frame: no letterbox margin slides in.
+      tx = Math.min(-d.x * scale, Math.max(W - (d.x + d.w) * scale, tx));
+      ty = Math.min(-d.y * scale, Math.max(H - (d.y + d.h) * scale, ty));
+      shot.style.transform = "translate(" + tx + "px, " + ty + "px) scale(" + scale + ")";
+    }
+    at(done + 900, function () { aim(0.5, 0.5); });
+    at(done + 1500, function () { pointer.classList.add("press"); });
+    at(done + 1650, function () {
       pointer.classList.remove("press", "show");
       demo.setAttribute("data-stage", "zoom");
     });
+    var open = done + 1650;
+    at(open + 550, function () { aim(0.31, 0.42); });
+    at(open + 1150, function () { click(function () { pointer.classList.remove("show"); zoomTo("a"); }); });
+    at(open + 2700, function () { shot.style.transform = ""; });
+    at(open + 2950, function () { aim(0.81, 0.45); });
+    at(open + 3550, function () { click(function () { pointer.classList.remove("show"); zoomTo("b"); }); });
   }
 
   // P runs the whole deck on the clock in data-dur, for a one-take recording.
