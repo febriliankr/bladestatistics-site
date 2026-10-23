@@ -112,6 +112,50 @@
     animation: mock-up 0.5s var(--ease) 1s both;
   }
 
+  /* Findings: the sentence on top, then the figure Blade saved beside the
+     ranking it came from, like the chart slide before it. */
+  .s-find { grid-template-rows: auto auto; gap: clamp(28px, 4vh, 48px); align-content: center; }
+  .s-find .copy h2 { font-size: clamp(30px, 3vw, 46px); max-width: 26ch; }
+  .find-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    gap: clamp(24px, 4vw, 64px);
+    align-items: center;
+  }
+  .find-fig {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 18px 50px #2a35201a;
+    animation: mock-up 0.6s var(--ease) 0.1s both;
+  }
+  .find-fig p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: #fbfbfa;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .find-fig p .mi { width: 15px; height: 15px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; }
+  .find-fig p b { overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+  .find-fig p span { margin-inline-start: auto; color: var(--muted); font-size: 13px; }
+  .find-fig img { display: block; width: 100%; height: auto; padding: 8px; }
+  .s-find .rank li { grid-template-columns: 16px auto minmax(0, 1fr); gap: 0 16px; padding: 10px 0; font-size: clamp(15px, 1.2vw, 18px); }
+  .s-find .rank b { font-size: clamp(22px, 1.9vw, 30px); }
+  .s-find .rank small { font-size: 13px; }
+  .s-find .rank-note { font-size: 13px; }
+  /* A 720p recording has no room for the sub-lines under each factor. */
+  @media (max-height: 780px) {
+    .s-find .rank small { display: none; }
+    .s-find .rank li { padding: 8px 0; }
+  }
+
   /* Title and closing slides sit on the homepage landscape. */
   .s-hero {
     place-items: center;
@@ -269,6 +313,12 @@
     .s-fig .ask-data tr:nth-child(n + 6) { display: table-row; }
     .s-fig .mock { font-size: calc(100cqw / 29); }
     .rank li { grid-template-columns: 14px 84px minmax(0, 1fr); gap: 0 10px; padding: 10px 0; }
+    .s-find { grid-template-rows: none; align-content: start; gap: 24px; }
+    .s-find .copy h2 { font-size: 36px; }
+    .find-body { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .find-fig p { font-size: 13px; }
+    /* The figure's own caption carries the note on a phone. */
+    .s-find .rank small, .s-find .rank-note { display: none; }
     .rank b { font-size: 24px; }
     .s-hero h1 { font-size: 44px; }
     .s-hero p { font-size: 18px; }
@@ -446,12 +496,17 @@
     </div>
   </section>
 
-  <section class="slide split" data-dur="11" aria-label="Temuan">
+  <section class="slide s-find" data-dur="11" aria-label="Temuan">
     <p data-say>Hasilnya: yang paling kuat adalah pernah gagal kelas. Sekali gagal, rata-rata nilai akhir turun dari 12,5 ke 8,6, di bawah batas lulus. Lalu keinginan lanjut kuliah, sekolah, jam belajar, dan pendidikan ibu, yang ternyata lebih kuat daripada ayah.</p>
     <div class="copy">
-      <h2>Ternyata sekali gagal kelas aja, rata-rata nilai akhirnya anjlok dari 12.5 ke 8.6.</h2>
+      <h2>Ternyata sekali gagal kelas aja, rata&#8209;rata nilai akhirnya anjlok dari 12.5 ke 8.6.</h2>
     </div>
-    <div class="finds">
+    <div class="find-body">
+      <figure class="find-fig">
+        <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>grades_top_correlations_top5.png</b><span>PNG · 174 KB</span></p>
+        <img src="/assets/g3-top-correlations.webp" alt="Grafik yang dibuat Blade. Panel A: korelasi Pearson dengan nilai akhir G3, lima teratas berwarna hitam. Panel B: nilai akhir menurut jumlah gagal kelas." width="1800" height="803" />
+      </figure>
+      <div class="finds">
       <ol class="rank">
         <li><span class="n">1</span><b class="down">−0.393</b><span>Pernah gagal kelas<small>Makin sering gagal, makin rendah nilai akhir</small></span></li>
         <li><span class="n">2</span><b class="up">+0.332</b><span>Ingin lanjut kuliah<small>580 dari 649 siswa menjawab ya</small></span></li>
@@ -460,6 +515,7 @@
         <li><span class="n">5</span><b class="up">+0.240</b><span>Pendidikan ibu<small>Lebih kuat daripada pendidikan ayah (+0.212)</small></span></li>
       </ol>
       <p class="rank-note">Pearson r dengan G3, n = 649. G1 dan G2 tidak dihitung (r = 0.83 dan 0.92): itu nilai juga, bukan prediktor. Berikutnya: alkohol hari sekolah −0.205, akhir pekan −0.177.</p>
+      </div>
     </div>
   </section>
 
