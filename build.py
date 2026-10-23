@@ -426,6 +426,90 @@ def render_doc(src, css, doc_css, extra=None):
     return page
 
 
+# Vertical reels in the /demo/short style, one per content/reels/<name>.json.
+# Each scene is one sentence: a landscape title, an Ask window that plays the
+# question and Blade's answer, the saved figure with its ranking, and a close.
+REEL_SPINNER = (
+    '<svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true">'
+    + "".join(
+        f'<rect class="{c}" x="{x}" y="{y}" width="3" height="3" rx="1" style="animation-duration:{d}s;animation-delay:{dl}s"/>'
+        for c, x, y, d, dl in [
+            ("o", 4, 0, 1.15, 0.49), ("o", 8, 0, 1.07, 0.98), ("o", 0, 4, 1.37, 0.8), ("i", 4, 4, 1.51, 0.09),
+            ("i", 8, 4, 1.43, 0.06), ("o", 12, 4, 1.09, 0.1), ("o", 0, 8, 1.83, 0.64), ("i", 4, 8, 1.22, 0.19),
+            ("i", 8, 8, 1.95, 0.94), ("o", 12, 8, 1.4, 0.87), ("o", 4, 12, 1.05, 1.46), ("o", 8, 12, 1.29, 1.29),
+        ]
+    )
+    + "</svg>"
+)
+REEL_FILE_ICON = '<svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>'
+REEL_FOLDER_ICON = '<svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>'
+
+
+def reel_table(t, cls="m-table"):
+    hl = set(t.get("hl", []))
+    def cell(tag, i, v):
+        cls = ' class="hl"' if i in hl else ""
+        return f"<{tag}{cls}>{html.escape(v)}</{tag}>"
+    head = "".join(cell("th", i, v) for i, v in enumerate(t["head"]))
+    rows = "".join("<tr>" + "".join(cell("td", i, v) for i, v in enumerate(r)) + "</tr>" for r in t["rows"])
+    return f'<table class="{cls}"><tr>{head}</tr>{rows}</table>'
+
+
+def reel_scene(reel, sc, figure):
+    dur = f'data-dur="{sc["dur"]}"'
+    if sc["type"] in ("hero", "cta"):
+        url = '<span class="url">bladestatistics.com</span>' if sc["type"] == "cta" else ""
+        return (f'  <section class="scene s-hero" {dur}><div class="in">'
+                f'<span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>{sc["text"]}</h1>{url}</div></section>')
+    cap = f'<p class="cap">{sc["caption"]}</p>'
+    if sc["type"] == "find":
+        f = figure
+        rank = "".join(f'<li><b class="{c}">{html.escape(v)}</b><span>{html.escape(l)}</span></li>' for c, v, l in sc["rank"])
+        return (f'  <section class="scene" {dur}>{cap}<div class="find"><figure class="find-fig">'
+                f'<p>{REEL_FILE_ICON}<b>{f["name"]}</b><span>{f["size"]}</span></p>'
+                f'<img src="{f["src"]}" alt="{html.escape(f["alt"])}" width="{f["w"]}" height="{f["h"]}" /></figure>'
+                f'<ol class="rank">{rank}</ol></div></section>')
+    if "figure" in sc:
+        f = sc["figure"]
+        out = (f'<div class="m-shot"><p>{REEL_FILE_ICON}<b class="shot-name">{f["name"]}</b><span class="shot-size">{f["size"]}</span></p>'
+               f'<div class="shot-zoom"><img src="{f["src"]}" alt="{html.escape(f["alt"])}" width="{f["w"]}" height="{f["h"]}" '
+               f"data-panels='{json.dumps(f['panels'])}' /></div></div>")
+    else:
+        out = reel_table(sc["result"], "m-table m-result")
+    prompt = html.escape(sc["prompt"])
+    return (
+        f'  <section class="scene" {dur} data-think="{sc.get("think_ms", 1500)}">{cap}<div class="win">'
+        f'<div class="app-preview mock ask-demo" role="img" aria-label="Tanya: {prompt}"><div class="mw">'
+        f'<div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>{reel["crumb"]}</b></span></div>'
+        f'<div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb">{REEL_FOLDER_ICON}Riset <em>›</em> {reel["crumb"]}</span></div>'
+        f'<div class="mw-body">'
+        f'<div class="m-file">{REEL_FILE_ICON}<b>{reel["file"]}</b><span>{reel["fileMeta"]}</span></div>'
+        f'<div class="ask-data">{reel_table(sc["table"])}</div>'
+        f'<div class="ask-chat"><p class="m-user">{prompt}</p>'
+        f'<div class="m-think">{REEL_SPINNER}<span class="m-shimmer" data-text="{sc["think"]}">{sc["think"]}</span></div>'
+        f'<div class="ask-answer"><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>'
+        f'<b>{sc["tool"]}</b><small>Done</small></div><p class="m-msg">{sc["answer"]}</p>{out}</div></div>'
+        f'<div class="m-compose"><p><span class="ask-input" data-prompt="{prompt}"></span><i class="caret-blink"></i></p>'
+        f'<div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>'
+        f'</div><svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>'
+        f'</div></div></div></section>'
+    )
+
+
+def build_reels(out_root, css, doc_css):
+    names = []
+    for path in sorted((ROOT / "content" / "reels").glob("*.json")):
+        reel = json.loads(path.read_text(encoding="utf-8"))
+        figure = next((s["figure"] for s in reel["scenes"] if isinstance(s.get("figure"), dict)), None)
+        scenes = "\n".join(reel_scene(reel, s, figure) for s in reel["scenes"])
+        page = render_doc("reel.html", css, doc_css, {"reelTitle": html.escape(reel["title"]), "reelScenes": scenes})
+        out = out_root / "demo" / "reels" / path.stem / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(page, encoding="utf-8")
+        names.append(path.stem)
+    return names
+
+
 def build_site(key, site, shell, css, doc_css, base_locales, names):
     out_root = site["out"]
     out_root.mkdir(parents=True, exist_ok=True)
@@ -458,7 +542,9 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
     (out_root / "demo" / "short" / "index.html").write_text(
         render_doc("demo-short.html", css, doc_css), encoding="utf-8"
     )
+    reels = build_reels(out_root, css, doc_css)
     print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html, demo/short/index.html")
+    print(f"  {key:15} reels -> {', '.join('demo/reels/' + n for n in reels)}")
 
     # locales that were dropped from ORDER should not linger as stale pages
     for path in out_root.iterdir():

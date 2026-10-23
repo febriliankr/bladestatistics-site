@@ -1,0 +1,222 @@
+{
+  "title": "Blade reel: tensi dan jantung",
+  "file": "framingham.csv",
+  "fileMeta": "4,240 rows · 16 columns",
+  "crumb": "Framingham CHD",
+  "scenes": [
+    {
+      "type": "hero",
+      "dur": 3.5,
+      "text": "Seberapa bahaya tensi tinggi buat jantung kamu?"
+    },
+    {
+      "type": "ask",
+      "dur": 9,
+      "caption": "Data 4.240 orang dari studi jantung Framingham, tanya aja isinya apa.",
+      "table": {
+        "head": [
+          "male",
+          "age",
+          "sysBP",
+          "diaBP",
+          "BMI",
+          "TenYearCHD"
+        ],
+        "rows": [
+          [
+            "1",
+            "39",
+            "106",
+            "70",
+            "26.97",
+            "0"
+          ],
+          [
+            "0",
+            "46",
+            "121",
+            "81",
+            "28.73",
+            "0"
+          ],
+          [
+            "1",
+            "48",
+            "127.5",
+            "80",
+            "25.34",
+            "0"
+          ],
+          [
+            "0",
+            "61",
+            "150",
+            "95",
+            "28.58",
+            "1"
+          ],
+          [
+            "0",
+            "46",
+            "130",
+            "84",
+            "23.10",
+            "0"
+          ],
+          [
+            "0",
+            "43",
+            "180",
+            "110",
+            "30.30",
+            "0"
+          ]
+        ]
+      },
+      "prompt": "what is this dataset about?",
+      "think": "Thinking",
+      "tool": "Listed a folder and ran 2 commands",
+      "answer": "Framingham Heart Study teaching extract: 4,240 adults, 16 columns. Target: <b>TenYearCHD</b>, coronary heart disease within 10 years (644 cases, 15.2%).",
+      "result": {
+        "head": [
+          "Group",
+          "Columns"
+        ],
+        "rows": [
+          [
+            "Demographics",
+            "male (1,820), age 32 to 70, education"
+          ],
+          [
+            "Smoking",
+            "currentSmoker (2,095 yes), cigsPerDay"
+          ],
+          [
+            "Measures",
+            "sysBP, diaBP, totChol, BMI, heartRate, glucose"
+          ],
+          [
+            "Missing",
+            "glucose 388, education 105; 3,658 complete rows"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "ask",
+      "dur": 14,
+      "think_ms": 1800,
+      "caption": "Tanya faktor risikonya apa aja, grafiknya langsung jadi.",
+      "table": {
+        "head": [
+          "age",
+          "sysBP",
+          "diaBP",
+          "TenYearCHD"
+        ],
+        "hl": [
+          1,
+          2,
+          3
+        ],
+        "rows": [
+          [
+            "39",
+            "106",
+            "70",
+            "0"
+          ],
+          [
+            "46",
+            "121",
+            "81",
+            "0"
+          ],
+          [
+            "48",
+            "127.5",
+            "80",
+            "0"
+          ],
+          [
+            "61",
+            "150",
+            "95",
+            "1"
+          ],
+          [
+            "46",
+            "130",
+            "84",
+            "0"
+          ],
+          [
+            "43",
+            "180",
+            "110",
+            "0"
+          ]
+        ]
+      },
+      "prompt": "which factors relate most to ten-year CHD? also chart the CHD rate by systolic BP",
+      "think": "Running Python",
+      "tool": "Ran 3 commands and wrote 2 files",
+      "answer": "Age (+0.225) and systolic BP (+0.216) lead, then hypertension (+0.177) and diastolic BP (+0.145).",
+      "figure": {
+        "src": "/assets/reel-framingham.webp",
+        "name": "chd_risk_factors.png",
+        "size": "PNG · 74 KB",
+        "w": 1800,
+        "h": 803,
+        "alt": "Panel A: Pearson r with 10-year CHD, top four in black. Panel B: 10-year CHD rate by systolic blood pressure group.",
+        "panels": {
+          "a": [
+            0.03,
+            0.54,
+            0.29,
+            0.4
+          ],
+          "b": [
+            0.6,
+            0.99,
+            0.8,
+            0.45
+          ]
+        }
+      }
+    },
+    {
+      "type": "find",
+      "dur": 7,
+      "caption": "Tensi sistolik 160 ke atas bikin risiko jantung 10 tahun naik jadi 30.8%, hampir 4 kali lipat yang di bawah 120.",
+      "figure": "same",
+      "rank": [
+        [
+          "n",
+          "8.5%",
+          "Sistolik di bawah 120"
+        ],
+        [
+          "n",
+          "13.0%",
+          "120 sampai 139"
+        ],
+        [
+          "n",
+          "21.1%",
+          "140 sampai 159"
+        ],
+        [
+          "key",
+          "30.8%",
+          "160 ke atas"
+        ]
+      ]
+    },
+    {
+      "type": "cta",
+      "dur": 4.5,
+      "text": "Coba pakai data kamu sendiri, gratis."
+    }
+  ]
+}

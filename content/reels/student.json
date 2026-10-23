@@ -1,0 +1,229 @@
+{
+  "title": "Blade reel: nilai siswa",
+  "file": "student-por.csv",
+  "fileMeta": "649 rows · 33 columns",
+  "crumb": "Student performance",
+  "scenes": [
+    {
+      "type": "hero",
+      "dur": 3.5,
+      "text": "Kenapa nilai akhir siswa bisa anjlok?"
+    },
+    {
+      "type": "ask",
+      "dur": 9,
+      "caption": "Punya CSV tapi nggak tahu isinya, tinggal tanya aja kayak lagi chat.",
+      "table": {
+        "head": [
+          "school",
+          "sex",
+          "age",
+          "studytime",
+          "failures",
+          "G3"
+        ],
+        "rows": [
+          [
+            "GP",
+            "F",
+            "18",
+            "2",
+            "0",
+            "11"
+          ],
+          [
+            "GP",
+            "F",
+            "17",
+            "2",
+            "0",
+            "11"
+          ],
+          [
+            "GP",
+            "F",
+            "15",
+            "2",
+            "0",
+            "12"
+          ],
+          [
+            "GP",
+            "F",
+            "15",
+            "3",
+            "0",
+            "14"
+          ],
+          [
+            "GP",
+            "F",
+            "16",
+            "2",
+            "0",
+            "13"
+          ],
+          [
+            "GP",
+            "M",
+            "16",
+            "2",
+            "0",
+            "13"
+          ]
+        ]
+      },
+      "prompt": "what is this dataset about?",
+      "think": "Thinking",
+      "tool": "Listed a folder and ran 2 commands",
+      "answer": "UCI Student Performance, Portuguese course: 649 students, 33 columns, no missing values. Target: <b>G3</b>, the final grade (0 to 19, mean 11.9).",
+      "result": {
+        "head": [
+          "Group",
+          "Columns"
+        ],
+        "rows": [
+          [
+            "Demographics",
+            "school (GP 423 / MS 226), sex, age 15 to 22"
+          ],
+          [
+            "School",
+            "studytime, failures (549 have none), paid"
+          ],
+          [
+            "Lifestyle",
+            "higher (580 yes), internet, romantic, Dalc, Walc"
+          ],
+          [
+            "Outcomes",
+            "absences (mean 3.7), G1, G2, G3"
+          ]
+        ]
+      }
+    },
+    {
+      "type": "ask",
+      "dur": 14,
+      "think_ms": 1800,
+      "caption": "Minta korelasi plus grafiknya, Blade langsung bikinin sendiri.",
+      "table": {
+        "head": [
+          "studytime",
+          "failures",
+          "G1",
+          "G2",
+          "G3"
+        ],
+        "hl": [
+          2,
+          3,
+          4
+        ],
+        "rows": [
+          [
+            "2",
+            "0",
+            "0",
+            "11",
+            "11"
+          ],
+          [
+            "2",
+            "0",
+            "9",
+            "11",
+            "11"
+          ],
+          [
+            "2",
+            "0",
+            "12",
+            "13",
+            "12"
+          ],
+          [
+            "3",
+            "0",
+            "14",
+            "14",
+            "14"
+          ],
+          [
+            "2",
+            "0",
+            "11",
+            "13",
+            "13"
+          ],
+          [
+            "2",
+            "0",
+            "12",
+            "12",
+            "13"
+          ]
+        ]
+      },
+      "prompt": "output top 5 strongest variable that correlates to grades, and also output the graph",
+      "think": "Running Python",
+      "tool": "Ran 4 commands and wrote 2 files",
+      "answer": "Top 5 with G1 and G2 excluded: failures (−0.393), higher (+0.332), school (+0.284), studytime (+0.250), Medu (+0.240).",
+      "figure": {
+        "src": "/assets/g3-top-correlations.webp",
+        "name": "grades_top_correlations_top5.png",
+        "size": "PNG · 174 KB",
+        "w": 1800,
+        "h": 803,
+        "alt": "Panel A: Pearson r with final grade G3, top five in black. Panel B: final grade by number of past class failures.",
+        "panels": {
+          "a": [
+            0.03,
+            0.58,
+            0.31,
+            0.36
+          ],
+          "b": [
+            0.585,
+            0.99,
+            0.79,
+            0.38
+          ]
+        }
+      }
+    },
+    {
+      "type": "find",
+      "dur": 7,
+      "caption": "Ternyata sekali gagal kelas aja, rata&#8209;rata nilai akhirnya anjlok dari 12.5 ke 8.6.",
+      "figure": "same",
+      "rank": [
+        [
+          "down",
+          "−0.393",
+          "Pernah gagal kelas"
+        ],
+        [
+          "up",
+          "+0.332",
+          "Ingin lanjut kuliah"
+        ],
+        [
+          "up",
+          "+0.284",
+          "Sekolah GP, bukan MS"
+        ],
+        [
+          "up",
+          "+0.250",
+          "Jam belajar per minggu"
+        ]
+      ]
+    },
+    {
+      "type": "cta",
+      "dur": 4.5,
+      "text": "Coba pakai data kamu sendiri, gratis."
+    }
+  ]
+}

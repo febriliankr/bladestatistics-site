@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Blade reel: tensi dan jantung</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#10141c" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" />
+<link rel="stylesheet" href="/assets/landing.css?v=b60037012d9f" />
+<style>
+  /* A vertical reel in the /demo/short style. Every scene is one sentence over
+     the same Blade window, played on a clock. The stage is a fixed 1080x1920
+     canvas scaled to the screen, so a browser view and a recording match
+     pixel for pixel. ?record holds the reel until window.startReel(). */
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: #10141c; }
+  .reel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: #fff;
+    transform: translate(-50%, -50%) scale(var(--fit, 1));
+    transform-origin: center;
+  }
+
+  /* Story-style progress: one segment per scene. Sits below the top edge
+     that Instagram and TikTok cover with the account row. */
+  .bars { position: absolute; inset: 132px 64px auto; z-index: 5; display: flex; gap: 10px; }
+  .bars i { flex: 1; height: 6px; border-radius: 3px; background: #1f23201f; overflow: hidden; }
+  .bars i::after { content: ""; display: block; height: 100%; background: #1f2320b3; transform: scaleX(var(--p, 0)); transform-origin: left; }
+
+  .scene { position: absolute; inset: 0; display: none; }
+  .scene.on { display: block; animation: scene-in 0.5s var(--ease) both; }
+  @keyframes scene-in { from { opacity: 0; transform: translateY(16px); } }
+
+  .cap {
+    position: absolute;
+    inset: 200px 72px auto;
+    margin: 0;
+    font-size: 66px;
+    line-height: 1.06;
+    font-weight: 450;
+    letter-spacing: -0.045em;
+    color: #1f2320;
+    text-wrap: balance;
+  }
+
+  /* The Blade window: same mock as the homepage and /demo/short. */
+  .win {
+    position: absolute;
+    left: 60px;
+    right: 60px;
+    top: 480px;
+    height: 1140px;
+    container-type: inline-size;
+  }
+  .win .app-preview { width: 100%; height: 100%; }
+  .win .mock { padding: 0; font-size: calc(100cqw / 27); width: 100%; height: 100%; }
+  .win .mw { height: 100%; box-shadow: 0 30px 80px #2a352024; }
+  .ask-demo .ask-answer { flex: 1; min-height: 0; }
+  .ask-answer > :nth-child(4) { animation-delay: 0.75s; }
+  .ask-demo .m-result { font-size: 0.8em; }
+  .ask-demo .m-result td { white-space: normal; }
+  .ask-data .hl { background: #d43b0012; }
+  .ask-data th.hl { color: #b53200; font-weight: 600; }
+  .ask-demo .m-shot img { display: block; flex: 1; min-height: 0; width: 100%; object-fit: contain; padding: 0.4em; }
+  /* Once the answer lands the pointer opens the PNG, the chat steps aside,
+     and the figure pushes toward each panel in turn, then settles back. */
+  .ask-demo[data-stage="zoom"] :is(.m-user, .m-compose, .ask-answer > :not(.m-shot)) { display: none; }
+  .ask-demo[data-stage="zoom"] .m-shot { animation: shot-open 0.45s var(--ease) both; }
+  @keyframes shot-open { from { opacity: 0.6; transform: scale(0.94); } }
+  .ask-demo .shot-zoom { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+  .ask-demo .shot-zoom img { height: 100%; transform-origin: 0 0; transition: transform 0.85s var(--ease); }
+
+  /* Findings: the saved figure, then the ranking it came from. */
+  .find { position: absolute; inset: 480px 60px auto; display: grid; gap: 40px; }
+  .find-fig {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 24px 70px #2a35201f;
+    animation: mock-up 0.6s var(--ease) 0.1s both;
+  }
+  .find-fig p {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line);
+    background: #fbfbfa;
+    font-size: 26px;
+    white-space: nowrap;
+  }
+  .find-fig p .mi { width: 26px; height: 26px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; }
+  .find-fig p b { overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+  .find-fig p span { margin-inline-start: auto; color: var(--muted); font-size: 24px; }
+  .find-fig img { display: block; width: 100%; height: auto; padding: 10px; }
+  .rank { margin: 0; padding: 0; list-style: none; }
+  .rank li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0 28px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    font-size: 34px;
+    color: #1f2320;
+    animation: mock-up 0.5s var(--ease) both;
+  }
+  .rank li:nth-child(1) { animation-delay: 0.3s; }
+  .rank li:nth-child(2) { animation-delay: 0.45s; }
+  .rank li:nth-child(3) { animation-delay: 0.6s; }
+  .rank li:nth-child(4) { animation-delay: 0.75s; }
+  .rank b { min-width: 4.2ch; font-size: 54px; font-weight: 450; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .rank b.down { color: var(--orange); }
+  .rank b.up { color: #5d7a4f; }
+  .rank b.key { color: var(--orange); }
+  .rank b.n { color: #1f2320; }
+
+  /* Opening and closing scenes sit on the homepage landscape. */
+  .s-hero { text-align: center; }
+  .s-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, #fff0 18%, #ffffffb8 52%, #fff 80%),
+      url(/assets/daylight-lake-mobile.webp) center top / auto 62% no-repeat;
+  }
+  .s-hero .in { position: absolute; inset: 760px 80px auto; }
+  .mark { display: inline-flex; align-items: center; gap: 18px; margin-bottom: 44px; font-size: 52px; font-weight: 600; letter-spacing: -0.04em; color: #192715; }
+  .mark img { width: 72px; height: 72px; border-radius: 16px; }
+  .s-hero h1 { margin: 0; font-size: 92px; line-height: 1.02; font-weight: 430; letter-spacing: -0.055em; color: #1f2320; text-wrap: balance; }
+  .s-hero .url { display: inline-block; margin-top: 52px; font-size: 52px; letter-spacing: -0.03em; color: #1f2320; border-bottom: 4px solid var(--orange); padding-bottom: 4px; }
+
+  /* Small brand line above the area the apps cover with the caption. */
+  .sig { position: absolute; left: 0; right: 0; top: 1660px; z-index: 4; display: flex; justify-content: center; align-items: center; gap: 12px; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: #1f2320; }
+  .sig img { width: 40px; height: 40px; border-radius: 9px; }
+  .sig span { font-weight: 400; color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scene.on, .rank li, .find-fig { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="reel" id="reel">
+  <div class="bars" id="bars"></div>
+  <section class="scene s-hero" data-dur="3.5"><div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>Seberapa bahaya tensi tinggi buat jantung kamu?</h1></div></section>
+  <section class="scene" data-dur="9" data-think="1500"><p class="cap">Data 4.240 orang dari studi jantung Framingham, tanya aja isinya apa.</p><div class="win"><div class="app-preview mock ask-demo" role="img" aria-label="Tanya: what is this dataset about?"><div class="mw"><div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>Framingham CHD</b></span></div><div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Framingham CHD</span></div><div class="mw-body"><div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>4,240 rows · 16 columns</span></div><div class="ask-data"><table class="m-table"><tr><th>male</th><th>age</th><th>sysBP</th><th>diaBP</th><th>BMI</th><th>TenYearCHD</th></tr><tr><td>1</td><td>39</td><td>106</td><td>70</td><td>26.97</td><td>0</td></tr><tr><td>0</td><td>46</td><td>121</td><td>81</td><td>28.73</td><td>0</td></tr><tr><td>1</td><td>48</td><td>127.5</td><td>80</td><td>25.34</td><td>0</td></tr><tr><td>0</td><td>61</td><td>150</td><td>95</td><td>28.58</td><td>1</td></tr><tr><td>0</td><td>46</td><td>130</td><td>84</td><td>23.10</td><td>0</td></tr><tr><td>0</td><td>43</td><td>180</td><td>110</td><td>30.30</td><td>0</td></tr></table></div><div class="ask-chat"><p class="m-user">what is this dataset about?</p><div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Thinking">Thinking</span></div><div class="ask-answer"><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Listed a folder and ran 2 commands</b><small>Done</small></div><p class="m-msg">Framingham Heart Study teaching extract: 4,240 adults, 16 columns. Target: <b>TenYearCHD</b>, coronary heart disease within 10 years (644 cases, 15.2%).</p><table class="m-table m-result"><tr><th>Group</th><th>Columns</th></tr><tr><td>Demographics</td><td>male (1,820), age 32 to 70, education</td></tr><tr><td>Smoking</td><td>currentSmoker (2,095 yes), cigsPerDay</td></tr><tr><td>Measures</td><td>sysBP, diaBP, totChol, BMI, heartRate, glucose</td></tr><tr><td>Missing</td><td>glucose 388, education 105; 3,658 complete rows</td></tr></table></div></div><div class="m-compose"><p><span class="ask-input" data-prompt="what is this dataset about?"></span><i class="caret-blink"></i></p><div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div></div><svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg></div></div></div></section>
+  <section class="scene" data-dur="14" data-think="1800"><p class="cap">Tanya faktor risikonya apa aja, grafiknya langsung jadi.</p><div class="win"><div class="app-preview mock ask-demo" role="img" aria-label="Tanya: which factors relate most to ten-year CHD? also chart the CHD rate by systolic BP"><div class="mw"><div class="mw-bar"><i></i><i></i><i></i><span>Riset <b>Framingham CHD</b></span></div><div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Riset <em>›</em> Framingham CHD</span></div><div class="mw-body"><div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>framingham.csv</b><span>4,240 rows · 16 columns</span></div><div class="ask-data"><table class="m-table"><tr><th>age</th><th class="hl">sysBP</th><th class="hl">diaBP</th><th class="hl">TenYearCHD</th></tr><tr><td>39</td><td class="hl">106</td><td class="hl">70</td><td class="hl">0</td></tr><tr><td>46</td><td class="hl">121</td><td class="hl">81</td><td class="hl">0</td></tr><tr><td>48</td><td class="hl">127.5</td><td class="hl">80</td><td class="hl">0</td></tr><tr><td>61</td><td class="hl">150</td><td class="hl">95</td><td class="hl">1</td></tr><tr><td>46</td><td class="hl">130</td><td class="hl">84</td><td class="hl">0</td></tr><tr><td>43</td><td class="hl">180</td><td class="hl">110</td><td class="hl">0</td></tr></table></div><div class="ask-chat"><p class="m-user">which factors relate most to ten-year CHD? also chart the CHD rate by systolic BP</p><div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running Python">Running Python</span></div><div class="ask-answer"><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Ran 3 commands and wrote 2 files</b><small>Done</small></div><p class="m-msg">Age (+0.225) and systolic BP (+0.216) lead, then hypertension (+0.177) and diastolic BP (+0.145).</p><div class="m-shot"><p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b class="shot-name">chd_risk_factors.png</b><span class="shot-size">PNG · 74 KB</span></p><div class="shot-zoom"><img src="/assets/reel-framingham.webp" alt="Panel A: Pearson r with 10-year CHD, top four in black. Panel B: 10-year CHD rate by systolic blood pressure group." width="1800" height="803" data-panels='{"a": [0.03, 0.54, 0.29, 0.4], "b": [0.6, 0.99, 0.8, 0.45]}' /></div></div></div></div><div class="m-compose"><p><span class="ask-input" data-prompt="which factors relate most to ten-year CHD? also chart the CHD rate by systolic BP"></span><i class="caret-blink"></i></p><div><span class="chip">Supervised</span><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div></div><svg class="m-pointer" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg></div></div></div></section>
+  <section class="scene" data-dur="7"><p class="cap">Tensi sistolik 160 ke atas bikin risiko jantung 10 tahun naik jadi 30.8%, hampir 4 kali lipat yang di bawah 120.</p><div class="find"><figure class="find-fig"><p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>chd_risk_factors.png</b><span>PNG · 74 KB</span></p><img src="/assets/reel-framingham.webp" alt="Panel A: Pearson r with 10-year CHD, top four in black. Panel B: 10-year CHD rate by systolic blood pressure group." width="1800" height="803" /></figure><ol class="rank"><li><b class="n">8.5%</b><span>Sistolik di bawah 120</span></li><li><b class="n">13.0%</b><span>120 sampai 139</span></li><li><b class="n">21.1%</b><span>140 sampai 159</span></li><li><b class="key">30.8%</b><span>160 ke atas</span></li></ol></div></section>
+  <section class="scene s-hero" data-dur="4.5"><div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>Coba pakai data kamu sendiri, gratis.</h1><span class="url">bladestatistics.com</span></div></section>
+  <p class="sig" id="sig"><img src="/logo.png" alt="" />Blade <span>bladestatistics.com</span></p>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var reel = document.getElementById("reel");
+  var scenes = [].slice.call(reel.querySelectorAll(".scene"));
+  var bars = document.getElementById("bars");
+  var sig = document.getElementById("sig");
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var record = /[?&]record\b/.test(location.search);
+  var durs = scenes.map(function (s) { return +s.getAttribute("data-dur") * 1000; });
+  var timers = [], segs = [], current = -1, startedAt = 0, raf = 0;
+
+  function fit() {
+    var s = Math.min(innerWidth / 1080, innerHeight / 1920);
+    reel.style.setProperty("--fit", s);
+  }
+  fit();
+  addEventListener("resize", fit);
+  scenes.forEach(function () { var i = document.createElement("i"); bars.appendChild(i); segs.push(i); });
+
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+  // Same session as /demo/short: the question types out, the pointer clicks
+  // send, Blade works, the answer lands, and a saved figure opens and zooms.
+  function playAsk(scene) {
+    var demo = scene.querySelector(".ask-demo");
+    if (!demo || reduce) return;
+    var input = demo.querySelector(".ask-input");
+    var send = demo.querySelector(".send");
+    var pointer = demo.querySelector(".m-pointer");
+    var win = demo.querySelector(".mw");
+    var prompt = input.getAttribute("data-prompt");
+    var hold = +scene.getAttribute("data-hold") || 600;
+    var think = +scene.getAttribute("data-think") || 1500;
+    demo.setAttribute("data-stage", "type");
+    input.textContent = "";
+    pointer.className.baseVal = "m-pointer";
+    send.classList.remove("press");
+    for (var i = 1; i <= prompt.length; i++) {
+      (function (n) { at(hold + n * 30, function () { input.textContent = prompt.slice(0, n); }); })(i);
+    }
+    var typed = hold + prompt.length * 30;
+    at(typed + 150, function () {
+      var w = win.getBoundingClientRect(), b = send.getBoundingClientRect(), k = w.width / win.offsetWidth;
+      pointer.style.transition = "none";
+      pointer.style.setProperty("--px", win.offsetWidth * 0.78 + "px");
+      pointer.style.setProperty("--py", win.offsetHeight * 1.05 + "px");
+      void pointer.getBoundingClientRect();
+      pointer.style.transition = "";
+      pointer.classList.add("show");
+      pointer.style.setProperty("--px", (b.left - w.left) / k + b.width / k * 0.45 + "px");
+      pointer.style.setProperty("--py", (b.top - w.top) / k + b.height / k * 0.4 + "px");
+    });
+    at(typed + 1000, function () { pointer.classList.add("press"); send.classList.add("press"); });
+    at(typed + 1150, function () {
+      pointer.classList.remove("press");
+      send.classList.remove("press");
+      input.textContent = "";
+      demo.setAttribute("data-stage", "sent");
+    });
+    at(typed + 1450, function () { pointer.classList.remove("show"); demo.setAttribute("data-stage", "think"); });
+    var done = typed + 1450 + think;
+    at(done, function () { demo.setAttribute("data-stage", "done"); });
+
+    var shot = demo.querySelector(".shot-zoom img");
+    if (!shot) return;
+    shot.style.transform = "";
+    var panels = JSON.parse(shot.getAttribute("data-panels"));
+    // Where the drawn PNG sits inside its letterboxed img box, in layout px.
+    function drawn() {
+      var W = shot.clientWidth, H = shot.clientHeight;
+      var pad = parseFloat(getComputedStyle(shot).paddingLeft) || 0;
+      var iw = W - 2 * pad, ih = H - 2 * pad;
+      var ratio = shot.naturalWidth / shot.naturalHeight || 1800 / 803;
+      var cw = Math.min(iw, ih * ratio), ch = cw / ratio;
+      return { W: W, H: H, x: pad + (iw - cw) / 2, y: pad + (ih - ch) / 2, w: cw, h: ch };
+    }
+    function aim(fx, fy) {
+      var d = drawn();
+      var box = shot.getBoundingClientRect(), w = win.getBoundingClientRect(), k = w.width / win.offsetWidth;
+      pointer.classList.add("show");
+      pointer.style.setProperty("--px", (box.left - w.left) / k + d.x + d.w * fx + "px");
+      pointer.style.setProperty("--py", (box.top - w.top) / k + d.y + d.h * fy + "px");
+    }
+    function click(then) {
+      pointer.classList.add("press");
+      at(150, function () { pointer.classList.remove("press"); if (then) then(); });
+    }
+    function zoomTo(p) {
+      var d = drawn();
+      var scale = Math.min(1.9, d.W / ((p[1] - p[0]) * d.w));
+      var tx = d.W / 2 - (d.x + d.w * p[2]) * scale;
+      var ty = d.H / 2 - (d.y + d.h * p[3]) * scale;
+      tx = Math.min(-d.x * scale, Math.max(d.W - (d.x + d.w) * scale, tx));
+      ty = Math.min(-d.y * scale, Math.max(d.H - (d.y + d.h) * scale, ty));
+      shot.style.transform = "translate(" + tx + "px, " + ty + "px) scale(" + scale + ")";
+    }
+    at(done + 900, function () { aim(0.5, 0.5); });
+    at(done + 1400, function () { pointer.classList.add("press"); });
+    at(done + 1550, function () { pointer.classList.remove("press", "show"); demo.setAttribute("data-stage", "zoom"); });
+    var open = done + 1550;
+    at(open + 450, function () { aim(panels.a[2], panels.a[3]); });
+    at(open + 900, function () { click(function () { pointer.classList.remove("show"); zoomTo(panels.a); }); });
+    at(open + 2350, function () { shot.style.transform = ""; });
+    at(open + 2550, function () { aim(panels.b[2], panels.b[3]); });
+    at(open + 3000, function () { click(function () { pointer.classList.remove("show"); zoomTo(panels.b); }); });
+    at(open + 4450, function () { shot.style.transform = ""; });
+  }
+
+  function show(n) {
+    timers.forEach(clearTimeout);
+    timers = [];
+    current = n;
+    scenes.forEach(function (s, k) { s.classList.toggle("on", k === n); });
+    sig.hidden = scenes[n].classList.contains("s-hero");
+    playAsk(scenes[n]);
+  }
+
+  // The whole reel runs on one clock so a recording has fixed timing.
+  function tick() {
+    var t = performance.now() - startedAt, acc = 0;
+    for (var k = 0; k < scenes.length; k++) {
+      var p = Math.max(0, Math.min(1, (t - acc) / durs[k]));
+      segs[k].style.setProperty("--p", p);
+      if (t >= acc && t < acc + durs[k] && current !== k) show(k);
+      acc += durs[k];
+    }
+    if (t < acc) raf = requestAnimationFrame(tick);
+    else { window.reelDone = true; if (!record) at(1200, start); }
+  }
+  function start() {
+    cancelAnimationFrame(raf);
+    current = -1;
+    window.reelDone = false;
+    startedAt = performance.now();
+    raf = requestAnimationFrame(tick);
+  }
+  window.startReel = start;
+  window.reelLength = durs.reduce(function (a, b) { return a + b; }, 0);
+  if (!record) start();
+  else show(0);
+  // A tap restarts the reel from the top.
+  reel.addEventListener("click", function () { if (!record) start(); });
+});
+</script>
+</body>
+</html>
