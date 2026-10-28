@@ -512,11 +512,22 @@ def build_reels(out_root, css, doc_css):
 
 
 # The how-to walkthrough downloads the current release, so it reads the
-# version and sizes from the homepage's download links. Its copy and both demo
-# datasets live in content/howto.json and its charts in src/howto/. Every page
-# carries both datasets; the reel's data-ds attribute shows one at a time.
+# version and sizes from the homepage's download links. Its copy, both demo
+# datasets, and their R scripts live in content/howto.json. The charts in
+# assets/howto/ are what those scripts saved when run on the data, one per
+# dataset and language. Every page carries both datasets; the reel's data-ds
+# attribute shows one at a time.
 HOWTO_LOCALES = ["en", "id"]
 HOWTO_CHECK = '<svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>'
+
+
+def highlight_r(line):
+    parts = re.split(r'("[^"]*")', line)
+    return "".join(
+        f'<span class="s">{html.escape(part, quote=False)}</span>' if i % 2
+        else re.sub(r"([A-Za-z_.][\w.]*)(?=\()", r'<span class="f">\1</span>', html.escape(part, quote=False))
+        for i, part in enumerate(parts)
+    )
 
 
 def howto_blocks(code):
@@ -542,20 +553,18 @@ def howto_blocks(code):
         return "".join(fn(f"ds-{name}", ds, ds[code]) for name, ds in howto["datasets"].items())
 
     def chart(cls, ds, t):
-        svg = (ROOT / "src" / "howto" / (cls[3:] + ".svg")).read_text(encoding="utf-8").strip()
-        svg = svg.replace('class="chart"', f'class="chart {cls}"', 1)
-        for k in ("alt", "yLabel", "xLabel"):
-            svg = svg.replace("{{" + k + "}}", html.escape(t[k]))
-        for i, v in enumerate(t.get("vals", [])):
-            svg = svg.replace("{{v%d}}" % i, v)
-        return svg
+        src = f"/assets/howto/{cls[3:]}-{code}.webp"
+        return f'<img class="chart {cls}" src="{src}" width="1400" height="900" alt="{attr(t["alt"])}" />'
 
     def answer(cls, ds, t):
         tools = "".join(f'<div class="m-tool">{HOWTO_CHECK}<b>{html.escape(x)}</b><small>Done</small></div>' for x in ds["tools"])
         return f'<div class="ask-answer {cls}">{tools}<p class="m-msg">{t["answer"]}</p></div>'
 
     def code_view(cls, ds, t):
-        lines = "".join(f'<span class="cl"><i>{n}</i>{line}</span>' for n, line in enumerate(ds["code"], 1))
+        lines = "".join(
+            f'<span class="cl"><i>{n}</i>{highlight_r(line.replace("{x}", t["xLabel"]).replace("{y}", t["yLabel"])) or " "}</span>'
+            for n, line in enumerate(ds["code"], 1)
+        )
         return f'<pre class="m-code {cls}"><code>{lines}</code></pre>'
 
     def stats(cls, ds, t):

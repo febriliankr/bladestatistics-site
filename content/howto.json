@@ -51,29 +51,87 @@
       "file": "sleep_survey.csv",
       "meta": "214 rows · 6 columns",
       "png": "sleep_vs_gpa.png",
-      "pngMeta": "PNG · 84 KB",
-      "head": ["id", "year", "sleep_hrs", "study_hrs", "caffeine", "gpa"],
-      "hl": [2, 5],
-      "rows": [
-        ["S001", "1st", "6.9", "9", "4", "3.21"],
-        ["S002", "2nd", "7.2", "8", "3", "2.76"],
-        ["S003", "3rd", "7.1", "13", "1", "3.59"],
-        ["S004", "4th", "6.0", "11", "4", "2.56"],
-        ["S005", "1st", "5.7", "13", "1", "2.63"],
-        ["S006", "2nd", "7.3", "2", "1", "3.29"]
+      "pngMeta": "PNG · 357 KB",
+      "head": [
+        "id",
+        "year",
+        "sleep_hrs",
+        "study_hrs",
+        "caffeine",
+        "gpa"
       ],
-      "tools": ["Read sleep_survey.csv", "Ran a linear regression in R", "Saved 3 files"],
+      "hl": [
+        2,
+        5
+      ],
+      "rows": [
+        [
+          "S001",
+          "1st",
+          "6.9",
+          "9",
+          "4",
+          "3.21"
+        ],
+        [
+          "S002",
+          "2nd",
+          "7.2",
+          "8",
+          "3",
+          "2.76"
+        ],
+        [
+          "S003",
+          "3rd",
+          "7.1",
+          "13",
+          "1",
+          "3.59"
+        ],
+        [
+          "S004",
+          "4th",
+          "6.0",
+          "11",
+          "4",
+          "2.56"
+        ],
+        [
+          "S005",
+          "1st",
+          "5.7",
+          "13",
+          "1",
+          "2.63"
+        ],
+        [
+          "S006",
+          "2nd",
+          "7.3",
+          "2",
+          "1",
+          "3.29"
+        ]
+      ],
+      "tools": [
+        "Read sleep_survey.csv",
+        "Ran a linear regression in R",
+        "Saved 3 files"
+      ],
       "tone": "up",
       "code": [
-        "<span class=\"f\">library</span>(ggplot2)",
-        "d &lt;- <span class=\"f\">read.csv</span>(<span class=\"s\">\"sleep_survey.csv\"</span>)",
-        "fit &lt;- <span class=\"f\">lm</span>(gpa ~ sleep_hrs, data = d)",
-        "<span class=\"f\">summary</span>(fit)",
-        " ",
-        "<span class=\"f\">ggplot</span>(d, <span class=\"f\">aes</span>(sleep_hrs, gpa)) +",
-        "  <span class=\"f\">geom_point</span>() +",
-        "  <span class=\"f\">geom_smooth</span>(method = <span class=\"s\">\"lm\"</span>)",
-        "<span class=\"f\">ggsave</span>(<span class=\"s\">\"sleep_vs_gpa.png\"</span>)"
+        "library(ggplot2)",
+        "d <- read.csv(\"sleep_survey.csv\")",
+        "fit <- lm(gpa ~ sleep_hrs, data = d)",
+        "summary(fit)",
+        "",
+        "ggplot(d, aes(sleep_hrs, gpa)) +",
+        "  geom_point(alpha = 0.5) +",
+        "  geom_smooth(method = \"lm\") +",
+        "  labs(x = \"{x}\", y = \"{y}\") +",
+        "  theme_minimal(base_size = 18)",
+        "ggsave(\"sleep_vs_gpa.png\", width = 7, height = 4.5)"
       ],
       "en": {
         "folder": "Sleep study",
@@ -82,7 +140,20 @@
         "alt": "Scatter plot of sleep hours against GPA with a rising regression line",
         "yLabel": "GPA",
         "xLabel": "Sleep per night (hours)",
-        "stats": [["+0.16", "GPA per extra hour"], ["0.40", "Correlation (r)"], ["&lt; 0.001", "p value"]]
+        "stats": [
+          [
+            "+0.16",
+            "GPA per extra hour"
+          ],
+          [
+            "0.40",
+            "Correlation (r)"
+          ],
+          [
+            "&lt; 0.001",
+            "p value"
+          ]
+        ]
       },
       "id": {
         "folder": "Studi tidur",
@@ -91,7 +162,20 @@
         "alt": "Grafik sebar jam tidur terhadap IPK dengan garis regresi yang naik",
         "yLabel": "IPK",
         "xLabel": "Tidur per malam (jam)",
-        "stats": [["+0,16", "IPK per jam tambahan"], ["0,40", "Korelasi (r)"], ["&lt; 0,001", "Nilai p"]]
+        "stats": [
+          [
+            "+0,16",
+            "IPK per jam tambahan"
+          ],
+          [
+            "0,40",
+            "Korelasi (r)"
+          ],
+          [
+            "&lt; 0,001",
+            "Nilai p"
+          ]
+        ]
       }
     },
     "framingham": {
@@ -99,29 +183,89 @@
       "file": "framingham.csv",
       "meta": "4,240 rows · 16 columns",
       "png": "chd_by_bp.png",
-      "pngMeta": "PNG · 61 KB",
-      "head": ["male", "age", "sysBP", "diaBP", "BMI", "TenYearCHD"],
-      "hl": [2, 5],
-      "rows": [
-        ["1", "39", "106", "70", "26.97", "0"],
-        ["0", "46", "121", "81", "28.73", "0"],
-        ["1", "48", "127.5", "80", "25.34", "0"],
-        ["0", "61", "150", "95", "28.58", "1"],
-        ["0", "46", "130", "84", "23.10", "0"],
-        ["0", "43", "180", "110", "30.30", "0"]
+      "pngMeta": "PNG · 112 KB",
+      "head": [
+        "male",
+        "age",
+        "sysBP",
+        "diaBP",
+        "BMI",
+        "TenYearCHD"
       ],
-      "tools": ["Read framingham.csv", "Ran a logistic regression in R", "Saved 3 files"],
+      "hl": [
+        2,
+        5
+      ],
+      "rows": [
+        [
+          "1",
+          "39",
+          "106",
+          "70",
+          "26.97",
+          "0"
+        ],
+        [
+          "0",
+          "46",
+          "121",
+          "81",
+          "28.73",
+          "0"
+        ],
+        [
+          "1",
+          "48",
+          "127.5",
+          "80",
+          "25.34",
+          "0"
+        ],
+        [
+          "0",
+          "61",
+          "150",
+          "95",
+          "28.58",
+          "1"
+        ],
+        [
+          "0",
+          "46",
+          "130",
+          "84",
+          "23.10",
+          "0"
+        ],
+        [
+          "0",
+          "43",
+          "180",
+          "110",
+          "30.30",
+          "0"
+        ]
+      ],
+      "tools": [
+        "Read framingham.csv",
+        "Ran a logistic regression in R",
+        "Saved 3 files"
+      ],
       "tone": "warn",
       "code": [
-        "d &lt;- <span class=\"f\">read.csv</span>(<span class=\"s\">\"framingham.csv\"</span>)",
-        "fit &lt;- <span class=\"f\">glm</span>(TenYearCHD ~ sysBP + age + male,",
+        "library(ggplot2)",
+        "d <- read.csv(\"framingham.csv\")",
+        "fit <- glm(TenYearCHD ~ sysBP + age + male,",
         "           family = binomial, data = d)",
-        "<span class=\"f\">exp</span>(10 * <span class=\"f\">coef</span>(fit)[<span class=\"s\">\"sysBP\"</span>])",
-        " ",
-        "bp &lt;- <span class=\"f\">findInterval</span>(d$sysBP, <span class=\"f\">c</span>(120, 140, 160))",
-        "rate &lt;- <span class=\"f\">tapply</span>(d$TenYearCHD, bp, mean)",
-        "<span class=\"f\">png</span>(<span class=\"s\">\"chd_by_bp.png\"</span>)",
-        "<span class=\"f\">barplot</span>(100 * rate); <span class=\"f\">dev.off</span>()"
+        "bands <- c(\"<120\", \"120-139\", \"140-159\", \"160+\")",
+        "d$bp <- cut(d$sysBP, c(0, 120, 140, 160, Inf),",
+        "            bands, right = FALSE)",
+        "ggplot(d, aes(bp, 100 * TenYearCHD)) +",
+        "  stat_summary(fun = mean, geom = \"col\") +",
+        "  labs(x = \"{x}\",",
+        "       y = \"{y}\") +",
+        "  theme_minimal(base_size = 18)",
+        "ggsave(\"chd_by_bp.png\", width = 7, height = 4.5)"
       ],
       "en": {
         "folder": "Heart study",
@@ -130,8 +274,20 @@
         "alt": "Bar chart of 10-year heart disease risk by systolic blood pressure, rising from 8.5% to 30.8%",
         "yLabel": "10-year CHD risk (%)",
         "xLabel": "Systolic BP (mmHg)",
-        "vals": ["8.5%", "13.0%", "21.1%", "30.8%"],
-        "stats": [["30.8%", "CHD risk at 160+ mmHg"], ["1.20", "Odds ratio per 10 mmHg"], ["&lt; 0.001", "p value"]]
+        "stats": [
+          [
+            "30.8%",
+            "CHD risk at 160+ mmHg"
+          ],
+          [
+            "1.20",
+            "Odds ratio per 10 mmHg"
+          ],
+          [
+            "&lt; 0.001",
+            "p value"
+          ]
+        ]
       },
       "id": {
         "folder": "Studi jantung",
@@ -140,8 +296,20 @@
         "alt": "Grafik batang risiko penyakit jantung 10 tahun menurut tensi sistolik, naik dari 8,5% ke 30,8%",
         "yLabel": "Risiko PJK 10 tahun (%)",
         "xLabel": "Tensi sistolik (mmHg)",
-        "vals": ["8,5%", "13,0%", "21,1%", "30,8%"],
-        "stats": [["30,8%", "Risiko PJK di 160+ mmHg"], ["1,20", "Odds ratio per 10 mmHg"], ["&lt; 0,001", "Nilai p"]]
+        "stats": [
+          [
+            "30,8%",
+            "Risiko PJK di 160+ mmHg"
+          ],
+          [
+            "1,20",
+            "Odds ratio per 10 mmHg"
+          ],
+          [
+            "&lt; 0,001",
+            "Nilai p"
+          ]
+        ]
       }
     }
   }
