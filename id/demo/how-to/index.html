@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Cara pakai Blade</title>
+<meta name="description" content="Dari download sampai hasil pertama dengan Blade, langkah demi langkah." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="/logo.png" />
+<meta name="color-scheme" content="light" />
+<meta name="theme-color" content="#10141c" />
+<link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" />
+<link rel="stylesheet" href="/assets/landing.css?v=b60037012d9f" />
+<style>
+  /* How to use Blade, from the download to the first result, in the style of
+     the reels. Each scene is one short caption over a coded mock that plays
+     on a clock. The stage is a fixed canvas scaled to the screen, so a
+     browser view and a recording match pixel for pixel: 9:16 for reels and
+     stories, 4:5 for the feed, 16:9 for desktop. ?format=story|feed|wide and
+     ?os=mac|win and ?data=sleep|framingham pin the take; ?record holds it
+     until window.startReel(). The numbers come from the demo datasets:
+     sleep_survey.csv (n = 214, made up) and the Framingham heart study
+     teaching extract (n = 4,240). The copy lives in content/howto.json. */
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: #10141c; }
+  .reel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--w);
+    height: var(--h);
+    overflow: hidden;
+    background: #fff;
+    transform: translate(-50%, -50%) scale(var(--fit, 1));
+    transform-origin: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .reel[data-format="story"] { --w: 1080px; --h: 1920px; --fs: 34px; }
+  .reel[data-format="feed"] { --w: 1080px; --h: 1350px; --fs: 30px; }
+  .reel[data-format="wide"] { --w: 1920px; --h: 1080px; --fs: 24px; }
+  .reel[data-os="mac"] .os-win, .reel[data-os="win"] .os-mac { display: none !important; }
+  /* One demo dataset plays at a time; ?data=sleep|framingham picks it. */
+  .reel[data-ds="sleep"] .ds-framingham, .reel[data-ds="framingham"] .ds-sleep { display: none !important; }
+  /* The variants are spans, so they must not pick up the title bar's or file chips' span rules. */
+  .mw-bar b span { position: static; font: inherit; color: inherit; }
+  .out-files li span[class^="ds-"] { display: inline; }
+
+  /* Story-style progress, one segment per scene. In 9:16 it sits below the
+     account row Instagram lays over the top edge. */
+  .bars { position: absolute; z-index: 5; display: flex; gap: 10px; inset: 132px 64px auto; }
+  .bars i { flex: 1; height: 6px; padding: 14px 0; margin: -14px 0; background: content-box #1f23201f; overflow: hidden; border-radius: 3px; }
+  .bars i::after { content: ""; display: block; height: 6px; background: #1f2320b3; transform: scaleX(var(--p, 0)); transform-origin: left; }
+  .reel[data-format="feed"] .bars { inset: 44px 56px auto; }
+  .reel[data-format="wide"] .bars { inset: 48px 96px auto; }
+
+  .scene { position: absolute; inset: 0; display: none; }
+  .scene.on { display: block; animation: scene-in 0.5s var(--ease) both; }
+  @keyframes scene-in { from { opacity: 0; transform: translateY(16px); } }
+
+  /* The one sentence, with its step number above it. */
+  .cap {
+    position: absolute;
+    inset: 200px 72px auto;
+    margin: 0;
+    font-size: 68px;
+    line-height: 1.06;
+    font-weight: 450;
+    letter-spacing: -0.045em;
+    color: #1f2320;
+    text-wrap: balance;
+  }
+  .cap .num {
+    display: grid;
+    place-items: center;
+    width: 1em;
+    height: 1em;
+    margin-bottom: 0.4em;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .reel[data-format="feed"] .cap { inset: 92px 64px auto; font-size: 58px; }
+  .reel[data-format="wide"] .cap { inset: 50% auto auto 110px; width: 660px; font-size: 76px; transform: translateY(-50%); }
+
+  .stage {
+    position: absolute;
+    inset: 520px 60px auto;
+    height: 1100px;
+    container-type: size;
+    font-size: var(--fs);
+    line-height: 1.45;
+  }
+  .reel[data-format="feed"] .stage { inset: 330px 56px 110px; height: auto; }
+  .reel[data-format="wide"] .stage { inset: 124px 96px 110px 840px; height: auto; }
+  .stage > .mock { position: absolute; inset: 0; display: flex; padding: 0; font-size: 1em; }
+  .stage .mw { box-shadow: 0 30px 80px #2a352024; }
+  .stage .m-table { font-size: 0.8em; }
+  .stage .m-compose p { animation: none; }
+  .stage .m-compose .ph { color: #a3a79e; }
+
+  /* The pointer and anything it carries move in stage pixels. */
+  .ptr, .ghost {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(var(--x, 0), var(--y, 0));
+    transition: transform 0.8s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.25s;
+  }
+  .ptr {
+    z-index: 5;
+    width: 1.5em;
+    height: 1.85em;
+    fill: #1f2320;
+    stroke: #fff;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0.1em 0.15em #0003);
+  }
+  .ptr.show, .ghost.show { opacity: 1; }
+  .ptr.press { transform: translate(var(--x), var(--y)) scale(0.85); transition-duration: 0.1s; }
+  .ghost { transform: translate(var(--x, 0), var(--y, 0)) translate(-50%, -50%) rotate(-4deg); filter: drop-shadow(0 0.5em 0.8em #0003); }
+  .ghost.show { opacity: 0.9; }
+  .press-able { transition: transform 0.12s, background 0.2s, box-shadow 0.2s; }
+  .press-able.press { transform: scale(0.94); }
+
+  .prog { display: block; height: 0.42em; border-radius: 1em; background: #e6e7e1; overflow: hidden; }
+  .prog i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--orange); transition: width var(--t, 2.2s) linear; }
+
+  /* The plain Blade window: title bar, folder crumb, an empty body, compose. */
+  .mw-head .crumb-btn { display: inline-flex; align-items: center; gap: 0.4em; padding: 0.2em 0.5em; margin: -0.2em -0.1em; border-radius: 0.45em; color: var(--m-fg); }
+  .mw-head .crumb-btn.press, .mw-head .crumb-btn.open { background: #ecede7; }
+  .mw-head .crumb-btn .chev { width: 0.8em; height: 0.8em; }
+  .app-body { position: relative; display: flex; flex-direction: column; gap: 0.7em; flex: 1; min-height: 0; padding: 0.9em; }
+  .app-empty { display: grid; justify-items: center; gap: 0.3em; margin: auto; color: var(--m-muted); text-align: center; }
+  .app-empty img { width: 3em; height: 3em; margin-bottom: 0.4em; opacity: 0.35; filter: grayscale(1); }
+  .app-empty b { font-weight: 500; color: var(--m-fg); }
+  .app-empty small { font-size: 0.8em; }
+
+  /* 1. Download from the website. */
+  .br .mw-bar .br-url {
+    inset-inline: auto;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.2em 1.4em;
+    border-radius: 0.6em;
+    background: #eeefe9;
+    font-weight: 500;
+    transform: translateX(-50%);
+  }
+  .br-url svg { width: 0.85em; height: 0.85em; fill: none; stroke: currentColor; stroke-width: 1.6; }
+  .br-page {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    background:
+      linear-gradient(180deg, #fff0 25%, #ffffffd9 62%, #fff 88%),
+      url(/assets/daylight-lake-mobile.webp) center top / cover no-repeat;
+  }
+  .br-nav { display: flex; align-items: center; gap: 1.1em; padding: 0.8em 1em; font-size: 0.85em; }
+  .br-logo { display: inline-flex; align-items: center; gap: 0.4em; font-weight: 600; }
+  .br-logo img { width: 1.4em; height: 1.4em; }
+  .br-get { margin-inline-start: auto; padding: 0.3em 0.9em; border-radius: 2em; background: #1f2320; color: #fff; }
+  .br-hero { margin: auto 0 0; padding: 0 1.4em 1.8em; text-align: center; }
+  .br-hero h3 { margin: 0 0 0.45em; font-size: 1.75em; line-height: 1.06; font-weight: 450; letter-spacing: -0.045em; text-wrap: balance; }
+  .br-hero h3 em { font-style: normal; color: #303c2c; }
+  .br-hero p { max-width: 21em; margin: 0 auto 1.1em; font-size: 0.82em; color: var(--m-muted); }
+  .br-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.65em 1.3em;
+    border-radius: 0.7em;
+    background: var(--btn-face);
+    box-shadow: var(--btn-lift);
+    color: #fff;
+    font-weight: 600;
+  }
+  .br-btn svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .br-hero small { display: block; margin-top: 0.7em; font-size: 0.72em; color: var(--m-muted); }
+  .br-shelf { display: flex; align-items: center; gap: 0.7em; padding: 0.8em 1em; border-top: 1px solid var(--m-line); background: #fff; animation: mock-up 0.4s var(--ease) both; }
+  .sc-dl:not(.s3) .br-shelf { display: none; }
+  .br-shelf .mi { width: 1.6em; height: 1.6em; }
+  .br-file { display: grid; gap: 0.35em; flex: 1; min-width: 0; }
+  .br-file b { overflow: hidden; font-size: 0.82em; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+  .br-size { font-size: 0.78em; color: var(--m-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .br-shelf .ok { opacity: 0; transition: opacity 0.3s; }
+  .sc-dl.s4 .br-shelf .prog i { width: 100%; }
+  .sc-dl.s5 .br-shelf .ok { opacity: 1; }
+  .sc-dl.s5 .br-shelf .prog i { background: #5d7a4f; }
+
+  /* 2. Install: drag to Applications on a Mac, the setup wizard on Windows. */
+  .fd-body { display: grid; flex: 1; place-items: center; background: #fff; }
+  .fd-row { display: flex; align-items: center; gap: 1.6em; }
+  .fd-item { position: relative; display: grid; justify-items: center; gap: 0.5em; padding: 0.8em 0.9em 0.6em; border-radius: 0.8em; font-size: 0.9em; transition: background 0.25s, opacity 0.25s; }
+  .fd-item img, .fd-item svg.big { width: 5.4em; height: 5.4em; }
+  .fd-app img { border-radius: 1.2em; }
+  .fd-arrow { width: 3.2em; fill: none; stroke: #b9bdb3; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .fd-ok { position: absolute; top: 0.4em; right: 0.4em; display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: #5d7a4f; opacity: 0; transform: scale(0.6); transition: opacity 0.3s, transform 0.4s var(--ease); }
+  .fd-ok svg { width: 1em; height: 1em; fill: none; stroke: #fff; stroke-width: 2; }
+  .sc-in.s2 .fd-app { opacity: 0.4; }
+  .sc-in.s3 .fd-app { opacity: 1; }
+  .sc-in.s2:not(.s3) .fd-apps { background: #e3eefb; }
+  .sc-in.s5 .fd-ok { opacity: 1; transform: none; }
+  .fd-copy { display: grid; gap: 0.45em; padding: 0.8em 1em 1em; border-top: 1px solid var(--m-line); font-size: 0.85em; animation: mock-up 0.4s var(--ease) both; }
+  .sc-in:not(.s3) .fd-copy { display: none; }
+  .sc-in.s4 .fd-copy .prog i { width: 100%; }
+  .sc-in.s5 .fd-copy .prog i { background: #5d7a4f; }
+  .ghost-app { width: 5em; height: 5em; border-radius: 1.1em; }
+
+  .wi { border-radius: 0.4em !important; }
+  .wi-bar { display: flex; align-items: center; gap: 0.5em; padding: 0.6em 0.9em; border-bottom: 1px solid var(--m-line); background: #fff; font-size: 0.85em; }
+  .wi-bar img { width: 1.2em; height: 1.2em; }
+  .wi-bar span { margin-inline-start: auto; letter-spacing: 1.1em; color: var(--m-muted); }
+  .wi-body { display: grid; flex: 1; place-content: center; justify-items: center; gap: 0.9em; padding: 1em; text-align: center; }
+  .wi-logo { width: 5em; height: 5em; border-radius: 1.1em; }
+  .wi-body h4 { margin: 0; font-size: 1.35em; font-weight: 500; letter-spacing: -0.03em; }
+  .wi-body .prog { width: 14em; }
+  .wi-body small { font-size: 0.8em; color: var(--m-muted); }
+  .wi-foot { display: flex; justify-content: flex-end; padding: 0.8em 1em; border-top: 1px solid var(--m-line); background: #f6f6f3; }
+  .wi-btn { padding: 0.4em 1.6em; border: 1px solid var(--m-line); border-radius: 0.35em; background: #fff; color: var(--m-muted); }
+  .sc-in.s1 .wi .prog i { width: 100%; }
+  .sc-in .wi-b, .sc-in.s2 .wi-a { display: none; }
+  .sc-in.s2 .wi-b { display: inline; }
+  .sc-in.s2 .wi .prog i { background: #5d7a4f; }
+  .sc-in.s2 .wi-btn { border-color: var(--orange); background: var(--orange); color: #fff; }
+
+  /* 3. Sign in: email, then the six-digit code from the inbox. */
+  .lg-body {
+    display: grid;
+    flex: 1;
+    place-items: center;
+    background:
+      linear-gradient(180deg, #fff0 0%, #ffffffb3 58%, #fff 92%),
+      url(/assets/daylight-lake-mobile.webp) center top / cover no-repeat;
+  }
+  .lg-box { display: grid; gap: 0.8em; width: 15em; padding: 1.5em 1.3em; border: 1px solid var(--m-line); border-radius: 1em; background: #fffffff2; box-shadow: 0 1em 2.4em #2a35201a; text-align: center; }
+  .lg-icon { justify-self: center; width: 2.6em; height: 2.6em; }
+  .lg-box h4 { margin: 0; font-size: 1.3em; line-height: 1.15; font-weight: 500; letter-spacing: -0.035em; }
+  .lg-sub { margin: -0.3em 0 0; font-size: 0.75em; color: var(--m-muted); }
+  .lg-field { text-align: start; font-size: 0.85em; }
+  .lg-field > span { font-size: 0.85em; color: var(--m-muted); }
+  .lg-field p { display: flex; align-items: center; min-height: 2.3em; margin: 0.3em 0 0; padding: 0.4em 0.7em; border: 1px solid #d36a3a; border-radius: 0.55em; background: #fff; box-shadow: 0 0 0 0.2em #d43b0014; }
+  .lg-code b { font-weight: 500; letter-spacing: 0.45em; font-variant-numeric: tabular-nums; }
+  .lg-btn { display: block; padding: 0.55em; border-radius: 0.6em; background: #1f2320; color: #fff; font-weight: 600; }
+  .sc-lg .lg-b, .sc-lg.s2 .lg-a, .lg-ok, .sc-lg.s5 .lg-box > :not(.lg-ok) { display: none; }
+  .sc-lg.s2 .lg-b { display: block; }
+  .sc-lg.s2 :is(h4, .lg-sub, .lg-btn) .lg-b { display: inline; }
+  .sc-lg.s4 .lg-btn { opacity: 0.6; }
+  .sc-lg.s5 .lg-ok { display: grid; justify-items: center; gap: 0.5em; padding: 1em 0; animation: mock-up 0.45s var(--ease) both; }
+  .lg-ok i { display: grid; place-items: center; width: 3em; height: 3em; border-radius: 50%; background: #5d7a4f; }
+  .lg-ok svg { width: 1.6em; height: 1.6em; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lg-ok b { font-size: 1.2em; font-weight: 500; }
+  .mail {
+    position: absolute;
+    top: 3.2em;
+    right: 0.8em;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    width: 15em;
+    padding: 0.7em 0.9em;
+    border: 1px solid #0000000d;
+    border-radius: 1em;
+    background: #fbfbfaf2;
+    box-shadow: 0 0.8em 2em #2a352033;
+    font-size: 0.8em;
+    line-height: 1.35;
+    opacity: 0;
+    transform: translateY(-1em);
+    transition: opacity 0.35s, transform 0.5s var(--ease);
+  }
+  .mail img { width: 2.2em; height: 2.2em; }
+  .mail div { display: grid; min-width: 0; }
+  .mail small { align-self: start; margin-inline-start: auto; color: var(--m-muted); }
+  .mail strong { font-weight: 600; letter-spacing: 0.08em; }
+  .sc-lg.s3 .mail { opacity: 1; transform: none; }
+  .sc-lg.s5 .mail { opacity: 0; }
+
+  /* 4. First launch: Blade checks for R and installs it. */
+  .rt { display: grid; gap: 0.2em; margin: auto 0; padding: 0.4em 0; border: 1px solid var(--m-line); border-radius: 0.8em; background: #fff; animation: mock-up 0.5s var(--ease) 0.4s both; }
+  .rt > p { margin: 0; padding: 0.4em 0.9em; font-size: 0.75em; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--m-muted); }
+  .rt-row { display: flex; align-items: center; gap: 0.6em; min-height: 2.6em; padding: 0.3em 0.9em; font-size: 0.9em; }
+  .rt-row + .rt-row { border-top: 1px solid var(--m-line); }
+  .rt-row .mi { width: 1.1em; height: 1.1em; }
+  .rt-row .warn { color: #c27c0e; stroke-width: 1.6; }
+  .rt-path { margin-inline-start: auto; overflow: hidden; font: 0.78em ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: var(--m-muted); text-overflow: ellipsis; white-space: nowrap; }
+  .rt-btn { display: inline-flex; align-items: center; gap: 0.4em; margin-inline-start: auto; padding: 0.35em 0.75em; border-radius: 0.5em; background: #1f2320; color: #fff; font-size: 0.85em; font-weight: 500; white-space: nowrap; }
+  .rt-btn svg { width: 0.95em; height: 0.95em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .rt-busy { display: inline-flex; align-items: center; gap: 0.45em; margin-inline-start: auto; font-size: 0.85em; }
+  .rt-r .ok, .rt-r .rt-path, .rt-r .rt-b, .rt-busy, .sc-rt.s2 .rt-btn, .sc-rt.s3 :is(.rt-r .warn, .rt-r .rt-a, .rt-busy) { display: none; }
+  .sc-rt.s2 .rt-busy { display: inline-flex; }
+  .sc-rt.s3 :is(.rt-r .ok, .rt-r .rt-path) { display: block; }
+  .sc-rt.s3 .rt-r .rt-b { display: inline; }
+  .sc-rt.s3 .rt-r { animation: mock-up 0.4s var(--ease) both; }
+
+  /* 5. Choose the project folder. */
+  .fo-b, .sc-fo.s4 .fo-a { display: none; }
+  .sc-fo.s4 .fo-b { display: inline; }
+  .sc-fo.s4 .app-empty .fo-b { display: block; }
+  .fo-menu { position: absolute; top: 0.3em; left: 0.9em; z-index: 2; display: none; min-width: 11em; padding: 0.35em; border: 1px solid var(--m-line); border-radius: 0.7em; background: #fff; box-shadow: 0 0.8em 2em #2a352026; animation: mock-up 0.3s var(--ease) both; }
+  .fo-menu small { display: block; padding: 0.3em 0.6em; font-size: 0.72em; color: var(--m-muted); }
+  .fo-menu span { display: flex; align-items: center; gap: 0.5em; padding: 0.45em 0.6em; border-radius: 0.45em; }
+  .fo-menu span.press { background: #ecede7; transform: none; }
+  .sc-fo.s1:not(.s2) .fo-menu { display: block; }
+  .pk {
+    position: absolute;
+    inset: 0.6em;
+    z-index: 3;
+    display: none;
+    grid-template-columns: 7.5em minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid #d4d6ce;
+    border-radius: 0.8em;
+    background: #fff;
+    box-shadow: 0 1.2em 3em #2a352040;
+    animation: mock-rise 0.4s var(--ease) both;
+  }
+  .sc-fo.s2:not(.s4) .pk { display: grid; }
+  .pk-side { display: grid; align-content: start; gap: 0.1em; padding: 0.8em 0.5em; background: #f3f3f0; font-size: 0.85em; }
+  .pk-side small { padding: 0 0.5em 0.3em; font-size: 0.8em; font-weight: 600; color: var(--m-muted); }
+  .pk-side span { padding: 0.3em 0.5em; border-radius: 0.4em; }
+  .pk-side .on { background: #e2e3dd; }
+  .pk-main { display: flex; flex-direction: column; min-width: 0; }
+  .pk-path { display: flex; align-items: center; gap: 0.5em; margin: 0; padding: 0.7em 0.9em; border-bottom: 1px solid var(--m-line); font-weight: 600; }
+  .pk-main ul { flex: 1; margin: 0; padding: 0.4em; list-style: none; }
+  .pk-main li { display: flex; align-items: center; gap: 0.6em; padding: 0.35em 0.6em; border-radius: 0.45em; }
+  .fi { width: 1.25em; height: 1.25em; flex: none; fill: #79b8ec; }
+  .sc-fo.s3 .pk-pick { background: #2f6fd6; color: #fff; }
+  .sc-fo.s3 .pk-pick .fi { fill: #cfe5fa; }
+  .pk-btns { display: flex; justify-content: flex-end; gap: 0.6em; padding: 0.7em 0.9em; border-top: 1px solid var(--m-line); font-size: 0.9em; }
+  .pk-btns span { padding: 0.3em 1.1em; border: 1px solid var(--m-line); border-radius: 0.45em; }
+  .pk-btns .pk-open { border-color: #c9cbc3; color: var(--m-muted); }
+  .sc-fo.s3 .pk-btns .pk-open { border-color: #2f6fd6; background: #2f6fd6; color: #fff; }
+
+  /* 6. Drop the data file in. The window makes room for the file above it. */
+  .sc-ad .stage > .mock { top: 3.6em; }
+  .sc-ad .m-table tr:nth-child(n + 6) { display: none; }
+  .dfile { position: absolute; top: -0.4em; left: 0.4em; z-index: 3; display: grid; justify-items: center; gap: 0.15em; transition: opacity 0.3s; }
+  .dfile span { padding: 0 0.4em; border-radius: 0.3em; font-size: 0.7em; font-weight: 500; }
+  .doc { position: relative; display: block; width: 2.5em; height: 3.1em; }
+  .doc svg { width: 100%; height: 100%; }
+  .doc b { position: absolute; left: 0; right: 0; bottom: 0.55em; font-size: 0.5em; font-weight: 700; color: #fff; text-align: center; letter-spacing: 0.05em; }
+  .sc-ad.s1 .dfile { opacity: 0.35; }
+  .sc-ad.s3 .dfile { opacity: 0; }
+  .drop { position: absolute; inset: 0.6em; z-index: 2; display: none; place-content: center; justify-items: center; gap: 0.5em; border: 0.12em dashed var(--orange); border-radius: 0.8em; background: #fdf3eef0; color: #b53200; font-weight: 500; }
+  .drop svg { width: 2em; height: 2em; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .sc-ad.s2:not(.s3) .drop { display: grid; animation: mock-up 0.3s var(--ease) both; }
+  .ad-data, .att { display: none; }
+  .sc-ad.s3 .ad-data { display: flex; flex-direction: column; gap: 0.7em; }
+  .sc-ad.s3 .ad-data > * { animation: mock-up 0.45s var(--ease) both; }
+  .sc-ad.s3 .ad-data > :nth-child(2) { animation-delay: 0.15s; }
+  .sc-ad.s3 .app-empty { display: none; }
+  .sc-ad.s3 .att { display: inline-flex; animation: mock-up 0.4s var(--ease) 0.2s both; }
+  .att { align-items: center; gap: 0.4em; margin: 0 0 0.6em; padding: 0.2em 0.6em; border-radius: 0.45em; background: #f0f1ec; font-size: 0.85em; }
+
+  /* 7. Ask. Same session as the homepage preview. */
+  .ask-demo .ask-answer { flex: 1; min-height: 0; }
+  .ask-answer > :nth-child(4) { animation-delay: 0.75s; }
+  .ask-data .hl { background: #d43b0012; }
+  .ask-data th.hl { color: #b53200; font-weight: 600; }
+
+  /* 8. The output: the chart, the numbers, and the script behind them. */
+  .out-body { display: flex; flex-direction: column; gap: 0.7em; flex: 1; min-height: 0; padding: 0.9em; }
+  .out-fig { flex: 1; min-height: 0; }
+  .out-fig p b { font-weight: 600; }
+  .out-view { position: relative; flex: 1; min-height: 0; padding: 0.6em; }
+  .chart { display: block; width: 100%; height: 100%; overflow: visible; }
+  .chart .grid line { stroke: #e9eae4; }
+  .chart text { font-size: 16px; fill: #767b72; }
+  .chart .dots circle { fill: #5d7a4f; fill-opacity: 0.5; }
+  .chart .dots { clip-path: inset(0 100% 0 0); transition: clip-path 1.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .chart .fit { stroke: var(--orange); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 600; stroke-dashoffset: 600; transition: stroke-dashoffset 0.9s var(--ease); }
+  .sc-out.s1 .chart .dots { clip-path: inset(0 0 0 0); }
+  .sc-out.s2 .chart .fit { stroke-dashoffset: 0; }
+  .chart .bars rect { fill: #5d7a4f; fill-opacity: 0.7; transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); transition: transform 0.8s var(--ease); }
+  .chart .bars .key { fill: var(--orange); fill-opacity: 1; }
+  .chart .bars rect:nth-child(2) { transition-delay: 0.15s; }
+  .chart .bars rect:nth-child(3) { transition-delay: 0.3s; }
+  .chart .bars rect:nth-child(4) { transition-delay: 0.45s; }
+  .chart .vals { opacity: 0; transition: opacity 0.5s; }
+  .chart .vals text { font-size: 19px; font-weight: 600; fill: #1f2320; }
+  .sc-out.s1 .chart .bars rect { transform: none; }
+  .sc-out.s2 .chart .vals { opacity: 1; }
+  .out-code { position: absolute; inset: 0; display: none; padding-top: 0.4em; background: #fff; animation: mock-up 0.4s var(--ease) both; }
+  .out-code .m-code { font-size: 0.7em; }
+  .o-b, .sc-out.s5 .o-a { display: none; }
+  .sc-out.s5 .o-b { display: inline; }
+  .sc-out.s5 .out-code { display: block; }
+  .out-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6em; }
+  .out-stats div { padding: 0.55em 0.8em; border: 1px solid var(--m-line); border-radius: 0.7em; background: #fff; }
+  .out-stats b { display: block; font-size: 1.45em; line-height: 1.2; font-weight: 500; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .out-stats b.up { color: #5d7a4f; }
+  .out-stats b.warn { color: var(--orange); }
+  .out-stats span { display: block; font-size: 0.72em; line-height: 1.3; color: var(--m-muted); }
+  .out-files { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 0; padding: 0; list-style: none; }
+  .out-files li { display: inline-flex; align-items: center; gap: 0.45em; padding: 0.4em 0.75em; border: 1px solid var(--m-line); border-radius: 0.6em; background: #fff; font-size: 0.85em; }
+  .out-files li span { display: none; }
+  .out-files li.press { background: #ecede7; }
+  .sc-out.s5 .out-files .pick { border-color: var(--orange); background: #fdf0e9; }
+  .out-stats div, .out-files li { opacity: 0; transform: translateY(0.4em); transition: opacity 0.4s, transform 0.5s var(--ease), background 0.2s; }
+  .sc-out.s3 .out-stats div, .sc-out.s4 .out-files li { opacity: 1; transform: none; }
+  .out-stats div:nth-child(2), .out-files li:nth-child(2) { transition-delay: 0.12s; }
+  .out-stats div:nth-child(3), .out-files li:nth-child(3) { transition-delay: 0.24s; }
+  /* A landscape stage puts the numbers and files beside the chart. */
+  @container (min-aspect-ratio: 1.05) {
+    .out-body { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+    .out-fig { grid-row: span 2; }
+    .out-stats { grid-template-columns: minmax(0, 1fr); align-content: start; }
+    .out-files { flex-direction: column; align-items: stretch; }
+  }
+
+  /* Opening and closing scenes sit on the homepage landscape. */
+  .s-hero { text-align: center; }
+  .s-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, #fff0 18%, #ffffffb8 52%, #fff 80%),
+      url(/assets/daylight-lake-mobile.webp) center top / auto 62% no-repeat;
+  }
+  .reel[data-format="feed"] .s-hero::before { background-size: auto, auto 78%; }
+  .reel[data-format="wide"] .s-hero::before {
+    background:
+      linear-gradient(180deg, #fff0 10%, #ffffffb3 55%, #fff 88%),
+      url(/assets/daylight-lake.webp) center 30% / cover no-repeat;
+  }
+  .s-hero .in { position: absolute; inset: 760px 80px auto; }
+  .reel[data-format="feed"] .s-hero .in { top: 600px; }
+  .reel[data-format="wide"] .s-hero .in { top: 380px; inset-inline: 200px; }
+  .mark { display: inline-flex; align-items: center; gap: 18px; margin-bottom: 44px; font-size: 52px; font-weight: 600; letter-spacing: -0.04em; color: #192715; }
+  .mark img { width: 72px; height: 72px; border-radius: 16px; }
+  .s-hero h1 { margin: 0; font-size: 96px; line-height: 1.02; font-weight: 430; letter-spacing: -0.055em; color: #1f2320; text-wrap: balance; }
+  .reel[data-format="feed"] .s-hero h1 { font-size: 88px; }
+  .reel[data-format="wide"] .s-hero h1 { font-size: 104px; }
+  .s-hero .url { display: inline-block; margin-top: 52px; font-size: 52px; letter-spacing: -0.03em; color: #1f2320; border-bottom: 4px solid var(--orange); padding-bottom: 4px; }
+
+  /* Small brand line, kept above the area the apps cover with the caption. */
+  .sig { position: absolute; inset: 1668px 0 auto; z-index: 4; display: flex; justify-content: center; align-items: center; gap: 12px; margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: #1f2320; }
+  .sig img { width: 40px; height: 40px; border-radius: 9px; }
+  .sig span { font-weight: 400; color: var(--muted); }
+  .reel[data-format="feed"] .sig { inset: auto 0 38px; }
+  .reel[data-format="wide"] .sig { inset: auto auto 56px 110px; }
+
+  /* Controls live outside the canvas and fade while the pointer rests, so a
+     screen recording stays clean. ?record drops them entirely. */
+  .chrome {
+    position: fixed;
+    left: 50%;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    width: max-content;
+    max-width: calc(100vw - 32px);
+    padding: 6px;
+    border-radius: 24px;
+    background: #1f2320e0;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1;
+    transform: translateX(-50%);
+    transition: opacity 0.4s var(--ease);
+  }
+  body.idle .chrome { opacity: 0; pointer-events: none; }
+  body.idle, body.idle .reel { cursor: none; }
+  body.record .chrome { display: none; }
+  .seg { display: flex; padding: 2px; border-radius: 20px; background: #ffffff1a; }
+  .seg button, .cbtn { border: 0; background: none; color: #ffffffb8; cursor: pointer; font: inherit; font-weight: 500; }
+  .seg button { padding: 8px 12px; border-radius: 18px; }
+  .seg button[aria-pressed="true"] { background: #fff; color: #1f2320; }
+  .cbtn { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #ffffff1a; color: #fff; }
+  .cbtn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .seg button:focus-visible, .cbtn:focus-visible { outline: 2px solid #ff8a5c; outline-offset: 2px; }
+  #play .i-play, body.paused #play .i-pause { display: none; }
+  body.paused #play .i-play { display: block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reel *, .reel *::before, .reel *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="reel" id="reel" data-format="story" data-os="mac" data-ds="sleep" role="region" aria-label="Cara pakai Blade, langkah demi langkah">
+  <div class="bars" id="bars"></div>
+
+  <section class="scene s-hero" data-dur="3.5" aria-label="Pembuka">
+    <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>Dari download sampai hasil pertama</h1></div>
+  </section>
+
+  <section class="scene sc-dl" data-dur="6" data-play="download">
+    <p class="cap"><span class="num">1</span>Download Blade untuk Mac atau Windows</p>
+    <div class="stage">
+      <div class="mock"><div class="mw br">
+        <div class="mw-bar"><i></i><i></i><i></i><span class="br-url"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>bladestatistics.com</span></div>
+        <div class="br-page">
+          <div class="br-nav"><span class="br-logo"><img src="/logo.png" alt="" />Blade</span><span>Harga</span><span class="br-get">Unduh Blade</span></div>
+          <div class="br-hero">
+            <h3>Agen AI khusus untuk <em>analisis statistik</em></h3>
+            <p>Blade mengerjakan bagian terberatnya, jadi Anda bisa fokus menemukan insight yang penting</p>
+            <span class="br-btn press-able"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg><span class="os-mac">Unduh untuk macOS</span><span class="os-win">Unduh untuk Windows</span></span>
+            <small>macOS dan Windows, beta</small>
+          </div>
+        </div>
+        <div class="br-shelf">
+          <svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>
+          <div class="br-file"><b class="os-mac">blade-desktop-0.2.38-mac-arm64.dmg</b><b class="os-win">blade-desktop-0.2.38-win-x64.exe</b><span class="prog"><i></i></span></div>
+          <span class="br-size"><span class="os-mac">110 MB</span><span class="os-win">99 MB</span></span>
+          <svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>
+        </div>
+      </div></div>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-in" data-dur="6.5" data-play="install">
+    <p class="cap"><span class="num">2</span><span class="os-mac">Seret Blade ke Applications untuk install</span><span class="os-win">Jalankan installer sampai selesai</span></p>
+    <div class="stage">
+      <div class="mock os-mac"><div class="mw fd">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade 0.2.38</span></div>
+        <div class="fd-body">
+          <div class="fd-row">
+            <div class="fd-item fd-app"><img src="/logo.png" alt="" /><span>Blade</span></div>
+            <svg class="fd-arrow" viewBox="0 0 60 20" aria-hidden="true"><path d="M3 10h52M47 3l8 7-8 7"/></svg>
+            <div class="fd-item fd-apps">
+              <svg class="big" viewBox="0 0 64 52" aria-hidden="true"><path d="M4 8a4 4 0 0 1 4-4h15l6 6h27a4 4 0 0 1 4 4v30a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" fill="#4f9fe0"/><path d="M4 16a3 3 0 0 1 3-3h50a3 3 0 0 1 3 3v28a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" fill="#7cc0f2"/><path d="M26 41l6-14 6 14M28.4 36h7.2" fill="none" stroke="#e6f3fd" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Applications</span>
+              <i class="fd-ok"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-6.5"/></svg></i>
+            </div>
+          </div>
+        </div>
+        <div class="fd-copy"><span>Copying “Blade” to “Applications”</span><span class="prog" style="--t: 1.8s"><i></i></span></div>
+      </div></div>
+      <div class="mock os-win"><div class="mw wi">
+        <div class="wi-bar"><img src="/logo.png" alt="" />Blade Setup<span aria-hidden="true">–□×</span></div>
+        <div class="wi-body">
+          <img class="wi-logo" src="/logo.png" alt="" />
+          <h4><span class="wi-a">Installing Blade</span><span class="wi-b">Blade is installed</span></h4>
+          <span class="prog" style="--t: 2.6s"><i></i></span>
+          <small><span class="wi-a">Copying files</span><span class="wi-b">Blade 0.2.38</span></small>
+        </div>
+        <div class="wi-foot"><span class="wi-btn press-able">Finish</span></div>
+      </div></div>
+      <img class="ghost ghost-app" src="/logo.png" alt="" />
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-lg" data-dur="8" data-play="signin">
+    <p class="cap"><span class="num">3</span>Buka Blade lalu masuk pakai email kamu</p>
+    <div class="stage">
+      <div class="mock"><div class="mw">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
+        <div class="lg-body">
+          <div class="lg-box">
+            <img class="lg-icon" src="/logo.png" alt="" />
+            <h4><span class="lg-a">Good research takes time.</span><span class="lg-b">Check your email</span></h4>
+            <p class="lg-sub"><span class="lg-a">Enter your email to sign in or create an account</span><span class="lg-b">We sent a 6-digit code to maya@kampus.ac.id</span></p>
+            <div class="lg-field lg-a"><span>Email</span><p><b class="type" data-text="maya@kampus.ac.id"></b><i class="caret-blink"></i></p></div>
+            <div class="lg-field lg-b"><span>Code</span><p class="lg-code"><b class="type" data-text="482916"></b><i class="caret-blink"></i></p></div>
+            <span class="lg-btn press-able"><span class="lg-a">Continue</span><span class="lg-b">Verify</span></span>
+            <div class="lg-ok"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-6.5"/></svg></i><b>Signed in</b></div>
+          </div>
+        </div>
+      </div></div>
+      <div class="mail" aria-hidden="true"><img src="/logo.png" alt="" /><div><b>Blade</b><span>Your sign-in code is <strong>482916</strong></span></div><small>now</small></div>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-rt" data-dur="6" data-play="runtime">
+    <p class="cap"><span class="num">4</span>Blade cek R dan pasang otomatis buat kamu</p>
+    <div class="stage">
+      <div class="mock"><div class="mw">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>No workspace</span></div>
+        <div class="app-body">
+          <div class="rt">
+            <p>Analysis tools</p>
+            <div class="rt-row rt-r">
+              <svg class="mi warn" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 1.5 13.5h13z M8 6.5v3 M8 11.6v.1"/></svg>
+              <svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>
+              <span><span class="rt-a">R not found</span><span class="rt-b">R 4.5.1</span></span>
+              <span class="rt-btn press-able"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg><span class="os-mac">Install via Homebrew</span><span class="os-win">Download installer</span></span>
+              <span class="rt-busy"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Installing">Installing</span></span>
+              <span class="rt-path"><span class="os-mac">/opt/homebrew/bin/R</span><span class="os-win">C:\Program Files\R\R-4.5.1</span></span>
+            </div>
+            <div class="rt-row">
+              <svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>
+              <span>Python 3.12</span>
+              <span class="rt-path"><span class="os-mac">/usr/bin/python3</span><span class="os-win">C:\Python312</span></span>
+            </div>
+          </div>
+          <div class="m-compose"><p><span class="ph">Ask Blade anything, or paste an image</span></p><div><span class="chip">Supervised</span><span class="send" style="background:#d4d6ce"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>
+        </div>
+      </div></div>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-fo" data-dur="6.5" data-play="folder">
+    <p class="cap"><span class="num">5</span>Pilih folder untuk proyek kamu</p>
+    <div class="stage">
+      <div class="mock"><div class="mw">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb-btn press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg><span class="fo-a">No workspace</span><span class="fo-b"><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></span><svg class="mi chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></div>
+        <div class="app-body">
+          <div class="fo-menu"><small>Workspace</small><span class="fo-open press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Open folder…</span></div>
+          <div class="app-empty"><img src="/logo.png" alt="" /><b><span class="fo-a">No workspace</span><span class="fo-b"><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></span></b><small class="fo-b">Ready when you are</small></div>
+          <div class="m-compose"><p><span class="ph">Ask Blade anything, or paste an image</span></p><div><span class="chip">Supervised</span><span class="send" style="background:#d4d6ce"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>
+          <div class="pk">
+            <div class="pk-side"><small>Favorites</small><span>Desktop</span><span class="on">Documents</span><span>Downloads</span></div>
+            <div class="pk-main">
+              <p class="pk-path"><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Documents</p>
+              <ul>
+                <li><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Tugas kuliah</li>
+                <li class="pk-pick press-able"><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></li>
+                <li><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Draf skripsi</li>
+              </ul>
+              <div class="pk-btns"><span>Cancel</span><span class="pk-open press-able">Open</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-ad" data-dur="6" data-play="drop">
+    <p class="cap"><span class="num">6</span>Seret file data kamu ke Blade</p>
+    <div class="stage">
+      <div class="dfile"><span class="doc"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M3 4a3 3 0 0 1 3-3h20l11 11v34a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#fff" stroke="#c9cbc3"/><path d="M26 1v8a3 3 0 0 0 3 3h8" fill="#eceee7" stroke="#c9cbc3"/><rect x="3" y="31" width="34" height="11" fill="#2f8a52"/></svg><b>CSV</b></span><span><span class="ds-sleep">sleep_survey.csv</span><span class="ds-framingham">framingham.csv</span></span></div>
+      <div class="mock"><div class="mw">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></b></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></span></div>
+        <div class="app-body">
+          <div class="app-empty"><img src="/logo.png" alt="" /><b><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></b><small>Ready when you are</small></div>
+          <div class="ad-data">
+            <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b><span class="ds-sleep">sleep_survey.csv</span><span class="ds-framingham">framingham.csv</span></b><span><span class="ds-sleep">214 rows · 6 columns</span><span class="ds-framingham">4,240 rows · 16 columns</span></span></div>
+            <div class="ask-data"><table class="m-table ds-sleep"><tr><th>id</th><th>year</th><th>sleep_hrs</th><th>study_hrs</th><th>caffeine</th><th>gpa</th></tr><tr><td>S001</td><td>1st</td><td>6.9</td><td>9</td><td>4</td><td>3.21</td></tr><tr><td>S002</td><td>2nd</td><td>7.2</td><td>8</td><td>3</td><td>2.76</td></tr><tr><td>S003</td><td>3rd</td><td>7.1</td><td>13</td><td>1</td><td>3.59</td></tr><tr><td>S004</td><td>4th</td><td>6.0</td><td>11</td><td>4</td><td>2.56</td></tr><tr><td>S005</td><td>1st</td><td>5.7</td><td>13</td><td>1</td><td>2.63</td></tr><tr><td>S006</td><td>2nd</td><td>7.3</td><td>2</td><td>1</td><td>3.29</td></tr></table><table class="m-table ds-framingham"><tr><th>male</th><th>age</th><th>sysBP</th><th>diaBP</th><th>BMI</th><th>TenYearCHD</th></tr><tr><td>1</td><td>39</td><td>106</td><td>70</td><td>26.97</td><td>0</td></tr><tr><td>0</td><td>46</td><td>121</td><td>81</td><td>28.73</td><td>0</td></tr><tr><td>1</td><td>48</td><td>127.5</td><td>80</td><td>25.34</td><td>0</td></tr><tr><td>0</td><td>61</td><td>150</td><td>95</td><td>28.58</td><td>1</td></tr><tr><td>0</td><td>46</td><td>130</td><td>84</td><td>23.10</td><td>0</td></tr><tr><td>0</td><td>43</td><td>180</td><td>110</td><td>30.30</td><td>0</td></tr></table></div>
+          </div>
+          <div class="m-compose"><span class="att"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><span class="ds-sleep">sleep_survey.csv</span><span class="ds-framingham">framingham.csv</span></span><p><span class="ph">Ask Blade anything, or paste an image</span></p><div><span class="chip">Supervised</span><span class="send" style="background:#d4d6ce"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>
+          <div class="drop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4 14v5h16v-5"/></svg>Drop supporting files here</div>
+        </div>
+      </div></div>
+      <span class="ghost"><span class="doc"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M3 4a3 3 0 0 1 3-3h20l11 11v34a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#fff" stroke="#c9cbc3"/><path d="M26 1v8a3 3 0 0 0 3 3h8" fill="#eceee7" stroke="#c9cbc3"/><rect x="3" y="31" width="34" height="11" fill="#2f8a52"/></svg><b>CSV</b></span></span>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-ask" data-dur="10" data-play="ask">
+    <p class="cap"><span class="num">7</span>Tanya pakai bahasa sehari-hari</p>
+    <div class="stage">
+      <div class="mock ask-demo" data-stage="type"><div class="mw">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></b></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></span></div>
+        <div class="mw-body">
+          <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b><span class="ds-sleep">sleep_survey.csv</span><span class="ds-framingham">framingham.csv</span></b><span><span class="ds-sleep">214 rows · 6 columns</span><span class="ds-framingham">4,240 rows · 16 columns</span></span></div>
+          <div class="ask-data"><table class="m-table ds-sleep"><tr><th>id</th><th>year</th><th class="hl">sleep_hrs</th><th>study_hrs</th><th>caffeine</th><th class="hl">gpa</th></tr><tr><td>S001</td><td>1st</td><td class="hl">6.9</td><td>9</td><td>4</td><td class="hl">3.21</td></tr><tr><td>S002</td><td>2nd</td><td class="hl">7.2</td><td>8</td><td>3</td><td class="hl">2.76</td></tr><tr><td>S003</td><td>3rd</td><td class="hl">7.1</td><td>13</td><td>1</td><td class="hl">3.59</td></tr><tr><td>S004</td><td>4th</td><td class="hl">6.0</td><td>11</td><td>4</td><td class="hl">2.56</td></tr><tr><td>S005</td><td>1st</td><td class="hl">5.7</td><td>13</td><td>1</td><td class="hl">2.63</td></tr><tr><td>S006</td><td>2nd</td><td class="hl">7.3</td><td>2</td><td>1</td><td class="hl">3.29</td></tr></table><table class="m-table ds-framingham"><tr><th>male</th><th>age</th><th class="hl">sysBP</th><th>diaBP</th><th>BMI</th><th class="hl">TenYearCHD</th></tr><tr><td>1</td><td>39</td><td class="hl">106</td><td>70</td><td>26.97</td><td class="hl">0</td></tr><tr><td>0</td><td>46</td><td class="hl">121</td><td>81</td><td>28.73</td><td class="hl">0</td></tr><tr><td>1</td><td>48</td><td class="hl">127.5</td><td>80</td><td>25.34</td><td class="hl">0</td></tr><tr><td>0</td><td>61</td><td class="hl">150</td><td>95</td><td>28.58</td><td class="hl">1</td></tr><tr><td>0</td><td>46</td><td class="hl">130</td><td>84</td><td>23.10</td><td class="hl">0</td></tr><tr><td>0</td><td>43</td><td class="hl">180</td><td>110</td><td>30.30</td><td class="hl">0</td></tr></table></div>
+          <div class="ask-chat">
+            <p class="m-user ds-sleep">Apakah jam tidur ngaruh ke IPK? Buatkan grafiknya</p><p class="m-user ds-framingham">Apakah tensi tinggi bikin risiko jantung naik? Buatkan grafiknya</p>
+            <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running R">Running R</span></div>
+            <div class="ask-answer ds-sleep"><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Read sleep_survey.csv</b><small>Done</small></div><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Ran a linear regression in R</b><small>Done</small></div><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Saved 3 files</b><small>Done</small></div><p class="m-msg">Ya. Mahasiswa yang tidur lebih lama cenderung punya IPK lebih tinggi: tiap tambahan satu jam sejalan dengan IPK <b>+0,16</b> (r&nbsp;=&nbsp;0,40, p&nbsp;&lt;&nbsp;0,001, n&nbsp;=&nbsp;214). Yang tidur kurang dari 6 jam rata-rata IPK 2,87, yang 8 jam atau lebih rata-rata 3,35.</p></div><div class="ask-answer ds-framingham"><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Read framingham.csv</b><small>Done</small></div><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Ran a logistic regression in R</b><small>Done</small></div><div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Saved 3 files</b><small>Done</small></div><p class="m-msg">Ya. Risiko penyakit jantung koroner dalam 10 tahun naik seiring tensi sistolik, dari 8,5% di bawah 120 mmHg jadi 30,8% di 160 ke atas. Tiap tambahan 10 mmHg menaikkan odds sekitar <b>20%</b> setelah disesuaikan dengan usia dan jenis kelamin (OR 1,20, p&nbsp;&lt;&nbsp;0,001, n&nbsp;=&nbsp;4.240).</p></div>
+          </div>
+          <div class="m-compose">
+            <p><span class="ask-input ds-sleep" data-prompt="Apakah jam tidur ngaruh ke IPK? Buatkan grafiknya"></span><span class="ask-input ds-framingham" data-prompt="Apakah tensi tinggi bikin risiko jantung naik? Buatkan grafiknya"></span><i class="caret-blink"></i></p>
+            <div><span class="chip">Supervised</span><span class="send press-able"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
+          </div>
+        </div>
+      </div></div>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene sc-out" data-dur="9.5" data-play="output">
+    <p class="cap"><span class="num">8</span>Dapat grafik, angka, dan script R-nya</p>
+    <div class="stage">
+      <div class="mock"><div class="mw">
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></b></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></span></div>
+        <div class="out-body">
+          <div class="m-shot out-fig">
+            <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b><span class="o-a"><span class="ds-sleep">sleep_vs_gpa.png</span><span class="ds-framingham">chd_by_bp.png</span></span><span class="o-b">analysis.R</span></b><span><span class="o-a"><span class="ds-sleep">PNG · 84 KB</span><span class="ds-framingham">PNG · 61 KB</span></span><span class="o-b">R · 1 KB</span></span></p>
+            <div class="out-view">
+              <svg class="chart ds-sleep" viewBox="0 0 600 380" role="img" aria-label="Grafik sebar jam tidur terhadap IPK dengan garis regresi yang naik"><g class="grid"><line x1="56" x2="584" y1="273.6" y2="273.6"/><text x="46" y="277.6" text-anchor="end">2.0</text><line x1="56" x2="584" y1="211.2" y2="211.2"/><text x="46" y="215.2" text-anchor="end">2.5</text><line x1="56" x2="584" y1="148.8" y2="148.8"/><text x="46" y="152.8" text-anchor="end">3.0</text><line x1="56" x2="584" y1="86.4" y2="86.4"/><text x="46" y="90.4" text-anchor="end">3.5</text><line x1="56" x2="584" y1="24.0" y2="24.0"/><text x="46" y="28.0" text-anchor="end">4.0</text></g><g class="ticks"><text x="56.0" y="358" text-anchor="middle">4</text><text x="144.0" y="358" text-anchor="middle">5</text><text x="232.0" y="358" text-anchor="middle">6</text><text x="320.0" y="358" text-anchor="middle">7</text><text x="408.0" y="358" text-anchor="middle">8</text><text x="496.0" y="358" text-anchor="middle">9</text><text x="584.0" y="358" text-anchor="middle">10</text></g><text class="ax" x="8" y="14">IPK</text><g class="dots"><circle cx="311.2" cy="122.6" r="4.2"/><circle cx="337.6" cy="178.8" r="4.2"/><circle cx="328.8" cy="75.2" r="4.2"/><circle cx="232.0" cy="203.7" r="4.2"/><circle cx="205.6" cy="195.0" r="4.2"/><circle cx="346.4" cy="112.6" r="4.2"/><circle cx="355.2" cy="56.4" r="4.2"/><circle cx="487.2" cy="95.1" r="4.2"/><circle cx="258.4" cy="142.6" r="4.2"/><circle cx="346.4" cy="136.3" r="4.2"/><circle cx="328.8" cy="80.2" r="4.2"/><circle cx="293.6" cy="68.9" r="4.2"/><circle cx="196.8" cy="112.6" r="4.2"/><circle cx="179.2" cy="237.4" r="4.2"/><circle cx="496.0" cy="103.9" r="4.2"/><circle cx="267.2" cy="175.0" r="4.2"/><circle cx="496.0" cy="56.4" r="4.2"/><circle cx="372.8" cy="86.4" r="4.2"/><circle cx="258.4" cy="82.7" r="4.2"/><circle cx="355.2" cy="76.4" r="4.2"/><circle cx="170.4" cy="123.8" r="4.2"/><circle cx="267.2" cy="110.1" r="4.2"/><circle cx="311.2" cy="136.3" r="4.2"/><circle cx="346.4" cy="90.1" r="4.2"/><circle cx="267.2" cy="185.0" r="4.2"/><circle cx="223.2" cy="107.6" r="4.2"/><circle cx="302.4" cy="113.9" r="4.2"/><circle cx="320.0" cy="133.8" r="4.2"/><circle cx="276.0" cy="160.0" r="4.2"/><circle cx="302.4" cy="125.1" r="4.2"/><circle cx="408.0" cy="98.9" r="4.2"/><circle cx="434.4" cy="178.8" r="4.2"/><circle cx="434.4" cy="103.9" r="4.2"/><circle cx="240.8" cy="127.6" r="4.2"/><circle cx="284.8" cy="127.6" r="4.2"/><circle cx="372.8" cy="102.6" r="4.2"/><circle cx="355.2" cy="24.0" r="4.2"/><circle cx="460.8" cy="24.0" r="4.2"/><circle cx="311.2" cy="202.5" r="4.2"/><circle cx="408.0" cy="116.4" r="4.2"/><circle cx="276.0" cy="24.0" r="4.2"/><circle cx="258.4" cy="32.7" r="4.2"/><circle cx="284.8" cy="126.3" r="4.2"/><circle cx="425.6" cy="112.6" r="4.2"/><circle cx="144.0" cy="81.4" r="4.2"/><circle cx="258.4" cy="207.5" r="4.2"/><circle cx="205.6" cy="171.3" r="4.2"/><circle cx="302.4" cy="121.3" r="4.2"/><circle cx="390.4" cy="162.5" r="4.2"/><circle cx="364.0" cy="51.5" r="4.2"/><circle cx="364.0" cy="108.9" r="4.2"/><circle cx="188.0" cy="218.7" r="4.2"/><circle cx="346.4" cy="108.9" r="4.2"/><circle cx="452.0" cy="128.8" r="4.2"/><circle cx="346.4" cy="131.3" r="4.2"/><circle cx="434.4" cy="77.7" r="4.2"/><circle cx="205.6" cy="163.8" r="4.2"/><circle cx="337.6" cy="115.1" r="4.2"/><circle cx="408.0" cy="88.9" r="4.2"/><circle cx="302.4" cy="161.3" r="4.2"/><circle cx="205.6" cy="186.2" r="4.2"/><circle cx="179.2" cy="138.8" r="4.2"/><circle cx="223.2" cy="214.9" r="4.2"/><circle cx="302.4" cy="163.8" r="4.2"/><circle cx="205.6" cy="221.2" r="4.2"/><circle cx="249.6" cy="121.3" r="4.2"/><circle cx="196.8" cy="193.7" r="4.2"/><circle cx="249.6" cy="126.3" r="4.2"/><circle cx="293.6" cy="131.3" r="4.2"/><circle cx="284.8" cy="185.0" r="4.2"/><circle cx="311.2" cy="135.1" r="4.2"/><circle cx="355.2" cy="212.4" r="4.2"/><circle cx="408.0" cy="82.7" r="4.2"/><circle cx="328.8" cy="97.6" r="4.2"/><circle cx="161.6" cy="101.4" r="4.2"/><circle cx="372.8" cy="81.4" r="4.2"/><circle cx="258.4" cy="133.8" r="4.2"/><circle cx="372.8" cy="216.2" r="4.2"/><circle cx="293.6" cy="115.1" r="4.2"/><circle cx="381.6" cy="131.3" r="4.2"/><circle cx="346.4" cy="113.9" r="4.2"/><circle cx="223.2" cy="226.2" r="4.2"/><circle cx="425.6" cy="100.1" r="4.2"/><circle cx="258.4" cy="211.2" r="4.2"/><circle cx="293.6" cy="153.8" r="4.2"/><circle cx="399.2" cy="113.9" r="4.2"/><circle cx="249.6" cy="111.4" r="4.2"/><circle cx="328.8" cy="160.0" r="4.2"/><circle cx="416.8" cy="25.2" r="4.2"/><circle cx="364.0" cy="197.5" r="4.2"/><circle cx="355.2" cy="63.9" r="4.2"/><circle cx="452.0" cy="100.1" r="4.2"/><circle cx="416.8" cy="101.4" r="4.2"/><circle cx="328.8" cy="80.2" r="4.2"/><circle cx="284.8" cy="73.9" r="4.2"/><circle cx="276.0" cy="110.1" r="4.2"/><circle cx="302.4" cy="112.6" r="4.2"/><circle cx="469.6" cy="87.6" r="4.2"/><circle cx="240.8" cy="116.4" r="4.2"/><circle cx="372.8" cy="97.6" r="4.2"/><circle cx="232.0" cy="207.5" r="4.2"/><circle cx="434.4" cy="49.0" r="4.2"/><circle cx="399.2" cy="67.7" r="4.2"/><circle cx="487.2" cy="103.9" r="4.2"/><circle cx="240.8" cy="178.8" r="4.2"/><circle cx="355.2" cy="170.0" r="4.2"/><circle cx="390.4" cy="56.4" r="4.2"/><circle cx="205.6" cy="196.2" r="4.2"/><circle cx="293.6" cy="151.3" r="4.2"/><circle cx="258.4" cy="186.2" r="4.2"/><circle cx="381.6" cy="110.1" r="4.2"/><circle cx="240.8" cy="130.1" r="4.2"/><circle cx="284.8" cy="171.3" r="4.2"/><circle cx="328.8" cy="173.8" r="4.2"/><circle cx="355.2" cy="141.3" r="4.2"/><circle cx="258.4" cy="170.0" r="4.2"/><circle cx="232.0" cy="150.0" r="4.2"/><circle cx="284.8" cy="102.6" r="4.2"/><circle cx="372.8" cy="120.1" r="4.2"/><circle cx="381.6" cy="180.0" r="4.2"/><circle cx="416.8" cy="123.8" r="4.2"/><circle cx="293.6" cy="123.8" r="4.2"/><circle cx="469.6" cy="141.3" r="4.2"/><circle cx="144.0" cy="151.3" r="4.2"/><circle cx="108.8" cy="151.3" r="4.2"/><circle cx="284.8" cy="35.2" r="4.2"/><circle cx="276.0" cy="218.7" r="4.2"/><circle cx="320.0" cy="107.6" r="4.2"/><circle cx="346.4" cy="200.0" r="4.2"/><circle cx="372.8" cy="86.4" r="4.2"/><circle cx="443.2" cy="56.4" r="4.2"/><circle cx="276.0" cy="176.3" r="4.2"/><circle cx="355.2" cy="143.8" r="4.2"/><circle cx="337.6" cy="148.8" r="4.2"/><circle cx="311.2" cy="27.7" r="4.2"/><circle cx="302.4" cy="82.7" r="4.2"/><circle cx="416.8" cy="80.2" r="4.2"/><circle cx="196.8" cy="205.0" r="4.2"/><circle cx="302.4" cy="176.3" r="4.2"/><circle cx="399.2" cy="57.7" r="4.2"/><circle cx="249.6" cy="98.9" r="4.2"/><circle cx="276.0" cy="249.9" r="4.2"/><circle cx="249.6" cy="113.9" r="4.2"/><circle cx="249.6" cy="176.3" r="4.2"/><circle cx="126.4" cy="175.0" r="4.2"/><circle cx="390.4" cy="142.6" r="4.2"/><circle cx="240.8" cy="118.8" r="4.2"/><circle cx="337.6" cy="130.1" r="4.2"/><circle cx="328.8" cy="147.6" r="4.2"/><circle cx="267.2" cy="163.8" r="4.2"/><circle cx="284.8" cy="192.5" r="4.2"/><circle cx="267.2" cy="205.0" r="4.2"/><circle cx="381.6" cy="83.9" r="4.2"/><circle cx="232.0" cy="73.9" r="4.2"/><circle cx="293.6" cy="183.7" r="4.2"/><circle cx="390.4" cy="131.3" r="4.2"/><circle cx="214.4" cy="85.2" r="4.2"/><circle cx="381.6" cy="128.8" r="4.2"/><circle cx="205.6" cy="151.3" r="4.2"/><circle cx="355.2" cy="71.4" r="4.2"/><circle cx="425.6" cy="166.3" r="4.2"/><circle cx="276.0" cy="165.0" r="4.2"/><circle cx="232.0" cy="162.5" r="4.2"/><circle cx="267.2" cy="145.1" r="4.2"/><circle cx="425.6" cy="106.4" r="4.2"/><circle cx="416.8" cy="141.3" r="4.2"/><circle cx="320.0" cy="110.1" r="4.2"/><circle cx="302.4" cy="155.0" r="4.2"/><circle cx="302.4" cy="203.7" r="4.2"/><circle cx="337.6" cy="68.9" r="4.2"/><circle cx="364.0" cy="66.4" r="4.2"/><circle cx="355.2" cy="40.2" r="4.2"/><circle cx="276.0" cy="107.6" r="4.2"/><circle cx="214.4" cy="126.3" r="4.2"/><circle cx="161.6" cy="116.4" r="4.2"/><circle cx="513.6" cy="173.8" r="4.2"/><circle cx="328.8" cy="96.4" r="4.2"/><circle cx="320.0" cy="98.9" r="4.2"/><circle cx="223.2" cy="214.9" r="4.2"/><circle cx="320.0" cy="113.9" r="4.2"/><circle cx="328.8" cy="148.8" r="4.2"/><circle cx="320.0" cy="165.0" r="4.2"/><circle cx="311.2" cy="146.3" r="4.2"/><circle cx="337.6" cy="226.2" r="4.2"/><circle cx="320.0" cy="132.6" r="4.2"/><circle cx="240.8" cy="190.0" r="4.2"/><circle cx="337.6" cy="158.8" r="4.2"/><circle cx="196.8" cy="121.3" r="4.2"/><circle cx="82.4" cy="163.8" r="4.2"/><circle cx="452.0" cy="141.3" r="4.2"/><circle cx="223.2" cy="177.5" r="4.2"/><circle cx="240.8" cy="171.3" r="4.2"/><circle cx="460.8" cy="140.1" r="4.2"/><circle cx="337.6" cy="143.8" r="4.2"/><circle cx="302.4" cy="92.6" r="4.2"/><circle cx="249.6" cy="120.1" r="4.2"/><circle cx="346.4" cy="123.8" r="4.2"/><circle cx="179.2" cy="110.1" r="4.2"/><circle cx="328.8" cy="96.4" r="4.2"/><circle cx="337.6" cy="76.4" r="4.2"/><circle cx="249.6" cy="146.3" r="4.2"/><circle cx="56.0" cy="193.7" r="4.2"/><circle cx="452.0" cy="92.6" r="4.2"/><circle cx="320.0" cy="118.8" r="4.2"/><circle cx="364.0" cy="70.2" r="4.2"/><circle cx="416.8" cy="157.5" r="4.2"/><circle cx="337.6" cy="112.6" r="4.2"/><circle cx="496.0" cy="105.1" r="4.2"/><circle cx="372.8" cy="25.2" r="4.2"/><circle cx="258.4" cy="150.0" r="4.2"/><circle cx="302.4" cy="75.2" r="4.2"/><circle cx="214.4" cy="177.5" r="4.2"/><circle cx="302.4" cy="105.1" r="4.2"/><circle cx="126.4" cy="234.9" r="4.2"/></g><line class="fit" x1="73.6" y1="184.4" x2="566.4" y2="72.3"/><text class="ax" x="320.0" y="376" text-anchor="middle">Tidur per malam (jam)</text></svg><svg class="chart ds-framingham" viewBox="0 0 600 380" role="img" aria-label="Grafik batang risiko penyakit jantung 10 tahun menurut tensi sistolik, naik dari 8,5% ke 30,8%"><g class="grid"><line x1="56" x2="584" y1="336.0" y2="336.0"/><text x="46" y="340.0" text-anchor="end">0</text><line x1="56" x2="584" y1="246.9" y2="246.9"/><text x="46" y="250.9" text-anchor="end">10</text><line x1="56" x2="584" y1="157.7" y2="157.7"/><text x="46" y="161.7" text-anchor="end">20</text><line x1="56" x2="584" y1="68.6" y2="68.6"/><text x="46" y="72.6" text-anchor="end">30</text></g><g class="ticks"><text x="122.0" y="358" text-anchor="middle">&lt;120</text><text x="254.0" y="358" text-anchor="middle">120-139</text><text x="386.0" y="358" text-anchor="middle">140-159</text><text x="518.0" y="358" text-anchor="middle">160+</text></g><text class="ax" x="8" y="14">Risiko PJK 10 tahun (%)</text><g class="bars"><rect x="80.0" y="260.2" width="84" height="75.8" rx="4"/><rect x="212.0" y="220.1" width="84" height="115.9" rx="4"/><rect x="344.0" y="147.9" width="84" height="188.1" rx="4"/><rect class="key" x="476.0" y="61.4" width="84" height="274.6" rx="4"/></g><g class="vals"><text x="122.0" y="250.2" text-anchor="middle">8,5%</text><text x="254.0" y="210.1" text-anchor="middle">13,0%</text><text x="386.0" y="137.9" text-anchor="middle">21,1%</text><text x="518.0" y="51.4" text-anchor="middle">30,8%</text></g><text class="ax" x="320.0" y="376" text-anchor="middle">Tensi sistolik (mmHg)</text></svg>
+              <div class="out-code"><pre class="m-code ds-sleep"><code><span class="cl"><i>1</i><span class="f">library</span>(ggplot2)</span><span class="cl"><i>2</i>d &lt;- <span class="f">read.csv</span>(<span class="s">"sleep_survey.csv"</span>)</span><span class="cl"><i>3</i>fit &lt;- <span class="f">lm</span>(gpa ~ sleep_hrs, data = d)</span><span class="cl"><i>4</i><span class="f">summary</span>(fit)</span><span class="cl"><i>5</i> </span><span class="cl"><i>6</i><span class="f">ggplot</span>(d, <span class="f">aes</span>(sleep_hrs, gpa)) +</span><span class="cl"><i>7</i>  <span class="f">geom_point</span>() +</span><span class="cl"><i>8</i>  <span class="f">geom_smooth</span>(method = <span class="s">"lm"</span>)</span><span class="cl"><i>9</i><span class="f">ggsave</span>(<span class="s">"sleep_vs_gpa.png"</span>)</span></code></pre><pre class="m-code ds-framingham"><code><span class="cl"><i>1</i>d &lt;- <span class="f">read.csv</span>(<span class="s">"framingham.csv"</span>)</span><span class="cl"><i>2</i>fit &lt;- <span class="f">glm</span>(TenYearCHD ~ sysBP + age + male,</span><span class="cl"><i>3</i>           family = binomial, data = d)</span><span class="cl"><i>4</i><span class="f">exp</span>(10 * <span class="f">coef</span>(fit)[<span class="s">"sysBP"</span>])</span><span class="cl"><i>5</i> </span><span class="cl"><i>6</i>bp &lt;- <span class="f">findInterval</span>(d$sysBP, <span class="f">c</span>(120, 140, 160))</span><span class="cl"><i>7</i>rate &lt;- <span class="f">tapply</span>(d$TenYearCHD, bp, mean)</span><span class="cl"><i>8</i><span class="f">png</span>(<span class="s">"chd_by_bp.png"</span>)</span><span class="cl"><i>9</i><span class="f">barplot</span>(100 * rate); <span class="f">dev.off</span>()</span></code></pre></div>
+            </div>
+          </div>
+          <div class="out-stats ds-sleep"><div><b class="up">+0,16</b><span>IPK per jam tambahan</span></div><div><b>0,40</b><span>Korelasi (r)</span></div><div><b>&lt; 0,001</b><span>Nilai p</span></div></div><div class="out-stats ds-framingham"><div><b class="warn">30,8%</b><span>Risiko PJK di 160+ mmHg</span></div><div><b>1,20</b><span>Odds ratio per 10 mmHg</span></div><div><b>&lt; 0,001</b><span>Nilai p</span></div></div>
+          <ul class="out-files">
+            <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><span class="ds-sleep">sleep_vs_gpa.png</span><span class="ds-framingham">chd_by_bp.png</span><span>Chart</span></li>
+            <li class="pick press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>analysis.R<span>Script</span></li>
+            <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>results.csv<span>Table</span></li>
+          </ul>
+        </div>
+      </div></div>
+      <svg class="ptr" viewBox="0 0 16 20" aria-hidden="true"><path d="M1.5 1.5v15l4-3.8 2.6 5.8 2.6-1.1-2.6-5.7h5.4z"/></svg>
+    </div>
+  </section>
+
+  <section class="scene s-hero" data-dur="4.5" aria-label="Coba Blade">
+    <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>Coba gratis pakai data kamu sendiri</h1><span class="url">bladestatistics.com</span></div>
+  </section>
+
+  <p class="sig" id="sig"><img src="/logo.png" alt="" />Blade <span>bladestatistics.com</span></p>
+</div>
+
+<div class="chrome" id="chrome">
+  <div class="seg" role="group" aria-label="Format">
+    <button type="button" data-format="story" title="Reels and stories">9:16</button>
+    <button type="button" data-format="feed" title="Instagram feed">4:5</button>
+    <button type="button" data-format="wide" title="Desktop">16:9</button>
+  </div>
+  <div class="seg" role="group" aria-label="Computer">
+    <button type="button" data-os="mac">macOS</button>
+    <button type="button" data-os="win">Windows</button>
+  </div>
+  <div class="seg" role="group" aria-label="Dataset">
+    <button type="button" data-ds="sleep" title="sleep_survey.csv">Sleep</button>
+    <button type="button" data-ds="framingham" title="framingham.csv">Framingham</button>
+  </div>
+  <div class="seg" role="group" aria-label="Language">
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="id">ID</button>
+  </div>
+  <button class="cbtn" type="button" id="play" aria-label="Pause" title="Pause (space)"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg></button>
+  <button class="cbtn" type="button" id="restart" aria-label="Start over" title="Start over (R)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 1 0 1.5-3.6M3 2.5v2.5h2.5"/></svg></button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var reel = document.getElementById("reel");
+  var scenes = [].slice.call(reel.querySelectorAll(".scene"));
+  var bars = document.getElementById("bars");
+  var sig = document.getElementById("sig");
+  var playBtn = document.getElementById("play");
+  var params = new URLSearchParams(location.search);
+  var record = params.has("record");
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SIZES = { story: [1080, 1920], feed: [1080, 1350], wide: [1920, 1080] };
+  var pinned = SIZES[params.get("format")] ? params.get("format") : null;
+  var DATASETS = ["sleep", "framingham"];
+  var base = scenes.map(function (s) { return s.className; });
+  var durs = scenes.map(function (s) { return +s.getAttribute("data-dur") * 1000; });
+  var starts = [], total = 0;
+  durs.forEach(function (d) { starts.push(total); total += d; });
+  var segs = scenes.map(function () { var i = document.createElement("i"); bars.appendChild(i); return i; });
+  var t = 0, last = performance.now(), playing = !record, current = -1, queue = [], next = 0;
+
+  if (record) document.body.classList.add("record");
+
+  function fit() {
+    var f = SIZES[reel.getAttribute("data-format")];
+    reel.style.setProperty("--fit", Math.min(innerWidth / f[0], innerHeight / f[1]));
+  }
+  function autoFormat() { return innerWidth / innerHeight > 1.2 ? "wide" : "story"; }
+  function pressed(attr, value) {
+    document.querySelectorAll("[data-" + attr + "]").forEach(function (b) {
+      if (b.tagName === "BUTTON") b.setAttribute("aria-pressed", b.getAttribute("data-" + attr) === value);
+    });
+  }
+  function remember() {
+    if (record) return;
+    var q = new URLSearchParams(location.search);
+    if (pinned) q.set("format", pinned); else q.delete("format");
+    q.set("os", reel.getAttribute("data-os"));
+    q.set("data", reel.getAttribute("data-ds"));
+    history.replaceState(null, "", "?" + q + location.hash);
+  }
+  function setFormat(name) {
+    reel.setAttribute("data-format", name);
+    pressed("format", name);
+    fit();
+    replay();
+  }
+  function setOs(name) {
+    reel.setAttribute("data-os", name);
+    pressed("os", name);
+    replay();
+  }
+  function setDataset(name) {
+    reel.setAttribute("data-ds", name);
+    pressed("ds", name);
+    replay();
+  }
+  // Pointer positions are measured, so a new layout restarts the scene.
+  function replay() { if (current >= 0) seek(current); }
+
+  // Each OS and dataset has its own copy of some elements; act on the one shown.
+  function visible(root, sel) {
+    var all = root.querySelectorAll(sel);
+    for (var i = 0; i < all.length; i++) if (all[i].getClientRects().length) return all[i];
+    return all[0];
+  }
+
+  // Everything a scene does is queued on its own clock: the reel clock only
+  // advances while playing, so pausing freezes the take mid-gesture.
+  function kit(scene) {
+    var stage = scene.querySelector(".stage");
+    var ptr = stage && stage.querySelector(".ptr");
+    var ghost = stage && stage.querySelector(".ghost");
+    function el(x) { return typeof x === "string" ? visible(scene, x) : x; }
+    function rel(x, fx, fy) {
+      var s = stage.getBoundingClientRect(), r = el(x).getBoundingClientRect(), k = s.width / stage.offsetWidth;
+      return [(r.left - s.left + r.width * (fx == null ? 0.5 : fx)) / k, (r.top - s.top + r.height * (fy == null ? 0.5 : fy)) / k];
+    }
+    function place(node, xy, instant) {
+      if (instant) node.style.transition = "none";
+      node.style.setProperty("--x", xy[0] + "px");
+      node.style.setProperty("--y", xy[1] + "px");
+      if (instant) { void node.offsetWidth; node.style.transition = ""; }
+    }
+    var k = {
+      at: function (ms, fn) { queue.push({ ms: ms, fn: fn }); },
+      step: function (ms, n) { k.at(ms, function () { scene.classList.add("s" + n); }); },
+      // The pointer enters from a point given as fractions of the stage.
+      enter: function (ms, fx, fy, target, tx, ty) {
+        k.at(ms, function () {
+          place(ptr, [stage.offsetWidth * fx, stage.offsetHeight * fy], true);
+          ptr.classList.add("show");
+          place(ptr, rel(target, tx, ty));
+        });
+      },
+      aim: function (ms, target, fx, fy) { k.at(ms, function () { ptr.classList.add("show"); place(ptr, rel(target, fx, fy)); }); },
+      hide: function (ms) { k.at(ms, function () { ptr.classList.remove("show"); }); },
+      click: function (ms, target, then) {
+        k.at(ms, function () { ptr.classList.add("press"); if (target) el(target).classList.add("press"); });
+        k.at(ms + 150, function () { ptr.classList.remove("press"); if (target) el(target).classList.remove("press"); if (then) then(); });
+      },
+      type: function (ms, target, speed) {
+        var node = el(target), text = node.getAttribute("data-text") || node.getAttribute("data-prompt");
+        speed = Math.min(speed, 1800 / text.length);
+        for (var i = 1; i <= text.length; i++) {
+          (function (n) { k.at(ms + n * speed, function () { node.textContent = text.slice(0, n); }); })(i);
+        }
+        return ms + text.length * speed;
+      },
+      grab: function (ms, target) { k.at(ms, function () { place(ghost, rel(target), true); ghost.classList.add("show"); }); },
+      carry: function (ms, target, fx, fy) { k.at(ms, function () { var xy = rel(target, fx, fy); place(ptr, xy); place(ghost, xy); }); },
+      drop: function (ms) { k.at(ms, function () { ghost.classList.remove("show"); }); },
+    };
+    return k;
+  }
+
+  var PLAY = {
+    download: function (k) {
+      k.enter(500, 0.78, 1.02, ".br-btn", 0.55, 0.55);
+      k.click(1400, ".br-btn");
+      k.step(1550, 3);
+      k.step(1750, 4);
+      k.hide(2200);
+      k.step(4000, 5);
+    },
+    install: function (k) {
+      if (reel.getAttribute("data-os") === "win") {
+        k.step(300, 1);
+        k.step(3000, 2);
+        k.enter(3300, 0.62, 1.02, ".wi-btn", 0.5, 0.6);
+        k.click(4200, ".wi-btn");
+        k.hide(4600);
+        return;
+      }
+      k.enter(400, 0.85, 1.02, ".fd-app img", 0.55, 0.6);
+      k.step(1300, 2);
+      k.grab(1300, ".fd-app img");
+      k.carry(1450, ".fd-apps svg", 0.5, 0.5);
+      k.step(2400, 3);
+      k.drop(2400);
+      k.step(2550, 4);
+      k.hide(2900);
+      k.step(4500, 5);
+    },
+    signin: function (k) {
+      var end = k.type(300, ".lg-a .type", 45);
+      k.enter(end + 200, 0.75, 1.02, ".lg-btn", 0.6, 0.6);
+      k.click(end + 1000, ".lg-btn");
+      k.step(end + 1150, 2);
+      k.hide(end + 1300);
+      k.step(end + 1600, 3);
+      end = k.type(end + 2300, ".lg-b .type", 150);
+      k.aim(end + 200, ".lg-btn", 0.6, 0.6);
+      k.click(end + 1000, ".lg-btn");
+      k.step(end + 1150, 4);
+      k.hide(end + 1300);
+      k.step(end + 1700, 5);
+    },
+    runtime: function (k) {
+      k.enter(500, 0.6, 1.02, ".rt-btn", 0.5, 0.6);
+      k.click(1400, ".rt-btn");
+      k.step(1550, 2);
+      k.hide(1800);
+      k.step(4000, 3);
+    },
+    folder: function (k) {
+      k.enter(400, 0.6, 1.02, ".crumb-btn", 0.45, 0.6);
+      k.click(1200, ".crumb-btn");
+      k.step(1350, 1);
+      k.aim(1700, ".fo-open", 0.35, 0.6);
+      k.click(2400, ".fo-open");
+      k.step(2550, 2);
+      k.aim(2950, ".pk-pick", 0.3, 0.6);
+      k.click(3650, ".pk-pick");
+      k.step(3800, 3);
+      k.aim(4100, ".pk-open", 0.5, 0.6);
+      k.click(4800, ".pk-open");
+      k.step(4950, 4);
+      k.hide(5200);
+    },
+    drop: function (k) {
+      k.enter(400, 0.9, 0.45, ".dfile .doc", 0.55, 0.55);
+      k.step(1200, 1);
+      k.grab(1200, ".dfile .doc");
+      k.carry(1350, ".app-body", 0.5, 0.45);
+      k.step(1850, 2);
+      k.step(2500, 3);
+      k.drop(2500);
+      k.hide(2800);
+    },
+    ask: function (k, scene) {
+      var demo = scene.querySelector(".ask-demo");
+      var input = visible(scene, ".ask-input");
+      function stage(ms, name) { k.at(ms, function () { demo.setAttribute("data-stage", name); }); }
+      var typed = k.type(700, input, 34);
+      k.enter(typed + 150, 0.8, 1.02, ".send", 0.45, 0.4);
+      k.click(typed + 1000, ".send");
+      k.at(typed + 1150, function () { input.textContent = ""; });
+      stage(typed + 1150, "sent");
+      k.hide(typed + 1450);
+      stage(typed + 1450, "think");
+      stage(typed + 3850, "done");
+    },
+    output: function (k) {
+      k.step(300, 1);
+      k.step(1500, 2);
+      k.step(2200, 3);
+      k.step(2900, 4);
+      k.enter(4500, 0.85, 1.02, ".out-files .pick", 0.3, 0.55);
+      k.click(5300, ".out-files .pick");
+      k.step(5450, 5);
+      k.hide(5800);
+    },
+  };
+
+  function enter(n) {
+    current = n;
+    queue = [];
+    next = 0;
+    scenes.forEach(function (s, i) {
+      s.className = base[i];
+      if (i !== n) return;
+      void s.offsetWidth;
+      s.classList.add("on");
+      s.querySelectorAll(".press").forEach(function (x) { x.classList.remove("press"); });
+      s.querySelectorAll(".type, .ask-input").forEach(function (x) { x.textContent = ""; });
+      s.querySelectorAll(".ptr, .ghost").forEach(function (x) { x.classList.remove("show", "press"); });
+      var demo = s.querySelector(".ask-demo");
+      if (demo) demo.setAttribute("data-stage", "type");
+    });
+    sig.hidden = scenes[n].classList.contains("s-hero");
+    var play = PLAY[scenes[n].getAttribute("data-play")];
+    if (play) play(kit(scenes[n]), scenes[n]);
+    queue.sort(function (a, b) { return a.ms - b.ms; });
+    // Reduced motion lands every scene on its finished state at once.
+    if (reduce) { queue.forEach(function (e) { e.fn(); }); next = queue.length; }
+  }
+
+  function indexAt(time) {
+    var n = 0;
+    while (n < scenes.length - 1 && time >= starts[n + 1]) n++;
+    return n;
+  }
+  function seek(n) {
+    t = starts[(n + scenes.length) % scenes.length];
+    current = -1;
+  }
+
+  function frame(now) {
+    if (playing) t += Math.min(now - last, 250);
+    last = now;
+    if (t >= total) {
+      if (record) { t = total - 1; playing = false; window.reelDone = true; }
+      else t = 0;
+    }
+    var n = indexAt(t);
+    if (n !== current) enter(n);
+    var local = t - starts[n];
+    while (next < queue.length && queue[next].ms <= local) queue[next++].fn();
+    segs.forEach(function (s, i) { s.style.setProperty("--p", Math.max(0, Math.min(1, (t - starts[i]) / durs[i]))); });
+    requestAnimationFrame(frame);
+  }
+
+  function setPlaying(on) {
+    playing = on;
+    document.body.classList.toggle("paused", !on);
+    playBtn.setAttribute("aria-label", on ? "Pause" : "Play");
+  }
+
+  window.reelLength = total;
+  window.startReel = function () { t = 0; current = -1; window.reelDone = false; setPlaying(true); };
+
+  // Tap the left third to go back a scene, anywhere else to skip ahead, or a
+  // progress segment to jump straight to it.
+  reel.addEventListener("click", function (event) {
+    if (record) return;
+    var seg = event.target.closest(".bars i");
+    if (seg) { seek(segs.indexOf(seg)); return; }
+    var r = reel.getBoundingClientRect();
+    seek(event.clientX - r.left < r.width / 3 ? Math.max(0, current - 1) : current + 1);
+  });
+  document.querySelectorAll(".chrome [data-format]").forEach(function (b) {
+    b.addEventListener("click", function () { pinned = b.getAttribute("data-format"); setFormat(pinned); remember(); });
+  });
+  document.querySelectorAll(".chrome [data-os]").forEach(function (b) {
+    b.addEventListener("click", function () { setOs(b.getAttribute("data-os")); remember(); });
+  });
+  document.querySelectorAll(".chrome [data-ds]").forEach(function (b) {
+    b.addEventListener("click", function () { setDataset(b.getAttribute("data-ds")); remember(); });
+  });
+  // The other language is its own page; the query carries the take across.
+  document.querySelectorAll(".chrome [data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var code = b.getAttribute("data-lang");
+      if (code !== document.documentElement.lang) location.href = (code === "en" ? "" : "/" + code) + "/demo/how-to/" + location.search;
+    });
+  });
+  playBtn.addEventListener("click", function () { setPlaying(!playing); });
+  document.getElementById("restart").addEventListener("click", function () { seek(0); setPlaying(true); });
+  document.addEventListener("keydown", function (event) {
+    if (record) return;
+    var key = event.key;
+    if (key === "ArrowRight") seek(current + 1);
+    else if (key === "ArrowLeft") seek(Math.max(0, current - 1));
+    else if (key === " " && !event.target.closest("button")) { event.preventDefault(); setPlaying(!playing); }
+    else if (key === "r" || key === "R") { seek(0); setPlaying(true); }
+    else if (key === "f" || key === "F") {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener("resize", function () {
+    fit();
+    if (!pinned && autoFormat() !== reel.getAttribute("data-format")) setFormat(autoFormat());
+  });
+
+  var idleTimer = null;
+  function wake() {
+    document.body.classList.remove("idle");
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () { document.body.classList.add("idle"); }, 2500);
+  }
+  ["mousemove", "pointerdown", "keydown", "focusin"].forEach(function (type) {
+    document.addEventListener(type, wake, { passive: true });
+  });
+  wake();
+
+  reel.setAttribute("data-os", params.get("os") === "win" ? "win" : "mac");
+  pressed("os", reel.getAttribute("data-os"));
+  reel.setAttribute("data-ds", DATASETS.indexOf(params.get("data")) > 0 ? params.get("data") : DATASETS[0]);
+  pressed("ds", reel.getAttribute("data-ds"));
+  pressed("lang", document.documentElement.lang);
+  setFormat(pinned || autoFormat());
+  setPlaying(playing);
+  requestAnimationFrame(frame);
+});
+</script>
+</body>
+</html>

@@ -512,18 +512,78 @@ def build_reels(out_root, css, doc_css):
 
 
 # The how-to walkthrough downloads the current release, so it reads the
-# version and sizes from the homepage's download links. Its chart is the demo
-# dataset in src/howto-chart.svg.
-def howto_blocks():
+# version and sizes from the homepage's download links. Its copy and both demo
+# datasets live in content/howto.json and its charts in src/howto/. Every page
+# carries both datasets; the reel's data-ds attribute shows one at a time.
+HOWTO_LOCALES = ["en", "id"]
+HOWTO_CHECK = '<svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg>'
+
+
+def howto_blocks(code):
     shell = (ROOT / "src" / "shell.html").read_text(encoding="utf-8")
     mac = re.search(r"dl\.skalatec\.com/([\d.]+)/blade-desktop-[\d.]+-mac-arm64\.dmg\">.*?&middot; (\d+ MB)", shell, re.S)
     win = re.search(r"blade-desktop-[\d.]+-win-x64\.exe\">.*?&middot; (\d+ MB)", shell, re.S)
-    return {
-        "dlVersion": mac.group(1),
-        "macSize": mac.group(2),
-        "winSize": win.group(1),
-        "chart": (ROOT / "src" / "howto-chart.svg").read_text(encoding="utf-8").strip(),
-    }
+    howto = json.loads((ROOT / "content" / "howto.json").read_text(encoding="utf-8"))
+    site = load(code)
+    blocks = {"dlVersion": mac.group(1), "macSize": mac.group(2), "winSize": win.group(1)}
+    blocks.update({"t." + k: v for k, v in howto["locales"][code].items()})
+    blocks.update({
+        "site.h1a": site["hero"]["h1a"],
+        "site.h1em": site["hero"]["h1em"],
+        "site.lede": site["hero"]["lede"].rstrip("."),
+        "site.get": site["cta"]["get"],
+        "site.pricing": site["footer"]["pricing"],
+        "site.dlMac": site["cta"]["downloadFor"] % "macOS",
+        "site.dlWin": site["cta"]["downloadFor"] % "Windows",
+        "site.note": site["cta"]["note"],
+    })
+
+    def each(fn):
+        return "".join(fn(f"ds-{name}", ds, ds[code]) for name, ds in howto["datasets"].items())
+
+    def chart(cls, ds, t):
+        svg = (ROOT / "src" / "howto" / (cls[3:] + ".svg")).read_text(encoding="utf-8").strip()
+        svg = svg.replace('class="chart"', f'class="chart {cls}"', 1)
+        for k in ("alt", "yLabel", "xLabel"):
+            svg = svg.replace("{{" + k + "}}", html.escape(t[k]))
+        for i, v in enumerate(t.get("vals", [])):
+            svg = svg.replace("{{v%d}}" % i, v)
+        return svg
+
+    def answer(cls, ds, t):
+        tools = "".join(f'<div class="m-tool">{HOWTO_CHECK}<b>{html.escape(x)}</b><small>Done</small></div>' for x in ds["tools"])
+        return f'<div class="ask-answer {cls}">{tools}<p class="m-msg">{t["answer"]}</p></div>'
+
+    def code_view(cls, ds, t):
+        lines = "".join(f'<span class="cl"><i>{n}</i>{line}</span>' for n, line in enumerate(ds["code"], 1))
+        return f'<pre class="m-code {cls}"><code>{lines}</code></pre>'
+
+    def stats(cls, ds, t):
+        # The headline number takes the dataset's tone: green for good news, orange for risk.
+        tone = f' class="{ds["tone"]}"'
+        tiles = "".join(
+            f'<div><b{tone if i == 0 else ""}>{v}</b><span>{html.escape(label)}</span></div>'
+            for i, (v, label) in enumerate(t["stats"])
+        )
+        return f'<div class="out-stats {cls}">{tiles}</div>'
+
+    span = lambda key, src="ds": lambda cls, ds, t: f'<span class="{cls}">{html.escape((ds if src == "ds" else t)[key])}</span>'
+    blocks.update({
+        "d.folder": each(span("folder", "t")),
+        "d.file": each(span("file")),
+        "d.meta": each(span("meta")),
+        "d.png": each(span("png")),
+        "d.pngMeta": each(span("pngMeta")),
+        "d.table": each(lambda cls, ds, t: reel_table({"head": ds["head"], "rows": ds["rows"]}, "m-table " + cls)),
+        "d.tableHl": each(lambda cls, ds, t: reel_table(ds, "m-table " + cls)),
+        "d.user": each(lambda cls, ds, t: f'<p class="m-user {cls}">{html.escape(t["prompt"])}</p>'),
+        "d.input": each(lambda cls, ds, t: f'<span class="ask-input {cls}" data-prompt="{attr(t["prompt"])}"></span>'),
+        "d.answer": each(answer),
+        "d.chart": each(chart),
+        "d.code": each(code_view),
+        "d.stats": each(stats),
+    })
+    return blocks
 
 
 def build_site(key, site, shell, css, doc_css, base_locales, names):
@@ -558,12 +618,12 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
     (out_root / "demo" / "short" / "index.html").write_text(
         render_doc("demo-short.html", css, doc_css), encoding="utf-8"
     )
-    (out_root / "demo" / "how-to").mkdir(parents=True, exist_ok=True)
-    (out_root / "demo" / "how-to" / "index.html").write_text(
-        render_doc("demo-howto.html", css, doc_css, howto_blocks()), encoding="utf-8"
-    )
+    for code in HOWTO_LOCALES:
+        out = out_root / ("" if code == "en" else code) / "demo" / "how-to" / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(render_doc("demo-howto.html", css, doc_css, howto_blocks(code)), encoding="utf-8")
     reels = build_reels(out_root, css, doc_css)
-    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html, demo/short/index.html, demo/how-to/index.html")
+    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html, demo/short/index.html, demo/how-to/index.html, id/demo/how-to/index.html")
     print(f"  {key:15} reels -> {', '.join('demo/reels/' + n for n in reels)}")
 
     # locales that were dropped from ORDER should not linger as stale pages

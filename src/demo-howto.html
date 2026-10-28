@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="{{t.lang}}" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>How to use Blade</title>
-<meta name="description" content="From download to your first result with Blade, step by step." />
+<title>{{t.title}}</title>
+<meta name="description" content="{{t.description}}" />
 <meta name="robots" content="noindex" />
 <link rel="icon" href="/logo.png" />
 <meta name="color-scheme" content="light" />
@@ -17,8 +17,10 @@
      on a clock. The stage is a fixed canvas scaled to the screen, so a
      browser view and a recording match pixel for pixel: 9:16 for reels and
      stories, 4:5 for the feed, 16:9 for desktop. ?format=story|feed|wide and
-     ?os=mac|win pin the take; ?record holds it until window.startReel().
-     Every number comes from one demo dataset, sleep_survey.csv (n = 214). */
+     ?os=mac|win and ?data=sleep|framingham pin the take; ?record holds it
+     until window.startReel(). The numbers come from the demo datasets:
+     sleep_survey.csv (n = 214, made up) and the Framingham heart study
+     teaching extract (n = 4,240). The copy lives in content/howto.json. */
   html, body { height: 100%; }
   body { margin: 0; overflow: hidden; background: #10141c; }
   .reel {
@@ -39,6 +41,11 @@
   .reel[data-format="feed"] { --w: 1080px; --h: 1350px; --fs: 30px; }
   .reel[data-format="wide"] { --w: 1920px; --h: 1080px; --fs: 24px; }
   .reel[data-os="mac"] .os-win, .reel[data-os="win"] .os-mac { display: none !important; }
+  /* One demo dataset plays at a time; ?data=sleep|framingham picks it. */
+  .reel[data-ds="sleep"] .ds-framingham, .reel[data-ds="framingham"] .ds-sleep { display: none !important; }
+  /* The variants are spans, so they must not pick up the title bar's or file chips' span rules. */
+  .mw-bar b span { position: static; font: inherit; color: inherit; }
+  .out-files li span[class^="ds-"] { display: inline; }
 
   /* Story-style progress, one segment per scene. In 9:16 it sits below the
      account row Instagram lays over the top edge. */
@@ -379,6 +386,15 @@
   .chart .fit { stroke: var(--orange); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 600; stroke-dashoffset: 600; transition: stroke-dashoffset 0.9s var(--ease); }
   .sc-out.s1 .chart .dots { clip-path: inset(0 0 0 0); }
   .sc-out.s2 .chart .fit { stroke-dashoffset: 0; }
+  .chart .bars rect { fill: #5d7a4f; fill-opacity: 0.7; transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); transition: transform 0.8s var(--ease); }
+  .chart .bars .key { fill: var(--orange); fill-opacity: 1; }
+  .chart .bars rect:nth-child(2) { transition-delay: 0.15s; }
+  .chart .bars rect:nth-child(3) { transition-delay: 0.3s; }
+  .chart .bars rect:nth-child(4) { transition-delay: 0.45s; }
+  .chart .vals { opacity: 0; transition: opacity 0.5s; }
+  .chart .vals text { font-size: 19px; font-weight: 600; fill: #1f2320; }
+  .sc-out.s1 .chart .bars rect { transform: none; }
+  .sc-out.s2 .chart .vals { opacity: 1; }
   .out-code { position: absolute; inset: 0; display: none; padding-top: 0.4em; background: #fff; animation: mock-up 0.4s var(--ease) both; }
   .out-code .m-code { font-size: 0.7em; }
   .o-b, .sc-out.s5 .o-a { display: none; }
@@ -388,7 +404,8 @@
   .out-stats div { padding: 0.55em 0.8em; border: 1px solid var(--m-line); border-radius: 0.7em; background: #fff; }
   .out-stats b { display: block; font-size: 1.45em; line-height: 1.2; font-weight: 500; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
   .out-stats b.up { color: #5d7a4f; }
-  .out-stats span { font-size: 0.72em; color: var(--m-muted); }
+  .out-stats b.warn { color: var(--orange); }
+  .out-stats span { display: block; font-size: 0.72em; line-height: 1.3; color: var(--m-muted); }
   .out-files { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 0; padding: 0; list-style: none; }
   .out-files li { display: inline-flex; align-items: center; gap: 0.45em; padding: 0.4em 0.75em; border: 1px solid var(--m-line); border-radius: 0.6em; background: #fff; font-size: 0.85em; }
   .out-files li span { display: none; }
@@ -482,25 +499,25 @@
 </style>
 </head>
 <body>
-<div class="reel" id="reel" data-format="story" data-os="mac" role="region" aria-label="How to use Blade, step by step">
+<div class="reel" id="reel" data-format="story" data-os="mac" data-ds="sleep" role="region" aria-label="{{t.ariaReel}}">
   <div class="bars" id="bars"></div>
 
-  <section class="scene s-hero" data-dur="3.5" aria-label="Intro">
-    <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>From download to your first result</h1></div>
+  <section class="scene s-hero" data-dur="3.5" aria-label="{{t.ariaIntro}}">
+    <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>{{t.hero1}}</h1></div>
   </section>
 
   <section class="scene sc-dl" data-dur="6" data-play="download">
-    <p class="cap"><span class="num">1</span>Download Blade for Mac or Windows</p>
+    <p class="cap"><span class="num">1</span>{{t.cap1}}</p>
     <div class="stage">
       <div class="mock"><div class="mw br">
         <div class="mw-bar"><i></i><i></i><i></i><span class="br-url"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>bladestatistics.com</span></div>
         <div class="br-page">
-          <div class="br-nav"><span class="br-logo"><img src="/logo.png" alt="" />Blade</span><span>Pricing</span><span class="br-get">Get Blade</span></div>
+          <div class="br-nav"><span class="br-logo"><img src="/logo.png" alt="" />Blade</span><span>{{site.pricing}}</span><span class="br-get">{{site.get}}</span></div>
           <div class="br-hero">
-            <h3>Specialized AI agents for <em>statistical analysis</em></h3>
-            <p>Blade handles the heavy lifting so you can focus on discovering insights that matter</p>
-            <span class="br-btn press-able"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg><span class="os-mac">Download for macOS</span><span class="os-win">Download for Windows</span></span>
-            <small>macOS and Windows, beta</small>
+            <h3>{{site.h1a}}<em>{{site.h1em}}</em></h3>
+            <p>{{site.lede}}</p>
+            <span class="br-btn press-able"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg><span class="os-mac">{{site.dlMac}}</span><span class="os-win">{{site.dlWin}}</span></span>
+            <small>{{site.note}}</small>
           </div>
         </div>
         <div class="br-shelf">
@@ -515,7 +532,7 @@
   </section>
 
   <section class="scene sc-in" data-dur="6.5" data-play="install">
-    <p class="cap"><span class="num">2</span><span class="os-mac">Drag Blade into Applications to install it</span><span class="os-win">Run the installer and let it finish</span></p>
+    <p class="cap"><span class="num">2</span><span class="os-mac">{{t.cap2mac}}</span><span class="os-win">{{t.cap2win}}</span></p>
     <div class="stage">
       <div class="mock os-mac"><div class="mw fd">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade {{dlVersion}}</span></div>
@@ -548,7 +565,7 @@
   </section>
 
   <section class="scene sc-lg" data-dur="8" data-play="signin">
-    <p class="cap"><span class="num">3</span>Open Blade and sign in with your email</p>
+    <p class="cap"><span class="num">3</span>{{t.cap3}}</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
@@ -556,8 +573,8 @@
           <div class="lg-box">
             <img class="lg-icon" src="/logo.png" alt="" />
             <h4><span class="lg-a">Good research takes time.</span><span class="lg-b">Check your email</span></h4>
-            <p class="lg-sub"><span class="lg-a">Enter your email to sign in or create an account</span><span class="lg-b">We sent a 6-digit code to maya@university.edu</span></p>
-            <div class="lg-field lg-a"><span>Email</span><p><b class="type" data-text="maya@university.edu"></b><i class="caret-blink"></i></p></div>
+            <p class="lg-sub"><span class="lg-a">Enter your email to sign in or create an account</span><span class="lg-b">We sent a 6-digit code to {{t.email}}</span></p>
+            <div class="lg-field lg-a"><span>Email</span><p><b class="type" data-text="{{t.email}}"></b><i class="caret-blink"></i></p></div>
             <div class="lg-field lg-b"><span>Code</span><p class="lg-code"><b class="type" data-text="482916"></b><i class="caret-blink"></i></p></div>
             <span class="lg-btn press-able"><span class="lg-a">Continue</span><span class="lg-b">Verify</span></span>
             <div class="lg-ok"><i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-6.5"/></svg></i><b>Signed in</b></div>
@@ -570,7 +587,7 @@
   </section>
 
   <section class="scene sc-rt" data-dur="6" data-play="runtime">
-    <p class="cap"><span class="num">4</span>Blade checks for R and sets it up for you</p>
+    <p class="cap"><span class="num">4</span>{{t.cap4}}</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
@@ -600,23 +617,23 @@
   </section>
 
   <section class="scene sc-fo" data-dur="6.5" data-play="folder">
-    <p class="cap"><span class="num">5</span>Choose a folder for your project</p>
+    <p class="cap"><span class="num">5</span>{{t.cap5}}</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
-        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb-btn press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg><span class="fo-a">No workspace</span><span class="fo-b">Sleep study</span><svg class="mi chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb-btn press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg><span class="fo-a">No workspace</span><span class="fo-b">{{d.folder}}</span><svg class="mi chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></span></div>
         <div class="app-body">
           <div class="fo-menu"><small>Workspace</small><span class="fo-open press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Open folder…</span></div>
-          <div class="app-empty"><img src="/logo.png" alt="" /><b><span class="fo-a">No workspace</span><span class="fo-b">Sleep study</span></b><small class="fo-b">Ready when you are</small></div>
+          <div class="app-empty"><img src="/logo.png" alt="" /><b><span class="fo-a">No workspace</span><span class="fo-b">{{d.folder}}</span></b><small class="fo-b">Ready when you are</small></div>
           <div class="m-compose"><p><span class="ph">Ask Blade anything, or paste an image</span></p><div><span class="chip">Supervised</span><span class="send" style="background:#d4d6ce"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>
           <div class="pk">
             <div class="pk-side"><small>Favorites</small><span>Desktop</span><span class="on">Documents</span><span>Downloads</span></div>
             <div class="pk-main">
               <p class="pk-path"><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Documents</p>
               <ul>
-                <li><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Coursework</li>
-                <li class="pk-pick press-able"><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Sleep study</li>
-                <li><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>Thesis drafts</li>
+                <li><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>{{t.folderBefore}}</li>
+                <li class="pk-pick press-able"><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>{{d.folder}}</li>
+                <li><svg class="fi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h5l1.5 1.5h6.5v8.5h-13z"/></svg>{{t.folderAfter}}</li>
               </ul>
               <div class="pk-btns"><span>Cancel</span><span class="pk-open press-able">Open</span></div>
             </div>
@@ -628,19 +645,19 @@
   </section>
 
   <section class="scene sc-ad" data-dur="6" data-play="drop">
-    <p class="cap"><span class="num">6</span>Drop your data file into Blade</p>
+    <p class="cap"><span class="num">6</span>{{t.cap6}}</p>
     <div class="stage">
-      <div class="dfile"><span class="doc"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M3 4a3 3 0 0 1 3-3h20l11 11v34a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#fff" stroke="#c9cbc3"/><path d="M26 1v8a3 3 0 0 0 3 3h8" fill="#eceee7" stroke="#c9cbc3"/><rect x="3" y="31" width="34" height="11" fill="#2f8a52"/></svg><b>CSV</b></span><span>sleep_survey.csv</span></div>
+      <div class="dfile"><span class="doc"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M3 4a3 3 0 0 1 3-3h20l11 11v34a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#fff" stroke="#c9cbc3"/><path d="M26 1v8a3 3 0 0 0 3 3h8" fill="#eceee7" stroke="#c9cbc3"/><rect x="3" y="31" width="34" height="11" fill="#2f8a52"/></svg><b>CSV</b></span><span>{{d.file}}</span></div>
       <div class="mock"><div class="mw">
-        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b>Sleep study</b></span></div>
-        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Sleep study</span></div>
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b>{{d.folder}}</b></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>{{d.folder}}</span></div>
         <div class="app-body">
-          <div class="app-empty"><img src="/logo.png" alt="" /><b>Sleep study</b><small>Ready when you are</small></div>
+          <div class="app-empty"><img src="/logo.png" alt="" /><b>{{d.folder}}</b><small>Ready when you are</small></div>
           <div class="ad-data">
-            <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>sleep_survey.csv</b><span>214 rows · 6 columns</span></div>
-            <div class="ask-data"><table class="m-table"><tr><th>id</th><th>year</th><th>sleep_hrs</th><th>study_hrs</th><th>caffeine</th><th>gpa</th></tr><tr><td>S001</td><td>1st</td><td>6.9</td><td>9</td><td>4</td><td>3.21</td></tr><tr><td>S002</td><td>2nd</td><td>7.2</td><td>8</td><td>3</td><td>2.76</td></tr><tr><td>S003</td><td>3rd</td><td>7.1</td><td>13</td><td>1</td><td>3.59</td></tr><tr><td>S004</td><td>4th</td><td>6.0</td><td>11</td><td>4</td><td>2.56</td></tr><tr><td>S005</td><td>1st</td><td>5.7</td><td>13</td><td>1</td><td>2.63</td></tr><tr><td>S006</td><td>2nd</td><td>7.3</td><td>2</td><td>1</td><td>3.29</td></tr></table></div>
+            <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>{{d.file}}</b><span>{{d.meta}}</span></div>
+            <div class="ask-data">{{d.table}}</div>
           </div>
-          <div class="m-compose"><span class="att"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>sleep_survey.csv</span><p><span class="ph">Ask Blade anything, or paste an image</span></p><div><span class="chip">Supervised</span><span class="send" style="background:#d4d6ce"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>
+          <div class="m-compose"><span class="att"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>{{d.file}}</span><p><span class="ph">Ask Blade anything, or paste an image</span></p><div><span class="chip">Supervised</span><span class="send" style="background:#d4d6ce"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div></div>
           <div class="drop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4 14v5h16v-5"/></svg>Drop supporting files here</div>
         </div>
       </div></div>
@@ -649,27 +666,22 @@
     </div>
   </section>
 
-  <section class="scene sc-ask" data-dur="9" data-play="ask">
-    <p class="cap"><span class="num">7</span>Ask your question in plain language</p>
+  <section class="scene sc-ask" data-dur="10" data-play="ask">
+    <p class="cap"><span class="num">7</span>{{t.cap7}}</p>
     <div class="stage">
       <div class="mock ask-demo" data-stage="type"><div class="mw">
-        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b>Sleep study</b></span></div>
-        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Sleep study</span></div>
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b>{{d.folder}}</b></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>{{d.folder}}</span></div>
         <div class="mw-body">
-          <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>sleep_survey.csv</b><span>214 rows · 6 columns</span></div>
-          <div class="ask-data"><table class="m-table"><tr><th>id</th><th>year</th><th class="hl">sleep_hrs</th><th>study_hrs</th><th>caffeine</th><th class="hl">gpa</th></tr><tr><td>S001</td><td>1st</td><td class="hl">6.9</td><td>9</td><td>4</td><td class="hl">3.21</td></tr><tr><td>S002</td><td>2nd</td><td class="hl">7.2</td><td>8</td><td>3</td><td class="hl">2.76</td></tr><tr><td>S003</td><td>3rd</td><td class="hl">7.1</td><td>13</td><td>1</td><td class="hl">3.59</td></tr><tr><td>S004</td><td>4th</td><td class="hl">6.0</td><td>11</td><td>4</td><td class="hl">2.56</td></tr><tr><td>S005</td><td>1st</td><td class="hl">5.7</td><td>13</td><td>1</td><td class="hl">2.63</td></tr><tr><td>S006</td><td>2nd</td><td class="hl">7.3</td><td>2</td><td>1</td><td class="hl">3.29</td></tr></table></div>
+          <div class="m-file"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b>{{d.file}}</b><span>{{d.meta}}</span></div>
+          <div class="ask-data">{{d.tableHl}}</div>
           <div class="ask-chat">
-            <p class="m-user">Does sleep affect GPA? Show me a chart</p>
+            {{d.user}}
             <div class="m-think"><svg class="m-spinner" viewBox="0 0 15 15" aria-hidden="true"><rect class="o" x="4" y="0" width="3" height="3" rx="1" style="animation-duration:1.15s;animation-delay:0.49s"/><rect class="o" x="8" y="0" width="3" height="3" rx="1" style="animation-duration:1.07s;animation-delay:0.98s"/><rect class="o" x="0" y="4" width="3" height="3" rx="1" style="animation-duration:1.37s;animation-delay:0.8s"/><rect class="i" x="4" y="4" width="3" height="3" rx="1" style="animation-duration:1.51s;animation-delay:0.09s"/><rect class="i" x="8" y="4" width="3" height="3" rx="1" style="animation-duration:1.43s;animation-delay:0.06s"/><rect class="o" x="12" y="4" width="3" height="3" rx="1" style="animation-duration:1.09s;animation-delay:0.1s"/><rect class="o" x="0" y="8" width="3" height="3" rx="1" style="animation-duration:1.83s;animation-delay:0.64s"/><rect class="i" x="4" y="8" width="3" height="3" rx="1" style="animation-duration:1.22s;animation-delay:0.19s"/><rect class="i" x="8" y="8" width="3" height="3" rx="1" style="animation-duration:1.95s;animation-delay:0.94s"/><rect class="o" x="12" y="8" width="3" height="3" rx="1" style="animation-duration:1.4s;animation-delay:0.87s"/><rect class="o" x="4" y="12" width="3" height="3" rx="1" style="animation-duration:1.05s;animation-delay:1.46s"/><rect class="o" x="8" y="12" width="3" height="3" rx="1" style="animation-duration:1.29s;animation-delay:1.29s"/></svg><span class="m-shimmer" data-text="Running R">Running R</span></div>
-            <div class="ask-answer">
-              <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Read sleep_survey.csv</b><small>Done</small></div>
-              <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Ran a linear regression in R</b><small>Done</small></div>
-              <div class="m-tool"><svg class="mi ok" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.5 3 3 7-7"/></svg><b>Saved 3 files</b><small>Done</small></div>
-              <p class="m-msg">Yes. Students who sleep more tend to have higher GPAs: each extra hour goes with <b>+0.16</b> GPA (r = 0.40, p &lt; 0.001, n = 214). Under 6 hours averages 2.87, 8 hours or more averages 3.35.</p>
-            </div>
+            {{d.answer}}
           </div>
           <div class="m-compose">
-            <p><span class="ask-input" data-prompt="Does sleep affect GPA? Show me a chart"></span><i class="caret-blink"></i></p>
+            <p>{{d.input}}<i class="caret-blink"></i></p>
             <div><span class="chip">Supervised</span><span class="send press-able"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4"/></svg></span></div>
           </div>
         </div>
@@ -679,26 +691,22 @@
   </section>
 
   <section class="scene sc-out" data-dur="9.5" data-play="output">
-    <p class="cap"><span class="num">8</span>Get the chart, the numbers, and the R script</p>
+    <p class="cap"><span class="num">8</span>{{t.cap8}}</p>
     <div class="stage">
       <div class="mock"><div class="mw">
-        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b>Sleep study</b></span></div>
-        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>Sleep study</span></div>
+        <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b>{{d.folder}}</b></span></div>
+        <div class="mw-head"><img src="/logo.png" alt="" width="20" height="20" /><span class="crumb"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 4V3h5l1.5 1.5h6.5v9h-13z"/></svg>{{d.folder}}</span></div>
         <div class="out-body">
           <div class="m-shot out-fig">
-            <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b><span class="o-a">sleep_vs_gpa.png</span><span class="o-b">analysis.R</span></b><span><span class="o-a">PNG · 84 KB</span><span class="o-b">R · 1 KB</span></span></p>
+            <p><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg><b><span class="o-a">{{d.png}}</span><span class="o-b">analysis.R</span></b><span><span class="o-a">{{d.pngMeta}}</span><span class="o-b">R · 1 KB</span></span></p>
             <div class="out-view">
-              {{chart}}
-              <div class="out-code"><pre class="m-code"><code><span class="cl"><i>1</i><span class="f">library</span>(ggplot2)</span><span class="cl"><i>2</i>d &lt;- <span class="f">read.csv</span>(<span class="s">"sleep_survey.csv"</span>)</span><span class="cl"><i>3</i>fit &lt;- <span class="f">lm</span>(gpa ~ sleep_hrs, data = d)</span><span class="cl"><i>4</i><span class="f">summary</span>(fit)</span><span class="cl"><i>5</i> </span><span class="cl"><i>6</i><span class="f">ggplot</span>(d, <span class="f">aes</span>(sleep_hrs, gpa)) +</span><span class="cl"><i>7</i>  <span class="f">geom_point</span>() +</span><span class="cl"><i>8</i>  <span class="f">geom_smooth</span>(method = <span class="s">"lm"</span>)</span><span class="cl"><i>9</i><span class="f">ggsave</span>(<span class="s">"sleep_vs_gpa.png"</span>)</span></code></pre></div>
+              {{d.chart}}
+              <div class="out-code">{{d.code}}</div>
             </div>
           </div>
-          <div class="out-stats">
-            <div><b class="up">+0.16</b><span>GPA per extra hour</span></div>
-            <div><b>0.40</b><span>Correlation (r)</span></div>
-            <div><b>&lt; 0.001</b><span>p value</span></div>
-          </div>
+          {{d.stats}}
           <ul class="out-files">
-            <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>sleep_vs_gpa.png<span>Chart</span></li>
+            <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>{{d.png}}<span>Chart</span></li>
             <li class="pick press-able"><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>analysis.R<span>Script</span></li>
             <li><svg class="mi" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z M9.5 1.5V5H13"/></svg>results.csv<span>Table</span></li>
           </ul>
@@ -708,8 +716,8 @@
     </div>
   </section>
 
-  <section class="scene s-hero" data-dur="4.5" aria-label="Try Blade">
-    <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>Start free with your own data</h1><span class="url">bladestatistics.com</span></div>
+  <section class="scene s-hero" data-dur="4.5" aria-label="{{t.ariaEnd}}">
+    <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>{{t.hero2}}</h1><span class="url">bladestatistics.com</span></div>
   </section>
 
   <p class="sig" id="sig"><img src="/logo.png" alt="" />Blade <span>bladestatistics.com</span></p>
@@ -724,6 +732,14 @@
   <div class="seg" role="group" aria-label="Computer">
     <button type="button" data-os="mac">macOS</button>
     <button type="button" data-os="win">Windows</button>
+  </div>
+  <div class="seg" role="group" aria-label="Dataset">
+    <button type="button" data-ds="sleep" title="sleep_survey.csv">Sleep</button>
+    <button type="button" data-ds="framingham" title="framingham.csv">Framingham</button>
+  </div>
+  <div class="seg" role="group" aria-label="Language">
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="id">ID</button>
   </div>
   <button class="cbtn" type="button" id="play" aria-label="Pause" title="Pause (space)"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z"/></svg></button>
   <button class="cbtn" type="button" id="restart" aria-label="Start over" title="Start over (R)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 1 0 1.5-3.6M3 2.5v2.5h2.5"/></svg></button>
@@ -741,6 +757,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var SIZES = { story: [1080, 1920], feed: [1080, 1350], wide: [1920, 1080] };
   var pinned = SIZES[params.get("format")] ? params.get("format") : null;
+  var DATASETS = ["sleep", "framingham"];
   var base = scenes.map(function (s) { return s.className; });
   var durs = scenes.map(function (s) { return +s.getAttribute("data-dur") * 1000; });
   var starts = [], total = 0;
@@ -765,6 +782,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var q = new URLSearchParams(location.search);
     if (pinned) q.set("format", pinned); else q.delete("format");
     q.set("os", reel.getAttribute("data-os"));
+    q.set("data", reel.getAttribute("data-ds"));
     history.replaceState(null, "", "?" + q + location.hash);
   }
   function setFormat(name) {
@@ -778,8 +796,20 @@ document.addEventListener("DOMContentLoaded", function () {
     pressed("os", name);
     replay();
   }
+  function setDataset(name) {
+    reel.setAttribute("data-ds", name);
+    pressed("ds", name);
+    replay();
+  }
   // Pointer positions are measured, so a new layout restarts the scene.
   function replay() { if (current >= 0) seek(current); }
+
+  // Each OS and dataset has its own copy of some elements; act on the one shown.
+  function visible(root, sel) {
+    var all = root.querySelectorAll(sel);
+    for (var i = 0; i < all.length; i++) if (all[i].getClientRects().length) return all[i];
+    return all[0];
+  }
 
   // Everything a scene does is queued on its own clock: the reel clock only
   // advances while playing, so pausing freezes the take mid-gesture.
@@ -787,7 +817,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var stage = scene.querySelector(".stage");
     var ptr = stage && stage.querySelector(".ptr");
     var ghost = stage && stage.querySelector(".ghost");
-    function el(x) { return typeof x === "string" ? scene.querySelector(x) : x; }
+    function el(x) { return typeof x === "string" ? visible(scene, x) : x; }
     function rel(x, fx, fy) {
       var s = stage.getBoundingClientRect(), r = el(x).getBoundingClientRect(), k = s.width / stage.offsetWidth;
       return [(r.left - s.left + r.width * (fx == null ? 0.5 : fx)) / k, (r.top - s.top + r.height * (fy == null ? 0.5 : fy)) / k];
@@ -817,6 +847,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       type: function (ms, target, speed) {
         var node = el(target), text = node.getAttribute("data-text") || node.getAttribute("data-prompt");
+        speed = Math.min(speed, 1800 / text.length);
         for (var i = 1; i <= text.length; i++) {
           (function (n) { k.at(ms + n * speed, function () { node.textContent = text.slice(0, n); }); })(i);
         }
@@ -905,7 +936,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     ask: function (k, scene) {
       var demo = scene.querySelector(".ask-demo");
-      var input = scene.querySelector(".ask-input");
+      var input = visible(scene, ".ask-input");
       function stage(ms, name) { k.at(ms, function () { demo.setAttribute("data-stage", name); }); }
       var typed = k.type(700, input, 34);
       k.enter(typed + 150, 0.8, 1.02, ".send", 0.45, 0.4);
@@ -1000,6 +1031,16 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".chrome [data-os]").forEach(function (b) {
     b.addEventListener("click", function () { setOs(b.getAttribute("data-os")); remember(); });
   });
+  document.querySelectorAll(".chrome [data-ds]").forEach(function (b) {
+    b.addEventListener("click", function () { setDataset(b.getAttribute("data-ds")); remember(); });
+  });
+  // The other language is its own page; the query carries the take across.
+  document.querySelectorAll(".chrome [data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var code = b.getAttribute("data-lang");
+      if (code !== document.documentElement.lang) location.href = (code === "en" ? "" : "/" + code) + "/demo/how-to/" + location.search;
+    });
+  });
   playBtn.addEventListener("click", function () { setPlaying(!playing); });
   document.getElementById("restart").addEventListener("click", function () { seek(0); setPlaying(true); });
   document.addEventListener("keydown", function (event) {
@@ -1032,6 +1073,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   reel.setAttribute("data-os", params.get("os") === "win" ? "win" : "mac");
   pressed("os", reel.getAttribute("data-os"));
+  reel.setAttribute("data-ds", DATASETS.indexOf(params.get("data")) > 0 ? params.get("data") : DATASETS[0]);
+  pressed("ds", reel.getAttribute("data-ds"));
+  pressed("lang", document.documentElement.lang);
   setFormat(pinned || autoFormat());
   setPlaying(playing);
   requestAnimationFrame(frame);
