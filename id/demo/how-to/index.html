@@ -50,8 +50,8 @@
   /* Story-style progress, one segment per scene. In 9:16 it sits below the
      account row Instagram lays over the top edge. */
   .bars { position: absolute; z-index: 5; display: flex; gap: 10px; inset: 132px 64px auto; }
-  .bars i { flex: 1; height: 6px; padding: 14px 0; margin: -14px 0; background: content-box #1f23201f; overflow: hidden; border-radius: 3px; }
-  .bars i::after { content: ""; display: block; height: 6px; background: #1f2320b3; transform: scaleX(var(--p, 0)); transform-origin: left; }
+  .bars i { flex: 1; height: 6px; padding: 14px 0; margin: -14px 0; background: content-box #1f23200a; overflow: hidden; border-radius: 3px; }
+  .bars i::after { content: ""; display: block; height: 6px; background: #1f232021; transform: scaleX(var(--p, 0)); transform-origin: left; }
   .reel[data-format="feed"] .bars { inset: 44px 56px auto; }
   .reel[data-format="wide"] .bars { inset: 48px 96px auto; }
 
@@ -59,10 +59,10 @@
   .scene.on { display: block; animation: scene-in 0.5s var(--ease) both; }
   @keyframes scene-in { from { opacity: 0; transform: translateY(16px); } }
 
-  /* The one sentence, with its step number above it. */
+  /* The one sentence. */
   .cap {
     position: absolute;
-    inset: 200px 72px auto;
+    inset: 240px 72px auto;
     margin: 0;
     font-size: 68px;
     line-height: 1.06;
@@ -70,21 +70,6 @@
     letter-spacing: -0.045em;
     color: #1f2320;
     text-wrap: balance;
-  }
-  .cap .num {
-    display: grid;
-    place-items: center;
-    width: 1em;
-    height: 1em;
-    margin-bottom: 0.4em;
-    border-radius: 50%;
-    background: var(--orange);
-    color: #fff;
-    font-size: 0.8em;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
   }
   .reel[data-format="feed"] .cap { inset: 92px 64px auto; font-size: 58px; }
   .reel[data-format="wide"] .cap { inset: 50% auto auto 110px; width: 660px; font-size: 76px; transform: translateY(-50%); }
@@ -507,7 +492,7 @@
   </section>
 
   <section class="scene sc-dl" data-dur="6" data-play="download">
-    <p class="cap"><span class="num">1</span>Download Blade untuk Mac atau Windows</p>
+    <p class="cap">Download Blade untuk Mac atau Windows</p>
     <div class="stage">
       <div class="mock"><div class="mw br">
         <div class="mw-bar"><i></i><i></i><i></i><span class="br-url"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="7" width="9" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>bladestatistics.com</span></div>
@@ -532,7 +517,7 @@
   </section>
 
   <section class="scene sc-in" data-dur="6.5" data-play="install">
-    <p class="cap"><span class="num">2</span><span class="os-mac">Seret Blade ke Applications untuk install</span><span class="os-win">Jalankan installer sampai selesai</span></p>
+    <p class="cap"><span class="os-mac">Seret Blade ke Applications untuk install</span><span class="os-win">Jalankan installer sampai selesai</span></p>
     <div class="stage">
       <div class="mock os-mac"><div class="mw fd">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade 0.2.38</span></div>
@@ -565,7 +550,7 @@
   </section>
 
   <section class="scene sc-lg" data-dur="8" data-play="signin">
-    <p class="cap"><span class="num">3</span>Buka Blade lalu masuk pakai email kamu</p>
+    <p class="cap">Buka Blade lalu masuk pakai email kamu</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
@@ -587,7 +572,7 @@
   </section>
 
   <section class="scene sc-rt" data-dur="6" data-play="runtime">
-    <p class="cap"><span class="num">4</span>Blade cek R dan pasang otomatis buat kamu</p>
+    <p class="cap">Blade cek R dan pasang otomatis buat kamu</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
@@ -617,7 +602,7 @@
   </section>
 
   <section class="scene sc-fo" data-dur="6.5" data-play="folder">
-    <p class="cap"><span class="num">5</span>Pilih folder untuk proyek kamu</p>
+    <p class="cap">Pilih folder untuk proyek kamu</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade</span></div>
@@ -645,7 +630,7 @@
   </section>
 
   <section class="scene sc-ad" data-dur="6" data-play="drop">
-    <p class="cap"><span class="num">6</span>Seret file data kamu ke Blade</p>
+    <p class="cap">Seret file data kamu ke Blade</p>
     <div class="stage">
       <div class="dfile"><span class="doc"><svg viewBox="0 0 40 50" aria-hidden="true"><path d="M3 4a3 3 0 0 1 3-3h20l11 11v34a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z" fill="#fff" stroke="#c9cbc3"/><path d="M26 1v8a3 3 0 0 0 3 3h8" fill="#eceee7" stroke="#c9cbc3"/><rect x="3" y="31" width="34" height="11" fill="#2f8a52"/></svg><b>CSV</b></span><span><span class="ds-sleep">sleep_survey.csv</span><span class="ds-framingham">framingham.csv</span></span></div>
       <div class="mock"><div class="mw">
@@ -667,7 +652,7 @@
   </section>
 
   <section class="scene sc-ask" data-dur="10" data-play="ask">
-    <p class="cap"><span class="num">7</span>Tanya pakai bahasa sehari-hari</p>
+    <p class="cap">Tanya pakai bahasa sehari-hari</p>
     <div class="stage">
       <div class="mock ask-demo" data-stage="type"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></b></span></div>
@@ -691,7 +676,7 @@
   </section>
 
   <section class="scene sc-out" data-dur="9.5" data-play="output">
-    <p class="cap"><span class="num">8</span>Dapat grafik, angka, dan script R-nya</p>
+    <p class="cap">Dapat grafik, angka, dan script R-nya</p>
     <div class="stage">
       <div class="mock"><div class="mw">
         <div class="mw-bar"><i></i><i></i><i></i><span>Blade <b><span class="ds-sleep">Studi tidur</span><span class="ds-framingham">Studi jantung</span></b></span></div>
