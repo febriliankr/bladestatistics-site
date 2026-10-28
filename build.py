@@ -15,6 +15,7 @@ import html
 import hashlib
 import json
 import pathlib
+import re
 import shutil
 import sys
 
@@ -510,6 +511,21 @@ def build_reels(out_root, css, doc_css):
     return names
 
 
+# The how-to walkthrough downloads the current release, so it reads the
+# version and sizes from the homepage's download links. Its chart is the demo
+# dataset in src/howto-chart.svg.
+def howto_blocks():
+    shell = (ROOT / "src" / "shell.html").read_text(encoding="utf-8")
+    mac = re.search(r"dl\.skalatec\.com/([\d.]+)/blade-desktop-[\d.]+-mac-arm64\.dmg\">.*?&middot; (\d+ MB)", shell, re.S)
+    win = re.search(r"blade-desktop-[\d.]+-win-x64\.exe\">.*?&middot; (\d+ MB)", shell, re.S)
+    return {
+        "dlVersion": mac.group(1),
+        "macSize": mac.group(2),
+        "winSize": win.group(1),
+        "chart": (ROOT / "src" / "howto-chart.svg").read_text(encoding="utf-8").strip(),
+    }
+
+
 def build_site(key, site, shell, css, doc_css, base_locales, names):
     out_root = site["out"]
     out_root.mkdir(parents=True, exist_ok=True)
@@ -542,8 +558,12 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
     (out_root / "demo" / "short" / "index.html").write_text(
         render_doc("demo-short.html", css, doc_css), encoding="utf-8"
     )
+    (out_root / "demo" / "how-to").mkdir(parents=True, exist_ok=True)
+    (out_root / "demo" / "how-to" / "index.html").write_text(
+        render_doc("demo-howto.html", css, doc_css, howto_blocks()), encoding="utf-8"
+    )
     reels = build_reels(out_root, css, doc_css)
-    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html, demo/short/index.html")
+    print(f"  {key:15} pages -> {', '.join(list(PAGES) + list(HIDDEN_PAGES))}, demo/index.html, demo/short/index.html, demo/how-to/index.html")
     print(f"  {key:15} reels -> {', '.join('demo/reels/' + n for n in reels)}")
 
     # locales that were dropped from ORDER should not linger as stale pages
