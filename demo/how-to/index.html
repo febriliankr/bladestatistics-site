@@ -47,14 +47,6 @@
   .mw-bar b span { position: static; font: inherit; color: inherit; }
   .out-files li span[class^="ds-"] { display: inline; }
 
-  /* Story-style progress, one segment per scene. In 9:16 it sits below the
-     account row Instagram lays over the top edge. */
-  .bars { position: absolute; z-index: 5; display: flex; gap: 10px; inset: 132px 64px auto; }
-  .bars i { flex: 1; height: 6px; padding: 14px 0; margin: -14px 0; background: content-box #1f23200a; overflow: hidden; border-radius: 3px; }
-  .bars i::after { content: ""; display: block; height: 6px; background: #1f232021; transform: scaleX(var(--p, 0)); transform-origin: left; }
-  .reel[data-format="feed"] .bars { inset: 44px 56px auto; }
-  .reel[data-format="wide"] .bars { inset: 48px 96px auto; }
-
   .scene { position: absolute; inset: 0; display: none; }
   .scene.on { display: block; animation: scene-in 0.5s var(--ease) both; }
   @keyframes scene-in { from { opacity: 0; transform: translateY(16px); } }
@@ -456,6 +448,10 @@
   body.idle .chrome { opacity: 0; pointer-events: none; }
   body.idle, body.idle .reel { cursor: none; }
   body.record .chrome { display: none; }
+  /* Progress, one segment per scene, rides in the controls so it stays off the take. */
+  .bars { display: flex; flex-basis: 100%; gap: 4px; padding: 4px 6px 0; }
+  .bars i { flex: 1; height: 4px; padding: 6px 0; margin: -6px 0; background: content-box #ffffff2e; overflow: hidden; border-radius: 2px; cursor: pointer; }
+  .bars i::after { content: ""; display: block; height: 4px; background: #fff; transform: scaleX(var(--p, 0)); transform-origin: left; }
   .seg { display: flex; padding: 2px; border-radius: 20px; background: #ffffff1a; }
   .seg button, .cbtn { border: 0; background: none; color: #ffffffb8; cursor: pointer; font: inherit; font-weight: 500; }
   .seg button { padding: 8px 12px; border-radius: 18px; }
@@ -473,7 +469,6 @@
 </head>
 <body>
 <div class="reel" id="reel" data-format="story" data-os="mac" data-ds="sleep" role="region" aria-label="How to use Blade, step by step">
-  <div class="bars" id="bars"></div>
 
   <section class="scene s-hero" data-dur="3.5" aria-label="Intro">
     <div class="in"><span class="mark"><img src="/logo.png" alt="" />Blade</span><h1>From download to your first result</h1></div>
@@ -504,7 +499,7 @@
     </div>
   </section>
 
-  <section class="scene sc-in" data-dur="6.5" data-play="install">
+  <section class="scene sc-in" data-dur="5.3" data-dur-win="4.5" data-play="install">
     <p class="cap"><span class="os-mac">Drag Blade into Applications to install it</span><span class="os-win">Run the installer and let it finish</span></p>
     <div class="stage">
       <div class="mock os-mac"><div class="mw fd">
@@ -697,6 +692,7 @@
 </div>
 
 <div class="chrome" id="chrome">
+  <div class="bars" id="bars" aria-label="Scenes"></div>
   <div class="seg" role="group" aria-label="Format">
     <button type="button" data-format="story" title="Reels and stories">9:16</button>
     <button type="button" data-format="feed" title="Instagram feed">4:5</button>
@@ -732,9 +728,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var pinned = SIZES[params.get("format")] ? params.get("format") : null;
   var DATASETS = ["sleep", "framingham"];
   var base = scenes.map(function (s) { return s.className; });
-  var durs = scenes.map(function (s) { return +s.getAttribute("data-dur") * 1000; });
-  var starts = [], total = 0;
-  durs.forEach(function (d) { starts.push(total); total += d; });
+  var durs = [], starts = [], total = 0;
   var segs = scenes.map(function () { var i = document.createElement("i"); bars.appendChild(i); return i; });
   var t = 0, last = performance.now(), playing = !record, current = -1, queue = [], next = 0;
 
@@ -764,9 +758,19 @@ document.addEventListener("DOMContentLoaded", function () {
     fit();
     replay();
   }
+  // A scene can run shorter on one OS (data-dur-win), so the timeline follows the OS.
+  function timeline() {
+    var os = reel.getAttribute("data-os");
+    durs = scenes.map(function (s) { return +(s.getAttribute("data-dur-" + os) || s.getAttribute("data-dur")) * 1000; });
+    starts = [];
+    total = 0;
+    durs.forEach(function (d) { starts.push(total); total += d; });
+    window.reelLength = total;
+  }
   function setOs(name) {
     reel.setAttribute("data-os", name);
     pressed("os", name);
+    timeline();
     replay();
   }
   function setDataset(name) {
@@ -986,15 +990,16 @@ document.addEventListener("DOMContentLoaded", function () {
     playBtn.setAttribute("aria-label", on ? "Pause" : "Play");
   }
 
-  window.reelLength = total;
   window.startReel = function () { t = 0; current = -1; window.reelDone = false; setPlaying(true); };
 
   // Tap the left third to go back a scene, anywhere else to skip ahead, or a
-  // progress segment to jump straight to it.
+  // progress segment in the controls to jump straight to it.
+  bars.addEventListener("click", function (event) {
+    var seg = event.target.closest(".bars i");
+    if (seg) seek(segs.indexOf(seg));
+  });
   reel.addEventListener("click", function (event) {
     if (record) return;
-    var seg = event.target.closest(".bars i");
-    if (seg) { seek(segs.indexOf(seg)); return; }
     var r = reel.getBoundingClientRect();
     seek(event.clientX - r.left < r.width / 3 ? Math.max(0, current - 1) : current + 1);
   });
@@ -1046,6 +1051,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   reel.setAttribute("data-os", params.get("os") === "win" ? "win" : "mac");
   pressed("os", reel.getAttribute("data-os"));
+  timeline();
   reel.setAttribute("data-ds", DATASETS.indexOf(params.get("data")) > 0 ? params.get("data") : DATASETS[0]);
   pressed("ds", reel.getAttribute("data-ds"));
   pressed("lang", document.documentElement.lang);
