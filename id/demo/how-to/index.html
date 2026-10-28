@@ -421,8 +421,9 @@
   .reel[data-format="feed"] .sig { inset: auto 0 38px; }
   .reel[data-format="wide"] .sig { inset: auto auto 56px 110px; }
 
-  /* Controls live outside the canvas and fade while the pointer rests, so a
-     screen recording stays clean. ?record drops them entirely. */
+  /* Controls stay hidden until the pointer reaches the bottom of the screen
+     (or a tap lands there), so a screen recording stays clean. The cursor
+     hides when it rests. ?record drops the controls entirely. */
   .chrome {
     position: fixed;
     left: 50%;
@@ -443,9 +444,11 @@
     font-size: 13px;
     line-height: 1;
     transform: translateX(-50%);
-    transition: opacity 0.4s var(--ease);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease);
   }
-  body.idle .chrome { opacity: 0; pointer-events: none; }
+  body.nav .chrome { opacity: 1; pointer-events: auto; }
   body.idle, body.idle .reel { cursor: none; }
   body.record .chrome { display: none; }
   /* Progress, one segment per scene, rides in the controls so it stays off the take. */
@@ -1000,6 +1003,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   reel.addEventListener("click", function (event) {
     if (record) return;
+    // The tap that brings up the controls does not also change the scene.
+    if (revealTap) { revealTap = false; return; }
     var r = reel.getBoundingClientRect();
     seek(event.clientX - r.left < r.width / 3 ? Math.max(0, current - 1) : current + 1);
   });
@@ -1038,15 +1043,35 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!pinned && autoFormat() !== reel.getAttribute("data-format")) setFormat(autoFormat());
   });
 
-  var idleTimer = null;
+  // The cursor hides once it rests; the controls show only near the bottom edge.
+  var idleTimer = null, navTimer = null, revealTap = false;
+  var chrome = document.getElementById("chrome");
   function wake() {
     document.body.classList.remove("idle");
     clearTimeout(idleTimer);
     idleTimer = setTimeout(function () { document.body.classList.add("idle"); }, 2500);
   }
-  ["mousemove", "pointerdown", "keydown", "focusin"].forEach(function (type) {
-    document.addEventListener(type, wake, { passive: true });
-  });
+  function nav(show, delay) {
+    clearTimeout(navTimer);
+    if (show) document.body.classList.add("nav");
+    else navTimer = setTimeout(function () { document.body.classList.remove("nav"); }, delay);
+  }
+  function nearBottom(event) {
+    return event.clientY > innerHeight - Math.max(120, chrome.offsetHeight + 40) || chrome.contains(event.target);
+  }
+  document.addEventListener("mousemove", function (event) { wake(); nav(nearBottom(event), 400); }, { passive: true });
+  document.addEventListener("pointerdown", function (event) {
+    wake();
+    // A tap near the bottom on a touch screen shows the controls for a while.
+    if (event.pointerType !== "mouse" && nearBottom(event)) {
+      revealTap = !document.body.classList.contains("nav");
+      nav(true);
+      nav(false, 4000);
+    }
+  }, { passive: true });
+  document.documentElement.addEventListener("mouseleave", function () { nav(false, 400); });
+  chrome.addEventListener("focusin", function () { nav(true); });
+  chrome.addEventListener("focusout", function () { nav(false, 400); });
   wake();
 
   reel.setAttribute("data-os", params.get("os") === "win" ? "win" : "mac");
