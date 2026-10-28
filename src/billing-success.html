@@ -14,6 +14,10 @@
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
 <link rel="stylesheet" href="/assets/landing.css?v={{designVersion}}" />
 <link rel="stylesheet" href="/assets/auth.css?v={{designVersion}}" />
+<style>
+  .auth-card .dl { grid-template-columns: minmax(0, 1fr); margin-bottom: 12px; }
+  .auth-card .dl a { justify-content: space-between; }
+</style>
 </head>
 <body class="auth-page">
 <div class="hero-landscape" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="/assets/moonlit-lake-soft-mobile.webp" /><source media="(prefers-color-scheme: dark)" srcset="/assets/moonlit-lake-soft.webp" /><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
@@ -26,8 +30,8 @@
   <section class="auth-card" aria-labelledby="t">
     <span class="auth-kicker">Payment received</span>
     <h1 id="t">Blade Pro is yours</h1>
-    <p class="lead" id="msg">Thank you! Pro is active on the email you paid with. Download Blade, then sign in with that same email to use it.</p>
-    <div id="actions"><a class="btn" href="/#get">Download Blade</a><a class="btn ghost" href="/account">View your account</a></div>
+    <p class="lead" id="msg">Thank you! Pro is active on the email you paid with. Download Blade for your computer, then sign in with that same email to use it.</p>
+    <div id="actions">{{block.dl}}<a class="btn ghost" href="/account">View your account</a></div>
   </section>
 </main>
 <footer class="auth-foot">

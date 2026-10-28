@@ -1,0 +1,213 @@
+<div class="download-content wrap" id="beli">
+    <h2>Mulai dengan Blade Pro</h2>
+    <p class="download-lede">Rp299.000 untuk satu bulan, tanpa perpanjangan otomatis. Setelah pembayaran, link unduhan macOS dan Windows langsung muncul.</p>
+    <div class="buy-row reveal">
+      <button class="btn buy-btn" type="button" data-checkout>Beli Blade Pro</button>
+    </div>
+    <ol class="buy-steps">
+      <li>Masukkan email</li>
+      <li>Bayar dengan QRIS atau virtual account</li>
+      <li>Unduh Blade, lalu masuk dengan email yang sama</li>
+    </ol>
+  </div>
+<style>
+  /* Paywalled variant (/id/pro/): the download table becomes a single buy
+     button, and the checkout dialog is the one /pricing uses, in Indonesian. */
+  .cta > .btn { border-radius: 100px; }
+  .buy-row { margin-top: 28px; }
+  .buy-btn { padding: 15px 30px; font-size: 16px; }
+  .buy-steps { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 22px 0 0; padding: 0; list-style: none; counter-reset: buy; color: var(--muted); font-size: 13px; }
+  .buy-steps li { counter-increment: buy; }
+  .buy-steps li::before { content: counter(buy) ". "; }
+  .pricing-section .plans { grid-template-columns: minmax(0, 460px); justify-content: center; }
+
+  .checkout-modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; background: #1d2619a6; }
+  .checkout-modal[hidden] { display: none; }
+  .checkout-dialog { width: min(100%, 470px); border-radius: 20px; background: var(--panel); color: var(--fg); box-shadow: 0 30px 80px #1a24124d; padding: 30px; animation: rise-in 0.4s var(--ease) both; }
+  .checkout-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+  .checkout-head h2 { margin: 0 0 4px; font-size: 26px; }
+  .checkout-head p { margin: 0; color: var(--muted); font-size: 14px; }
+  .checkout-close { display: grid; place-items: center; width: 36px; height: 36px; flex: none; border: 0; border-radius: 50%; background: var(--line); color: var(--fg); font-size: 22px; line-height: 1; cursor: pointer; }
+  .wizard-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; list-style: none; margin: 22px 0; padding: 0; }
+  .wizard-steps li { border-top: 2px solid var(--line); padding-top: 8px; color: var(--muted); font-size: 12px; }
+  .wizard-steps li.current, .wizard-steps li.done { border-color: var(--orange); color: var(--fg); }
+  .wizard-panel[hidden] { display: none; }
+  .wizard-panel label.field-label { display: block; margin: 0 0 7px; color: var(--muted); font-size: 13px; font-weight: 500; }
+  .wizard-panel input[type="email"] { width: 100%; padding: 12px 15px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--fg); font-size: 16px; }
+  .wizard-panel input[type="email"]:focus-visible { outline: 2px solid #7b8b6e; outline-offset: 2px; }
+  .wizard-actions { display: flex; gap: 9px; margin-top: 18px; }
+  .wizard-actions .btn { flex: 1; }
+  .wizard-actions .btn:disabled { cursor: default; opacity: 0.6; }
+  .method-list { display: grid; gap: 9px; }
+  .method { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; border: 1px solid var(--line); border-radius: 12px; padding: 14px; cursor: pointer; background: var(--bg); transition: border-color 0.2s; }
+  .method:hover, .method:has(input:checked) { border-color: #8fa27d; }
+  .method input { margin-top: 4px; accent-color: var(--orange); }
+  .method strong { display: block; font-size: 14px; font-weight: 550; }
+  .method span { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .checkout-email { color: var(--muted); font-size: 13px; margin: 0 0 12px; overflow-wrap: anywhere; }
+  .checkout-msg { margin: 12px 0 0; color: #c4502c; font-size: 13px; }
+  @media (max-width: 640px) { .checkout-dialog { padding: 22px; } }
+</style>
+
+<div class="checkout-modal" id="checkout-modal" hidden>
+  <div class="checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div class="checkout-head">
+      <div>
+        <h2 id="checkout-title">Beli Blade Pro</h2>
+        <p>Rp299.000 untuk satu bulan</p>
+      </div>
+      <button class="checkout-close" id="checkout-close" type="button" aria-label="Tutup">&times;</button>
+    </div>
+    <ol class="wizard-steps" aria-label="Langkah pembayaran">
+      <li class="current" id="step-email-label">1. Email</li>
+      <li id="step-payment-label">2. Pembayaran</li>
+    </ol>
+
+    <form class="wizard-panel" id="email-step" novalidate>
+      <label class="field-label" for="pro-email">Email untuk masuk ke Blade</label>
+      <input id="pro-email" type="email" required placeholder="nama@email.com" autocomplete="email" />
+      <div class="wizard-actions">
+        <button class="btn" type="submit">Lanjut</button>
+      </div>
+    </form>
+
+    <form class="wizard-panel" id="payment-step" hidden>
+      <p class="checkout-email" id="checkout-email"></p>
+      <div class="method-list">
+        <label class="method">
+          <input type="radio" name="payment-method" value="qris" checked />
+          <span><strong>QRIS</strong><span>Scan dengan aplikasi bank atau e-wallet</span></span>
+        </label>
+        <label class="method">
+          <input type="radio" name="payment-method" value="virtual_account" />
+          <span><strong>Virtual account bank</strong><span>BCA, BNI, BRI, Mandiri, atau Permata</span></span>
+        </label>
+      </div>
+      <div class="wizard-actions">
+        <button class="btn ghost" type="button" id="checkout-back">Kembali</button>
+        <button class="btn" type="submit" id="pro-btn">Lanjut ke Xendit</button>
+      </div>
+    </form>
+    <p id="pro-msg" class="checkout-msg" role="alert" hidden></p>
+  </div>
+</div>
+
+<script>
+// Same flow as /pricing: email, then payment method, then Xendit. Xendit returns
+// the buyer to /billing/success, which holds the download links.
+(function () {
+  var API = 'https://api.skalatec.com';
+  var PRICE = 299000;
+  var modal = document.getElementById('checkout-modal');
+  var closeBtn = document.getElementById('checkout-close');
+  var backBtn = document.getElementById('checkout-back');
+  var emailForm = document.getElementById('email-step');
+  var paymentForm = document.getElementById('payment-step');
+  var emailLabel = document.getElementById('step-email-label');
+  var paymentLabel = document.getElementById('step-payment-label');
+  var emailSummary = document.getElementById('checkout-email');
+  var btn = document.getElementById('pro-btn');
+  var msg = document.getElementById('pro-msg');
+  var input = document.getElementById('pro-email');
+  var idleLabel = btn.textContent;
+  var opener = null;
+  var email = '';
+
+  function showEmailStep() {
+    emailForm.hidden = false;
+    paymentForm.hidden = true;
+    emailLabel.className = 'current';
+    paymentLabel.className = '';
+    msg.hidden = true;
+    input.focus();
+  }
+
+  function showPaymentStep() {
+    emailForm.hidden = true;
+    paymentForm.hidden = false;
+    emailLabel.className = 'done';
+    paymentLabel.className = 'current';
+    emailSummary.textContent = 'Pro akan aktif untuk ' + email;
+    msg.hidden = true;
+    paymentForm.querySelector('input[name="payment-method"]:checked').focus();
+  }
+
+  function openCheckout(event) {
+    opener = event && event.currentTarget;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    showEmailStep();
+  }
+
+  function closeCheckout() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    btn.disabled = false;
+    btn.textContent = idleLabel;
+    msg.hidden = true;
+    if (opener) opener.focus();
+  }
+
+  function fail(text) {
+    btn.disabled = false;
+    btn.textContent = idleLabel;
+    msg.hidden = false;
+    msg.textContent = text;
+  }
+
+  [].forEach.call(document.querySelectorAll('[data-checkout]'), function (el) {
+    el.addEventListener('click', function (event) {
+      event.preventDefault();
+      openCheckout(event);
+    });
+  });
+  closeBtn.addEventListener('click', closeCheckout);
+  backBtn.addEventListener('click', showEmailStep);
+  modal.addEventListener('click', function (event) {
+    if (event.target === modal) closeCheckout();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !modal.hidden) closeCheckout();
+  });
+
+  emailForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    email = (input.value || '').trim();
+    if (!email || email.indexOf('@') < 1) {
+      fail('Masukkan email yang valid.');
+      input.focus();
+      return;
+    }
+    showPaymentStep();
+  });
+
+  paymentForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var selected = paymentForm.querySelector('input[name="payment-method"]:checked');
+    var paymentMethod = selected ? selected.value : '';
+    msg.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Membuka Xendit…';
+    if (typeof fbq === 'function') {
+      fbq('track', 'InitiateCheckout', { value: PRICE, currency: 'IDR' });
+    }
+    fetch(API + '/api/subscription/web-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, payment_method: paymentMethod })
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (body) {
+        return { ok: response.ok, body: body };
+      });
+    }).then(function (result) {
+      if (result.ok && result.body && result.body.url) {
+        window.location.href = result.body.url;
+        return;
+      }
+      fail((result.body && result.body.message) || 'Checkout gagal dibuka. Coba lagi.');
+    }).catch(function () {
+      fail('Koneksi bermasalah. Coba lagi.');
+    });
+  });
+})();
+</script>

@@ -411,6 +411,44 @@ def demo_blocks(en_page):
     return blocks
 
 
+# A/B test against paid ad traffic: /id/pro/ is the Indonesian homepage with
+# every download path turned into a Blade Pro checkout, so the flow is buy,
+# then download from /billing/success. Derived from the rendered page so copy
+# and releases never drift from /id/; kept out of the sitemap and the index.
+PAYWALL_BUY = '<button class="btn" type="button" data-checkout>Beli Blade Pro</button>'
+
+
+def paywall_page(page):
+    partial = (ROOT / "src" / "_paywall.html").read_text(encoding="utf-8")
+    buy = extract_element(partial, '<div class="download-content wrap" id="beli">')
+    checkout = partial.replace(buy, "").strip()
+
+    def swap(start, new):
+        nonlocal page
+        page = page.replace(extract_element(page, start), new, 1)
+
+    # No language sniffing or switcher: either would bounce ad traffic to a
+    # homepage that offers the free download.
+    swap("<script>\n// Runs before anything paints", "")
+    swap('<details class="lang">', "")
+    swap('<a class="nav-cta" href="#get">', '<a class="nav-cta" href="#beli">Beli Blade Pro</a>')
+    swap('<span class="cta">', '<span class="cta">' + PAYWALL_BUY + "</span>")
+    swap('<span class="note" id="cta-note">', '<span class="note">Rp299.000 untuk satu bulan &middot; QRIS atau virtual account</span>')
+    swap('<a class="outline-link" href="/pricing">', "")
+    swap('<section class="plan" aria-labelledby="home-plan-free">', "")
+    swap('<a class="btn" href="/pricing#checkout">', PAYWALL_BUY)
+    swap('<div class="download-content wrap">', buy)
+    page = (
+        page.replace('<meta charset="utf-8" />', '<meta charset="utf-8" />\n<meta name="robots" content="noindex" />', 1)
+        .replace('<a class="wordmark" href="/"', '<a class="wordmark" href="/id/pro/"')
+        .replace('<a href="/pricing">', '<a href="#pricing">')
+        .replace("</body>", checkout + "\n</body>", 1)
+    )
+    if 'href="https://dl.skalatec.com' in page or 'href="#get"' in page:
+        sys.exit("id/pro: a download path survived the paywall")
+    return page
+
+
 def render_doc(src, css, doc_css, extra=None):
     page = (ROOT / "src" / src).read_text(encoding="utf-8")
     for key, value in (extra or {}).items():
@@ -607,17 +645,24 @@ def build_site(key, site, shell, css, doc_css, base_locales, names):
         page = render(code, locales[code], shell, css, locales, names, site)
         if code == "en":
             en_page = page
+        if code == "id":
+            id_page = page
         out = out_root / "index.html" if code == "en" else out_root / code / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(page, encoding="utf-8")
         print(f"  {key:15} {code:3} -> {out.relative_to(ROOT)}  ({len(page) // 1024} KB)")
+    (out_root / "id" / "pro").mkdir(parents=True, exist_ok=True)
+    (out_root / "id" / "pro" / "index.html").write_text(paywall_page(id_page), encoding="utf-8")
 
     for name, src in PAGES.items():
         (out_root / name).mkdir(parents=True, exist_ok=True)
         (out_root / name / "index.html").write_text(render_doc(src, css, doc_css), encoding="utf-8")
+    # The success page hands a web buyer the installers directly; lifted from the
+    # homepage so a release bump updates both.
+    dl = extract_element(en_page, '<div class="dl reveal" id="dl">').replace(" reveal", "", 1)
     for path, src in HIDDEN_PAGES.items():
         (out_root / path).parent.mkdir(parents=True, exist_ok=True)
-        (out_root / path).write_text(render_doc(src, css, doc_css), encoding="utf-8")
+        (out_root / path).write_text(render_doc(src, css, doc_css, {"block.dl": dl}), encoding="utf-8")
     (out_root / "demo").mkdir(parents=True, exist_ok=True)
     (out_root / "demo" / "index.html").write_text(
         render_doc("demo.html", css, doc_css, demo_blocks(en_page)), encoding="utf-8"

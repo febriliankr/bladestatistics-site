@@ -27,6 +27,10 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
 <link rel="preload" as="image" href="/assets/daylight-lake-mobile.webp" media="(max-width: 640px)" />
 <link rel="stylesheet" href="/assets/landing.css?v=b60037012d9f" />
 <link rel="stylesheet" href="/assets/auth.css?v=b60037012d9f" />
+<style>
+  .auth-card .dl { grid-template-columns: minmax(0, 1fr); margin-bottom: 12px; }
+  .auth-card .dl a { justify-content: space-between; }
+</style>
 </head>
 <body class="auth-page">
 <div class="hero-landscape" aria-hidden="true"><picture><source media="(prefers-color-scheme: dark) and (max-width: 640px)" srcset="/assets/moonlit-lake-soft-mobile.webp" /><source media="(prefers-color-scheme: dark)" srcset="/assets/moonlit-lake-soft.webp" /><source media="(max-width: 640px)" srcset="/assets/daylight-lake-mobile.webp" /><img src="/assets/daylight-lake.webp" alt="" width="1536" height="1024" fetchpriority="high" /></picture></div>
@@ -39,8 +43,25 @@ src="https://www.facebook.com/tr?id=1373789871610184&ev=PageView&noscript=1" /><
   <section class="auth-card" aria-labelledby="t">
     <span class="auth-kicker">Payment received</span>
     <h1 id="t">Blade Pro is yours</h1>
-    <p class="lead" id="msg">Thank you! Pro is active on the email you paid with. Download Blade, then sign in with that same email to use it.</p>
-    <div id="actions"><a class="btn" href="/#get">Download Blade</a><a class="btn ghost" href="/account">View your account</a></div>
+    <p class="lead" id="msg">Thank you! Pro is active on the email you paid with. Download Blade for your computer, then sign in with that same email to use it.</p>
+    <div id="actions"><div class="dl" id="dl">
+      <a data-os="mac" data-arch="arm64" href="https://dl.skalatec.com/0.2.38/blade-desktop-0.2.38-mac-arm64.dmg">
+        <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
+        <span class="meta">Apple silicon &middot; 110 MB</span>
+      </a>
+      <a data-os="mac" data-arch="x64" href="https://dl.skalatec.com/0.2.38/blade-desktop-0.2.38-mac-x64.dmg">
+        <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg> macOS</span>
+        <span class="meta">Intel &middot; 119 MB</span>
+      </a>
+      <a data-os="win" data-arch="x64" href="https://dl.skalatec.com/0.2.38/blade-desktop-0.2.38-win-x64.exe">
+        <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3.5 10.6 2.3v9.2H2V3.5zm10.2-1.4L22 .8v10.7h-9.8V2.1zM2 13.1h8.6v9.2L2 21.1v-8zm10.2 0H22v10.7l-9.8-1.3v-9.4z"/></svg> Windows</span>
+        <span class="meta">x64 &middot; 99 MB</span>
+      </a>
+      <a data-os="win" data-arch="arm64" href="https://dl.skalatec.com/0.2.38/blade-desktop-0.2.38-win-arm64.exe">
+        <span class="os"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3.5 10.6 2.3v9.2H2V3.5zm10.2-1.4L22 .8v10.7h-9.8V2.1zM2 13.1h8.6v9.2L2 21.1v-8zm10.2 0H22v10.7l-9.8-1.3v-9.4z"/></svg> Windows</span>
+        <span class="meta">ARM &middot; 100 MB</span>
+      </a>
+    </div><a class="btn ghost" href="/account">View your account</a></div>
   </section>
 </main>
 <footer class="auth-foot">
