@@ -23,7 +23,7 @@
 
   .checkout-modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; background: #1d2619a6; }
   .checkout-modal[hidden] { display: none; }
-  .checkout-dialog { width: min(100%, 470px); border-radius: 20px; background: var(--panel); color: var(--fg); box-shadow: 0 30px 80px #1a24124d; padding: 30px; animation: rise-in 0.4s var(--ease) both; }
+  .checkout-dialog { width: min(100%, 470px); border-radius: 20px; background: var(--panel); color: var(--fg); box-shadow: 0 30px 80px #1a24124d; padding: 30px; max-height: calc(100svh - 40px); overflow-y: auto; animation: rise-in 0.4s var(--ease) both; }
   .checkout-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
   .checkout-head h2 { margin: 0 0 4px; font-size: 26px; }
   .checkout-head p { margin: 0; color: var(--muted); font-size: 14px; }
@@ -38,15 +38,42 @@
   .wizard-actions { display: flex; gap: 9px; margin-top: 18px; }
   .wizard-actions .btn { flex: 1; }
   .wizard-actions .btn:disabled { cursor: default; opacity: 0.6; }
-  .method-list { display: grid; gap: 9px; }
-  .method { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; border: 1px solid var(--line); border-radius: 12px; padding: 14px; cursor: pointer; background: var(--bg); transition: border-color 0.2s; }
-  .method:hover, .method:has(input:checked) { border-color: #8fa27d; }
-  .method input { margin-top: 4px; accent-color: var(--orange); }
-  .method strong { display: block; font-size: 14px; font-weight: 550; }
-  .method span { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
-  .checkout-email { color: var(--muted); font-size: 13px; margin: 0 0 12px; overflow-wrap: anywhere; }
+  .checkout-email { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; padding: 10px 12px 10px 14px; border-radius: 12px; background: color-mix(in srgb, var(--fg) 5%, transparent); color: var(--muted); font-size: 13px; }
+  .checkout-email strong { flex: 1; min-width: 0; color: var(--fg); font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .link-btn { flex: none; border: 0; background: none; padding: 2px 4px; color: var(--orange); font: inherit; font-weight: 550; cursor: pointer; }
+  .link-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .method-list { display: grid; gap: 10px; margin: 0; padding: 0; border: 0; min-width: 0; }
+  .method-list legend { padding: 0; margin: 0 0 9px; color: var(--muted); font-size: 13px; font-weight: 500; }
+  .method { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) 22px; gap: 14px; align-items: center; padding: 16px; border: 1.5px solid var(--line); border-radius: 14px; background: var(--bg); cursor: pointer; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; }
+  .method:hover { border-color: color-mix(in srgb, var(--orange) 40%, var(--line)); }
+  .method:has(input:checked) { border-color: var(--orange); background: color-mix(in srgb, var(--orange) 5%, var(--bg)); box-shadow: 0 6px 18px color-mix(in srgb, var(--orange) 12%, transparent); }
+  .method:has(input:focus-visible) { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .method input { position: absolute; opacity: 0; pointer-events: none; }
+  .method-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: color-mix(in srgb, var(--fg) 6%, transparent); color: var(--fg); transition: background 0.2s, color 0.2s; }
+  .method:has(input:checked) .method-icon { background: var(--orange); color: #fff; }
+  .method-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .method-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--fg); font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .method-badge { padding: 2px 8px; border-radius: 100px; background: color-mix(in srgb, var(--orange) 14%, transparent); color: var(--orange); font-size: 11px; font-weight: 600; letter-spacing: 0; }
+  .method-desc { display: block; margin-top: 3px; color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+  .method-banks { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .method-banks span { padding: 2px 7px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+  .method-check { width: 22px; height: 22px; border: 1.5px solid var(--line); border-radius: 50%; transition: border-color 0.2s, background 0.2s; }
+  .method:has(input:checked) .method-check { border-color: var(--orange); background: var(--orange) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5 6.8 11 12 5.5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat; }
+  .method-total { display: flex; justify-content: space-between; align-items: baseline; margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  .method-total strong { color: var(--fg); font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+  .secure-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+  .secure-note svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  @media (prefers-reduced-motion: reduce) { .method, .method-icon, .method-check { transition: none; } }
   .checkout-msg { margin: 12px 0 0; color: #c4502c; font-size: 13px; }
-  @media (max-width: 640px) { .checkout-dialog { padding: 22px; } }
+  @media (max-width: 640px) {
+    .checkout-dialog { padding: 22px 18px; }
+    .wizard-steps { margin: 16px 0; }
+    .method { grid-template-columns: 38px minmax(0, 1fr) 20px; gap: 12px; align-items: start; padding: 14px; }
+    .method-icon { width: 38px; height: 38px; border-radius: 10px; }
+    .method-icon svg { width: 19px; height: 19px; }
+    .method-check { width: 20px; height: 20px; margin-top: 9px; }
+    .method-title { font-size: 14.5px; }
+  }
 </style>
 
 <div class="checkout-modal" id="checkout-modal" hidden>
@@ -72,21 +99,35 @@
     </form>
 
     <form class="wizard-panel" id="payment-step" hidden>
-      <p class="checkout-email" id="checkout-email"></p>
-      <div class="method-list">
+      <p class="checkout-email"><span>Pro untuk</span><strong id="checkout-email"></strong><button class="link-btn" type="button" id="checkout-change">Ubah</button></p>
+      <fieldset class="method-list">
+        <legend>Pilih cara bayar</legend>
         <label class="method">
           <input type="radio" name="payment-method" value="qris" checked />
-          <span><strong>QRIS</strong><span>Scan dengan aplikasi bank atau e-wallet</span></span>
+          <span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6" height="6" rx="1.2"/><rect x="14.5" y="3.5" width="6" height="6" rx="1.2"/><rect x="3.5" y="14.5" width="6" height="6" rx="1.2"/><path d="M14.5 14.5h2.5v2.5M20.5 14.5v.01M14.5 20.5h.01M17.5 20.5h3v-3"/></svg></span>
+          <span>
+            <span class="method-title">QRIS <span class="method-badge">Paling cepat</span></span>
+            <span class="method-desc">Scan dari GoPay, OVO, DANA, ShopeePay, atau m&#8209;banking.</span>
+          </span>
+          <span class="method-check" aria-hidden="true"></span>
         </label>
         <label class="method">
           <input type="radio" name="payment-method" value="virtual_account" />
-          <span><strong>Virtual account bank</strong><span>BCA, BNI, BRI, Mandiri, atau Permata</span></span>
+          <span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 9.5 12 4l8.5 5.5M5 20.5h14M6 10.5v7M10 10.5v7M14 10.5v7M18 10.5v7"/></svg></span>
+          <span>
+            <span class="method-title">Virtual account</span>
+            <span class="method-desc">Transfer dari m&#8209;banking atau ATM.</span>
+            <span class="method-banks"><span>BCA</span><span>BNI</span><span>BRI</span><span>Mandiri</span><span>Permata</span></span>
+          </span>
+          <span class="method-check" aria-hidden="true"></span>
         </label>
-      </div>
+      </fieldset>
+      <p class="method-total"><span>Total, sekali bayar</span><strong>Rp299.000</strong></p>
       <div class="wizard-actions">
         <button class="btn ghost" type="button" id="checkout-back">Kembali</button>
-        <button class="btn" type="submit" id="pro-btn">Lanjut ke Xendit</button>
+        <button class="btn" type="submit" id="pro-btn">Bayar Rp299.000</button>
       </div>
+      <p class="secure-note"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg>Pembayaran aman lewat Xendit</p>
     </form>
     <p id="pro-msg" class="checkout-msg" role="alert" hidden></p>
   </div>
@@ -127,7 +168,7 @@
     paymentForm.hidden = false;
     emailLabel.className = 'done';
     paymentLabel.className = 'current';
-    emailSummary.textContent = 'Pro akan aktif untuk ' + email;
+    emailSummary.textContent = email;
     msg.hidden = true;
     paymentForm.querySelector('input[name="payment-method"]:checked').focus();
   }
@@ -163,6 +204,7 @@
   });
   closeBtn.addEventListener('click', closeCheckout);
   backBtn.addEventListener('click', showEmailStep);
+  document.getElementById('checkout-change').addEventListener('click', showEmailStep);
   modal.addEventListener('click', function (event) {
     if (event.target === modal) closeCheckout();
   });
