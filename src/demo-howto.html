@@ -182,7 +182,7 @@
   .fd-body { display: grid; flex: 1; place-items: center; background: #fff; }
   .fd-row { display: flex; align-items: center; gap: 1.6em; }
   .fd-item { position: relative; display: grid; justify-items: center; gap: 0.5em; padding: 0.8em 0.9em 0.6em; border-radius: 0.8em; font-size: 0.9em; transition: background 0.25s, opacity 0.25s; }
-  .fd-item img, .fd-item svg.big { width: 5.4em; height: 5.4em; }
+  .fd-item img { width: 5.4em; height: 5.4em; }
   .fd-app img { border-radius: 1.2em; }
   .fd-arrow { width: 3.2em; fill: none; stroke: #b9bdb3; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
   .fd-ok { position: absolute; top: 0.4em; right: 0.4em; display: grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: #5d7a4f; opacity: 0; transform: scale(0.6); transition: opacity 0.3s, transform 0.4s var(--ease); }
@@ -512,7 +512,7 @@
             <div class="fd-item fd-app"><img src="/logo.png" alt="" /><span>Blade</span></div>
             <svg class="fd-arrow" viewBox="0 0 60 20" aria-hidden="true"><path d="M3 10h52M47 3l8 7-8 7"/></svg>
             <div class="fd-item fd-apps">
-              <svg class="big" viewBox="0 0 64 52" aria-hidden="true"><path d="M4 8a4 4 0 0 1 4-4h15l6 6h27a4 4 0 0 1 4 4v30a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" fill="#4f9fe0"/><path d="M4 16a3 3 0 0 1 3-3h50a3 3 0 0 1 3 3v28a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" fill="#7cc0f2"/><path d="M26 41l6-14 6 14M28.4 36h7.2" fill="none" stroke="#e6f3fd" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <img src="/assets/howto/applications-folder.webp" alt="" />
               <span>Applications</span>
               <i class="fd-ok"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-6.5"/></svg></i>
             </div>
@@ -861,7 +861,7 @@ document.addEventListener("DOMContentLoaded", function () {
       k.enter(400, 0.85, 1.02, ".fd-app img", 0.55, 0.6);
       k.step(1300, 2);
       k.grab(1300, ".fd-app img");
-      k.carry(1450, ".fd-apps svg", 0.5, 0.5);
+      k.carry(1450, ".fd-apps img", 0.5, 0.5);
       k.step(2400, 3);
       k.drop(2400);
       k.step(2550, 4);
